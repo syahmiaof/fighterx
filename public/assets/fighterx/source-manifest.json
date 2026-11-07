@@ -1,0 +1,20 @@
+{
+  "project": "FighterX — Silat Seni & Silat Olahraga",
+  "style": "cinematic dark sports-tech, black charcoal crimson red silver, subtle Malay heritage detail",
+  "source": "ImageGen-created artboards based on selected homepage reference; cropped/processed into individual web-ready assets",
+  "usage": {
+    "hero": "bg-hero-desktop.webp + character-duo-hero-transparent.png + overlay-red-smoke-transparent.png",
+    "mobile": "bg-hero-mobile.webp + single character",
+    "section": "bg-section-angled.webp or bg-fx-angular.webp",
+    "seni": "character-silat-seni-transparent.png",
+    "olahraga": "character-silat-olahraga-transparent.png"
+  },
+  "note": "Generated cutouts have approximate alpha edges. If possible, optimize WebP for deployed pages. Do not replace the official logo with brand-logo-reference-crop.png. Reference images and generated artworks are not an editable vector logo.",
+  "silhouettes": [
+    "silhouette-silat-kick-transparent.png",
+    "silhouette-silat-stance-transparent.png",
+    "silhouette-silat-technique-transparent.png",
+    "silhouette-silat-action-transparent.png",
+    "silhouette-silat-sparring-transparent.png"
+  ]
+}

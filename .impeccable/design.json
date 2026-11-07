@@ -1,0 +1,189 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-07T07:00:33Z",
+  "title": "Design System: FighterX",
+  "extensions": {
+    "colorMeta": {
+      "background": {
+        "role": "neutral",
+        "displayName": "Night",
+        "canonical": "#08090B",
+        "tonalRamp": ["#08090B", "#17191E", "#202126"]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Charcoal",
+        "canonical": "#17191E",
+        "tonalRamp": ["#08090B", "#17191E", "#202126"]
+      },
+      "elevated": {
+        "role": "neutral",
+        "displayName": "Raised Charcoal",
+        "canonical": "#202126",
+        "tonalRamp": ["#08090B", "#17191E", "#202126"]
+      },
+      "foreground": {
+        "role": "neutral",
+        "displayName": "White",
+        "canonical": "#FFFFFF",
+        "tonalRamp": ["#96989F", "#C5C6CA", "#E5E5E7", "#FFFFFF"]
+      },
+      "silver": {
+        "role": "neutral",
+        "displayName": "Silver",
+        "canonical": "#E5E5E7",
+        "tonalRamp": ["#96989F", "#C5C6CA", "#E5E5E7", "#FFFFFF"]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted Silver",
+        "canonical": "#C5C6CA",
+        "tonalRamp": ["#96989F", "#C5C6CA", "#E5E5E7", "#FFFFFF"]
+      },
+      "subtle": {
+        "role": "neutral",
+        "displayName": "Subtle Gray",
+        "canonical": "#96989F",
+        "tonalRamp": ["#96989F", "#C5C6CA", "#E5E5E7", "#FFFFFF"]
+      },
+      "primary": {
+        "role": "primary",
+        "displayName": "Fighter Crimson",
+        "canonical": "#E10600",
+        "tonalRamp": ["#A90D11", "#E10600", "#FF3845"]
+      },
+      "accent": {
+        "role": "primary",
+        "displayName": "Hot Crimson",
+        "canonical": "#FF3845",
+        "tonalRamp": ["#A90D11", "#E10600", "#FF3845"]
+      },
+      "border": {
+        "role": "neutral",
+        "displayName": "Outline Gray",
+        "canonical": "#45464B",
+        "tonalRamp": ["#37383D", "#45464B", "#66686B"]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Athletic Display",
+        "purpose": "High-impact homepage and section headlines."
+      },
+      "body": {
+        "displayName": "Interface Sans",
+        "purpose": "Readable navigation, body copy, and form text."
+      },
+      "label": {
+        "displayName": "Tracked Label",
+        "purpose": "Compact eyebrows and interface labels."
+      }
+    },
+    "shadows": [
+      {
+        "name": "button-crimson",
+        "value": "0 5px 20px #d4000040, inset 0 1px #ff797c75",
+        "purpose": "Subtle depth on primary actions."
+      },
+      {
+        "name": "phone-preview",
+        "value": "0 0 0 4px #111, 0 13px 32px #000, 0 0 18px #e1060045",
+        "purpose": "Separate illustrative phone frames from the dark page."
+      }
+    ],
+    "motion": [
+      {
+        "name": "control-transition",
+        "value": "background .2s ease, transform .2s ease, border-color .2s ease",
+        "purpose": "Button hover and color changes."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "prefers-reduced-motion: reduce; transitions and animations reduced to .01ms",
+        "purpose": "Honor the operating system's reduced-motion preference."
+      }
+    ],
+    "breakpoints": [
+      { "name": "narrow-phone", "value": "380px" },
+      { "name": "mobile", "value": "760px" },
+      { "name": "compact-desktop", "value": "1100px" },
+      { "name": "wide-desktop", "value": "1600px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Primary conversion action, used for Register Club and other leading actions.",
+      "html": "<button class=\"ds-button-primary\">Register Club <span aria-hidden=\"true\">→</span></button>",
+      "css": ".ds-button-primary { min-height: 46px; padding: 0 20px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; border: 1px solid #ff555a; border-radius: 6px; background: linear-gradient(110deg, #ed171b, #bb080c); color: #fff; font: 700 13px Inter, Arial, sans-serif; letter-spacing: .005em; box-shadow: 0 5px 20px #d4000040, inset 0 1px #ff797c75; transition: background .2s ease, transform .2s ease, border-color .2s ease; cursor: pointer; } .ds-button-primary:hover { background: #ef272b; transform: translateY(-2px); } .ds-button-primary:focus-visible { outline: 3px solid #ff6b70; outline-offset: 3px; } .ds-button-primary:active { transform: translateY(0); }"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Secondary action that sits beside or below the primary CTA.",
+      "html": "<button class=\"ds-button-outline\">Explore Features <span aria-hidden=\"true\">↘</span></button>",
+      "css": ".ds-button-outline { min-height: 46px; padding: 0 20px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; border: 1px solid #bfc0c4; border-radius: 6px; background: #101114; color: #fff; font: 700 13px Inter, Arial, sans-serif; letter-spacing: .005em; transition: background .2s ease, transform .2s ease, border-color .2s ease; cursor: pointer; } .ds-button-outline:hover { border-color: #fff; background: #25262b; transform: translateY(-2px); } .ds-button-outline:focus-visible { outline: 3px solid #ff6b70; outline-offset: 3px; } .ds-button-outline:active { transform: translateY(0); }"
+    },
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "description": "Dark horizontal desktop navigation with an active underline and CTA.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Main navigation\"><a class=\"ds-nav-active\" href=\"#overview\">How It Works</a><a href=\"#features\">Features</a><a class=\"ds-nav-cta\" href=\"#register\">Register Club</a></nav>",
+      "css": ".ds-nav { min-height: 64px; padding: 0 20px; display: flex; align-items: center; gap: 28px; border-bottom: 1px solid #37383d; background: #090a0c; font: 600 12px Inter, Arial, sans-serif; } .ds-nav a { min-height: 44px; display: inline-flex; align-items: center; position: relative; color: #ececef; text-decoration: none; } .ds-nav a:hover { color: #ff6469; } .ds-nav a:focus-visible { outline: 3px solid #ff6b70; outline-offset: 3px; } .ds-nav .ds-nav-active::after { content: ''; position: absolute; right: 0; bottom: 0; left: 0; height: 2px; background: #e10600; } .ds-nav .ds-nav-cta { min-height: 39px; padding: 0 16px; border: 1px solid #ff555a; border-radius: 6px; background: linear-gradient(110deg, #ed171b, #bb080c); color: #fff; font-size: 12px; font-weight: 700; } .ds-nav .ds-nav-cta:hover { background: #ef272b; }"
+    },
+    {
+      "name": "Form Field",
+      "kind": "input",
+      "description": "Dark registration field with a visible label and neutral outline.",
+      "html": "<label class=\"ds-field\"><span>Club name</span><input type=\"text\" placeholder=\"e.g. Kelab Silat ...\" /></label>",
+      "css": ".ds-field { display: grid; gap: 5px; color: #f0f0f1; font: 650 12px Inter, Arial, sans-serif; } .ds-field input { width: 100%; min-height: 45px; padding: 0 12px; border: 1px solid #53545a; border-radius: 5px; background: #0f1012; color: #fff; font: 400 13px Inter, Arial, sans-serif; } .ds-field input::placeholder { color: #92939a; } .ds-field input:focus-visible { outline: 3px solid #ff6b70; outline-offset: 3px; }"
+    },
+    {
+      "name": "Outlined Panel",
+      "kind": "card",
+      "description": "Dark content panel with a restrained neutral outline and crimson detail.",
+      "html": "<article class=\"ds-panel\"><span class=\"ds-panel-kicker\">HOW IT WORKS</span><h3>Plan &amp; Train</h3><p>Use structured programmes and submit training with evidence.</p></article>",
+      "css": ".ds-panel { position: relative; padding: 24px 16px 14px; border: 1px solid #414247; border-radius: 8px 8px 8px 2px; background: linear-gradient(140deg, #202125, #111114); color: #fff; font-family: Inter, Arial, sans-serif; } .ds-panel-kicker { color: #ff343b; font-size: 10px; font-weight: 800; letter-spacing: .13em; } .ds-panel h3 { margin: 8px 0; font-size: 13px; } .ds-panel p { margin: 0; color: #d0d0d3; font-size: 10px; line-height: 1.5; }"
+    },
+    {
+      "name": "Phone Preview",
+      "kind": "custom",
+      "description": "Illustrative athlete screen preview; its demo values must remain clearly identified as illustrative.",
+      "html": "<div class=\"ds-phone-stage\"><span class=\"ds-phone-label\">ILLUSTRATIVE PREVIEW</span><div class=\"ds-phone\"><small>FIGHTER<span>X</span></small><p>Good morning,<br /><b>Athlete</b></p><div class=\"ds-phone-program\">YOUR PROGRAMME<br /><strong>Silat Olahraga · Block 1</strong></div><div class=\"ds-phone-progress\"><i></i></div><small>Weekly progress <b>72%</b></small></div></div>",
+      "css": ".ds-phone-stage { width: 190px; padding-top: 18px; position: relative; } .ds-phone-label { position: absolute; top: 0; right: 0; padding: 3px 6px; border: 1px solid #5a5b60; border-radius: 3px; background: #111216; color: #d3d4d7; font: 700 7px Inter, Arial, sans-serif; letter-spacing: .12em; } .ds-phone { min-height: 230px; padding: 20px 12px; border: 2px solid #85868b; border-radius: 23px; background: linear-gradient(180deg, #17181c, #08090b); color: #d8d8da; box-shadow: 0 0 0 4px #111, 0 13px 32px #000, 0 0 18px #e1060045; font: 400 9px Inter, Arial, sans-serif; } .ds-phone > small:first-child { font: italic 800 11px 'Barlow Condensed', Impact, sans-serif; color: #fff; } .ds-phone > small:first-child span { color: #ff3845; } .ds-phone p { margin: 17px 0 12px; line-height: 1.4; } .ds-phone p b { color: #fff; font-size: 13px; } .ds-phone-program { padding: 7px 5px; border: 1px solid #70282a; border-radius: 5px; background: #2a1517; color: #f08083; font-size: 6px; letter-spacing: .08em; } .ds-phone-program strong { display: block; margin-top: 3px; color: #fff; font-size: 7px; letter-spacing: 0; } .ds-phone-progress { height: 6px; margin: 14px 0 5px; overflow: hidden; border-radius: 5px; background: #35363a; } .ds-phone-progress i { display: block; width: 72%; height: 100%; background: linear-gradient(90deg, #d00, #ff4449); } .ds-phone > small:last-child { display: flex; justify-content: space-between; color: #d8d8da; font-size: 6px; } .ds-phone > small:last-child b { color: #fff; font-size: 9px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Cinematic Silat Performance",
+    "overview": "FighterX follows its approved visual reference: a dark, cinematic sports interface built around real Silat Seni and Silat Olahraga cutouts, crimson light, and clear training information. Barlow Condensed gives display copy its athletic emphasis; Inter keeps navigation, details, and controls readable. Use the supplied visual assets as independent layers, with charcoal panels and restrained outlines to organize the interface.",
+    "keyCharacteristics": [
+      "Near-black and charcoal surfaces with crimson actions and highlights.",
+      "Independent, proportion-preserving Silat imagery.",
+      "Condensed display type paired with compact, readable interface text.",
+      "Mobile layouts retain the same hierarchy and give touch controls room."
+    ],
+    "rules": [
+      {
+        "name": "The Accent Restraint Rule",
+        "body": "Keep crimson on actions, active states, and small visual accents; do not turn every surface into a red glow.",
+        "section": "colors"
+      }
+    ],
+    "dos": [
+      "Do use supplied Silat cutouts independently and preserve their proportions.",
+      "Do keep the Register Club action prominent where the page asks clubs to convert.",
+      "Do retain readable contrast, visible keyboard focus, reduced-motion support, and touch-friendly mobile controls.",
+      "Do label product mockups and preview-only flows honestly."
+    ],
+    "donts": [
+      "Don't use a reference screenshot as a page background.",
+      "Don't invent or redraw the official logo mark.",
+      "Don't describe supplied Malay-inspired textures as historically authentic patterns.",
+      "Don't spread crimson glow across every card or panel.",
+      "Don't rely on color alone to communicate status."
+    ]
+  }
+}
