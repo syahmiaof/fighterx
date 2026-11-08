@@ -89,7 +89,7 @@ export function RoleSelectionCards() {
               <p className="glass-card-tagline">{role.tagline}</p>
 
               {/* Direct Bypass Button to Dashboard */}
-              <div className="glass-card-cta">
+              <div className="glass-card-cta flex flex-col items-center gap-3">
                 <Link
                   href={role.destination}
                   className="glass-card-btn"
@@ -99,6 +99,12 @@ export function RoleSelectionCards() {
                   <Zap size={14} aria-hidden="true" className="bypass-zap-icon" />
                   <span>{role.buttonLabel}</span>
                   <ArrowRight size={14} aria-hidden="true" className="glass-card-arrow" />
+                </Link>
+                <Link
+                  href={role.roleHref}
+                  className="text-xs text-zinc-400 hover:text-white underline"
+                >
+                  Halaman Login Rasmi
                 </Link>
               </div>
             </div>

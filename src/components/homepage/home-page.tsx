@@ -236,6 +236,15 @@ function Hero() {
           </blockquote>
           <span className="hero-quote-rule" aria-hidden="true" />
         </div>
+
+        <div className="hero-actions flex flex-wrap justify-center gap-4 pt-2">
+          <Link href="/register-club" className="button button-primary">
+            Mula Sekarang
+          </Link>
+          <Link href="/disciplines" className="button button-outline">
+            Terokai Disiplin
+          </Link>
+        </div>
       </div>
     </section>
   );
