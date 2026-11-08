@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { SiteHeader } from "@/components/site-header";
-import { LoginExperience } from "@/components/auth/login-experience";
+import { RoleSelectionCards } from "@/components/auth/role-selection-cards";
 
 export const metadata: Metadata = {
-  title: "Sign In · FighterX",
-  description: "Sign in to FighterX with your athlete, coach, or administrator account.",
+  title: "Log Masuk · FighterX",
+  description: "Pilih portal log masuk rasmi FighterX: Atlet, Coach, atau Pentadbir.",
 };
 
 export default function LoginPage() {
@@ -12,7 +12,7 @@ export default function LoginPage() {
     <>
       <SiteHeader currentPage="login" />
       <main className="login-page">
-        <LoginExperience />
+        <RoleSelectionCards />
       </main>
     </>
   );

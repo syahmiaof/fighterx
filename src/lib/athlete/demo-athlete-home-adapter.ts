@@ -126,10 +126,13 @@ function buildDemoHome(now: Date) {
   };
 }
 
+export function getInitialDemoAthleteHome(): AthleteHomeLoadResult {
+  return { status: "demo", data: buildDemoHome(new Date()) };
+}
+
 /** Preview-only adapter. Replace with authenticated, tenant-scoped backend service later. */
 export const demoAthleteHomeAdapter: AthleteHomeService = {
   async loadHome(): Promise<AthleteHomeLoadResult> {
-    await new Promise((resolve) => window.setTimeout(resolve, 220));
     return { status: "demo", data: buildDemoHome(new Date()) };
   },
 };

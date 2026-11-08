@@ -2,13 +2,13 @@
 
 import { useEffect, useState } from "react";
 import type { AthleteHomeLoadResult } from "@/lib/athlete/athlete-home-contract";
-import { demoAthleteHomeAdapter } from "@/lib/athlete/demo-athlete-home-adapter";
+import { demoAthleteHomeAdapter, getInitialDemoAthleteHome } from "@/lib/athlete/demo-athlete-home-adapter";
 import { AthleteHomeDashboard } from "@/components/athlete/athlete-home-dashboard";
 
 type AthleteHomeUiState = { status: "loading" } | AthleteHomeLoadResult;
 
 export function AthleteHomeExperience() {
-  const [state, setState] = useState<AthleteHomeUiState>({ status: "loading" });
+  const [state, setState] = useState<AthleteHomeUiState>(() => getInitialDemoAthleteHome());
 
   useEffect(() => {
     let active = true;

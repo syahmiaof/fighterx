@@ -3,6 +3,7 @@ import type { AppRole } from "@/types/platform";
 export type SignInCredentials = {
   email: string;
   password: string;
+  role?: AppRole;
 };
 
 /**

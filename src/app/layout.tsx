@@ -10,6 +10,20 @@ export const metadata: Metadata = {
   title: "FighterX — Train Smarter. Fight Stronger.",
   description: "A training and performance platform for Silat Seni and Silat Olahraga.",
   applicationName: "FighterX",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.png", type: "image/png", sizes: "32x32" },
+      { url: "/favicon-32x32.png", type: "image/png", sizes: "32x32" },
+      { url: "/icon-192.png", type: "image/png", sizes: "192x192" },
+      { url: "/icon-512.png", type: "image/png", sizes: "512x512" },
+    ],
+    apple: [
+      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+    shortcut: "/favicon.ico",
+  },
+  manifest: "/site.webmanifest",
 };
 
 export const viewport: Viewport = { themeColor: "#08090B" };

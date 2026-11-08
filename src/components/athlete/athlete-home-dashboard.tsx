@@ -7,6 +7,7 @@ import {
   BarChart3,
   BookOpen,
   CalendarDays,
+  Camera,
   CheckCircle2,
   Clock3,
   Dumbbell,
@@ -243,7 +244,19 @@ function DemoDashboard({ data }: { data: AthleteHomeDashboardData }) {
           </div>
 
           <section className="athlete-quick-actions" aria-label="Rujukan dan halaman akan datang">
-            <div className="athlete-quick-action-intro"><h2>Rujukan</h2><p>Peraturan pertandingan yang berguna untuk persediaan.</p></div>
+            <div className="athlete-quick-action-intro"><h2>Rujukan &amp; Komuniti</h2><p>Aktiviti gelanggang dan peraturan pertandingan.</p></div>
+            <Link
+              href="/moments?upload=true"
+              className="athlete-quick-action is-available"
+              style={{ borderColor: "rgba(225, 6, 0, 0.4)" }}
+            >
+              <Camera size={17} aria-hidden="true" className="text-[#FF3845]" />
+              <span>
+                <strong>Kongsi Moment Latihan</strong>
+                <small>Muat naik foto gelanggang ke galeri atlet</small>
+              </span>
+              <ArrowRight size={15} aria-hidden="true" />
+            </Link>
             <Link href="/guidelines" className="athlete-quick-action is-available"><BookOpen size={17} aria-hidden="true" /><span><strong>Competition Guidelines</strong><small>Semak panduan pertandingan</small></span><ArrowRight size={15} aria-hidden="true" /></Link>
             <button className="athlete-quick-action is-unavailable" type="button" disabled title="Halaman ini belum dibina"><Dumbbell size={17} aria-hidden="true" /><span><strong>Training</strong><small>Gate seterusnya</small></span><Clock3 size={14} aria-hidden="true" /></button>
             <button className="athlete-quick-action is-unavailable" type="button" disabled title="Halaman ini belum dibina"><BarChart3 size={17} aria-hidden="true" /><span><strong>Progress</strong><small>Gate seterusnya</small></span><Clock3 size={14} aria-hidden="true" /></button>

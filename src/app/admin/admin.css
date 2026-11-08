@@ -1,0 +1,174 @@
+/* ==========================================================================
+   FighterX Admin Portal Scoped Stylesheet
+   Adheres to FighterX visual identity:
+   - Charcoal / Near-Black surfaces (#08090B, #17191E, #202126)
+   - Crimson red accents (#E10600, #FF3845)
+   - Metallic silver / White typography (#FFFFFF, #E5E5E7, #C5C6CA)
+   - Atmospheric background with red smoke overlay
+   - Restrained motion & prefers-reduced-motion compliance
+   ========================================================================== */
+
+/* Scoped root variables for admin portal */
+:root {
+  --admin-bg: #08090B;
+  --admin-surface: #17191E;
+  --admin-surface-2: #202126;
+  --admin-surface-elevated: #282A32;
+  --admin-line: #45464B;
+  --admin-border-subtle: #27272A;
+  --admin-red: #E10600;
+  --admin-hot: #FF3845;
+  --admin-crimson-glow: rgba(225, 6, 0, 0.35);
+  --admin-white: #FFFFFF;
+  --admin-silver: #E5E5E7;
+  --admin-muted: #C5C6CA;
+  --admin-subtle: #96989F;
+}
+
+/* Atmospheric wallpaper backdrop */
+.admin-wallpaper {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-color: #08090B;
+  background-image: url('/assets/fighterx/homepage-bg-desktop.webp');
+  background-position: center top;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+@media (max-width: 768px) {
+  .admin-wallpaper {
+    background-image: url('/assets/fighterx/homepage-bg-mobile.webp');
+  }
+}
+
+/* 90% dark overlay for high contrast readability */
+.admin-wallpaper-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(8, 9, 11, 0.92) 0%,
+    rgba(12, 13, 17, 0.90) 50%,
+    rgba(8, 9, 11, 0.95) 100%
+  );
+}
+
+/* Screen-blended red smoke overlay (12% opacity) */
+.admin-smoke-overlay {
+  position: absolute;
+  inset: 0;
+  background-image: url('/assets/fighterx/overlay-red-smoke-transparent.png');
+  background-position: center top;
+  background-size: cover;
+  background-repeat: no-repeat;
+  mix-blend-mode: screen;
+  opacity: 0.12;
+  pointer-events: none;
+}
+
+/* Custom Admin Scrollbar */
+.admin-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #37383D transparent;
+}
+
+.admin-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.admin-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.admin-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #37383D;
+  border-radius: 9999px;
+}
+
+.admin-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #55575E;
+}
+
+/* Restrained motion keyframes */
+@keyframes admin-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes admin-pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(225, 6, 0, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 56, 69, 0.7);
+  }
+}
+
+@keyframes admin-subtle-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.admin-panel-enter {
+  animation: admin-fade-in 0.22s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Red glow utilities */
+.admin-glow-red {
+  box-shadow: 0 0 16px rgba(225, 6, 0, 0.3);
+}
+
+.admin-glow-red-lg {
+  box-shadow: 0 0 24px rgba(225, 6, 0, 0.45);
+}
+
+.admin-active-indicator {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: #E10600;
+  box-shadow: 0 0 8px rgba(225, 6, 0, 0.75);
+}
+
+/* Focus styles for keyboard accessibility */
+.admin-focus-ring:focus-visible {
+  outline: 2px solid #FF3845;
+  outline-offset: 2px;
+}
+
+/* High-contrast table row transitions */
+.admin-table-row {
+  transition: background-color 0.15s ease;
+}
+
+.admin-table-row:hover {
+  background-color: rgba(32, 33, 38, 0.75);
+}
+
+/* Motion reduction compliance */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

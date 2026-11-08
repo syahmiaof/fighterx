@@ -1,14 +1,20 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { Suspense, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { ArrowRight, Building2, ChevronRight, ShieldCheck } from "lucide-react";
 import { uiOnlyAuthGateway } from "@/lib/auth/ui-only-auth";
 
-export function ClubAccessGateway() {
+function ClubAccessGatewayContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [checkingSession, setCheckingSession] = useState(false);
+
+  const associationParam = searchParams.get("association");
+  const registerHref = associationParam
+    ? `/register-club/new?association=${encodeURIComponent(associationParam)}`
+    : "/register-club/new";
 
   async function openClubAccess() {
     if (checkingSession) return;
@@ -43,7 +49,7 @@ export function ClubAccessGateway() {
             </div>
             <h2>Register New Club</h2>
             <p>Daftarkan kelab atau akademi silat anda dan mulakan perjalanan bersama FighterX.</p>
-            <Link className="club-gateway-action club-gateway-action-primary" href="/register-club/new">
+            <Link className="club-gateway-action club-gateway-action-primary" href={registerHref}>
               Register Club <ArrowRight size={17} aria-hidden="true" />
             </Link>
           </article>
@@ -63,5 +69,19 @@ export function ClubAccessGateway() {
         <p className="club-gateway-boundary">Authentication, membership and management permissions are not connected in this preview. No club data is loaded.</p>
       </div>
     </main>
+  );
+}
+
+export function ClubAccessGateway() {
+  return (
+    <Suspense
+      fallback={
+        <main className="club-gateway-page min-h-[50vh] flex items-center justify-center text-white">
+          <p>Memuatkan FighterX Club Access...</p>
+        </main>
+      }
+    >
+      <ClubAccessGatewayContent />
+    </Suspense>
   );
 }
