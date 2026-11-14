@@ -1,17 +1,228 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef } from "react";
 import Image from "next/image";
 import { Search, ChevronRight, AlertCircle } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+import { useCollectionMotion } from "@/hooks/useCollectionMotion";
 import { ALL_REGISTERED_ATHLETES } from "./data";
 import type { Athlete, DisciplineType } from "./types";
 import { AthleteDetailModal } from "./athlete-detail-modal";
+import { useLanguage } from "@/lib/i18n";
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 export function LeaderboardClient() {
+  const { dict, locale } = useLanguage();
+  const ld = dict.leaderboard;
   const [athleteSearch, setAthleteSearch] = useState("");
   const [disciplineFilter, setDisciplineFilter] = useState<DisciplineType>("ALL");
   const [visibleCount, setVisibleCount] = useState(25);
   const [selectedAthlete, setSelectedAthlete] = useState<Athlete | null>(null);
+
+  const mainContainerRef = useRef<HTMLDivElement>(null);
+  const listSectionRef = useRef<HTMLElement>(null);
+  const heroSectionRef = useRef<HTMLElement>(null);
+  const athleteFilterKey = `${disciplineFilter}|${athleteSearch}`;
+  const athleteListMotionRef = useCollectionMotion<HTMLDivElement>(athleteFilterKey);
+  const triggerRef = useRef<HTMLElement | null>(null);
+
+  // Helper to remove all temporary animation inline properties so hover micro-interactions work cleanly
+  const cleanInline = (el: HTMLElement) => {
+    el.style.removeProperty("clip-path");
+    el.style.removeProperty("-webkit-clip-path");
+    el.style.removeProperty("transform");
+    el.style.removeProperty("scale");
+    el.style.removeProperty("opacity");
+    el.style.removeProperty("will-change");
+  };
+
+  useGSAP(
+    () => {
+      const media = gsap.matchMedia();
+      media.add("(prefers-reduced-motion: no-preference)", () => {
+        // 1. Hero text cinematic sweep
+        const hero = heroSectionRef.current;
+        if (hero) {
+          gsap.fromTo(
+            hero.querySelector(".hero-overline"),
+            { y: -14, autoAlpha: 0 },
+            { y: 0, autoAlpha: 1, duration: 0.65, ease: "power2.out" }
+          );
+          gsap.fromTo(
+            hero.querySelector("h1"),
+            { yPercent: 45, autoAlpha: 0, filter: "blur(8px)" },
+            { yPercent: 0, autoAlpha: 1, filter: "blur(0px)", duration: 1.0, ease: "power4.out", clearProps: "filter,transform", delay: 0.05 }
+          );
+          gsap.fromTo(
+            hero.querySelector("p"),
+            { y: 16, autoAlpha: 0 },
+            { y: 0, autoAlpha: 1, duration: 0.7, ease: "power2.out", delay: 0.2 }
+          );
+        }
+
+        // 2. Search & Filter Strip Card - Nemo Iris Reveal
+        const filterCard = document.querySelector<HTMLElement>(".leaderboard-filter-card");
+        if (filterCard) {
+          gsap.fromTo(
+            filterCard,
+            {
+              opacity: 0,
+              y: 18,
+              scale: 0.98,
+              clipPath: "inset(0 50% 0 50% round 16px)",
+              willChange: "transform, opacity, clip-path",
+            },
+            {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              clipPath: "inset(0 0% 0 0% round 16px)",
+              duration: 0.85,
+              ease: "expo.out",
+              delay: 0.25,
+              clearProps: "transform,scale,opacity,clipPath,clip-path,willChange",
+              onComplete: () => {
+                cleanInline(filterCard);
+              },
+            }
+          );
+        }
+
+        // 3. Athlete Ranking Cards - Nemo Iris Reveal Physics
+        const athleteCards = Array.from(
+          document.querySelectorAll<HTMLElement>(".leaderboard-athlete-card")
+        ).slice(0, 25);
+
+        if (athleteCards.length > 0) {
+          gsap.fromTo(
+            athleteCards,
+            {
+              opacity: 0,
+              y: 20,
+              scale: 0.96,
+              clipPath: "inset(0 50% 0 50% round 14px)",
+              willChange: "transform, opacity, clip-path",
+            },
+            {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              clipPath: "inset(0 0% 0 0% round 14px)",
+              duration: 0.95,
+              stagger: 0.075,
+              ease: "expo.out",
+              clearProps: "transform,scale,opacity,clipPath,clip-path,willChange",
+              scrollTrigger: {
+                trigger: listSectionRef.current || ".leaderboard-athlete-card",
+                start: "top 78%",
+                once: true,
+              },
+              onComplete: () => {
+                athleteCards.forEach(cleanInline);
+              },
+            }
+          );
+
+          // Top 3 Podium Ranks Badges subtle athletic spring pop
+          const topBadges = Array.from(document.querySelectorAll<HTMLElement>(".leaderboard-rank-top"));
+          if (topBadges.length > 0) {
+            gsap.fromTo(
+              topBadges,
+              { scale: 0.82, opacity: 0.7 },
+              {
+                scale: 1,
+                opacity: 1,
+                duration: 0.55,
+                ease: "back.out(1.8)",
+                stagger: 0.08,
+                delay: 0.25,
+                clearProps: "transform,scale,opacity",
+                scrollTrigger: {
+                  trigger: listSectionRef.current || ".leaderboard-athlete-card",
+                  start: "top 78%",
+                  once: true,
+                },
+              }
+            );
+          }
+
+          // Points counter/value slide in
+          const pointVals = Array.from(document.querySelectorAll<HTMLElement>(".leaderboard-points-val")).slice(0, 25);
+          if (pointVals.length > 0) {
+            gsap.fromTo(
+              pointVals,
+              { opacity: 0.65, x: 6 },
+              {
+                opacity: 1,
+                x: 0,
+                duration: 0.45,
+                ease: "power2.out",
+                stagger: 0.04,
+                delay: 0.2,
+                clearProps: "transform,opacity",
+                scrollTrigger: {
+                  trigger: listSectionRef.current || ".leaderboard-athlete-card",
+                  start: "top 78%",
+                  once: true,
+                },
+              }
+            );
+          }
+        }
+
+        // 4. Tactile 3D Button & Card Micro-Interactions
+        const interactiveElements = Array.from(
+          document.querySelectorAll<HTMLElement>(
+            ".leaderboard-discipline-btn, .leaderboard-load-more-btn, .leaderboard-athlete-card"
+          )
+        );
+
+        const handleDown = (e: Event) => {
+          const target = e.currentTarget as HTMLElement;
+          const isCard = target.classList.contains("leaderboard-athlete-card");
+          gsap.to(target, { scale: isCard ? 0.99 : 0.96, duration: 0.08, ease: "power2.out" });
+        };
+
+        const handleUp = (e: Event) => {
+          const target = e.currentTarget as HTMLElement;
+          gsap.to(target, {
+            scale: 1,
+            duration: 0.34,
+            ease: "back.out(2)",
+            clearProps: "transform,scale",
+            onComplete: () => {
+              target.style.removeProperty("transform");
+              target.style.removeProperty("scale");
+            },
+          });
+        };
+
+        interactiveElements.forEach((el) => {
+          el.addEventListener("pointerdown", handleDown);
+          el.addEventListener("pointerup", handleUp);
+          el.addEventListener("pointercancel", handleUp);
+          el.addEventListener("pointerleave", handleUp);
+        });
+      });
+
+      media.add("(prefers-reduced-motion: reduce)", () => {
+        gsap.set(
+          ".hero-overline, h1, p, .leaderboard-filter-card, .leaderboard-athlete-card, .leaderboard-rank-top, .leaderboard-points-val",
+          { autoAlpha: 1, opacity: 1, scale: 1, y: 0, clearProps: "all" }
+        );
+      });
+
+      return () => media.revert();
+    },
+    { scope: mainContainerRef }
+  );
+
+  const handleSelectAthlete = (ath: Athlete) => {
+    triggerRef.current = (document.activeElement as HTMLElement) || null;
+    setSelectedAthlete(ath);
+  };
 
   // Filtered Athletes
   const filteredAthletes = useMemo(() => {
@@ -37,15 +248,15 @@ export function LeaderboardClient() {
   }, [filteredAthletes, visibleCount]);
 
   return (
-    <div className="relative min-h-screen text-white pb-24 overflow-hidden">
+    <div ref={mainContainerRef} className="relative min-h-screen text-white pb-24 overflow-hidden">
       <div className="relative z-10">
         {/* Header Hero Banner (Homepage Typography) */}
-        <section className="pt-10 pb-8 sm:pt-14 sm:pb-10">
+        <section ref={heroSectionRef} className="pt-10 pb-8 sm:pt-14 sm:pb-10">
           <div className="max-w-[1100px] mx-auto px-4 sm:px-6 text-center">
             {/* Sub-tajuk kecil atas (Tiru .hero-overline homepage) */}
             <div className="hero-overline mb-3">
               <span />
-              — CARTA KEDUDUKAN KEBANGSAAN —
+              — {ld.overline} —
               <span />
             </div>
 
@@ -82,14 +293,14 @@ export function LeaderboardClient() {
 
             {/* Sub-penerangan minimalis */}
             <p className="text-xs sm:text-sm text-[#A8ABB5] max-w-md mx-auto mt-3">
-              Kedudukan rasmi atlet silat berdaftar seluruh Malaysia berpandukan mata latihan terverifikasi.
+              {ld.subtitle}
             </p>
           </div>
         </section>
 
         {/* Minimalist Search & Filter Strip */}
         <section className="max-w-[1100px] mx-auto px-4 sm:px-6 mb-6">
-          <div className="p-2 sm:p-2.5 rounded-2xl border border-white/[0.08] bg-white/[0.025] backdrop-blur-[16px] shadow-[0_8px_32px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.06)] flex flex-col sm:flex-row items-center justify-between gap-2.5">
+          <div className="leaderboard-filter-card p-2 sm:p-2.5 rounded-2xl border border-white/[0.08] bg-white/[0.025] backdrop-blur-[16px] shadow-[0_8px_32px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.06)] flex flex-col sm:flex-row items-center justify-between gap-2.5">
             {/* Search Input */}
             <div className="relative w-full sm:max-w-md">
               <Search
@@ -103,7 +314,7 @@ export function LeaderboardClient() {
                   setAthleteSearch(e.target.value);
                   setVisibleCount(25);
                 }}
-                placeholder="Cari nama, kelab, atau gelaran..."
+                placeholder={ld.searchPlaceholder}
                 className="w-full pl-10 pr-8 py-2 rounded-xl bg-white/[0.03] backdrop-blur-[12px] border border-white/[0.1] text-xs sm:text-sm text-white placeholder-[#71737E] focus:outline-none focus:border-[#FF3845] focus:bg-white/[0.05] focus:shadow-[0_0_16px_rgba(225,6,0,0.2)] transition-all"
               />
               {athleteSearch && (
@@ -127,13 +338,13 @@ export function LeaderboardClient() {
                     setDisciplineFilter(disp);
                     setVisibleCount(25);
                   }}
-                  className={`flex-1 sm:flex-none px-3.5 py-1.5 rounded-lg font-bold text-xs transition-all ${
+                  className={`leaderboard-discipline-btn flex-1 sm:flex-none px-3.5 py-1.5 rounded-lg font-bold text-xs transition-all ${
                     disciplineFilter === disp
                       ? "bg-[#e10600] border border-[#ff3845] text-white shadow-[0_0_14px_rgba(225,6,0,0.4)]"
                       : "border border-transparent text-[#8C8E97] hover:text-white hover:bg-white/[0.04]"
                   }`}
                 >
-                  {disp === "ALL" ? "Semua" : disp === "TANDING" ? "Silat Olahraga" : "Silat Seni"}
+                  {disp === "ALL" ? ld.filterAll : disp === "TANDING" ? ld.filterOlahraga : ld.filterSeni}
                 </button>
               ))}
             </div>
@@ -141,20 +352,20 @@ export function LeaderboardClient() {
         </section>
 
         {/* Minimalist Ranking List */}
-        <section className="max-w-[1100px] mx-auto px-4 sm:px-6">
+        <section id="leaderboard-list-section" ref={listSectionRef} className="max-w-[1100px] mx-auto px-4 sm:px-6">
           {paginatedAthletes.length > 0 ? (
-            <div className="space-y-2">
+            <div ref={athleteListMotionRef} className="space-y-2">
               {paginatedAthletes.map((ath) => (
                 <div
                   key={ath.id}
-                  onClick={() => setSelectedAthlete(ath)}
-                  className="group p-3 sm:p-4 rounded-[14px] border border-white/[0.08] bg-white/[0.025] backdrop-blur-[16px] shadow-[0_8px_32px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.06)] hover:border-[#ff3845]/45 hover:bg-white/[0.045] hover:-translate-y-0.5 hover:shadow-[0_14px_32px_rgba(0,0,0,0.5),0_0_20px_rgba(225,6,0,0.15),inset_0_1px_0_rgba(255,255,255,0.12)] flex items-center justify-between gap-3 sm:gap-4 transition-all cursor-pointer"
+                  onClick={() => handleSelectAthlete(ath)}
+                  className="leaderboard-athlete-card group p-3 sm:p-4 rounded-[14px] border border-white/[0.08] bg-white/[0.025] backdrop-blur-[16px] shadow-[0_8px_32px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.06)] hover:border-[#ff3845]/45 hover:bg-white/[0.045] hover:-translate-y-0.5 hover:shadow-[0_14px_32px_rgba(0,0,0,0.5),0_0_20px_rgba(225,6,0,0.15),inset_0_1px_0_rgba(255,255,255,0.12)] flex items-center justify-between gap-3 sm:gap-4 transition-all cursor-pointer"
                 >
                   {/* Left: Rank, Avatar, Nama, Kelab, Jenis Kategori, Gelaran */}
                   <div className="flex items-center gap-3 sm:gap-4 min-w-0">
                     {/* Rank */}
                     <div
-                      className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center font-athletic font-bold text-sm sm:text-base shrink-0 transition-all ${
+                      className={`leaderboard-rank-marker ${ath.rank <= 3 ? "leaderboard-rank-top" : ""} w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center font-athletic font-bold text-sm sm:text-base shrink-0 transition-all ${
                         ath.rank === 1
                           ? "bg-[rgba(240,180,40,0.14)] border border-[rgba(240,180,40,0.45)] text-[#ffd24c] shadow-[0_0_12px_rgba(240,180,40,0.25)]"
                           : ath.rank === 2
@@ -193,7 +404,7 @@ export function LeaderboardClient() {
                         <span className="text-white font-medium truncate">{ath.clubName}</span>
                         <span>·</span>
                         <span className="text-[#C5C6CA]">
-                          {ath.discipline === "TANDING" ? "Silat Olahraga" : "Silat Seni"} ({ath.weightClassOrCategory})
+                          {ath.discipline === "TANDING" ? ld.filterOlahraga : ld.filterSeni} ({ath.weightClassOrCategory})
                         </span>
                       </div>
                     </div>
@@ -201,11 +412,11 @@ export function LeaderboardClient() {
 
                   {/* Right: Point */}
                   <div className="text-right shrink-0">
-                    <span className="text-xl sm:text-2xl font-bold font-athletic text-[#FF3845] group-hover:text-[#ff4d5a] block leading-none transition-colors">
+                    <span className="leaderboard-points-val text-xl sm:text-2xl font-bold font-athletic text-[#FF3845] group-hover:text-[#ff4d5a] block leading-none transition-colors">
                       {ath.points.totalVerifiedPoints.toLocaleString()}
                     </span>
                     <span className="text-[10px] text-[#8C8E97] font-semibold uppercase tracking-wider">
-                      PTS
+                      {ld.pointsLabel}
                     </span>
                   </div>
                 </div>
@@ -214,7 +425,7 @@ export function LeaderboardClient() {
           ) : (
             <div className="p-10 rounded-2xl border border-dashed border-white/[0.08] bg-white/[0.025] backdrop-blur-[16px] text-center shadow-[0_8px_32px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.06)]">
               <AlertCircle size={28} className="text-[#8C8E97] mx-auto mb-2" />
-              <p className="text-sm font-semibold text-white">Tiada pesilat dijumpai.</p>
+              <p className="text-sm font-semibold text-white">{ld.emptyTitle}</p>
               <button
                 type="button"
                 onClick={() => {
@@ -223,7 +434,7 @@ export function LeaderboardClient() {
                 }}
                 className="mt-3 px-3.5 py-1.5 rounded-xl bg-white/[0.06] border border-white/[0.1] text-xs font-bold text-white hover:bg-[#FF3845] hover:border-[#FF3845] transition-all"
               >
-                Set Semula
+                {ld.emptyReset}
               </button>
             </div>
           )}
@@ -234,9 +445,9 @@ export function LeaderboardClient() {
               <button
                 type="button"
                 onClick={() => setVisibleCount((prev) => prev + 25)}
-                className="px-6 py-2.5 rounded-xl border border-white/[0.1] bg-white/[0.035] backdrop-blur-md hover:border-[#FF3845]/50 hover:bg-[#FF3845]/15 text-xs font-bold text-white transition-all shadow-[0_4px_16px_rgba(0,0,0,0.25)] inline-flex items-center gap-2"
+                className="leaderboard-load-more-btn px-6 py-2.5 rounded-xl border border-white/[0.1] bg-white/[0.035] backdrop-blur-md hover:border-[#FF3845]/50 hover:bg-[#FF3845]/15 text-xs font-bold text-white transition-all shadow-[0_4px_16px_rgba(0,0,0,0.25)] inline-flex items-center gap-2"
               >
-                <span>Papar 25 Lagi (Baki {filteredAthletes.length - visibleCount})</span>
+                <span>{ld.loadMore} ({locale === "en" ? "Remaining" : "Baki"} {filteredAthletes.length - visibleCount})</span>
                 <ChevronRight size={14} className="text-[#FF3845]" />
               </button>
             </div>
@@ -247,7 +458,10 @@ export function LeaderboardClient() {
       {/* Athlete Detail Modal */}
       <AthleteDetailModal
         athlete={selectedAthlete}
-        onClose={() => setSelectedAthlete(null)}
+        onClose={() => {
+          setSelectedAthlete(null);
+          triggerRef.current?.focus();
+        }}
       />
     </div>
   );

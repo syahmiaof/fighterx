@@ -1,6 +1,9 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 import {
   CalendarDays,
   Search,
@@ -43,8 +46,15 @@ import {
   getPosterOrBulletin,
 } from "./competitions-data";
 import "./competitions.css";
+import { useCollectionMotion } from "@/hooks/useCollectionMotion";
+import { useLanguage } from "@/lib/i18n";
+
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 export function CompetitionsClient() {
+  const { dict, locale } = useLanguage();
+  const cd = dict.competitions;
+
   // Main Data State
   const [competitions, setCompetitions] = useState<CompetitionItem[]>(INITIAL_COMPETITIONS);
 
@@ -109,18 +119,385 @@ export function CompetitionsClient() {
     athleteCount: number;
   } | null>(null);
 
-  // Close modals on Escape key
+  // Hero animation ref
+  const heroRef = useRef<HTMLElement>(null);
+
+  // Helper to remove all temporary animation inline properties so hover micro-interactions work cleanly
+  const cleanInline = (el: HTMLElement) => {
+    el.style.removeProperty("clip-path");
+    el.style.removeProperty("-webkit-clip-path");
+    el.style.removeProperty("transform");
+    el.style.removeProperty("scale");
+    el.style.removeProperty("opacity");
+    el.style.removeProperty("will-change");
+  };
+
+  useGSAP(
+    () => {
+      const media = gsap.matchMedia();
+      media.add("(prefers-reduced-motion: no-preference)", () => {
+        // 1. Hero text cinematic sweep
+        const el = heroRef.current;
+        if (el) {
+          gsap.fromTo(
+            el.querySelector(".competitions-overline"),
+            { y: -10, autoAlpha: 0 },
+            { y: 0, autoAlpha: 1, duration: 0.55, ease: "power2.out" }
+          );
+          gsap.fromTo(
+            el.querySelector(".competitions-title"),
+            {
+              yPercent: 60,
+              autoAlpha: 0,
+              filter: "blur(10px)",
+              rotateX: -20,
+            },
+            {
+              yPercent: 0,
+              autoAlpha: 1,
+              filter: "blur(0px)",
+              rotateX: 0,
+              duration: 1.0,
+              ease: "power4.out",
+              clearProps: "filter,transform",
+              delay: 0.05,
+            }
+          );
+          gsap.fromTo(
+            el.querySelector(".competitions-narrative"),
+            { y: 16, autoAlpha: 0 },
+            { y: 0, autoAlpha: 1, duration: 0.65, ease: "power2.out", delay: 0.15 }
+          );
+          gsap.fromTo(
+            el.querySelector(".competitions-quote"),
+            { y: 10, autoAlpha: 0 },
+            { y: 0, autoAlpha: 1, duration: 0.5, ease: "power2.out", delay: 0.25 }
+          );
+        }
+
+        // 2. Pro Command & Filter Bar - Nemo Iris Reveal
+        const commandBar = document.querySelector<HTMLElement>(".pro-command-bar");
+        if (commandBar) {
+          gsap.fromTo(
+            commandBar,
+            {
+              opacity: 0,
+              y: 18,
+              scale: 0.98,
+              clipPath: "inset(0 50% 0 50% round 16px)",
+              willChange: "transform, opacity, clip-path",
+            },
+            {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              clipPath: "inset(0 0% 0 0% round 16px)",
+              duration: 0.85,
+              ease: "expo.out",
+              delay: 0.2,
+              clearProps: "transform,scale,opacity,clipPath,clip-path,willChange",
+              onComplete: () => cleanInline(commandBar),
+            }
+          );
+        }
+
+        // 3. Tournament Cards - Nemo Iris Reveal Physics
+        const cards = Array.from(
+          document.querySelectorAll<HTMLElement>(".comp-glass-card")
+        ).slice(0, 24);
+
+        if (cards.length > 0) {
+          gsap.fromTo(
+            cards,
+            {
+              opacity: 0,
+              y: 20,
+              scale: 0.96,
+              clipPath: "inset(0 50% 0 50% round 14px)",
+              willChange: "transform, opacity, clip-path",
+            },
+            {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              clipPath: "inset(0 0% 0 0% round 14px)",
+              duration: 0.95,
+              stagger: 0.075,
+              ease: "expo.out",
+              clearProps: "transform,scale,opacity,clipPath,clip-path,willChange",
+              scrollTrigger: {
+                trigger: feedMotionRef.current || ".comp-glass-card",
+                start: "top 78%",
+                once: true,
+              },
+              onComplete: () => {
+                cards.forEach(cleanInline);
+              },
+            }
+          );
+
+          // Tier & Status badges subtle athletic spring pop
+          const badges = Array.from(
+            document.querySelectorAll<HTMLElement>(".comp-tier-badge, .comp-status-badge")
+          ).slice(0, 30);
+
+          if (badges.length > 0) {
+            gsap.fromTo(
+              badges,
+              { scale: 0.86, opacity: 0.7 },
+              {
+                scale: 1,
+                opacity: 1,
+                duration: 0.5,
+                ease: "back.out(1.8)",
+                stagger: 0.04,
+                delay: 0.2,
+                clearProps: "transform,scale,opacity",
+                scrollTrigger: {
+                  trigger: feedMotionRef.current || ".comp-glass-card",
+                  start: "top 78%",
+                  once: true,
+                },
+              }
+            );
+          }
+        }
+
+        // 4. Tactile 3D Micro-Interactions for Buttons & Cards
+        const interactiveElements = Array.from(
+          document.querySelectorAll<HTMLElement>(
+            ".cat-tab, .mode-btn, .btn-submit-event-pill, .comp-card-details-btn, .comp-card-poster-btn, .btn-reset-filters, .comp-glass-card, .timeline-event-row"
+          )
+        );
+
+        const handleDown = (e: Event) => {
+          const target = e.currentTarget as HTMLElement;
+          gsap.to(target, {
+            scale: 0.97,
+            duration: 0.12,
+            ease: "power2.out",
+            overwrite: "auto",
+          });
+        };
+
+        const handleUp = (e: Event) => {
+          const target = e.currentTarget as HTMLElement;
+          gsap.to(target, {
+            scale: 1,
+            duration: 0.35,
+            ease: "back.out(2)",
+            overwrite: "auto",
+            onComplete: () => {
+              target.style.removeProperty("transform");
+              target.style.removeProperty("scale");
+            },
+          });
+        };
+
+        interactiveElements.forEach((el) => {
+          el.addEventListener("pointerdown", handleDown);
+          el.addEventListener("pointerup", handleUp);
+          el.addEventListener("pointerleave", handleUp);
+        });
+
+        return () => {
+          interactiveElements.forEach((el) => {
+            el.removeEventListener("pointerdown", handleDown);
+            el.removeEventListener("pointerup", handleUp);
+            el.removeEventListener("pointerleave", handleUp);
+          });
+        };
+      });
+    },
+    { dependencies: [] }
+  );
+
+  // DOM Refs for Container Transitions & Modal Focus Trapping
+  const timelineContainerRef = useRef<HTMLDivElement>(null);
+
+  const detailModalRef = useRef<HTMLDivElement>(null);
+  const submitModalRef = useRef<HTMLDivElement>(null);
+  const registerModalRef = useRef<HTMLDivElement>(null);
+  const triggerElementRef = useRef<HTMLElement | null>(null);
+
+  // useCollectionMotion for filter changes — Nemo-style visible-items animation
+  const filterKey = `${selectedCategoryTab}|${selectedState}|${selectedStatus}|${searchQuery}|${viewMode}`;
+  const feedMotionRef = useCollectionMotion<HTMLDivElement>(filterKey);
+
+  // Refresh ScrollTrigger and animate timeline view blocks on viewMode change
   useEffect(() => {
+    if (viewMode === "timeline") {
+      const monthBlocks = Array.from(
+        document.querySelectorAll<HTMLElement>(".timeline-month-block")
+      );
+      if (monthBlocks.length > 0) {
+        gsap.fromTo(
+          monthBlocks,
+          {
+            opacity: 0,
+            y: 18,
+            scale: 0.98,
+            clipPath: "inset(0 40% 0 40% round 16px)",
+          },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            clipPath: "inset(0 0% 0 0% round 16px)",
+            duration: 0.75,
+            stagger: 0.08,
+            ease: "expo.out",
+            clearProps: "transform,opacity,clipPath,scale",
+            onComplete: () => monthBlocks.forEach(cleanInline),
+          }
+        );
+      }
+    }
+    ScrollTrigger.refresh();
+  }, [viewMode]);
+
+  // Modal focus trap & trigger restoration management
+  const isAnyModalOpen = Boolean(selectedComp || showSubmitModal || registeringComp);
+  const prevModalOpen = useRef(false);
+
+  useEffect(() => {
+    if (!isAnyModalOpen) {
+      if (prevModalOpen.current) {
+        triggerElementRef.current?.focus();
+      }
+      prevModalOpen.current = false;
+      return;
+    }
+
+    prevModalOpen.current = true;
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    // Auto-focus first focusable element inside the active modal
+    const timer = setTimeout(() => {
+      const activeModal = detailModalRef.current || submitModalRef.current || registerModalRef.current;
+      if (activeModal) {
+        const focusables = activeModal.querySelectorAll<HTMLElement>(
+          'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        );
+        if (focusables.length > 0) {
+          focusables[0].focus();
+        }
+      }
+    }, 50);
+
+    // GSAP Nemo Iris Entrance for active modal
+    const activeModal = detailModalRef.current || submitModalRef.current || registerModalRef.current;
+    if (activeModal) {
+      gsap.fromTo(
+        activeModal,
+        {
+          opacity: 0,
+          scale: 0.96,
+          y: 16,
+          clipPath: "inset(0 45% 0 45% round 20px)",
+          willChange: "transform, opacity, clip-path",
+        },
+        {
+          opacity: 1,
+          scale: 1,
+          y: 0,
+          clipPath: "inset(0 0% 0 0% round 20px)",
+          duration: 0.55,
+          ease: "expo.out",
+          clearProps: "transform,scale,opacity,clipPath,clip-path,willChange",
+        }
+      );
+
+      const quickMetas = activeModal.querySelectorAll<HTMLElement>(".quick-meta-item");
+      if (quickMetas.length > 0) {
+        gsap.fromTo(
+          quickMetas,
+          { scale: 0.92, y: 10, opacity: 0 },
+          {
+            scale: 1,
+            y: 0,
+            opacity: 1,
+            duration: 0.45,
+            stagger: 0.05,
+            ease: "back.out(1.5)",
+            delay: 0.15,
+            clearProps: "transform,scale,opacity",
+          }
+        );
+      }
+    }
+
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
+        e.preventDefault();
         setSelectedComp(null);
         setRegisteringComp(null);
         setShowSubmitModal(false);
+        triggerElementRef.current?.focus();
+        return;
+      }
+
+      if (e.key === "Tab") {
+        const activeModal = detailModalRef.current || submitModalRef.current || registerModalRef.current;
+        if (!activeModal) return;
+
+        const focusables = Array.from(
+          activeModal.querySelectorAll<HTMLElement>(
+            'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+          )
+        ).filter((el) => el.offsetParent !== null || el.offsetWidth > 0 || el.offsetHeight > 0);
+
+        if (focusables.length === 0) {
+          e.preventDefault();
+          return;
+        }
+
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+
+        if (e.shiftKey) {
+          if (document.activeElement === first || !activeModal.contains(document.activeElement)) {
+            e.preventDefault();
+            last.focus();
+          }
+        } else {
+          if (document.activeElement === last || !activeModal.contains(document.activeElement)) {
+            e.preventDefault();
+            first.focus();
+          }
+        }
       }
     };
+
     window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
+    return () => {
+      clearTimeout(timer);
+      document.body.style.overflow = originalOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isAnyModalOpen]);
+
+  // Modal open helpers
+  const handleOpenDetailModal = (comp: CompetitionItem) => {
+    triggerElementRef.current = (document.activeElement as HTMLElement) || null;
+    setModalTab("tentatif");
+    setSelectedComp(comp);
+  };
+
+  const handleOpenSubmitModal = () => {
+    triggerElementRef.current = (document.activeElement as HTMLElement) || null;
+    setOrgStep(1);
+    setOrgSuccess(null);
+    setShowSubmitModal(true);
+  };
+
+  const handleOpenRegistrationModal = (comp: CompetitionItem) => {
+    if (!selectedComp) {
+      triggerElementRef.current = (document.activeElement as HTMLElement) || null;
+    }
+    handleOpenRegistration(comp);
+  };
 
   // Filter Logic
   const filteredCompetitions = useMemo(() => {
@@ -314,11 +691,12 @@ export function CompetitionsClient() {
 
   return (
     <div className="competitions-container">
+      {/* feedMotionRef applied to card feed for Nemo collection motion */}
       {/* 1. Hero Header Section (Preserved Exactly as Loved by User) */}
-      <header className="competitions-header">
+      <header ref={heroRef} className="competitions-header">
         <div className="competitions-overline">
           <span className="accent-rule" />
-          <span className="overline-text">TAKWIM KEJOHANAN PENCAK SILAT KEBANGSAAN 2026 / 2027</span>
+          <span className="overline-text">{cd.overline}</span>
           <span className="accent-rule" />
         </div>
 
@@ -328,15 +706,13 @@ export function CompetitionsClient() {
         </h1>
 
         <p className="competitions-narrative">
-          Pusat rujukan rasmi takwim kejohanan Pencak Silat seluruh Malaysia: Sukan Malaysia
-          (SUKMA), SUKIPT, Kejohanan Remaja Kebangsaan, Sirkit Negeri, dan Terbuka Jemputan
-          Kelab berpandukan standard PERSILAT 2026 &amp; pengiktirafan PESAKA.
+          {cd.subtitle}
         </p>
 
         <div className="competitions-quote">
           <span className="quote-rule" />
           <span className="quote-text">
-            — &ldquo;Semangat Juang. <span className="quote-red">Jiwa Malaysia.</span>&rdquo; —
+            — &ldquo;{cd.quote}&rdquo; —
           </span>
           <span className="quote-rule" />
         </div>
@@ -355,7 +731,7 @@ export function CompetitionsClient() {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Cari kejohanan: SUKMA, UNITEN, Titiwangsa, PESAKA, Shah Alam..."
+              placeholder={cd.searchPlaceholder}
               className="pro-search-input"
               aria-label="Cari nama kejohanan, penganjur, atau gelanggang"
             />
@@ -382,7 +758,7 @@ export function CompetitionsClient() {
               >
                 {MALAYSIAN_STATES.map((st) => (
                   <option key={st} value={st}>
-                    {st}
+                    {st === "Semua Negeri" && locale === "en" ? "All States" : st}
                   </option>
                 ))}
               </select>
@@ -396,26 +772,22 @@ export function CompetitionsClient() {
                 className="pro-select"
                 aria-label="Pilih Status Pendaftaran"
               >
-                <option value="ALL">Semua Status</option>
-                <option value="open">Pendaftaran Dibuka</option>
-                <option value="closing_soon">Hampir Tutup</option>
-                <option value="upcoming">Akan Datang</option>
-                <option value="closed">Ditutup</option>
+                <option value="ALL">{locale === "en" ? "All Statuses" : "Semua Status"}</option>
+                <option value="open">{cd.statusOpen}</option>
+                <option value="closing_soon">{cd.statusClosingSoon}</option>
+                <option value="upcoming">{cd.statusUpcoming}</option>
+                <option value="closed">{cd.statusClosed}</option>
               </select>
             </div>
 
             <button
               type="button"
-              onClick={() => {
-                setOrgStep(1);
-                setOrgSuccess(null);
-                setShowSubmitModal(true);
-              }}
+              onClick={handleOpenSubmitModal}
               className="btn-submit-event-pill"
               aria-label="Penganjur: Hantar Kejohanan Baru"
             >
               <PlusCircle size={15} />
-              <span>+ Hantar Acara</span>
+              <span>+ {cd.submitEventButton}</span>
             </button>
           </div>
         </div>
@@ -430,7 +802,7 @@ export function CompetitionsClient() {
               onClick={() => setSelectedCategoryTab("ALL")}
               className={`cat-tab ${selectedCategoryTab === "ALL" ? "is-active" : ""}`}
             >
-              Semua Kejohanan <span className="tab-badge">{competitions.length}</span>
+              {cd.tabAll} <span className="tab-badge">{competitions.length}</span>
             </button>
 
             <button
@@ -440,7 +812,7 @@ export function CompetitionsClient() {
               onClick={() => setSelectedCategoryTab("kebangsaan")}
               className={`cat-tab ${selectedCategoryTab === "kebangsaan" ? "is-active" : ""}`}
             >
-              🏆 Kebangsaan / SUKMA / SUKIPT
+              {cd.tabNational}
             </button>
 
             <button
@@ -450,7 +822,7 @@ export function CompetitionsClient() {
               onClick={() => setSelectedCategoryTab("sirkit_remaja")}
               className={`cat-tab ${selectedCategoryTab === "sirkit_remaja" ? "is-active" : ""}`}
             >
-              🥋 Sirkit Remaja &amp; Negeri
+              {cd.tabJunior}
             </button>
 
             <button
@@ -460,7 +832,7 @@ export function CompetitionsClient() {
               onClick={() => setSelectedCategoryTab("terbuka")}
               className={`cat-tab ${selectedCategoryTab === "terbuka" ? "is-active" : ""}`}
             >
-              ⚔️ Terbuka &amp; Kelab
+              {cd.tabOpen}
             </button>
           </div>
 
@@ -471,7 +843,7 @@ export function CompetitionsClient() {
               className={`mode-btn ${viewMode === "cards" ? "is-active" : ""}`}
               title="Paparan Kad Kronologi"
             >
-              <Grid size={13} /> Kad Acara
+              <Grid size={13} /> {cd.viewCards}
             </button>
             <button
               type="button"
@@ -479,7 +851,7 @@ export function CompetitionsClient() {
               className={`mode-btn ${viewMode === "timeline" ? "is-active" : ""}`}
               title="Paparan Takwim Kalendar Bulanan"
             >
-              <List size={13} /> Takwim Bulanan
+              <List size={13} /> {cd.viewCalendar}
             </button>
           </div>
         </div>
@@ -487,11 +859,15 @@ export function CompetitionsClient() {
         {/* Meta / Active Filter Count Bar */}
         <div className="command-meta-bar">
           <span className="results-count-text">
-            Memaparkan <strong>{filteredCompetitions.length}</strong> daripada {competitions.length} kejohanan silat berdaftar
+            {locale === "en" ? (
+              <>Showing <strong>{filteredCompetitions.length}</strong> of {competitions.length} registered silat championships</>
+            ) : (
+              <>Memaparkan <strong>{filteredCompetitions.length}</strong> daripada {competitions.length} kejohanan silat berdaftar</>
+            )}
           </span>
           {hasActiveFilters && (
             <button type="button" onClick={handleResetFilters} className="btn-reset-filters">
-              <RotateCcw size={12} /> Set Semula Penapis
+              <RotateCcw size={12} /> {locale === "en" ? "Reset Filters" : "Set Semula Penapis"}
             </button>
           )}
         </div>
@@ -514,7 +890,7 @@ export function CompetitionsClient() {
         </div>
       ) : viewMode === "cards" ? (
         /* ULTRA-MINIMALIST DARK GLASSMORPHISM TOURNAMENT CARDS FEED */
-        <div className="pro-events-feed">
+        <div ref={feedMotionRef} className="pro-events-feed">
           {filteredCompetitions.map((comp) => {
             const tierInfo = TIER_CONFIG[comp.tier];
             const dateRange = formatDisplayDateRange(comp.startDate, comp.endDate);
@@ -535,10 +911,7 @@ export function CompetitionsClient() {
               <article
                 key={comp.id}
                 className={`comp-glass-card ${comp.featured ? "is-featured" : ""}`}
-                onClick={() => {
-                  setModalTab("tentatif");
-                  setSelectedComp(comp);
-                }}
+                onClick={() => handleOpenDetailModal(comp)}
               >
                 {/* 1. Main Content: Header (Tier + Status), Title, and Meta (Date, Venue, State) */}
                 <div className="comp-card-main">
@@ -558,8 +931,7 @@ export function CompetitionsClient() {
                       type="button"
                       onClick={(e) => {
                         e.stopPropagation();
-                        setModalTab("tentatif");
-                        setSelectedComp(comp);
+                        handleOpenDetailModal(comp);
                       }}
                       className="comp-title-btn"
                       title={`Lihat butiran ${comp.title}`}
@@ -606,13 +978,12 @@ export function CompetitionsClient() {
                     type="button"
                     onClick={(e) => {
                       e.stopPropagation();
-                      setModalTab("tentatif");
-                      setSelectedComp(comp);
+                      handleOpenDetailModal(comp);
                     }}
                     className="comp-card-details-btn"
                     aria-label={`Lihat butiran ${comp.title}`}
                   >
-                    <span>Butiran</span>
+                    <span>{cd.btnDetails}</span>
                     <ChevronRight size={13} aria-hidden="true" />
                   </button>
                 </div>
@@ -622,7 +993,7 @@ export function CompetitionsClient() {
         </div>
       ) : (
         /* PRO MONTHLY TIMELINE VIEW */
-        <div className="pro-timeline-view">
+        <div ref={timelineContainerRef} className="pro-timeline-view">
           {groupedByMonth.map(({ monthKey, monthLabel, items }) => (
             <div key={monthKey} className="timeline-month-block">
               <div className="timeline-month-header">
@@ -668,10 +1039,7 @@ export function CompetitionsClient() {
                         <h4 className="timeline-title">
                           <button
                             type="button"
-                            onClick={() => {
-                              setModalTab("tentatif");
-                              setSelectedComp(comp);
-                            }}
+                            onClick={() => handleOpenDetailModal(comp)}
                             className="comp-title-btn"
                           >
                             {comp.title}
@@ -700,10 +1068,7 @@ export function CompetitionsClient() {
                         )}
                         <button
                           type="button"
-                          onClick={() => {
-                            setModalTab("tentatif");
-                            setSelectedComp(comp);
-                          }}
+                          onClick={() => handleOpenDetailModal(comp)}
                           className="comp-card-details-btn"
                           aria-label={`Lihat butiran ${comp.title}`}
                         >
@@ -730,7 +1095,7 @@ export function CompetitionsClient() {
           role="dialog"
           aria-modal="true"
         >
-          <div className="pro-modal-container" onClick={(e) => e.stopPropagation()}>
+          <div ref={detailModalRef} className="pro-modal-container" onClick={(e) => e.stopPropagation()}>
             {/* Modal Header */}
             <div className="pro-modal-header">
               <div className="modal-header-top">
@@ -994,7 +1359,7 @@ export function CompetitionsClient() {
                 type="button"
                 onClick={() => {
                   setSelectedComp(null);
-                  handleOpenRegistration(selectedComp);
+                  handleOpenRegistrationModal(selectedComp);
                 }}
                 disabled={selectedComp.status === "closed"}
                 className="btn-modal-register"
@@ -1017,7 +1382,7 @@ export function CompetitionsClient() {
           role="dialog"
           aria-modal="true"
         >
-          <div className="submit-wizard-modal" onClick={(e) => e.stopPropagation()}>
+          <div ref={submitModalRef} className="submit-wizard-modal" onClick={(e) => e.stopPropagation()}>
             <div className="wizard-modal-header">
               <div>
                 <span className="wizard-badge">PORTAL PENGANJUR KEJOHANAN</span>
@@ -1367,7 +1732,7 @@ export function CompetitionsClient() {
           role="dialog"
           aria-modal="true"
         >
-          <div className="pro-modal-container max-w-lg" onClick={(e) => e.stopPropagation()}>
+          <div ref={registerModalRef} className="pro-modal-container max-w-lg" onClick={(e) => e.stopPropagation()}>
             <div className="pro-modal-header">
               <div className="modal-header-top">
                 <span className="event-tier-badge">PENDAFTARAN ATLET</span>

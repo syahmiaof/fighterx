@@ -2,6 +2,7 @@
 
 import { CATEGORY_METADATA_LIST } from "@/lib/associations/data";
 import type { CategoryFilterKey } from "@/lib/associations/types";
+import { useLanguage } from "@/lib/i18n";
 
 interface CategoryFilterPillsProps {
   selectedCategory: CategoryFilterKey;
@@ -13,7 +14,26 @@ export function CategoryFilterPills({
   selectedCategory,
   onSelectCategory,
 }: CategoryFilterPillsProps) {
+  const { dict } = useLanguage();
+  const ad = dict.associations;
   const activeMeta = CATEGORY_METADATA_LIST.find((m) => m.key === selectedCategory);
+
+  const getLocalizedLabel = (key: CategoryFilterKey, fallback: string) => {
+    switch (key) {
+      case "ALL":
+        return ad.filterAll;
+      case "BADAN_INDUK":
+        return ad.filterBadanInduk;
+      case "PENGASAS_TERAS":
+        return ad.filterPengasas;
+      case "PERGURUAN_UTAMA":
+        return ad.filterPerguruanUtama;
+      case "ANTARABANGSA":
+        return ad.filterAntarabangsa;
+      default:
+        return fallback;
+    }
+  };
 
   return (
     <div className="category-filter-container">
@@ -35,7 +55,7 @@ export function CategoryFilterPills({
               className={`category-pill${isSelected ? " is-active" : ""}`}
               onClick={() => onSelectCategory(meta.key)}
             >
-              <span className="pill-label">{meta.label}</span>
+              <span className="pill-label">{getLocalizedLabel(meta.key, meta.label)}</span>
             </button>
           );
         })}

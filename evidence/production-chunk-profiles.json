@@ -1,0 +1,497 @@
+[
+  {
+    "route": "/",
+    "name": "Homepage",
+    "jsChunksCount": 5,
+    "rawJsBytes": 245770,
+    "gzipJsBytes": 80438,
+    "rawCssBytes": 326311,
+    "gzipCssBytes": 50617,
+    "jsDetails": [
+      {
+        "name": "1n0na-4jaqpll.js",
+        "rawSize": 14720,
+        "gzipSize": 3757
+      },
+      {
+        "name": "3_ok4kk7wj9ww.js",
+        "rawSize": 35975,
+        "gzipSize": 12334
+      },
+      {
+        "name": "1qoki1_nc7w7c.js",
+        "rawSize": 72493,
+        "gzipSize": 16656
+      },
+      {
+        "name": "442cgl5ndh2e6.js",
+        "rawSize": 79132,
+        "gzipSize": 30186
+      },
+      {
+        "name": "3uy0j_g0uafu_.js",
+        "rawSize": 43450,
+        "gzipSize": 17505
+      }
+    ],
+    "cssDetails": [
+      {
+        "name": "11tyslo_hq9h4.css",
+        "rawSize": 5070,
+        "gzipSize": 1010
+      },
+      {
+        "name": "0-emdj7xomt1a.css",
+        "rawSize": 321241,
+        "gzipSize": 49607
+      }
+    ]
+  },
+  {
+    "route": "/guidelines",
+    "name": "Guidelines",
+    "jsChunksCount": 5,
+    "rawJsBytes": 199046,
+    "gzipJsBytes": 62426,
+    "rawCssBytes": 326311,
+    "gzipCssBytes": 50617,
+    "jsDetails": [
+      {
+        "name": "1n0na-4jaqpll.js",
+        "rawSize": 14720,
+        "gzipSize": 3757
+      },
+      {
+        "name": "0v8xsf1ui64kb.js",
+        "rawSize": 4778,
+        "gzipSize": 1398
+      },
+      {
+        "name": "11c7og9z1o83c.js",
+        "rawSize": 30162,
+        "gzipSize": 10894
+      },
+      {
+        "name": "0478nveofkqte.js",
+        "rawSize": 70254,
+        "gzipSize": 16191
+      },
+      {
+        "name": "442cgl5ndh2e6.js",
+        "rawSize": 79132,
+        "gzipSize": 30186
+      }
+    ],
+    "cssDetails": [
+      {
+        "name": "11tyslo_hq9h4.css",
+        "rawSize": 5070,
+        "gzipSize": 1010
+      },
+      {
+        "name": "0-emdj7xomt1a.css",
+        "rawSize": 321241,
+        "gzipSize": 49607
+      }
+    ]
+  },
+  {
+    "route": "/disciplines",
+    "name": "Disciplines",
+    "jsChunksCount": 5,
+    "rawJsBytes": 187880,
+    "gzipJsBytes": 60918,
+    "rawCssBytes": 326311,
+    "gzipCssBytes": 50617,
+    "jsDetails": [
+      {
+        "name": "1n0na-4jaqpll.js",
+        "rawSize": 14720,
+        "gzipSize": 3757
+      },
+      {
+        "name": "3xva_xbhlo7hj.js",
+        "rawSize": 4223,
+        "gzipSize": 1336
+      },
+      {
+        "name": "1e17zfm5y51ca.js",
+        "rawSize": 30231,
+        "gzipSize": 10915
+      },
+      {
+        "name": "1nlvhgte7x5s1.js",
+        "rawSize": 59574,
+        "gzipSize": 14724
+      },
+      {
+        "name": "442cgl5ndh2e6.js",
+        "rawSize": 79132,
+        "gzipSize": 30186
+      }
+    ],
+    "cssDetails": [
+      {
+        "name": "11tyslo_hq9h4.css",
+        "rawSize": 5070,
+        "gzipSize": 1010
+      },
+      {
+        "name": "0-emdj7xomt1a.css",
+        "rawSize": 321241,
+        "gzipSize": 49607
+      }
+    ]
+  },
+  {
+    "route": "/competitions",
+    "name": "Competitions",
+    "jsChunksCount": 5,
+    "rawJsBytes": 235747,
+    "gzipJsBytes": 77927,
+    "rawCssBytes": 355883,
+    "gzipCssBytes": 56430,
+    "jsDetails": [
+      {
+        "name": "1n0na-4jaqpll.js",
+        "rawSize": 14720,
+        "gzipSize": 3757
+      },
+      {
+        "name": "3-8k0lfmugbw1.js",
+        "rawSize": 21564,
+        "gzipSize": 7605
+      },
+      {
+        "name": "2hgflcy7a82w8.js",
+        "rawSize": 76881,
+        "gzipSize": 18874
+      },
+      {
+        "name": "442cgl5ndh2e6.js",
+        "rawSize": 79132,
+        "gzipSize": 30186
+      },
+      {
+        "name": "3uy0j_g0uafu_.js",
+        "rawSize": 43450,
+        "gzipSize": 17505
+      }
+    ],
+    "cssDetails": [
+      {
+        "name": "11tyslo_hq9h4.css",
+        "rawSize": 5070,
+        "gzipSize": 1010
+      },
+      {
+        "name": "0-emdj7xomt1a.css",
+        "rawSize": 321241,
+        "gzipSize": 49607
+      },
+      {
+        "name": "3x6z1w2n24p8i.css",
+        "rawSize": 29572,
+        "gzipSize": 5813
+      }
+    ]
+  },
+  {
+    "route": "/calendar",
+    "name": "Calendar",
+    "jsChunksCount": 5,
+    "rawJsBytes": 235747,
+    "gzipJsBytes": 77927,
+    "rawCssBytes": 355883,
+    "gzipCssBytes": 56430,
+    "jsDetails": [
+      {
+        "name": "1n0na-4jaqpll.js",
+        "rawSize": 14720,
+        "gzipSize": 3757
+      },
+      {
+        "name": "3-8k0lfmugbw1.js",
+        "rawSize": 21564,
+        "gzipSize": 7605
+      },
+      {
+        "name": "2hgflcy7a82w8.js",
+        "rawSize": 76881,
+        "gzipSize": 18874
+      },
+      {
+        "name": "442cgl5ndh2e6.js",
+        "rawSize": 79132,
+        "gzipSize": 30186
+      },
+      {
+        "name": "3uy0j_g0uafu_.js",
+        "rawSize": 43450,
+        "gzipSize": 17505
+      }
+    ],
+    "cssDetails": [
+      {
+        "name": "11tyslo_hq9h4.css",
+        "rawSize": 5070,
+        "gzipSize": 1010
+      },
+      {
+        "name": "0-emdj7xomt1a.css",
+        "rawSize": 321241,
+        "gzipSize": 49607
+      },
+      {
+        "name": "3x6z1w2n24p8i.css",
+        "rawSize": 29572,
+        "gzipSize": 5813
+      }
+    ]
+  },
+  {
+    "route": "/leaderboard",
+    "name": "Leaderboard",
+    "jsChunksCount": 5,
+    "rawJsBytes": 230964,
+    "gzipJsBytes": 63222,
+    "rawCssBytes": 326311,
+    "gzipCssBytes": 50617,
+    "jsDetails": [
+      {
+        "name": "1n0na-4jaqpll.js",
+        "rawSize": 14720,
+        "gzipSize": 3757
+      },
+      {
+        "name": "3ta84lci_3idx.js",
+        "rawSize": 3780,
+        "gzipSize": 1480
+      },
+      {
+        "name": "1e5d54x_m28eh.js",
+        "rawSize": 30809,
+        "gzipSize": 11004
+      },
+      {
+        "name": "1zfb7obp0md53.js",
+        "rawSize": 102523,
+        "gzipSize": 16795
+      },
+      {
+        "name": "442cgl5ndh2e6.js",
+        "rawSize": 79132,
+        "gzipSize": 30186
+      }
+    ],
+    "cssDetails": [
+      {
+        "name": "11tyslo_hq9h4.css",
+        "rawSize": 5070,
+        "gzipSize": 1010
+      },
+      {
+        "name": "0-emdj7xomt1a.css",
+        "rawSize": 321241,
+        "gzipSize": 49607
+      }
+    ]
+  },
+  {
+    "route": "/associations",
+    "name": "Associations",
+    "jsChunksCount": 4,
+    "rawJsBytes": 168939,
+    "gzipJsBytes": 58184,
+    "rawCssBytes": 343877,
+    "gzipCssBytes": 54830,
+    "jsDetails": [
+      {
+        "name": "1n0na-4jaqpll.js",
+        "rawSize": 14720,
+        "gzipSize": 3757
+      },
+      {
+        "name": "1h5wa0jdr7d3h.js",
+        "rawSize": 44856,
+        "gzipSize": 13326
+      },
+      {
+        "name": "442cgl5ndh2e6.js",
+        "rawSize": 79132,
+        "gzipSize": 30186
+      },
+      {
+        "name": "1e17zfm5y51ca.js",
+        "rawSize": 30231,
+        "gzipSize": 10915
+      }
+    ],
+    "cssDetails": [
+      {
+        "name": "11tyslo_hq9h4.css",
+        "rawSize": 5070,
+        "gzipSize": 1010
+      },
+      {
+        "name": "0-emdj7xomt1a.css",
+        "rawSize": 321241,
+        "gzipSize": 49607
+      },
+      {
+        "name": "18pwnwf3hkidm.css",
+        "rawSize": 17566,
+        "gzipSize": 4213
+      }
+    ]
+  },
+  {
+    "route": "/moments",
+    "name": "Moments",
+    "jsChunksCount": 5,
+    "rawJsBytes": 170037,
+    "gzipJsBytes": 57785,
+    "rawCssBytes": 326311,
+    "gzipCssBytes": 50617,
+    "jsDetails": [
+      {
+        "name": "1n0na-4jaqpll.js",
+        "rawSize": 14720,
+        "gzipSize": 3757
+      },
+      {
+        "name": "2ji88_bhi_7xh.js",
+        "rawSize": 3915,
+        "gzipSize": 1221
+      },
+      {
+        "name": "1e17zfm5y51ca.js",
+        "rawSize": 30231,
+        "gzipSize": 10915
+      },
+      {
+        "name": "3erkqdiae3rcr.js",
+        "rawSize": 42039,
+        "gzipSize": 11706
+      },
+      {
+        "name": "442cgl5ndh2e6.js",
+        "rawSize": 79132,
+        "gzipSize": 30186
+      }
+    ],
+    "cssDetails": [
+      {
+        "name": "11tyslo_hq9h4.css",
+        "rawSize": 5070,
+        "gzipSize": 1010
+      },
+      {
+        "name": "0-emdj7xomt1a.css",
+        "rawSize": 321241,
+        "gzipSize": 49607
+      }
+    ]
+  },
+  {
+    "route": "/knowledge",
+    "name": "Knowledge Hub",
+    "jsChunksCount": 6,
+    "rawJsBytes": 299408,
+    "gzipJsBytes": 100210,
+    "rawCssBytes": 333264,
+    "gzipCssBytes": 52430,
+    "jsDetails": [
+      {
+        "name": "1n0na-4jaqpll.js",
+        "rawSize": 14720,
+        "gzipSize": 3757
+      },
+      {
+        "name": "385ihyt-5k5cc.js",
+        "rawSize": 20486,
+        "gzipSize": 7452
+      },
+      {
+        "name": "1_0zdwclzjmm1.js",
+        "rawSize": 79554,
+        "gzipSize": 27704
+      },
+      {
+        "name": "442cgl5ndh2e6.js",
+        "rawSize": 79132,
+        "gzipSize": 30186
+      },
+      {
+        "name": "3m7yh6dk12ajl.js",
+        "rawSize": 62066,
+        "gzipSize": 13606
+      },
+      {
+        "name": "3uy0j_g0uafu_.js",
+        "rawSize": 43450,
+        "gzipSize": 17505
+      }
+    ],
+    "cssDetails": [
+      {
+        "name": "11tyslo_hq9h4.css",
+        "rawSize": 5070,
+        "gzipSize": 1010
+      },
+      {
+        "name": "0-emdj7xomt1a.css",
+        "rawSize": 321241,
+        "gzipSize": 49607
+      },
+      {
+        "name": "3pn7w01m5djyq.css",
+        "rawSize": 6953,
+        "gzipSize": 1813
+      }
+    ]
+  },
+  {
+    "route": "/knowledge/[slug]",
+    "name": "Knowledge Article",
+    "jsChunksCount": 3,
+    "rawJsBytes": 109169,
+    "gzipJsBytes": 39872,
+    "rawCssBytes": 333264,
+    "gzipCssBytes": 52430,
+    "jsDetails": [
+      {
+        "name": "1n0na-4jaqpll.js",
+        "rawSize": 14720,
+        "gzipSize": 3757
+      },
+      {
+        "name": "0832rvlayp5wn.js",
+        "rawSize": 15317,
+        "gzipSize": 5929
+      },
+      {
+        "name": "442cgl5ndh2e6.js",
+        "rawSize": 79132,
+        "gzipSize": 30186
+      }
+    ],
+    "cssDetails": [
+      {
+        "name": "11tyslo_hq9h4.css",
+        "rawSize": 5070,
+        "gzipSize": 1010
+      },
+      {
+        "name": "0-emdj7xomt1a.css",
+        "rawSize": 321241,
+        "gzipSize": 49607
+      },
+      {
+        "name": "3pn7w01m5djyq.css",
+        "rawSize": 6953,
+        "gzipSize": 1813
+      }
+    ]
+  }
+]

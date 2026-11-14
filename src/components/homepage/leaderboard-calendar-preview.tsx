@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Trophy, Calendar } from "lucide-react";
+import { useLanguage } from "@/lib/i18n";
 
 interface TopAthletePreview {
   rank: string;
@@ -88,110 +89,115 @@ const upcomingTournaments: TournamentPreview[] = [
   },
 ];
 
+const SHOW_LEADERBOARD_PREVIEW = false;
+
 export function LeaderboardCalendarPreview() {
+  const { d } = useLanguage();
   return (
     <section
       className="relative z-10 pt-12 pb-8 sm:pt-14 sm:pb-10 md:pt-16 md:pb-12 bg-black/25 backdrop-blur-[2px] border-b border-white/[0.08]"
       id="arena-preview"
       aria-label="Papan Kedudukan dan Takwim Kejohanan"
     >
-      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+      <div className={SHOW_LEADERBOARD_PREVIEW ? "max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8" : "max-w-[760px] mx-auto px-4 sm:px-6 lg:px-8"}>
+        <div className={SHOW_LEADERBOARD_PREVIEW ? "grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 motion-grid" : "motion-grid"}>
           
-          {/* Card 1: Top Athletes Leaderboard (Frosted Glass) */}
-          <div
-            className="rounded-2xl border border-white/15 bg-gradient-to-b from-white/[0.08] via-black/40 to-black/75 p-6 sm:p-7 flex flex-col justify-between backdrop-blur-2xl shadow-[0_16px_40px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.15)] hover:border-white/25 transition-all"
-          >
-            <div>
-              {/* Header */}
-              <div className="flex items-center justify-between pb-4 mb-3 border-b border-white/10">
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-white/[0.06] border border-white/15 flex items-center justify-center text-[#FFD700] shadow-[0_0_12px_rgba(255,215,0,0.15)]">
-                    <Trophy size={16} />
+          {/* Card 1: Top Athletes Leaderboard (Frosted Glass) - Hidden while leaderboard page is deferred */}
+          {SHOW_LEADERBOARD_PREVIEW && (
+            <div
+              className="rounded-2xl border border-white/15 bg-gradient-to-b from-white/[0.08] via-black/40 to-black/75 p-6 sm:p-7 flex flex-col justify-between backdrop-blur-2xl shadow-[0_16px_40px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.15)] hover:border-white/25 transition-all"
+            >
+              <div>
+                {/* Header */}
+                <div className="flex items-center justify-between pb-4 mb-3 border-b border-white/10">
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-xl bg-white/[0.06] border border-white/15 flex items-center justify-center text-[#FFD700] shadow-[0_0_12px_rgba(255,215,0,0.15)]">
+                      <Trophy size={16} />
+                    </div>
+                    <div>
+                      <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#FFB800] block leading-tight font-semibold">
+                        {d.home.preview.leaderboardOverline}
+                      </span>
+                      <h3 className="text-xl sm:text-2xl font-bold text-white font-athletic tracking-wide uppercase">
+                        {d.home.preview.leaderboardTitle}
+                      </h3>
+                    </div>
                   </div>
-                  <div>
-                    <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#FFB800] block leading-tight font-semibold">
-                      PRESTASI MINGGUAN
-                    </span>
-                    <h3 className="text-xl sm:text-2xl font-bold text-white font-athletic tracking-wide uppercase">
-                      Top Atlet Teratas
-                    </h3>
-                  </div>
+
+                  <Link
+                    href="/leaderboard"
+                    className="text-xs font-semibold text-[#C5C6CA] hover:text-white inline-flex items-center gap-1 transition-colors group"
+                  >
+                    <span>{d.home.preview.viewAll}</span>
+                    <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform text-[#FF3845]" />
+                  </Link>
                 </div>
 
-                <Link
-                  href="/leaderboard"
-                  className="text-xs font-semibold text-[#C5C6CA] hover:text-white inline-flex items-center gap-1 transition-colors group"
-                >
-                  <span>Lihat Semua</span>
-                  <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform text-[#FF3845]" />
+                {/* Athletes List */}
+                <div className="space-y-1.5">
+                  {topAthletes.map((athlete) => (
+                    <div
+                      key={athlete.rank}
+                      className="py-2.5 px-3 rounded-xl flex items-center justify-between border border-transparent hover:border-white/10 hover:bg-white/[0.06] transition-all group"
+                    >
+                      <div className="flex items-center gap-3.5 min-w-0">
+                        {/* Monospaced Rank */}
+                        <span
+                          className={`font-mono text-sm font-bold w-6 shrink-0 ${
+                            athlete.rank === "01"
+                              ? "text-[#FFD700]"
+                              : athlete.rank === "02"
+                              ? "text-slate-300"
+                              : "text-[#C5832B]"
+                          }`}
+                        >
+                          {athlete.rank}
+                        </span>
+
+                        {/* Avatar */}
+                        <div className="relative w-10 h-10 rounded-full bg-white/[0.06] overflow-hidden border border-white/15 shrink-0 shadow-sm">
+                          <Image
+                            src={athlete.avatar}
+                            alt={athlete.name}
+                            fill
+                            sizes="40px"
+                            className="object-cover object-top"
+                          />
+                        </div>
+
+                        {/* Info */}
+                        <div className="min-w-0">
+                          <h4 className="text-sm font-semibold text-white truncate group-hover:text-[#FF3845] transition-colors">
+                            {athlete.name}
+                          </h4>
+                          <p className="text-xs text-[#96989F] truncate">
+                            {athlete.club} · <span className="text-white/70 font-medium">{athlete.association}</span>
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Points */}
+                      <div className="text-right shrink-0 pl-3">
+                        <span className="font-mono font-bold text-sm text-white tabular-nums">
+                          {athlete.points.toLocaleString()}
+                        </span>
+                        <span className="text-[10px] text-[#8C8E96] font-mono ml-1">pts</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Footer */}
+              <div className="mt-5 pt-3.5 border-t border-white/10 flex items-center justify-between text-xs text-[#96989F]">
+                <span>Kemas kini automatik setiap Ahad 23:59</span>
+                <Link href="/leaderboard" className="text-white/80 hover:text-white font-medium inline-flex items-center gap-1 transition-colors">
+                  <span>{d.home.preview.fullLeaderboard}</span>
+                  <ArrowRight size={12} className="text-[#FF3845]" />
                 </Link>
               </div>
-
-              {/* Athletes List */}
-              <div className="space-y-1.5">
-                {topAthletes.map((athlete) => (
-                  <div
-                    key={athlete.rank}
-                    className="py-2.5 px-3 rounded-xl flex items-center justify-between border border-transparent hover:border-white/10 hover:bg-white/[0.06] transition-all group"
-                  >
-                    <div className="flex items-center gap-3.5 min-w-0">
-                      {/* Monospaced Rank */}
-                      <span
-                        className={`font-mono text-sm font-bold w-6 shrink-0 ${
-                          athlete.rank === "01"
-                            ? "text-[#FFD700]"
-                            : athlete.rank === "02"
-                            ? "text-slate-300"
-                            : "text-[#C5832B]"
-                        }`}
-                      >
-                        {athlete.rank}
-                      </span>
-
-                      {/* Avatar */}
-                      <div className="relative w-10 h-10 rounded-full bg-white/[0.06] overflow-hidden border border-white/15 shrink-0 shadow-sm">
-                        <Image
-                          src={athlete.avatar}
-                          alt={athlete.name}
-                          fill
-                          sizes="40px"
-                          className="object-cover object-top"
-                        />
-                      </div>
-
-                      {/* Info */}
-                      <div className="min-w-0">
-                        <h4 className="text-sm font-semibold text-white truncate group-hover:text-[#FF3845] transition-colors">
-                          {athlete.name}
-                        </h4>
-                        <p className="text-xs text-[#96989F] truncate">
-                          {athlete.club} · <span className="text-white/70 font-medium">{athlete.association}</span>
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Points */}
-                    <div className="text-right shrink-0 pl-3">
-                      <span className="font-mono font-bold text-sm text-white tabular-nums">
-                        {athlete.points.toLocaleString()}
-                      </span>
-                      <span className="text-[10px] text-[#8C8E96] font-mono ml-1">pts</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
             </div>
-
-            {/* Footer */}
-            <div className="mt-5 pt-3.5 border-t border-white/10 flex items-center justify-between text-xs text-[#96989F]">
-              <span>Kemas kini automatik setiap Ahad 23:59</span>
-              <Link href="/leaderboard" className="text-white/80 hover:text-white font-medium inline-flex items-center gap-1 transition-colors">
-                <span>Kedudukan Penuh</span>
-                <ArrowRight size={12} className="text-[#FF3845]" />
-              </Link>
-            </div>
-          </div>
+          )}
 
           {/* Card 2: Tournament Schedule (Frosted Glass) */}
           <div
@@ -206,10 +212,10 @@ export function LeaderboardCalendarPreview() {
                   </div>
                   <div>
                     <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#FF3845] block leading-tight font-semibold">
-                      TAKWIM KEJOHANAN
+                      {d.home.preview.calendarOverline}
                     </span>
                     <h3 className="text-xl sm:text-2xl font-bold text-white font-athletic tracking-wide uppercase">
-                      Jadual Pertandingan 2026
+                      {d.home.preview.calendarTitle}
                     </h3>
                   </div>
                 </div>
@@ -218,7 +224,7 @@ export function LeaderboardCalendarPreview() {
                   href="/competitions"
                   className="text-xs font-semibold text-[#C5C6CA] hover:text-white inline-flex items-center gap-1 transition-colors group"
                 >
-                  <span>Lihat Semua</span>
+                  <span>{d.home.preview.viewAll}</span>
                   <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform text-[#FF3845]" />
                 </Link>
               </div>
@@ -284,7 +290,7 @@ export function LeaderboardCalendarPreview() {
             <div className="mt-5 pt-3.5 border-t border-white/10 flex items-center justify-between text-xs text-[#96989F]">
               <span>Disahkan oleh PESAKA &amp; MSN</span>
               <Link href="/competitions" className="text-white/80 hover:text-white font-medium inline-flex items-center gap-1 transition-colors">
-                <span>Semak Takwim Lengkap</span>
+                <span>{d.home.preview.fullCalendar}</span>
                 <ArrowRight size={12} className="text-[#FF3845]" />
               </Link>
             </div>

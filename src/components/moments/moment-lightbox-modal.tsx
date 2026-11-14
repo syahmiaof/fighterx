@@ -1,26 +1,95 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import Image from "next/image";
+import gsap from "gsap";
 import { X, Heart, ShieldCheck, MapPin, Share2 } from "lucide-react";
 import { useMoments } from "@/lib/moments/moments-context";
 
 export function MomentLightboxModal() {
   const { lightboxMoment, setLightboxMoment, toggleLike, showToast } = useMoments();
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const triggerRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
+    if (!lightboxMoment) return;
+
+    triggerRef.current = (document.activeElement as HTMLElement) || null;
+    document.body.style.overflow = "hidden";
+
+    const timer = setTimeout(() => {
+      closeButtonRef.current?.focus();
+    }, 40);
+
+    // GSAP Nemo Iris Entrance for Lightbox Container
+    const container = dialogRef.current?.querySelector<HTMLElement>(".moment-lightbox-container");
+    if (container) {
+      gsap.fromTo(
+        container,
+        {
+          opacity: 0,
+          scale: 0.95,
+          y: 16,
+          clipPath: "inset(0 45% 0 45% round 24px)",
+          willChange: "transform, opacity, clip-path",
+        },
+        {
+          opacity: 1,
+          scale: 1,
+          y: 0,
+          clipPath: "inset(0 0% 0 0% round 24px)",
+          duration: 0.55,
+          ease: "expo.out",
+          clearProps: "transform,scale,opacity,clipPath,clip-path,willChange",
+        }
+      );
+    }
+
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
+        e.preventDefault();
         setLightboxMoment(null);
+        return;
+      }
+
+      if (e.key === "Tab") {
+        if (!dialogRef.current) return;
+        const focusables = Array.from(
+          dialogRef.current.querySelectorAll<HTMLElement>(
+            'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+          )
+        ).filter((el) => el.offsetParent !== null || el.offsetWidth > 0 || el.offsetHeight > 0);
+
+        if (focusables.length === 0) {
+          e.preventDefault();
+          return;
+        }
+
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+
+        if (e.shiftKey) {
+          if (document.activeElement === first || !dialogRef.current.contains(document.activeElement)) {
+            e.preventDefault();
+            last.focus();
+          }
+        } else {
+          if (document.activeElement === last || !dialogRef.current.contains(document.activeElement)) {
+            e.preventDefault();
+            first.focus();
+          }
+        }
       }
     };
-    if (lightboxMoment) {
-      window.addEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "hidden";
-    }
+
+    window.addEventListener("keydown", handleKeyDown);
+
     return () => {
-      window.removeEventListener("keydown", handleKeyDown);
+      clearTimeout(timer);
       document.body.style.overflow = "";
+      window.removeEventListener("keydown", handleKeyDown);
+      triggerRef.current?.focus();
     };
   }, [lightboxMoment, setLightboxMoment]);
 
@@ -35,6 +104,7 @@ export function MomentLightboxModal() {
 
   return (
     <div
+      ref={dialogRef}
       className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/92 backdrop-blur-xl animate-in fade-in duration-200"
       onClick={() => setLightboxMoment(null)}
       role="dialog"
@@ -42,6 +112,7 @@ export function MomentLightboxModal() {
     >
       {/* Close button */}
       <button
+        ref={closeButtonRef}
         type="button"
         onClick={() => setLightboxMoment(null)}
         className="absolute top-4 right-4 z-50 w-11 h-11 rounded-full bg-white/10 hover:bg-[#E10600] text-white flex items-center justify-center transition-colors cursor-pointer"
@@ -52,7 +123,7 @@ export function MomentLightboxModal() {
 
       {/* Lightbox Container */}
       <div
-        className="relative max-w-5xl w-full max-h-[92vh] flex flex-col md:flex-row rounded-3xl bg-[#0c0d11] border border-white/15 overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.95)]"
+        className="moment-lightbox-container relative max-w-5xl w-full max-h-[92vh] flex flex-col md:flex-row rounded-3xl bg-[#0c0d11] border border-white/15 overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.95)]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Large Image Stage */}

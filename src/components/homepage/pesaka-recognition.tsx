@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ShieldCheck, ArrowRight, FileText, CheckCircle2 } from "lucide-react";
+import { useLanguage } from "@/lib/i18n";
 
 const foundingBodies = [
   {
@@ -36,6 +37,7 @@ const foundingBodies = [
 ];
 
 export function PesakaRecognition() {
+  const { d } = useLanguage();
   return (
     <section
       className="relative z-10 py-14 md:py-20 bg-black/25 backdrop-blur-[2px] border-b border-[#26272C]/40 overflow-hidden"
@@ -46,13 +48,13 @@ export function PesakaRecognition() {
         {/* Minimalist Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
           <p className="text-[11px] sm:text-xs font-mono font-semibold tracking-[0.25em] text-[#FF3845] uppercase mb-2">
-            — PENGIKTIRAFAN BADAN INDUK KEBANGSAAN —
+            {d.home.pesaka.eyebrow}
           </p>
           <h2
             id="pesaka-heading"
             className="text-3xl sm:text-4xl lg:text-5xl font-bold font-athletic tracking-wider text-white uppercase"
           >
-            Piawaian Rasmi PESAKA &amp; PERSILAT
+            {d.home.pesaka.title}
           </h2>
           <p className="text-xs sm:text-sm text-[#96989F] mt-2 max-w-xl mx-auto leading-relaxed">
             Platform pengurusan latihan silat yang berlandaskan tatakelola kebangsaan PESAKA Malaysia dan piawaian antarabangsa PERSILAT.
@@ -60,8 +62,9 @@ export function PesakaRecognition() {
         </div>
 
         {/* Prestige Executive Endorsement Card */}
-        <div className="rounded-2xl border border-white/10 bg-gradient-to-b from-white/[0.04] to-transparent p-6 sm:p-8 lg:p-10 mb-12 shadow-[0_16px_50px_rgba(0,0,0,0.5)]">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div className="motion-grid mb-12">
+          <div className="rounded-2xl border border-white/10 bg-gradient-to-b from-white/[0.04] to-transparent p-6 sm:p-8 lg:p-10 shadow-[0_16px_50px_rgba(0,0,0,0.5)]">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             {/* PESAKA Emblem Column */}
             <div className="lg:col-span-4 flex flex-col items-center justify-center text-center">
               <div className="relative w-32 h-32 sm:w-40 sm:h-40 mb-3 flex items-center justify-center">
@@ -71,7 +74,6 @@ export function PesakaRecognition() {
                   width={160}
                   height={160}
                   className="object-contain max-h-36 w-auto drop-shadow-[0_8px_24px_rgba(225,6,0,0.35)]"
-                  priority
                 />
               </div>
               <span className="px-3 py-1 rounded-full border border-[#FF3845]/40 bg-[#FF3845]/10 text-[#FF3845] text-[10px] font-bold tracking-wider uppercase">
@@ -103,15 +105,15 @@ export function PesakaRecognition() {
                 <div className="flex flex-wrap items-center gap-2.5 mb-6">
                   <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-white/10 bg-white/[0.03] text-xs font-mono text-[#D8DAE0]">
                     <CheckCircle2 size={13} className="text-[#22C55E]" />
-                    <span>Standard PERSILAT 2026</span>
+                    <span>{d.home.pesaka.tag1}</span>
                   </span>
                   <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-white/10 bg-white/[0.03] text-xs font-mono text-[#D8DAE0]">
                     <CheckCircle2 size={13} className="text-[#22C55E]" />
-                    <span>Akreditasi SKK &amp; MSN</span>
+                    <span>{d.home.pesaka.tag2}</span>
                   </span>
                   <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-white/10 bg-white/[0.03] text-xs font-mono text-[#D8DAE0]">
                     <CheckCircle2 size={13} className="text-[#22C55E]" />
-                    <span>Integriti 100 Jurus Baku</span>
+                    <span>{d.home.pesaka.tag3}</span>
                   </span>
                 </div>
               </div>
@@ -123,19 +125,20 @@ export function PesakaRecognition() {
                   className="button button-outline text-xs px-4 py-2 hover:border-[#FF3845]"
                 >
                   <FileText size={14} className="text-[#FF3845]" />
-                  <span>Semak Format PERSILAT 2026</span>
+                  <span>{d.home.pesaka.ctaFormat}</span>
                 </Link>
                 <Link
                   href="/associations"
                   className="inline-flex items-center gap-1.5 text-xs font-semibold text-white hover:text-[#FF3845] transition-colors"
                 >
-                  <span>Lihat Direktori 26 Persatuan</span>
+                  <span>{d.home.pesaka.ctaDirectory}</span>
                   <ArrowRight size={14} />
                 </Link>
               </div>
             </div>
           </div>
         </div>
+      </div>
 
         {/* 4 Founding Bodies Showcase */}
         <div>
@@ -145,7 +148,7 @@ export function PesakaRecognition() {
                 TONGGAK SEJARAH PERSILATAN NEGARA
               </p>
               <h3 className="text-xl sm:text-2xl font-bold font-athletic text-white tracking-wide uppercase">
-                Empat (4) Anggota Pengasas Teras PESAKA Malaysia
+                {d.home.pesaka.fourFoundersTitle}
               </h3>
             </div>
             <Link
@@ -157,11 +160,11 @@ export function PesakaRecognition() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 motion-grid">
             {foundingBodies.map((body) => (
               <div
                 key={body.shortName}
-                className="group relative p-6 rounded-2xl border border-white/10 bg-gradient-to-b from-white/[0.04] to-transparent hover:border-[#FF3845]/50 hover:bg-white/[0.06] hover:shadow-[0_12px_36px_rgba(225,6,0,0.12)] transition-all duration-300 flex flex-col items-center text-center justify-between"
+                className="group relative p-6 rounded-2xl border border-white/10 bg-gradient-to-b from-white/[0.04] to-transparent hover:border-[#FF3845]/50 hover:bg-white/[0.06] hover:shadow-[0_12px_36px_rgba(225,6,0,0.12)] transition-colors duration-300 flex flex-col items-center text-center justify-between"
               >
                 {/* Logo in Full Color */}
                 <div className="h-24 w-full flex items-center justify-center mb-3">

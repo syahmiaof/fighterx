@@ -1,0 +1,2000 @@
+[
+  {
+    "route": "/",
+    "id": "home",
+    "name": "Homepage",
+    "width": 320,
+    "scrollWidth": 320,
+    "clientWidth": 320,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/home_320px.png",
+    "overflowDetails": [
+      {
+        "tag": "IMG",
+        "className": "hero-athlete hero-athlete-right",
+        "right": 355,
+        "excess": 35
+      },
+      {
+        "tag": "DIV",
+        "className": "partner-scroll-track flex items-center shrink-0",
+        "right": 4774,
+        "excess": 4454
+      },
+      {
+        "tag": "A",
+        "className": "partner-logo-link focus:outline-none",
+        "right": 332,
+        "excess": 12
+      },
+      {
+        "tag": "IMG",
+        "className": "partner-logo",
+        "right": 332,
+        "excess": 12
+      },
+      {
+        "tag": "A",
+        "className": "partner-logo-link focus:outline-none",
+        "right": 472,
+        "excess": 152
+      }
+    ],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/",
+    "id": "home",
+    "name": "Homepage",
+    "width": 360,
+    "scrollWidth": 360,
+    "clientWidth": 360,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/home_360px.png",
+    "overflowDetails": [
+      {
+        "tag": "IMG",
+        "className": "hero-athlete hero-athlete-right",
+        "right": 400,
+        "excess": 40
+      },
+      {
+        "tag": "DIV",
+        "className": "partner-scroll-track flex items-center shrink-0",
+        "right": 4811,
+        "excess": 4451
+      },
+      {
+        "tag": "A",
+        "className": "partner-logo-link focus:outline-none",
+        "right": 368,
+        "excess": 8
+      },
+      {
+        "tag": "IMG",
+        "className": "partner-logo",
+        "right": 368,
+        "excess": 8
+      },
+      {
+        "tag": "A",
+        "className": "partner-logo-link focus:outline-none",
+        "right": 509,
+        "excess": 149
+      }
+    ],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/",
+    "id": "home",
+    "name": "Homepage",
+    "width": 390,
+    "scrollWidth": 390,
+    "clientWidth": 390,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/home_390px.png",
+    "overflowDetails": [
+      {
+        "tag": "IMG",
+        "className": "hero-athlete hero-athlete-right",
+        "right": 433,
+        "excess": 43
+      },
+      {
+        "tag": "DIV",
+        "className": "partner-scroll-track flex items-center shrink-0",
+        "right": 4842,
+        "excess": 4452
+      },
+      {
+        "tag": "A",
+        "className": "partner-logo-link focus:outline-none",
+        "right": 399,
+        "excess": 9
+      },
+      {
+        "tag": "IMG",
+        "className": "partner-logo",
+        "right": 399,
+        "excess": 9
+      },
+      {
+        "tag": "A",
+        "className": "partner-logo-link focus:outline-none",
+        "right": 540,
+        "excess": 150
+      }
+    ],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/",
+    "id": "home",
+    "name": "Homepage",
+    "width": 430,
+    "scrollWidth": 430,
+    "clientWidth": 430,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/home_430px.png",
+    "overflowDetails": [
+      {
+        "tag": "IMG",
+        "className": "hero-athlete hero-athlete-right",
+        "right": 477,
+        "excess": 47
+      },
+      {
+        "tag": "DIV",
+        "className": "partner-scroll-track flex items-center shrink-0",
+        "right": 4879,
+        "excess": 4449
+      },
+      {
+        "tag": "A",
+        "className": "partner-logo-link focus:outline-none",
+        "right": 436,
+        "excess": 6
+      },
+      {
+        "tag": "IMG",
+        "className": "partner-logo",
+        "right": 436,
+        "excess": 6
+      },
+      {
+        "tag": "A",
+        "className": "partner-logo-link focus:outline-none",
+        "right": 576,
+        "excess": 146
+      }
+    ],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/",
+    "id": "home",
+    "name": "Homepage",
+    "width": 768,
+    "scrollWidth": 768,
+    "clientWidth": 768,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/home_768px.png",
+    "overflowDetails": [
+      {
+        "tag": "IMG",
+        "className": "hero-athlete hero-athlete-right",
+        "right": 775,
+        "excess": 7
+      },
+      {
+        "tag": "DIV",
+        "className": "partner-scroll-track flex items-center shrink-0",
+        "right": 4745,
+        "excess": 3977
+      },
+      {
+        "tag": "A",
+        "className": "partner-logo-link focus:outline-none",
+        "right": 894,
+        "excess": 126
+      },
+      {
+        "tag": "IMG",
+        "className": "partner-logo",
+        "right": 894,
+        "excess": 126
+      },
+      {
+        "tag": "A",
+        "className": "partner-logo-link focus:outline-none",
+        "right": 1034,
+        "excess": 266
+      }
+    ],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/",
+    "id": "home",
+    "name": "Homepage",
+    "width": 1024,
+    "scrollWidth": 1024,
+    "clientWidth": 1024,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/home_1024px.png",
+    "overflowDetails": [
+      {
+        "tag": "IMG",
+        "className": "hero-athlete hero-athlete-right",
+        "right": 1039,
+        "excess": 15
+      },
+      {
+        "tag": "DIV",
+        "className": "partner-scroll-track flex items-center shrink-0",
+        "right": 4420,
+        "excess": 3396
+      },
+      {
+        "tag": "A",
+        "className": "partner-logo-link focus:outline-none",
+        "right": 1081,
+        "excess": 57
+      },
+      {
+        "tag": "IMG",
+        "className": "partner-logo",
+        "right": 1081,
+        "excess": 57
+      },
+      {
+        "tag": "A",
+        "className": "partner-logo-link focus:outline-none",
+        "right": 1207,
+        "excess": 183
+      }
+    ],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/",
+    "id": "home",
+    "name": "Homepage",
+    "width": 1440,
+    "scrollWidth": 1440,
+    "clientWidth": 1440,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/home_1440px.png",
+    "overflowDetails": [
+      {
+        "tag": "IMG",
+        "className": "hero-athlete hero-athlete-right",
+        "right": 1461,
+        "excess": 21
+      },
+      {
+        "tag": "DIV",
+        "className": "partner-scroll-track flex items-center shrink-0",
+        "right": 4487,
+        "excess": 3047
+      },
+      {
+        "tag": "A",
+        "className": "partner-logo-link focus:outline-none",
+        "right": 1513,
+        "excess": 73
+      },
+      {
+        "tag": "IMG",
+        "className": "partner-logo",
+        "right": 1513,
+        "excess": 73
+      },
+      {
+        "tag": "A",
+        "className": "partner-logo-link focus:outline-none",
+        "right": 1651,
+        "excess": 211
+      }
+    ],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/guidelines",
+    "id": "guidelines",
+    "name": "Guidelines",
+    "width": 320,
+    "scrollWidth": 320,
+    "clientWidth": 320,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/guidelines_320px.png",
+    "overflowDetails": [
+      {
+        "tag": "TABLE",
+        "className": "w-full text-left text-xs text-slate-200",
+        "right": 438,
+        "excess": 118
+      },
+      {
+        "tag": "THEAD",
+        "className": "bg-white/[0.04] text-white/70 uppercase text-[10px] font-bold tracking-wider bor",
+        "right": 438,
+        "excess": 118
+      },
+      {
+        "tag": "TR",
+        "right": 438,
+        "excess": 118
+      },
+      {
+        "tag": "TH",
+        "className": "px-4 py-3",
+        "right": 337,
+        "excess": 17
+      },
+      {
+        "tag": "TH",
+        "className": "px-4 py-3",
+        "right": 438,
+        "excess": 118
+      }
+    ],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/guidelines",
+    "id": "guidelines",
+    "name": "Guidelines",
+    "width": 360,
+    "scrollWidth": 360,
+    "clientWidth": 360,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/guidelines_360px.png",
+    "overflowDetails": [
+      {
+        "tag": "TABLE",
+        "className": "w-full text-left text-xs text-slate-200",
+        "right": 438,
+        "excess": 78
+      },
+      {
+        "tag": "THEAD",
+        "className": "bg-white/[0.04] text-white/70 uppercase text-[10px] font-bold tracking-wider bor",
+        "right": 438,
+        "excess": 78
+      },
+      {
+        "tag": "TR",
+        "right": 438,
+        "excess": 78
+      },
+      {
+        "tag": "TH",
+        "className": "px-4 py-3",
+        "right": 438,
+        "excess": 78
+      },
+      {
+        "tag": "TBODY",
+        "className": "divide-y divide-white/[0.05] bg-white/[0.015] backdrop-blur-md",
+        "right": 438,
+        "excess": 78
+      }
+    ],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/guidelines",
+    "id": "guidelines",
+    "name": "Guidelines",
+    "width": 390,
+    "scrollWidth": 390,
+    "clientWidth": 390,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/guidelines_390px.png",
+    "overflowDetails": [
+      {
+        "tag": "TABLE",
+        "className": "w-full text-left text-xs text-slate-200",
+        "right": 442,
+        "excess": 52
+      },
+      {
+        "tag": "THEAD",
+        "className": "bg-white/[0.04] text-white/70 uppercase text-[10px] font-bold tracking-wider bor",
+        "right": 442,
+        "excess": 52
+      },
+      {
+        "tag": "TR",
+        "right": 442,
+        "excess": 52
+      },
+      {
+        "tag": "TH",
+        "className": "px-4 py-3",
+        "right": 442,
+        "excess": 52
+      },
+      {
+        "tag": "TBODY",
+        "className": "divide-y divide-white/[0.05] bg-white/[0.015] backdrop-blur-md",
+        "right": 442,
+        "excess": 52
+      }
+    ],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/guidelines",
+    "id": "guidelines",
+    "name": "Guidelines",
+    "width": 430,
+    "scrollWidth": 430,
+    "clientWidth": 430,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/guidelines_430px.png",
+    "overflowDetails": [
+      {
+        "tag": "TABLE",
+        "className": "w-full text-left text-xs text-slate-200",
+        "right": 442,
+        "excess": 12
+      },
+      {
+        "tag": "THEAD",
+        "className": "bg-white/[0.04] text-white/70 uppercase text-[10px] font-bold tracking-wider bor",
+        "right": 442,
+        "excess": 12
+      },
+      {
+        "tag": "TR",
+        "right": 442,
+        "excess": 12
+      },
+      {
+        "tag": "TH",
+        "className": "px-4 py-3",
+        "right": 442,
+        "excess": 12
+      },
+      {
+        "tag": "TBODY",
+        "className": "divide-y divide-white/[0.05] bg-white/[0.015] backdrop-blur-md",
+        "right": 442,
+        "excess": 12
+      }
+    ],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/guidelines",
+    "id": "guidelines",
+    "name": "Guidelines",
+    "width": 768,
+    "scrollWidth": 768,
+    "clientWidth": 768,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/guidelines_768px.png",
+    "overflowDetails": [],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/guidelines",
+    "id": "guidelines",
+    "name": "Guidelines",
+    "width": 1024,
+    "scrollWidth": 1024,
+    "clientWidth": 1024,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/guidelines_1024px.png",
+    "overflowDetails": [],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/guidelines",
+    "id": "guidelines",
+    "name": "Guidelines",
+    "width": 1440,
+    "scrollWidth": 1440,
+    "clientWidth": 1440,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/guidelines_1440px.png",
+    "overflowDetails": [],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/disciplines",
+    "id": "disciplines",
+    "name": "Disciplines",
+    "width": 320,
+    "scrollWidth": 320,
+    "clientWidth": 320,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/disciplines_320px.png",
+    "overflowDetails": [
+      {
+        "tag": "DIV",
+        "className": "absolute -bottom-24 -right-24 w-72 h-72 rounded-full bg-red-600/10 blur-3xl poin",
+        "right": 399,
+        "excess": 79
+      }
+    ],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/disciplines",
+    "id": "disciplines",
+    "name": "Disciplines",
+    "width": 360,
+    "scrollWidth": 360,
+    "clientWidth": 360,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/disciplines_360px.png",
+    "overflowDetails": [
+      {
+        "tag": "DIV",
+        "className": "absolute -bottom-24 -right-24 w-72 h-72 rounded-full bg-red-600/10 blur-3xl poin",
+        "right": 439,
+        "excess": 79
+      }
+    ],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/disciplines",
+    "id": "disciplines",
+    "name": "Disciplines",
+    "width": 390,
+    "scrollWidth": 390,
+    "clientWidth": 390,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/disciplines_390px.png",
+    "overflowDetails": [
+      {
+        "tag": "DIV",
+        "className": "absolute -bottom-24 -right-24 w-72 h-72 rounded-full bg-red-600/10 blur-3xl poin",
+        "right": 469,
+        "excess": 79
+      }
+    ],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/disciplines",
+    "id": "disciplines",
+    "name": "Disciplines",
+    "width": 430,
+    "scrollWidth": 430,
+    "clientWidth": 430,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/disciplines_430px.png",
+    "overflowDetails": [
+      {
+        "tag": "DIV",
+        "className": "absolute -bottom-24 -right-24 w-72 h-72 rounded-full bg-red-600/10 blur-3xl poin",
+        "right": 509,
+        "excess": 79
+      }
+    ],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/disciplines",
+    "id": "disciplines",
+    "name": "Disciplines",
+    "width": 768,
+    "scrollWidth": 768,
+    "clientWidth": 768,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/disciplines_768px.png",
+    "overflowDetails": [
+      {
+        "tag": "DIV",
+        "className": "absolute -bottom-24 -right-24 w-72 h-72 rounded-full bg-red-600/10 blur-3xl poin",
+        "right": 847,
+        "excess": 79
+      }
+    ],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/disciplines",
+    "id": "disciplines",
+    "name": "Disciplines",
+    "width": 1024,
+    "scrollWidth": 1024,
+    "clientWidth": 1024,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/disciplines_1024px.png",
+    "overflowDetails": [
+      {
+        "tag": "DIV",
+        "className": "absolute -bottom-24 -right-24 w-72 h-72 rounded-full bg-red-600/10 blur-3xl poin",
+        "right": 1103,
+        "excess": 79
+      }
+    ],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/disciplines",
+    "id": "disciplines",
+    "name": "Disciplines",
+    "width": 1440,
+    "scrollWidth": 1440,
+    "clientWidth": 1440,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/disciplines_1440px.png",
+    "overflowDetails": [],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/competitions",
+    "id": "competitions",
+    "name": "Competitions",
+    "width": 320,
+    "scrollWidth": 320,
+    "clientWidth": 320,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/competitions_320px.png",
+    "overflowDetails": [
+      {
+        "tag": "DIV",
+        "className": "pro-select-wrapper",
+        "right": 384,
+        "excess": 64
+      },
+      {
+        "tag": "SELECT",
+        "className": "pro-select",
+        "right": 384,
+        "excess": 64
+      },
+      {
+        "tag": "BUTTON",
+        "className": "btn-submit-event-pill",
+        "right": 384,
+        "excess": 64
+      },
+      {
+        "tag": "BUTTON",
+        "className": "cat-tab ",
+        "right": 434,
+        "excess": 114
+      },
+      {
+        "tag": "BUTTON",
+        "className": "cat-tab ",
+        "right": 618,
+        "excess": 298
+      }
+    ],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/competitions",
+    "id": "competitions",
+    "name": "Competitions",
+    "width": 360,
+    "scrollWidth": 360,
+    "clientWidth": 360,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/competitions_360px.png",
+    "overflowDetails": [
+      {
+        "tag": "DIV",
+        "className": "pro-select-wrapper",
+        "right": 384,
+        "excess": 24
+      },
+      {
+        "tag": "SELECT",
+        "className": "pro-select",
+        "right": 384,
+        "excess": 24
+      },
+      {
+        "tag": "BUTTON",
+        "className": "btn-submit-event-pill",
+        "right": 384,
+        "excess": 24
+      },
+      {
+        "tag": "BUTTON",
+        "className": "cat-tab ",
+        "right": 434,
+        "excess": 74
+      },
+      {
+        "tag": "BUTTON",
+        "className": "cat-tab ",
+        "right": 618,
+        "excess": 258
+      }
+    ],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/competitions",
+    "id": "competitions",
+    "name": "Competitions",
+    "width": 390,
+    "scrollWidth": 390,
+    "clientWidth": 390,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/competitions_390px.png",
+    "overflowDetails": [
+      {
+        "tag": "BUTTON",
+        "className": "cat-tab ",
+        "right": 434,
+        "excess": 44
+      },
+      {
+        "tag": "BUTTON",
+        "className": "cat-tab ",
+        "right": 618,
+        "excess": 228
+      },
+      {
+        "tag": "BUTTON",
+        "className": "cat-tab ",
+        "right": 767,
+        "excess": 377
+      }
+    ],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/competitions",
+    "id": "competitions",
+    "name": "Competitions",
+    "width": 430,
+    "scrollWidth": 430,
+    "clientWidth": 430,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/competitions_430px.png",
+    "overflowDetails": [
+      {
+        "tag": "BUTTON",
+        "className": "cat-tab ",
+        "right": 434,
+        "excess": 4
+      },
+      {
+        "tag": "BUTTON",
+        "className": "cat-tab ",
+        "right": 618,
+        "excess": 188
+      },
+      {
+        "tag": "BUTTON",
+        "className": "cat-tab ",
+        "right": 767,
+        "excess": 337
+      }
+    ],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/competitions",
+    "id": "competitions",
+    "name": "Competitions",
+    "width": 768,
+    "scrollWidth": 768,
+    "clientWidth": 768,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/competitions_768px.png",
+    "overflowDetails": [],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/competitions",
+    "id": "competitions",
+    "name": "Competitions",
+    "width": 1024,
+    "scrollWidth": 1024,
+    "clientWidth": 1024,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/competitions_1024px.png",
+    "overflowDetails": [],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/competitions",
+    "id": "competitions",
+    "name": "Competitions",
+    "width": 1440,
+    "scrollWidth": 1440,
+    "clientWidth": 1440,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/competitions_1440px.png",
+    "overflowDetails": [],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/calendar",
+    "id": "calendar",
+    "name": "Calendar",
+    "width": 320,
+    "scrollWidth": 320,
+    "clientWidth": 320,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/calendar_320px.png",
+    "overflowDetails": [
+      {
+        "tag": "DIV",
+        "className": "pro-select-wrapper",
+        "right": 384,
+        "excess": 64
+      },
+      {
+        "tag": "SELECT",
+        "className": "pro-select",
+        "right": 384,
+        "excess": 64
+      },
+      {
+        "tag": "BUTTON",
+        "className": "btn-submit-event-pill",
+        "right": 384,
+        "excess": 64
+      },
+      {
+        "tag": "BUTTON",
+        "className": "cat-tab ",
+        "right": 434,
+        "excess": 114
+      },
+      {
+        "tag": "BUTTON",
+        "className": "cat-tab ",
+        "right": 618,
+        "excess": 298
+      }
+    ],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/calendar",
+    "id": "calendar",
+    "name": "Calendar",
+    "width": 360,
+    "scrollWidth": 360,
+    "clientWidth": 360,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/calendar_360px.png",
+    "overflowDetails": [
+      {
+        "tag": "DIV",
+        "className": "pro-select-wrapper",
+        "right": 384,
+        "excess": 24
+      },
+      {
+        "tag": "SELECT",
+        "className": "pro-select",
+        "right": 384,
+        "excess": 24
+      },
+      {
+        "tag": "BUTTON",
+        "className": "btn-submit-event-pill",
+        "right": 384,
+        "excess": 24
+      },
+      {
+        "tag": "BUTTON",
+        "className": "cat-tab ",
+        "right": 434,
+        "excess": 74
+      },
+      {
+        "tag": "BUTTON",
+        "className": "cat-tab ",
+        "right": 618,
+        "excess": 258
+      }
+    ],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/calendar",
+    "id": "calendar",
+    "name": "Calendar",
+    "width": 390,
+    "scrollWidth": 390,
+    "clientWidth": 390,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/calendar_390px.png",
+    "overflowDetails": [
+      {
+        "tag": "BUTTON",
+        "className": "cat-tab ",
+        "right": 434,
+        "excess": 44
+      },
+      {
+        "tag": "BUTTON",
+        "className": "cat-tab ",
+        "right": 618,
+        "excess": 228
+      },
+      {
+        "tag": "BUTTON",
+        "className": "cat-tab ",
+        "right": 767,
+        "excess": 377
+      }
+    ],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/calendar",
+    "id": "calendar",
+    "name": "Calendar",
+    "width": 430,
+    "scrollWidth": 430,
+    "clientWidth": 430,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/calendar_430px.png",
+    "overflowDetails": [
+      {
+        "tag": "BUTTON",
+        "className": "cat-tab ",
+        "right": 434,
+        "excess": 4
+      },
+      {
+        "tag": "BUTTON",
+        "className": "cat-tab ",
+        "right": 618,
+        "excess": 188
+      },
+      {
+        "tag": "BUTTON",
+        "className": "cat-tab ",
+        "right": 767,
+        "excess": 337
+      }
+    ],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/calendar",
+    "id": "calendar",
+    "name": "Calendar",
+    "width": 768,
+    "scrollWidth": 768,
+    "clientWidth": 768,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/calendar_768px.png",
+    "overflowDetails": [],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/calendar",
+    "id": "calendar",
+    "name": "Calendar",
+    "width": 1024,
+    "scrollWidth": 1024,
+    "clientWidth": 1024,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/calendar_1024px.png",
+    "overflowDetails": [],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/calendar",
+    "id": "calendar",
+    "name": "Calendar",
+    "width": 1440,
+    "scrollWidth": 1440,
+    "clientWidth": 1440,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/calendar_1440px.png",
+    "overflowDetails": [],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/leaderboard",
+    "id": "leaderboard",
+    "name": "Leaderboard",
+    "width": 320,
+    "scrollWidth": 320,
+    "clientWidth": 320,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/leaderboard_320px.png",
+    "overflowDetails": [],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/leaderboard",
+    "id": "leaderboard",
+    "name": "Leaderboard",
+    "width": 360,
+    "scrollWidth": 360,
+    "clientWidth": 360,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/leaderboard_360px.png",
+    "overflowDetails": [],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/leaderboard",
+    "id": "leaderboard",
+    "name": "Leaderboard",
+    "width": 390,
+    "scrollWidth": 390,
+    "clientWidth": 390,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/leaderboard_390px.png",
+    "overflowDetails": [],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/leaderboard",
+    "id": "leaderboard",
+    "name": "Leaderboard",
+    "width": 430,
+    "scrollWidth": 430,
+    "clientWidth": 430,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/leaderboard_430px.png",
+    "overflowDetails": [],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/leaderboard",
+    "id": "leaderboard",
+    "name": "Leaderboard",
+    "width": 768,
+    "scrollWidth": 768,
+    "clientWidth": 768,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/leaderboard_768px.png",
+    "overflowDetails": [],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/leaderboard",
+    "id": "leaderboard",
+    "name": "Leaderboard",
+    "width": 1024,
+    "scrollWidth": 1024,
+    "clientWidth": 1024,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/leaderboard_1024px.png",
+    "overflowDetails": [],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/leaderboard",
+    "id": "leaderboard",
+    "name": "Leaderboard",
+    "width": 1440,
+    "scrollWidth": 1440,
+    "clientWidth": 1440,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/leaderboard_1440px.png",
+    "overflowDetails": [],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/associations",
+    "id": "associations",
+    "name": "Associations",
+    "width": 320,
+    "scrollWidth": 320,
+    "clientWidth": 320,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/associations_320px.png",
+    "overflowDetails": [
+      {
+        "tag": "BUTTON",
+        "className": "category-pill",
+        "right": 472,
+        "excess": 152
+      },
+      {
+        "tag": "SPAN",
+        "className": "pill-label",
+        "right": 455,
+        "excess": 135
+      },
+      {
+        "tag": "BUTTON",
+        "className": "category-pill",
+        "right": 670,
+        "excess": 350
+      },
+      {
+        "tag": "SPAN",
+        "className": "pill-label",
+        "right": 653,
+        "excess": 333
+      },
+      {
+        "tag": "BUTTON",
+        "className": "category-pill",
+        "right": 900,
+        "excess": 580
+      }
+    ],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/associations",
+    "id": "associations",
+    "name": "Associations",
+    "width": 360,
+    "scrollWidth": 360,
+    "clientWidth": 360,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/associations_360px.png",
+    "overflowDetails": [
+      {
+        "tag": "BUTTON",
+        "className": "category-pill",
+        "right": 472,
+        "excess": 112
+      },
+      {
+        "tag": "SPAN",
+        "className": "pill-label",
+        "right": 455,
+        "excess": 95
+      },
+      {
+        "tag": "BUTTON",
+        "className": "category-pill",
+        "right": 670,
+        "excess": 310
+      },
+      {
+        "tag": "SPAN",
+        "className": "pill-label",
+        "right": 653,
+        "excess": 293
+      },
+      {
+        "tag": "BUTTON",
+        "className": "category-pill",
+        "right": 900,
+        "excess": 540
+      }
+    ],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/associations",
+    "id": "associations",
+    "name": "Associations",
+    "width": 390,
+    "scrollWidth": 390,
+    "clientWidth": 390,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/associations_390px.png",
+    "overflowDetails": [
+      {
+        "tag": "BUTTON",
+        "className": "category-pill",
+        "right": 472,
+        "excess": 82
+      },
+      {
+        "tag": "SPAN",
+        "className": "pill-label",
+        "right": 455,
+        "excess": 65
+      },
+      {
+        "tag": "BUTTON",
+        "className": "category-pill",
+        "right": 670,
+        "excess": 280
+      },
+      {
+        "tag": "SPAN",
+        "className": "pill-label",
+        "right": 653,
+        "excess": 263
+      },
+      {
+        "tag": "BUTTON",
+        "className": "category-pill",
+        "right": 900,
+        "excess": 510
+      }
+    ],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/associations",
+    "id": "associations",
+    "name": "Associations",
+    "width": 430,
+    "scrollWidth": 430,
+    "clientWidth": 430,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/associations_430px.png",
+    "overflowDetails": [
+      {
+        "tag": "BUTTON",
+        "className": "category-pill",
+        "right": 472,
+        "excess": 42
+      },
+      {
+        "tag": "SPAN",
+        "className": "pill-label",
+        "right": 455,
+        "excess": 25
+      },
+      {
+        "tag": "BUTTON",
+        "className": "category-pill",
+        "right": 670,
+        "excess": 240
+      },
+      {
+        "tag": "SPAN",
+        "className": "pill-label",
+        "right": 653,
+        "excess": 223
+      },
+      {
+        "tag": "BUTTON",
+        "className": "category-pill",
+        "right": 900,
+        "excess": 470
+      }
+    ],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/associations",
+    "id": "associations",
+    "name": "Associations",
+    "width": 768,
+    "scrollWidth": 768,
+    "clientWidth": 768,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/associations_768px.png",
+    "overflowDetails": [
+      {
+        "tag": "BUTTON",
+        "className": "category-pill",
+        "right": 900,
+        "excess": 132
+      },
+      {
+        "tag": "SPAN",
+        "className": "pill-label",
+        "right": 883,
+        "excess": 115
+      }
+    ],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/associations",
+    "id": "associations",
+    "name": "Associations",
+    "width": 1024,
+    "scrollWidth": 1024,
+    "clientWidth": 1024,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/associations_1024px.png",
+    "overflowDetails": [],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/associations",
+    "id": "associations",
+    "name": "Associations",
+    "width": 1440,
+    "scrollWidth": 1440,
+    "clientWidth": 1440,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/associations_1440px.png",
+    "overflowDetails": [],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/moments",
+    "id": "moments",
+    "name": "Moments",
+    "width": 320,
+    "scrollWidth": 320,
+    "clientWidth": 320,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/moments_320px.png",
+    "overflowDetails": [
+      {
+        "tag": "BUTTON",
+        "className": "px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-al",
+        "right": 380,
+        "excess": 60
+      },
+      {
+        "tag": "BUTTON",
+        "className": "inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold ",
+        "right": 367,
+        "excess": 47
+      },
+      {
+        "tag": "SPAN",
+        "right": 353,
+        "excess": 33
+      },
+      {
+        "tag": "SPAN",
+        "className": "truncate",
+        "right": 337,
+        "excess": 17
+      }
+    ],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/moments",
+    "id": "moments",
+    "name": "Moments",
+    "width": 360,
+    "scrollWidth": 360,
+    "clientWidth": 360,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/moments_360px.png",
+    "overflowDetails": [
+      {
+        "tag": "BUTTON",
+        "className": "px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-al",
+        "right": 380,
+        "excess": 20
+      },
+      {
+        "tag": "BUTTON",
+        "className": "inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold ",
+        "right": 367,
+        "excess": 7
+      }
+    ],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/moments",
+    "id": "moments",
+    "name": "Moments",
+    "width": 390,
+    "scrollWidth": 390,
+    "clientWidth": 390,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/moments_390px.png",
+    "overflowDetails": [],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/moments",
+    "id": "moments",
+    "name": "Moments",
+    "width": 430,
+    "scrollWidth": 430,
+    "clientWidth": 430,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/moments_430px.png",
+    "overflowDetails": [],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/moments",
+    "id": "moments",
+    "name": "Moments",
+    "width": 768,
+    "scrollWidth": 768,
+    "clientWidth": 768,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/moments_768px.png",
+    "overflowDetails": [],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/moments",
+    "id": "moments",
+    "name": "Moments",
+    "width": 1024,
+    "scrollWidth": 1024,
+    "clientWidth": 1024,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/moments_1024px.png",
+    "overflowDetails": [],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/moments",
+    "id": "moments",
+    "name": "Moments",
+    "width": 1440,
+    "scrollWidth": 1440,
+    "clientWidth": 1440,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/moments_1440px.png",
+    "overflowDetails": [],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/knowledge",
+    "id": "knowledge",
+    "name": "Knowledge Hub",
+    "width": 320,
+    "scrollWidth": 320,
+    "clientWidth": 320,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/knowledge_320px.png",
+    "overflowDetails": [
+      {
+        "tag": "DIV",
+        "className": "pointer-events-none absolute -top-28 left-1/2 -translate-x-1/2 w-[920px] h-[480p",
+        "right": 620,
+        "excess": 300
+      },
+      {
+        "tag": "BUTTON",
+        "className": "px-4 py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all fl",
+        "right": 381,
+        "excess": 61
+      },
+      {
+        "tag": "SPAN",
+        "className": "px-1.5 py-0.2 rounded-full text-[10px] bg-white/10 text-[#868892]",
+        "right": 364,
+        "excess": 44
+      },
+      {
+        "tag": "BUTTON",
+        "className": "px-4 py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all fl",
+        "right": 600,
+        "excess": 280
+      },
+      {
+        "tag": "SPAN",
+        "className": "px-1.5 py-0.2 rounded-full text-[10px] bg-white/10 text-[#868892]",
+        "right": 583,
+        "excess": 263
+      }
+    ],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/knowledge",
+    "id": "knowledge",
+    "name": "Knowledge Hub",
+    "width": 360,
+    "scrollWidth": 360,
+    "clientWidth": 360,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/knowledge_360px.png",
+    "overflowDetails": [
+      {
+        "tag": "DIV",
+        "className": "pointer-events-none absolute -top-28 left-1/2 -translate-x-1/2 w-[920px] h-[480p",
+        "right": 640,
+        "excess": 280
+      },
+      {
+        "tag": "BUTTON",
+        "className": "px-4 py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all fl",
+        "right": 381,
+        "excess": 21
+      },
+      {
+        "tag": "SPAN",
+        "className": "px-1.5 py-0.2 rounded-full text-[10px] bg-white/10 text-[#868892]",
+        "right": 364,
+        "excess": 4
+      },
+      {
+        "tag": "BUTTON",
+        "className": "px-4 py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all fl",
+        "right": 600,
+        "excess": 240
+      },
+      {
+        "tag": "SPAN",
+        "className": "px-1.5 py-0.2 rounded-full text-[10px] bg-white/10 text-[#868892]",
+        "right": 583,
+        "excess": 223
+      }
+    ],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/knowledge",
+    "id": "knowledge",
+    "name": "Knowledge Hub",
+    "width": 390,
+    "scrollWidth": 390,
+    "clientWidth": 390,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/knowledge_390px.png",
+    "overflowDetails": [
+      {
+        "tag": "DIV",
+        "className": "pointer-events-none absolute -top-28 left-1/2 -translate-x-1/2 w-[920px] h-[480p",
+        "right": 655,
+        "excess": 265
+      },
+      {
+        "tag": "BUTTON",
+        "className": "px-4 py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all fl",
+        "right": 600,
+        "excess": 210
+      },
+      {
+        "tag": "SPAN",
+        "className": "px-1.5 py-0.2 rounded-full text-[10px] bg-white/10 text-[#868892]",
+        "right": 583,
+        "excess": 193
+      },
+      {
+        "tag": "BUTTON",
+        "className": "px-4 py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all fl",
+        "right": 780,
+        "excess": 390
+      },
+      {
+        "tag": "SPAN",
+        "className": "px-1.5 py-0.2 rounded-full text-[10px] bg-white/10 text-[#868892]",
+        "right": 763,
+        "excess": 373
+      }
+    ],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/knowledge",
+    "id": "knowledge",
+    "name": "Knowledge Hub",
+    "width": 430,
+    "scrollWidth": 430,
+    "clientWidth": 430,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/knowledge_430px.png",
+    "overflowDetails": [
+      {
+        "tag": "DIV",
+        "className": "pointer-events-none absolute -top-28 left-1/2 -translate-x-1/2 w-[920px] h-[480p",
+        "right": 675,
+        "excess": 245
+      },
+      {
+        "tag": "BUTTON",
+        "className": "px-4 py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all fl",
+        "right": 600,
+        "excess": 170
+      },
+      {
+        "tag": "SPAN",
+        "className": "px-1.5 py-0.2 rounded-full text-[10px] bg-white/10 text-[#868892]",
+        "right": 583,
+        "excess": 153
+      },
+      {
+        "tag": "BUTTON",
+        "className": "px-4 py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all fl",
+        "right": 780,
+        "excess": 350
+      },
+      {
+        "tag": "SPAN",
+        "className": "px-1.5 py-0.2 rounded-full text-[10px] bg-white/10 text-[#868892]",
+        "right": 763,
+        "excess": 333
+      }
+    ],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/knowledge",
+    "id": "knowledge",
+    "name": "Knowledge Hub",
+    "width": 768,
+    "scrollWidth": 768,
+    "clientWidth": 768,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/knowledge_768px.png",
+    "overflowDetails": [
+      {
+        "tag": "DIV",
+        "className": "pointer-events-none absolute -top-28 left-1/2 -translate-x-1/2 w-[920px] h-[480p",
+        "right": 844,
+        "excess": 76
+      },
+      {
+        "tag": "BUTTON",
+        "className": "px-4 py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all fl",
+        "right": 788,
+        "excess": 20
+      },
+      {
+        "tag": "SPAN",
+        "className": "px-1.5 py-0.2 rounded-full text-[10px] bg-white/10 text-[#868892]",
+        "right": 771,
+        "excess": 3
+      },
+      {
+        "tag": "BUTTON",
+        "className": "px-4 py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all fl",
+        "right": 1030,
+        "excess": 262
+      },
+      {
+        "tag": "SPAN",
+        "className": "px-1.5 py-0.2 rounded-full text-[10px] bg-white/10 text-[#868892]",
+        "right": 1013,
+        "excess": 245
+      }
+    ],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/knowledge",
+    "id": "knowledge",
+    "name": "Knowledge Hub",
+    "width": 1024,
+    "scrollWidth": 1024,
+    "clientWidth": 1024,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/knowledge_1024px.png",
+    "overflowDetails": [
+      {
+        "tag": "BUTTON",
+        "className": "px-4 py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all fl",
+        "right": 1038,
+        "excess": 14
+      },
+      {
+        "tag": "BUTTON",
+        "className": "px-4 py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all fl",
+        "right": 1232,
+        "excess": 208
+      },
+      {
+        "tag": "SPAN",
+        "className": "px-1.5 py-0.2 rounded-full text-[10px] bg-white/10 text-[#868892]",
+        "right": 1215,
+        "excess": 191
+      },
+      {
+        "tag": "BUTTON",
+        "className": "px-4 py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all fl",
+        "right": 1452,
+        "excess": 428
+      },
+      {
+        "tag": "SPAN",
+        "className": "px-1.5 py-0.2 rounded-full text-[10px] bg-white/10 text-[#868892]",
+        "right": 1435,
+        "excess": 411
+      }
+    ],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/knowledge",
+    "id": "knowledge",
+    "name": "Knowledge Hub",
+    "width": 1440,
+    "scrollWidth": 1440,
+    "clientWidth": 1440,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/knowledge_1440px.png",
+    "overflowDetails": [
+      {
+        "tag": "BUTTON",
+        "className": "px-4 py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all fl",
+        "right": 1512,
+        "excess": 72
+      },
+      {
+        "tag": "SPAN",
+        "className": "px-1.5 py-0.2 rounded-full text-[10px] bg-white/10 text-[#868892]",
+        "right": 1495,
+        "excess": 55
+      },
+      {
+        "tag": "A",
+        "className": "px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all flex i",
+        "right": 1662,
+        "excess": 222
+      },
+      {
+        "tag": "svg",
+        "right": 1550,
+        "excess": 110
+      },
+      {
+        "tag": "rect",
+        "right": 1548,
+        "excess": 108
+      }
+    ],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/knowledge/periodisasi-latihan-silat",
+    "id": "knowledge-article",
+    "name": "Knowledge Article",
+    "width": 320,
+    "scrollWidth": 320,
+    "clientWidth": 320,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/knowledge-article_320px.png",
+    "overflowDetails": [
+      {
+        "tag": "TABLE",
+        "className": "w-full text-left text-xs",
+        "right": 510,
+        "excess": 190
+      },
+      {
+        "tag": "THEAD",
+        "className": "bg-white/[0.05] text-white",
+        "right": 510,
+        "excess": 190
+      },
+      {
+        "tag": "TR",
+        "right": 510,
+        "excess": 190
+      },
+      {
+        "tag": "TH",
+        "className": "p-3.5 font-bold border-b border-white/[0.08]",
+        "right": 330,
+        "excess": 10
+      },
+      {
+        "tag": "TH",
+        "className": "p-3.5 font-bold border-b border-white/[0.08]",
+        "right": 420,
+        "excess": 100
+      }
+    ],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/knowledge/periodisasi-latihan-silat",
+    "id": "knowledge-article",
+    "name": "Knowledge Article",
+    "width": 360,
+    "scrollWidth": 360,
+    "clientWidth": 360,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/knowledge-article_360px.png",
+    "overflowDetails": [
+      {
+        "tag": "TABLE",
+        "className": "w-full text-left text-xs",
+        "right": 510,
+        "excess": 150
+      },
+      {
+        "tag": "THEAD",
+        "className": "bg-white/[0.05] text-white",
+        "right": 510,
+        "excess": 150
+      },
+      {
+        "tag": "TR",
+        "right": 510,
+        "excess": 150
+      },
+      {
+        "tag": "TH",
+        "className": "p-3.5 font-bold border-b border-white/[0.08]",
+        "right": 420,
+        "excess": 60
+      },
+      {
+        "tag": "TH",
+        "className": "p-3.5 font-bold border-b border-white/[0.08]",
+        "right": 510,
+        "excess": 150
+      }
+    ],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/knowledge/periodisasi-latihan-silat",
+    "id": "knowledge-article",
+    "name": "Knowledge Article",
+    "width": 390,
+    "scrollWidth": 390,
+    "clientWidth": 390,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/knowledge-article_390px.png",
+    "overflowDetails": [
+      {
+        "tag": "TABLE",
+        "className": "w-full text-left text-xs",
+        "right": 510,
+        "excess": 120
+      },
+      {
+        "tag": "THEAD",
+        "className": "bg-white/[0.05] text-white",
+        "right": 510,
+        "excess": 120
+      },
+      {
+        "tag": "TR",
+        "right": 510,
+        "excess": 120
+      },
+      {
+        "tag": "TH",
+        "className": "p-3.5 font-bold border-b border-white/[0.08]",
+        "right": 420,
+        "excess": 30
+      },
+      {
+        "tag": "TH",
+        "className": "p-3.5 font-bold border-b border-white/[0.08]",
+        "right": 510,
+        "excess": 120
+      }
+    ],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/knowledge/periodisasi-latihan-silat",
+    "id": "knowledge-article",
+    "name": "Knowledge Article",
+    "width": 430,
+    "scrollWidth": 430,
+    "clientWidth": 430,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/knowledge-article_430px.png",
+    "overflowDetails": [
+      {
+        "tag": "TABLE",
+        "className": "w-full text-left text-xs",
+        "right": 510,
+        "excess": 80
+      },
+      {
+        "tag": "THEAD",
+        "className": "bg-white/[0.05] text-white",
+        "right": 510,
+        "excess": 80
+      },
+      {
+        "tag": "TR",
+        "right": 510,
+        "excess": 80
+      },
+      {
+        "tag": "TH",
+        "className": "p-3.5 font-bold border-b border-white/[0.08]",
+        "right": 510,
+        "excess": 80
+      },
+      {
+        "tag": "TBODY",
+        "className": "divide-y divide-white/[0.05] bg-transparent",
+        "right": 510,
+        "excess": 80
+      }
+    ],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/knowledge/periodisasi-latihan-silat",
+    "id": "knowledge-article",
+    "name": "Knowledge Article",
+    "width": 768,
+    "scrollWidth": 768,
+    "clientWidth": 768,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/knowledge-article_768px.png",
+    "overflowDetails": [],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/knowledge/periodisasi-latihan-silat",
+    "id": "knowledge-article",
+    "name": "Knowledge Article",
+    "width": 1024,
+    "scrollWidth": 1024,
+    "clientWidth": 1024,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/knowledge-article_1024px.png",
+    "overflowDetails": [],
+    "componentDetails": "OK"
+  },
+  {
+    "route": "/knowledge/periodisasi-latihan-silat",
+    "id": "knowledge-article",
+    "name": "Knowledge Article",
+    "width": 1440,
+    "scrollWidth": 1440,
+    "clientWidth": 1440,
+    "hasOverflow": false,
+    "passed": true,
+    "screenshot": "tests/visual-qa/knowledge-article_1440px.png",
+    "overflowDetails": [],
+    "componentDetails": "OK"
+  }
+]

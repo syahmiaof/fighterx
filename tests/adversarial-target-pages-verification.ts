@@ -260,7 +260,7 @@ for (const cssFile of cssFiles) {
 // ------------------------------------------------------------------------------
 console.log(`${BOLD}--- Suite 5: Interactive Logic & Calculation Integrity ---${RESET}`);
 
-import { calculateTandingScore, getPenaltyDeduction } from "../src/lib/guidelines/scoring";
+import { calculateTandingScore } from "../src/lib/guidelines/scoring";
 import { calculateJurusScore } from "../src/lib/guidelines/scoring";
 
 // Verify Tanding score logic

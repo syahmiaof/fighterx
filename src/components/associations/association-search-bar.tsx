@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { Search, X, SlidersHorizontal } from "lucide-react";
+import { useLanguage } from "@/lib/i18n";
 
 interface AssociationSearchBarProps {
   query: string;
@@ -16,10 +17,11 @@ export function AssociationSearchBar({
   query,
   onQueryChange,
   resultCount,
-  totalCount,
   onResetFilters,
   hasActiveFilters,
 }: AssociationSearchBarProps) {
+  const { dict, locale } = useLanguage();
+  const ad = dict.associations;
   const inputRef = useRef<HTMLInputElement>(null);
 
   // Keyboard shortcut: pressing '/' focuses the search bar if not typing in an input
@@ -48,7 +50,7 @@ export function AssociationSearchBar({
           type="search"
           value={query}
           onChange={(e) => onQueryChange(e.target.value)}
-          placeholder="Cari nama persatuan, akronim (PSSGM, PESAKA, PSHT), negeri, pengasas..."
+          placeholder={ad.searchPlaceholder}
           className="search-input"
           aria-label="Cari badan atau perguruan silat"
         />
@@ -75,7 +77,7 @@ export function AssociationSearchBar({
       {hasActiveFilters && (
         <div className="search-meta-bar">
           <span className="search-result-count">
-            {resultCount} keputusan dijumpai
+            {locale === "en" ? `${resultCount} results found` : `${resultCount} keputusan dijumpai`}
           </span>
 
           {onResetFilters && (
@@ -85,7 +87,7 @@ export function AssociationSearchBar({
               onClick={onResetFilters}
             >
               <SlidersHorizontal size={13} aria-hidden="true" />
-              Set Semula Penapis
+              {locale === "en" ? "Reset Filters" : "Set Semula Penapis"}
             </button>
           )}
         </div>

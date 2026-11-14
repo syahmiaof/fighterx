@@ -22,7 +22,6 @@ import {
   COMPETITION_POLICIES,
   BASELINE_ASSESSMENTS,
   TRAINING_PRIORITIES,
-  PERIODIZATION_PHASES,
   KnowledgeArticle,
   KnowledgeCategory,
   WeightCategoryOption,
@@ -54,11 +53,6 @@ function assert(condition: boolean, testName: string, detail?: string) {
     console.error(`  ${red("✗ FAIL")} ${testName}`);
     console.error(`         ${red(`Detail: ${errMsg}`)}`);
   }
-}
-
-function warn(warning: string, name: string) {
-  anomalies.push({ name, warning });
-  console.log(`  ${yellow("⚠ WARN")} [${name}]: ${warning}`);
 }
 
 console.log("");

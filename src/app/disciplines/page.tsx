@@ -3,9 +3,9 @@ import { SiteHeader } from "@/components/site-header";
 import { DisciplinesPageView } from "@/components/disciplines/disciplines-page-view";
 
 export const metadata: Metadata = {
-  title: "Silat Disciplines · Silat Seni & Silat Olahraga · FighterX",
+  title: "Kategori Silat · Silat Seni & Silat Olahraga · FighterX",
   description:
-    "Eksplorasi mendalam dua cabang sukan silat moden: Silat Seni (Tunggal 100 jurus baku, Ganda, Regu, Solo Bebas) dan Silat Olahraga (Taktikal, Zon Mata, Had Tangkapan 5 Saat, Divisyen Berat) mengikut peraturan rasmi PERSILAT 2026.",
+    "Eksplorasi mendalam dua kategori sukan silat moden: Silat Seni (Tunggal 100 jurus baku, Ganda, Regu, Solo Bebas) dan Silat Olahraga (Taktikal, Zon Mata, Had Tangkapan 5 Saat, Divisyen Berat) mengikut peraturan rasmi PERSILAT 2026.",
 };
 
 export default function DisciplinesPage() {

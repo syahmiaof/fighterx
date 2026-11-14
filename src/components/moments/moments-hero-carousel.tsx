@@ -1,20 +1,20 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
-import { Heart, ChevronLeft, ChevronRight, Sparkles, MapPin, Shield } from "lucide-react";
+import { Heart, ChevronLeft, ChevronRight } from "lucide-react";
 import { useMoments } from "@/lib/moments/moments-context";
 import { AthleteMoment } from "@/lib/moments/types";
 
 export function MomentsHeroCarousel() {
   const { featuredMoments, toggleLike, setLightboxMoment } = useMoments();
-  const [items, setItems] = useState<AthleteMoment[]>([]);
+  const [items, setItems] = useState<AthleteMoment[]>(featuredMoments);
+  const [prevFeatured, setPrevFeatured] = useState(featuredMoments);
 
-  useEffect(() => {
-    if (featuredMoments.length > 0) {
-      setItems(featuredMoments);
-    }
-  }, [featuredMoments]);
+  if (prevFeatured !== featuredMoments) {
+    setPrevFeatured(featuredMoments);
+    setItems(featuredMoments);
+  }
 
   if (items.length === 0) return null;
 

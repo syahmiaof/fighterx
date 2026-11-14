@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { SENI_CATEGORIES } from "@/components/disciplines/disciplines-data";
 import {
   AlertTriangle,
@@ -10,28 +10,139 @@ import {
   Sparkles,
   Users,
 } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useCollectionMotion } from "@/hooks/useCollectionMotion";
+import { useLanguage } from "@/lib/i18n";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export function SilatSeniSection() {
+  const { dict, locale } = useLanguage();
   const [activeCategory, setActiveCategory] = useState<string>("tunggal");
+  const sectionRef = useRef<HTMLElement>(null);
+  const detailMotionRef = useCollectionMotion<HTMLDivElement>(activeCategory);
+  const entranceTriggeredRef = useRef(false);
+
+  // Helper to remove inline overrides after GSAP finishes
+  const cleanInline = useCallback((elements: HTMLElement[]) => {
+    elements.forEach((el) => {
+      el.style.removeProperty("clip-path");
+      el.style.removeProperty("clipPath");
+      el.style.removeProperty("transform");
+      el.style.removeProperty("opacity");
+      el.style.removeProperty("scale");
+      el.style.removeProperty("will-change");
+    });
+  }, []);
+
+  useEffect(() => {
+    if (entranceTriggeredRef.current) return;
+    const el = sectionRef.current;
+    if (!el) return;
+
+    const isReduced =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (isReduced) return;
+
+    const targetCards = Array.from(
+      el.querySelectorAll<HTMLElement>(".seni-glass-card, .seni-phase-card")
+    ).slice(0, 10);
+    if (!targetCards.length) return;
+
+    gsap.set(targetCards, {
+      opacity: 0,
+      y: 20,
+      scale: 0.96,
+      clipPath: "inset(0 50% 0 50% round 16px)",
+      willChange: "transform, opacity, clip-path",
+    });
+
+    const st = ScrollTrigger.create({
+      trigger: el,
+      start: "top 75%",
+      once: true,
+      onEnter: () => {
+        entranceTriggeredRef.current = true;
+        gsap.to(targetCards, {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          clipPath: "inset(0 0% 0 0% round 16px)",
+          duration: 0.95,
+          stagger: 0.075,
+          ease: "expo.out",
+          clearProps: "transform,scale,opacity,clipPath,clip-path,willChange",
+          onComplete: () => {
+            cleanInline(targetCards);
+          },
+        });
+      },
+    });
+
+    return () => {
+      st.kill();
+    };
+  }, [cleanInline]);
+
+  // Interactive 3D Tactile Physics
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    const interactiveSelector = ".seni-cat-btn, .seni-phase-card";
+    const handlePointerDown = (e: PointerEvent) => {
+      const target = (e.target as HTMLElement).closest<HTMLElement>(interactiveSelector);
+      if (!target) return;
+      gsap.to(target, { scale: 0.97, duration: 0.14, ease: "power2.out", overwrite: "auto" });
+    };
+    const handlePointerUp = (e: PointerEvent) => {
+      const target = (e.target as HTMLElement).closest<HTMLElement>(interactiveSelector);
+      if (!target) return;
+      gsap.to(target, { scale: 1, duration: 0.28, ease: "back.out(2)", overwrite: "auto", clearProps: "transform,scale" });
+    };
+    const handlePointerLeave = (e: PointerEvent) => {
+      const target = (e.target as HTMLElement).closest<HTMLElement>(interactiveSelector);
+      if (!target) return;
+      gsap.to(target, { scale: 1, duration: 0.28, ease: "back.out(2)", overwrite: "auto", clearProps: "transform,scale" });
+    };
+
+    el.addEventListener("pointerdown", handlePointerDown, { passive: true });
+    el.addEventListener("pointerup", handlePointerUp, { passive: true });
+    el.addEventListener("pointerleave", handlePointerLeave, { passive: true, capture: true });
+
+    return () => {
+      el.removeEventListener("pointerdown", handlePointerDown);
+      el.removeEventListener("pointerup", handlePointerUp);
+      el.removeEventListener("pointerleave", handlePointerLeave, { capture: true });
+    };
+  }, []);
 
   const category = SENI_CATEGORIES.find((c) => c.id === activeCategory) || SENI_CATEGORIES[0];
 
   return (
-    <section id="silat-seni" className="py-12 sm:py-16 border-b border-white/[0.08]">
+    <section ref={sectionRef} id="silat-seni" className="py-12 sm:py-16 border-b border-white/[0.08]">
       <div className="max-w-6xl mx-auto px-4">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-8">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[rgba(240,180,40,0.35)] bg-[rgba(240,180,40,0.12)] text-[#ffd24c] text-xs font-bold uppercase tracking-wider mb-2">
-            <Award size={13} /> Disiplin Silat Seni
+            <Award size={13} /> {locale === "bm" ? "Disiplin Silat Seni" : "Silat Seni Discipline"}
           </div>
           <h2
             className="text-3xl sm:text-4xl md:text-5xl font-display font-bold uppercase text-white tracking-tight"
             style={{ fontFamily: "var(--font-athletic)" }}
           >
-            WARISAN &amp; <span className="text-amber-500">JURUS BAKU KEBANGSAAN</span>
+            {locale === "bm" ? (
+              <>WARISAN &amp; <span className="text-amber-500">JURUS BAKU KEBANGSAAN</span></>
+            ) : (
+              <>HERITAGE &amp; <span className="text-amber-500">STANDARDIZED NATIONAL FORMS</span></>
+            )}
           </h2>
           <p className="mt-2 text-xs sm:text-sm text-neutral-400 leading-relaxed">
-            Silat Seni mengangkat ketinggian martabat pusaka warisan Melayu melalui kesempurnaan gerak, ketajaman mata bilah, dan keharmonian jiwa pahlawan.
+            {locale === "bm"
+              ? "Silat Seni mengangkat ketinggian martabat pusaka warisan Melayu melalui kesempurnaan gerak, ketajaman mata bilah, dan keharmonian jiwa pahlawan."
+              : "Silat Seni elevates the heritage of Malay martial art through movement perfection, weapon sharpness, and harmonious warrior spirit."}
           </p>
 
           {/* 4 Category Filter Pills */}
@@ -45,10 +156,10 @@ export function SilatSeniSection() {
                   role="tab"
                   aria-selected={isActive}
                   onClick={() => setActiveCategory(cat.id)}
-                  className={`px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                  className={`seni-cat-btn px-4 py-2 rounded-full text-xs font-bold cursor-pointer ${
                     isActive
                       ? "bg-[#e10600] border border-[#ff3845] text-white shadow-[0_0_16px_rgba(225,6,0,0.4)]"
-                      : "bg-white/[0.035] backdrop-blur-[8px] border border-white/[0.08] text-[#b5b6bc] hover:bg-white/[0.08] hover:border-white/20 hover:text-white hover:-translate-y-0.5"
+                      : "bg-white/[0.035] backdrop-blur-[8px] border border-white/[0.08] text-[#b5b6bc] hover:bg-white/[0.08] hover:border-white/20 hover:text-white"
                   }`}
                 >
                   {cat.name}
@@ -59,12 +170,12 @@ export function SilatSeniSection() {
         </div>
 
         {/* Category Detail Box */}
-        <div className="rounded-2xl border border-white/[0.08] bg-white/[0.025] backdrop-blur-[16px] p-6 sm:p-8 shadow-[0_8px_32px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.06)]">
+        <div ref={detailMotionRef} className="seni-glass-card rounded-2xl border border-white/[0.08] bg-white/[0.025] backdrop-blur-[16px] p-6 sm:p-8 shadow-[0_8px_32px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.06)]">
           {/* Top metadata strip */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/[0.08] pb-4 mb-6">
             <div>
               <span className="text-xs font-bold uppercase tracking-widest text-[#ffd24c]">
-                Kategori Rasmi PERSILAT
+                {locale === "bm" ? "Kategori Rasmi PERSILAT" : "Official PERSILAT Category"}
               </span>
               <h3
                 className="text-2xl sm:text-3xl font-display font-bold uppercase text-white mt-0.5"
@@ -82,7 +193,7 @@ export function SilatSeniSection() {
               </div>
               <div className="flex items-center gap-2 rounded-lg bg-white/[0.03] border border-white/[0.06] px-3 py-1.5 text-xs text-[#a5a6ad] backdrop-blur-sm">
                 <Clock size={14} className="text-[#ff4d5a]" />
-                <span>Masa: {category.duration}</span>
+                <span>{locale === "bm" ? "Masa:" : "Duration:"} {category.duration}</span>
               </div>
             </div>
           </div>
@@ -110,7 +221,9 @@ export function SilatSeniSection() {
               <div className="flex items-center gap-2">
                 <Sparkles size={16} className="text-[#ffd24c]" />
                 <h4 className="text-sm font-bold uppercase tracking-wider text-white">
-                  Rangkaian 100 Jurus Baku Tunggal (3 Fasa)
+                  {locale === "bm"
+                    ? "Rangkaian 100 Jurus Baku Tunggal (3 Fasa)"
+                    : "Standardized 100 Jurus Sequence (3 Phases)"}
                 </h4>
               </div>
 
@@ -118,7 +231,7 @@ export function SilatSeniSection() {
                 {category.phases.map((phase) => (
                   <div
                     key={phase.title}
-                    className="rounded-xl border border-white/[0.08] bg-white/[0.025] backdrop-blur-[12px] p-4 flex flex-col justify-between shadow-[0_4px_20px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.05)] hover:border-[rgba(240,180,40,0.4)] hover:bg-white/[0.04] transition-all"
+                    className="seni-phase-card rounded-xl border border-white/[0.08] bg-white/[0.025] backdrop-blur-[12px] p-4 flex flex-col justify-between shadow-[0_4px_20px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.05)] hover:border-[rgba(240,180,40,0.4)] hover:bg-white/[0.04]"
                   >
                     <div>
                       <div className="flex items-center justify-between mb-2">
@@ -126,13 +239,13 @@ export function SilatSeniSection() {
                           {phase.range}
                         </span>
                         <span className="text-xs font-mono font-bold text-neutral-400">
-                          {phase.count} Gerakan
+                          {phase.count} {locale === "bm" ? "Gerakan" : "Movements"}
                         </span>
                       </div>
 
                       <h5 className="text-sm font-bold text-white mb-1">{phase.title}</h5>
                       <p className="text-[11px] font-semibold text-[#ffd24c]/90 mb-2">
-                        Senjata: {phase.weapon}
+                        {locale === "bm" ? "Senjata:" : "Weapon:"} {phase.weapon}
                       </p>
                       <p className="text-xs text-neutral-300 leading-relaxed mb-3">
                         {phase.description}
@@ -141,7 +254,7 @@ export function SilatSeniSection() {
 
                     <div className="border-t border-white/[0.06] pt-2.5 space-y-1">
                       <p className="text-[10px] font-bold uppercase tracking-wider text-neutral-400">
-                        Teknik Kunci:
+                        {locale === "bm" ? "Teknik Kunci:" : "Key Techniques:"}
                       </p>
                       <ul className="text-[11px] text-neutral-300 list-disc pl-4 space-y-0.5">
                         {phase.keyTechniques.map((tech, tIdx) => (
@@ -159,7 +272,7 @@ export function SilatSeniSection() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="rounded-xl border border-white/[0.08] bg-white/[0.025] backdrop-blur-[12px] p-5 shadow-[0_4px_20px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.05)]">
               <h4 className="text-xs font-bold uppercase tracking-wider text-[#ffd24c] flex items-center gap-2 mb-3">
-                <Award size={15} /> Rubrik Pemarkahan Juri (PERSILAT)
+                <Award size={15} /> {locale === "bm" ? "Rubrik Pemarkahan Juri (PERSILAT)" : "Jury Scoring Rubric (PERSILAT)"}
               </h4>
               <div className="space-y-3 text-xs text-neutral-300 leading-relaxed">
                 <div className="rounded-lg bg-white/[0.02] p-3 border border-white/[0.06] text-xs text-[#d1d1d5] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">

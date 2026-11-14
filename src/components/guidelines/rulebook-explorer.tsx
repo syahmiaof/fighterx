@@ -136,7 +136,7 @@ export function RulebookExplorer() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Cari peraturan (contoh: bantingan, var, teguran, 5 saat, kepala, golok, toya, timbang)..."
-            className="w-full rounded-xl border border-white/[0.08] bg-white/[0.035] pl-10 pr-10 py-3 text-sm text-white placeholder-white/30 focus:border-[rgba(255,56,69,0.5)] focus:bg-white/[0.05] focus:outline-none focus:ring-1 focus:ring-[#ff3845] backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition-all"
+            className="w-full rounded-xl border border-white/[0.08] bg-white/[0.035] pl-10 pr-10 py-3 text-sm text-white placeholder-white/30 focus:border-[rgba(255,56,69,0.5)] focus:bg-white/[0.05] focus:outline-none focus:ring-1 focus:ring-[#ff3845] backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition-colors"
             aria-label="Cari buku peraturan"
           />
           {searchQuery && (
@@ -162,7 +162,7 @@ export function RulebookExplorer() {
               key={tab.id}
               type="button"
               onClick={() => setActiveCategory(tab.id)}
-              className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-xs font-semibold transition-all cursor-pointer backdrop-blur-md ${
+              className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-xs font-semibold transition-colors cursor-pointer backdrop-blur-md ${
                 isSelected
                   ? "bg-[#e10600] border border-[#ff3845] text-white shadow-[0_0_16px_rgba(225,6,0,0.4)]"
                   : "border border-white/[0.08] bg-white/[0.035] text-[#b5b6bc] hover:bg-white/[0.08] hover:border-white/20 hover:text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
@@ -185,7 +185,7 @@ export function RulebookExplorer() {
             return (
               <article
                 key={rule.id}
-                className="rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.15] p-4 sm:p-5 transition-all backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
+                className="rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.15] p-4 sm:p-5 transition-colors backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
               >
                 <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
                   <div className="flex-1">
@@ -214,7 +214,7 @@ export function RulebookExplorer() {
                   <button
                     type="button"
                     onClick={() => toggleExpand(rule.id)}
-                    className="self-start sm:self-center inline-flex items-center gap-1.5 rounded-xl border border-white/[0.12] bg-white/[0.04] hover:bg-white/[0.08] text-white px-3.5 py-1.5 text-xs font-semibold backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition-all cursor-pointer shrink-0"
+                    className="self-start sm:self-center inline-flex items-center gap-1.5 rounded-xl border border-white/[0.12] bg-white/[0.04] hover:bg-white/[0.08] text-white px-3.5 py-1.5 text-xs font-semibold backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition-colors cursor-pointer shrink-0"
                     aria-expanded={isExpanded}
                   >
                     {isExpanded ? (
@@ -273,7 +273,7 @@ export function RulebookExplorer() {
                 setSearchQuery("");
                 setActiveCategory("ALL");
               }}
-              className="mt-4 inline-flex items-center gap-1.5 rounded-xl bg-[#e10600] border border-[#ff3845] px-4 py-2 text-xs font-semibold text-white shadow-[0_0_16px_rgba(225,6,0,0.4)] transition-all cursor-pointer"
+              className="mt-4 inline-flex items-center gap-1.5 rounded-xl bg-[#e10600] border border-[#ff3845] px-4 py-2 text-xs font-semibold text-white shadow-[0_0_16px_rgba(225,6,0,0.4)] transition-colors cursor-pointer"
             >
               Papar Semua Peraturan
             </button>

@@ -450,9 +450,9 @@ async function runAllStressTests() {
   // --------------------------------------------------------------------------
   // CATEGORY 6: AFFILIATION SELECTOR & DIRECTORY ID RESOLUTION
   // --------------------------------------------------------------------------
-  await recordTest("Affiliation: Verify All 26 Directory Associations & ID Matching", "Affiliation Mapping", async () => {
-    expectEqual(SILAT_ASSOCIATIONS.length, 26, "Directory must have exactly 26 associations");
-    expectEqual(SILAT_AFFILIATIONS.length, 27, "Affiliations list must have exactly 27 options (26 + INDEPENDENT)");
+  await recordTest("Affiliation: Verify All 27 Directory Associations & ID Matching", "Affiliation Mapping", async () => {
+    expectEqual(SILAT_ASSOCIATIONS.length, 27, "Directory must have exactly 27 associations");
+    expectEqual(SILAT_AFFILIATIONS.length, 28, "Affiliations list must have exactly 28 options (27 + INDEPENDENT)");
 
     // Check INDEPENDENT
     const indep = SILAT_AFFILIATIONS.find((a) => a.id === "INDEPENDENT");
@@ -474,8 +474,8 @@ async function runAllStressTests() {
     }
 
     console.log(`\n  [Affiliation Mapping Analysis]`);
-    console.log(`    Matching Directory IDs: ${matchingIds.length} / 26`);
-    console.log(`    Diverging Directory IDs: ${divergingIds.length} / 26`);
+    console.log(`    Matching Directory IDs: ${matchingIds.length} / 27`);
+    console.log(`    Diverging Directory IDs: ${divergingIds.length} / 27`);
 
     if (divergingIds.length > 0) {
       console.log(`    Divergence details:`);

@@ -30,7 +30,7 @@ export function StakeholderGuideSwitcher() {
       </div>
 
       {/* Role Switcher Tabs */}
-      <div className="flex items-center gap-3 my-6">
+      <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3 my-6">
         <button
           type="button"
           onClick={() => setActiveRole("athlete")}

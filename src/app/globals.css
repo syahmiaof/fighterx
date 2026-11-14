@@ -111,7 +111,7 @@ img { display:block; }
   background: transparent;
   cursor: pointer;
   white-space: nowrap;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: color 0.18s ease, background-color 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
   user-select: none;
 }
 
@@ -296,6 +296,10 @@ img { display:block; }
   display: none;
 }
 
+.mobile-header-actions {
+  display: none;
+}
+
 @media (max-width: 1080px) {
   .header-nav-container {
     display: none !important;
@@ -303,12 +307,18 @@ img { display:block; }
   .header-actions {
     display: none !important;
   }
+  .mobile-header-actions {
+    display: inline-flex !important;
+    align-items: center;
+    margin-left: auto;
+    margin-right: 8px;
+  }
   .mobile-menu-toggle {
     display: grid !important;
     place-items: center;
     width: 40px;
     height: 40px;
-    margin-left: auto;
+    margin-left: 0;
     color: #ffffff;
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 8px;
@@ -490,7 +500,7 @@ img { display:block; }
 .hero { isolation:isolate; position:relative; min-height:max(410px, calc(100svh - 160px)); overflow:hidden; display:grid; place-items:center; background:transparent; }
 .hero-backdrop { position:absolute; z-index:-3; inset:0; background:transparent url('/assets/fighterx/bg-fighterx-desktop.webp') center/cover no-repeat; opacity:0.85; }
 .hero::before { position:absolute; z-index:-2; content:""; inset:0; background:linear-gradient(90deg,rgba(8,9,11,0.12) 0%,rgba(8,9,11,0.68) 31%,rgba(8,9,11,0.6) 68%,rgba(8,9,11,0.12) 100%),linear-gradient(0deg,rgba(8,9,11,0.7) 0%,transparent 26%,rgba(8,9,11,0.2) 100%); }
-.hero-smoke { z-index:-1; object-fit:cover; --smoke-low:.15; --smoke-high:.27; animation:ambient-smoke-drift 48s ease-in-out infinite alternate; mix-blend-mode:screen; pointer-events:none; }
+.hero-smoke { z-index:-1; object-fit:cover; opacity:0.25; animation:none; transform:none; mix-blend-mode:screen; pointer-events:none; }
 .hero-athlete { position:absolute; z-index:0; bottom:-50px; width:auto; height:min(95%,520px); object-fit:contain; filter:drop-shadow(0 12px 25px #0009); }
 .hero-athlete-left { left:3.5%; }
 .hero-athlete-right { right:-1.5%; }
@@ -523,7 +533,7 @@ img { display:block; }
 .hero-quote-highlight { color:var(--hot); }
 .hero-bottom-mark { display:none; }
 .feature-rail { position:relative; z-index:3; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:0; min-height:96px; padding:17px max(32px,calc((100vw - 1320px)/2)); border-top:1px solid #66686b; border-bottom:1px solid #44454a; background:linear-gradient(105deg,rgba(11,11,13,0.72),rgba(21,21,24,0.72) 52%,rgba(11,11,13,0.72)); backdrop-filter:blur(8px); }
-.feature-item { min-width:0; display:flex; align-items:center; gap:16px; padding:0 24px; border-right:1px solid #414247; }
+.feature-item { min-width:0; display:flex; align-items:center; gap:16px; padding:0 24px; border-right:1px solid #414247; border-radius:8px; }
 .feature-item:first-child { padding-left:8px; }
 .feature-item:last-child { border:0; padding-right:0; }
 .feature-icon { width:56px; height:48px; flex:none; display:grid; place-items:center; color:#fff; border:1px solid var(--hot); border-radius:8px 3px 8px 3px; background:linear-gradient(135deg,#ff202a50,#161619e8 72%); transform:skew(-12deg); box-shadow:inset 0 0 14px #e1060024; }
@@ -534,7 +544,7 @@ img { display:block; }
 .workflow,.programmes,.faq { position:relative; isolation:isolate; background:transparent; }
 .workflow::before,.programmes::before,.faq::before { content:""; position:absolute; z-index:-1; top:0; bottom:0; left:50%; width:100vw; transform:translateX(-50%); background-position:center; background-size:cover; background-repeat:no-repeat; pointer-events:none; }
 .workflow::before,.programmes::before,.faq::before { background-image:linear-gradient(100deg,#08090ba8,#08090b78 46%,#08090bb0),url('/assets/fighterx/homepage-bg-desktop.webp'); }
-.workflow::after,.programmes::after,.faq::after { content:""; position:absolute; z-index:-1; top:0; bottom:0; left:50%; width:100vw; transform:translateX(-50%); translate:0 0; background:url('/assets/fighterx/overlay-red-smoke-transparent.png') center/cover no-repeat; --smoke-low:.04; --smoke-high:.14; animation:ambient-smoke-drift 54s ease-in-out infinite alternate; mix-blend-mode:screen; pointer-events:none; }
+.workflow::after,.programmes::after,.faq::after { content:""; position:absolute; z-index:-1; top:0; bottom:0; left:50%; width:100vw; transform:translateX(-50%); background:url('/assets/fighterx/overlay-red-smoke-transparent.png') center/cover no-repeat; opacity:0.10; animation:none; mix-blend-mode:screen; pointer-events:none; }
 .workflow { position:relative; min-height:195px; padding-block:30px; display:grid; grid-template-columns:235px 1fr 292px; align-items:center; gap:26px; border-bottom:1px solid #45464a; overflow:visible; }
 .workflow-heading h2,.programmes-heading h2 { margin:0; font:700 32px/.98 var(--font-heritage); letter-spacing:.015em; }
 .heading-rule { display:block; width:125px; height:2px; margin-top:14px; background:linear-gradient(90deg,var(--red),transparent); }
@@ -648,7 +658,7 @@ img { display:block; }
   .hero { min-height:620px; align-items:start; }
   .hero-backdrop { background-image:url('/assets/fighterx/bg-fighterx-mobile.webp'); background-position:center; background-size:cover; }
   .hero::before { background:linear-gradient(180deg,#08090b52 0%,#08090b5c 50%,#08090b 100%),linear-gradient(90deg,#08090b94,transparent 45%,#08090b94); }
-  .hero-smoke { inset:auto 0 0!important; top:24%!important; height:70%!important; width:100%!important; object-fit:cover; --smoke-low:.12; --smoke-high:.2; }
+  .hero-smoke { inset:auto 0 0!important; top:24%!important; height:70%!important; width:100%!important; object-fit:cover; opacity:0.15; transform:none; }
   .hero-athlete { bottom:0; width:auto; height:clamp(280px,52vw,340px); max-height:none; object-fit:contain; }
   .hero-athlete-left { left:-2%; }.hero-athlete-right { right:-11%; }
   .hero-copy { width:100%; padding:46px 20px 230px; }
@@ -688,7 +698,7 @@ img { display:block; }
 .mobile-menu > a[aria-current="page"] { border-color:#8c3438; background:#241416; }
   .mobile-menu > .mobile-menu-register { justify-content:space-between; border-color:#ff555a; background:linear-gradient(110deg,#ed171b,#bb080c); }
   .workflow::before,.programmes::before,.faq::before { background-image:linear-gradient(100deg,#08090bb8,#08090b8c 48%,#08090bbd),url('/assets/fighterx/homepage-bg-mobile.webp'); background-position:center,center; }
-  .workflow::after,.programmes::after,.faq::after { --smoke-low:.025; --smoke-high:.085; }
+  .workflow::after,.programmes::after,.faq::after { opacity:0.05; }
   .button-small { min-height:32px; padding-inline:8px; font-size:9px; }
 }
 @media (max-width:450px) {
@@ -712,8 +722,153 @@ img { display:block; }
 @media (max-width:760px) {
 }
 @keyframes mobile-menu-in { from { opacity:0; transform:translateY(-5px); } to { opacity:1; transform:translateY(0); } }
-@keyframes ambient-smoke-drift { 0% { opacity:var(--smoke-low,.08); translate:-1.1% .6%; } 52% { opacity:var(--smoke-high,.16); translate:.9% -.7%; } 100% { opacity:var(--smoke-low,.08); translate:-.4% .45%; } }
-@media (prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important; animation-duration:.01ms!important; animation-iteration-count:1!important; transition-duration:.01ms!important; } }
+
+
+/* Page transition wrapper */
+.page-transition-shell {
+  min-height: 100%;
+  width: 100%;
+  will-change: opacity, transform;
+}
+
+/* Smooth Interactive Card Hover & Lift */
+.feature-item,
+.workflow-step,
+.programme-card,
+.spotlight-card,
+.collab-card,
+.testimonial-card,
+.faq-list details,
+.knowledge-frosted-card,
+.knowledge-card,
+.kpi-matrix-card,
+.guidelines-card,
+.leaderboard-athlete-card,
+.athlete-pillar-card,
+.athlete-deepdive-card,
+.comp-glass-card,
+.timeline-event-row,
+.timeline-month-block,
+.quick-meta-item,
+.moment-card,
+.upload-preset-card,
+.moments-filter-strip,
+.association-card,
+.spec-card,
+.directory-controls-section,
+.discipline-card-seni,
+.discipline-card-olahraga,
+.matrix-card,
+.seni-glass-card,
+.seni-phase-card,
+.tactical-pillar-card,
+.weight-class-card,
+.equipment-card,
+.target-zone-card,
+.discipline-cta-card {
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1), 
+              border-color 0.28s ease !important;
+}
+
+.leaderboard-athlete-card,
+.athlete-pillar-card,
+.athlete-deepdive-card,
+.comp-glass-card,
+.timeline-event-row,
+.timeline-month-block,
+.quick-meta-item,
+.moment-card,
+.upload-preset-card,
+.moments-filter-strip,
+.association-card,
+.spec-card,
+.directory-controls-section,
+.discipline-card-seni,
+.discipline-card-olahraga,
+.matrix-card,
+.seni-glass-card,
+.seni-phase-card,
+.tactical-pillar-card,
+.weight-class-card,
+.equipment-card,
+.target-zone-card,
+.discipline-cta-card {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.feature-item:hover,
+.workflow-step:hover,
+.programme-card:hover,
+.spotlight-card:hover,
+.collab-card:hover,
+.testimonial-card:hover,
+.faq-list details:hover,
+.guidelines-card:hover,
+.leaderboard-athlete-card:hover,
+.athlete-pillar-card:hover,
+.athlete-deepdive-card:hover,
+.comp-glass-card:hover,
+.timeline-event-row:hover,
+.quick-meta-item:hover,
+.moment-card:hover,
+.upload-preset-card:hover,
+.association-card:hover,
+.spec-card:hover,
+.discipline-card-seni:hover,
+.discipline-card-olahraga:hover,
+.matrix-card:hover,
+.seni-phase-card:hover,
+.tactical-pillar-card:hover,
+.weight-class-card:hover,
+.equipment-card:hover,
+.target-zone-card:hover {
+  transform: translateY(-2px) !important;
+  border-color: rgba(255, 56, 69, 0.55) !important;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.65), 0 0 20px rgba(225, 6, 0, 0.2) !important;
+}
+
+/* Interactive Button & Element Tactile 3D Physics */
+.button, .button-primary, .button-outline, .btn-crimson, .glass-bypass-btn, .text-link, .tactile-btn, .faq-list summary,
+.cat-tab, .mode-btn, .btn-submit-event-pill, .comp-card-details-btn, .comp-card-poster-btn, .btn-reset-filters,
+.moments-cat-pill, .moments-upload-btn, .moments-like-btn, .moments-share-btn, .moment-card,
+.category-pill, .search-reset-btn, .empty-state-reset-btn, .modal-action-primary, .modal-action-outline, .modal-action-close, .modal-close-button,
+.disc-tab-btn, .matrix-toggle-btn, .seni-cat-btn, .zone-toggle-btn, .equipment-filter-btn {
+  transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), 
+              box-shadow 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), 
+              background-color 0.18s ease, 
+              border-color 0.18s ease !important;
+  transform-origin: center center;
+}
+
+.button:hover, .button-primary:hover, .btn-crimson:hover, .text-link:hover, .tactile-btn:hover {
+  transform: translateY(-2px) scale(1.02) !important;
+  box-shadow: 0 8px 26px rgba(225, 6, 0, 0.5) !important;
+}
+
+.button:active, .button-primary:active, .button-outline:active, .btn-crimson:active, .glass-bypass-btn:active, .text-link:active, .tactile-btn:active, .faq-list summary:active {
+  transform: translateY(1px) scale(0.95) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) !important;
+  transition: transform 0.06s ease-out, box-shadow 0.06s ease-out !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .hero-smoke,
+  .workflow::after,
+  .programmes::after,
+  .faq::after,
+  .partner-scroll-track,
+  .public-page-ambient-smoke {
+    animation: none !important;
+    transform: none !important;
+  }
+}
 
 /* Sign In: same FighterX wallpaper and restrained motion language as the homepage. */
 .login-page { position:relative; isolation:isolate; min-height:calc(100svh - 64px); overflow:hidden; background:#08090b; }
@@ -1086,7 +1241,7 @@ img { display:block; }
   gap: 10px;
   cursor: pointer;
   box-shadow: 0 6px 24px rgba(225, 6, 0, 0.45), inset 0 1px rgba(255, 121, 124, 0.5);
-  transition: all .2s ease;
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .glass-bypass-btn:hover:not(:disabled) {
@@ -1304,7 +1459,7 @@ img { display:block; }
 
 /* Guidelines Revamped Hero: Option A - The Presidential Editorial */
 .guidelines-3d-headline { margin:0; font:italic 700 clamp(38px,5vw,68px)/.9 var(--font-athletic); letter-spacing:-.015em; text-wrap:balance; position:relative; }
-.guidelines-title-line { display:block; overflow:hidden; padding-block:.04em; margin-block:-.04em; }
+.guidelines-title-line { display:block; overflow:visible; padding-block:.04em; margin-block:-.04em; padding-inline:.06em; }
 .guidelines-3d-headline .title-metallic { color:#ffffff; text-shadow:0 2px 0 #b0b0b5,0 4px 0 #606166,0 12px 24px rgba(0,0,0,0.85); }
 .guidelines-3d-headline .title-crimson em { color:#f2242b; font-style:italic; text-shadow:0 2px 0 #9c0a10,0 4px 0 #580408,0 12px 24px rgba(225,6,0,0.45); filter:drop-shadow(0 0 16px rgba(225,6,0,0.6)); }
 
@@ -1325,7 +1480,7 @@ img { display:block; }
 .guidelines-live-pulse { width:7px; height:7px; border-radius:50%; background:#ff2a32; box-shadow:0 0 10px #ff2a32; animation:pulse-dot 1.8s ease-in-out infinite; }
 .guidelines-eyebrow-rule { width:52px; height:2px; background:linear-gradient(90deg,#ff2a32,transparent); }
 .guidelines-3d-headline { margin:0; font:italic 700 clamp(52px,6.8vw,92px)/.81 var(--font-athletic); letter-spacing:-.018em; text-wrap:balance; position:relative; }
-.guidelines-title-line { display:block; overflow:hidden; padding-block:.04em; margin-block:-.04em; }
+.guidelines-title-line { display:block; overflow:visible; padding-block:.04em; margin-block:-.04em; padding-inline:.06em; }
 .guidelines-3d-headline .title-metallic { color:#ffffff; text-shadow:0 2px 0 #b0b0b5,0 5px 0 #606166,0 14px 28px rgba(0,0,0,0.9); }
 .guidelines-3d-headline .title-crimson em { color:#f2242b; font-style:italic; text-shadow:0 2px 0 #9c0a10,0 5px 0 #580408,0 14px 28px rgba(225,6,0,0.45); filter:drop-shadow(0 0 16px rgba(225,6,0,0.6)); }
 .guidelines-hero-accent-bar { width:140px; height:3px; margin:14px 0 16px; background:linear-gradient(90deg,#ff2a32 0%,#e10600 65%,transparent 100%); transform:skew(-18deg); box-shadow:0 0 12px rgba(225,6,0,0.6); }
@@ -1848,9 +2003,10 @@ img { display:block; }
   animation: scrollLogos 30s linear infinite;
 }
 
-/* User requirement: Marquee continues moving smoothly on mouse hover without pausing */
-.partner-scroll-wrapper .partner-scroll-track {
-  animation-play-state: running;
+/* Allow pausing on hover or focus so partner links can be read and clicked comfortably */
+.partner-scroll-wrapper:hover .partner-scroll-track,
+.partner-scroll-wrapper:focus-within .partner-scroll-track {
+  animation-play-state: paused;
 }
 
 @keyframes scrollLogos {
@@ -1912,6 +2068,7 @@ img { display:block; }
 @media (prefers-reduced-motion: reduce) {
   .partner-scroll-track {
     animation: none !important;
+    transform: none !important;
   }
   .partner-scroll-wrapper {
     overflow-x: auto;

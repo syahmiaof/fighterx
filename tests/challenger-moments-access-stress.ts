@@ -19,7 +19,6 @@ import { AthleteMoment } from "../src/lib/moments/types";
 // ANSI colors for report
 const green = (s: string) => `\x1b[32m${s}\x1b[0m`;
 const red = (s: string) => `\x1b[31m${s}\x1b[0m`;
-const yellow = (s: string) => `\x1b[33m${s}\x1b[0m`;
 const cyan = (s: string) => `\x1b[36m${s}\x1b[0m`;
 const bold = (s: string) => `\x1b[1m${s}\x1b[0m`;
 
@@ -37,11 +36,12 @@ function check(desc: string, fn: () => void | boolean) {
     }
     passedTests++;
     console.log(`  ${green("✓ PASS")} ${desc}`);
-  } catch (err: any) {
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : String(err);
     failedTests++;
-    const msg = `FAIL: ${desc} -> ${err.message}`;
+    const msg = `FAIL: ${desc} -> ${message}`;
     failures.push(msg);
-    console.log(`  ${red("✗ FAIL")} ${desc} : ${err.message}`);
+    console.log(`  ${red("✗ FAIL")} ${desc} : ${message}`);
   }
 }
 

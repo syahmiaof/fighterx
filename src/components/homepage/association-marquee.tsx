@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useLanguage } from "@/lib/i18n";
 
 export interface PartnerLogo {
   name: string;
@@ -176,6 +177,7 @@ export const partnerLogos: PartnerLogo[] = [
 ];
 
 export function AssociationMarquee() {
+  const { d } = useLanguage();
   return (
     <section
       className="association-marquee-section relative py-12 md:py-16 overflow-hidden bg-black/25 backdrop-blur-[2px] border-y border-[#26272C]/40"
@@ -194,13 +196,13 @@ export function AssociationMarquee() {
       {/* Section Header */}
       <div className="association-marquee-header text-center mb-8 relative z-30">
         <p className="marquee-eyebrow text-xs tracking-[0.3em] text-[#FF3845] uppercase mb-2 font-semibold">
-          — RANGKAIAN KELAB &amp; PERSILATAN —
+          {d.home.marquee.eyebrow}
         </p>
         <h2 id="marquee-heading" className="marquee-title font-athletic text-2xl md:text-3xl font-bold text-white tracking-wide">
-          Kelab &amp; Badan Perguruan Berdaftar
+          {d.home.marquee.title}
         </h2>
         <p className="marquee-subtitle text-xs md:text-sm text-[#C5C6CA] max-w-2xl mx-auto mt-2">
-          Dinaungi oleh PESAKA Malaysia bersama empat anggota pengasas teras, perguruan utama kebangsaan, dan persekutuan antarabangsa PERSILAT.
+          {d.home.marquee.subtitle}
         </p>
       </div>
 

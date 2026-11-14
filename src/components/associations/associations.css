@@ -434,7 +434,11 @@
   font-size: 12px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: background-color 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+              color 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.2s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .category-pill:hover {
@@ -540,10 +544,10 @@
 
 .association-card:hover,
 .association-card:focus-visible {
-  border-color: rgba(255, 56, 69, 0.45);
+  border-color: rgba(255, 56, 69, 0.55);
   background: rgba(255, 255, 255, 0.045);
-  transform: translateY(-3px);
-  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.5), 0 0 20px rgba(225, 6, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.65), 0 0 20px rgba(225, 6, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 /* Top Row: Category tag and Acronym */
@@ -751,7 +755,7 @@
   border-radius: 16px;
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85), 0 0 30px rgba(225, 6, 0, 0.2);
   overflow: hidden;
-  animation: slideUp 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform, opacity, clip-path;
 }
 
 @keyframes fadeIn {

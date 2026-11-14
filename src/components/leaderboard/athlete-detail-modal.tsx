@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import Image from "next/image";
+import gsap from "gsap";
 import {
   X,
   Trophy,
@@ -29,15 +30,125 @@ interface AthleteDetailModalProps {
 }
 
 export function AthleteDetailModal({ athlete, onClose }: AthleteDetailModalProps) {
+  const modalRef = useRef<HTMLDivElement>(null);
+  const closeBtnRef = useRef<HTMLButtonElement>(null);
+  const triggerRef = useRef<HTMLElement | null>(null);
+
   useEffect(() => {
+    if (!athlete) return;
+    triggerRef.current = (document.activeElement as HTMLElement) || null;
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    // Auto-focus close button
+    const timer = setTimeout(() => {
+      closeBtnRef.current?.focus();
+    }, 40);
+
+    // GSAP Nemo Iris Entrance for Modal Shell & Stagger for Pillar Cards
+    if (modalRef.current) {
+      gsap.fromTo(
+        modalRef.current,
+        {
+          opacity: 0,
+          scale: 0.96,
+          y: 16,
+          clipPath: "inset(0 45% 0 45% round 20px)",
+          willChange: "transform, opacity, clip-path",
+        },
+        {
+          opacity: 1,
+          scale: 1,
+          y: 0,
+          clipPath: "inset(0 0% 0 0% round 20px)",
+          duration: 0.55,
+          ease: "expo.out",
+          clearProps: "transform,scale,opacity,clipPath,clip-path,willChange",
+        }
+      );
+
+      const pillars = modalRef.current.querySelectorAll<HTMLElement>(".athlete-pillar-card");
+      if (pillars.length > 0) {
+        gsap.fromTo(
+          pillars,
+          { scale: 0.92, y: 12, opacity: 0 },
+          {
+            scale: 1,
+            y: 0,
+            opacity: 1,
+            duration: 0.45,
+            stagger: 0.05,
+            ease: "back.out(1.5)",
+            delay: 0.15,
+            clearProps: "transform,scale,opacity",
+          }
+        );
+      }
+
+      const deepdives = modalRef.current.querySelectorAll<HTMLElement>(".athlete-deepdive-card");
+      if (deepdives.length > 0) {
+        gsap.fromTo(
+          deepdives,
+          { y: 14, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.45,
+            stagger: 0.04,
+            ease: "power2.out",
+            delay: 0.25,
+            clearProps: "transform,opacity",
+          }
+        );
+      }
+    }
+
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
+        e.preventDefault();
         onClose();
+        return;
+      }
+
+      if (e.key === "Tab") {
+        if (!modalRef.current) return;
+        const focusables = Array.from(
+          modalRef.current.querySelectorAll<HTMLElement>(
+            'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+          )
+        ).filter((el) => el.offsetParent !== null || el.offsetWidth > 0 || el.offsetHeight > 0);
+
+        if (focusables.length === 0) {
+          e.preventDefault();
+          return;
+        }
+
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+
+        if (e.shiftKey) {
+          if (document.activeElement === first || !modalRef.current.contains(document.activeElement)) {
+            e.preventDefault();
+            last.focus();
+          }
+        } else {
+          if (document.activeElement === last || !modalRef.current.contains(document.activeElement)) {
+            e.preventDefault();
+            first.focus();
+          }
+        }
       }
     };
+
     window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [onClose]);
+
+    return () => {
+      clearTimeout(timer);
+      document.body.style.overflow = originalOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+      triggerRef.current?.focus();
+    };
+  }, [athlete, onClose]);
 
   if (!athlete) return null;
 
@@ -47,7 +158,7 @@ export function AthleteDetailModal({ athlete, onClose }: AthleteDetailModalProps
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 md:p-6 overflow-y-auto animate-fadeIn"
+      className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 md:p-6 overflow-y-auto"
       role="dialog"
       aria-modal="true"
       aria-labelledby="athlete-modal-title"
@@ -55,9 +166,13 @@ export function AthleteDetailModal({ athlete, onClose }: AthleteDetailModalProps
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="relative w-full max-w-3xl my-auto rounded-2xl border border-white/[0.1] bg-[#0c0d12]/80 backdrop-blur-2xl p-5 sm:p-7 md:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.9),inset_0_1px_0_rgba(255,255,255,0.1)] max-h-[90vh] overflow-y-auto text-white">
+      <div
+        ref={modalRef}
+        className="relative w-full max-w-3xl my-auto rounded-2xl border border-white/[0.1] bg-[#0c0d12]/80 backdrop-blur-2xl p-5 sm:p-7 md:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.9),inset_0_1px_0_rgba(255,255,255,0.1)] max-h-[90vh] overflow-y-auto text-white"
+      >
         {/* Close Button */}
         <button
+          ref={closeBtnRef}
           type="button"
           onClick={onClose}
           aria-label="Tutup perincian atlet"
@@ -76,7 +191,6 @@ export function AthleteDetailModal({ athlete, onClose }: AthleteDetailModalProps
               fill
               className="object-cover object-top"
               sizes="(max-width: 640px) 80px, 96px"
-              priority
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
             <div className="absolute bottom-1 right-1 px-1.5 py-0.5 rounded bg-[#FF3845] text-[9px] font-bold font-athletic text-white">
@@ -190,7 +304,7 @@ export function AthleteDetailModal({ athlete, onClose }: AthleteDetailModalProps
 
           {/* Breakdown 4 Pillars */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mt-4">
-            <div className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.06] backdrop-blur-md">
+            <div className="athlete-pillar-card p-3 rounded-xl bg-white/[0.02] border border-white/[0.06] backdrop-blur-md">
               <div className="flex items-center justify-between text-[#8E9099] mb-1">
                 <span className="text-[10px] uppercase font-bold">Kehadiran</span>
                 <CalendarCheck size={13} className="text-[#FF555C]" />
@@ -203,7 +317,7 @@ export function AthleteDetailModal({ athlete, onClose }: AthleteDetailModalProps
               </span>
             </div>
 
-            <div className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.06] backdrop-blur-md">
+            <div className="athlete-pillar-card p-3 rounded-xl bg-white/[0.02] border border-white/[0.06] backdrop-blur-md">
               <div className="flex items-center justify-between text-[#8E9099] mb-1">
                 <span className="text-[10px] uppercase font-bold">Ujian Baseline</span>
                 <Activity size={13} className="text-sky-400" />
@@ -216,7 +330,7 @@ export function AthleteDetailModal({ athlete, onClose }: AthleteDetailModalProps
               </span>
             </div>
 
-            <div className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.06] backdrop-blur-md">
+            <div className="athlete-pillar-card p-3 rounded-xl bg-white/[0.02] border border-white/[0.06] backdrop-blur-md">
               <div className="flex items-center justify-between text-[#8E9099] mb-1">
                 <span className="text-[10px] uppercase font-bold">Video Drills</span>
                 <Video size={13} className="text-[#ffd24c]" />
@@ -229,7 +343,7 @@ export function AthleteDetailModal({ athlete, onClose }: AthleteDetailModalProps
               </span>
             </div>
 
-            <div className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.06] backdrop-blur-md">
+            <div className="athlete-pillar-card p-3 rounded-xl bg-white/[0.02] border border-white/[0.06] backdrop-blur-md">
               <div className="flex items-center justify-between text-[#8E9099] mb-1">
                 <span className="text-[10px] uppercase font-bold">Kejohanan</span>
                 <Medal size={13} className="text-purple-400" />
@@ -255,7 +369,7 @@ export function AthleteDetailModal({ athlete, onClose }: AthleteDetailModalProps
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <div className="p-3.5 rounded-xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-md">
+            <div className="athlete-deepdive-card p-3.5 rounded-xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-md">
               <div className="flex items-center justify-between">
                 <span className="text-xs text-[#A2A3AA] font-semibold">Larian 6-Minit</span>
                 <span className="text-xs font-bold text-emerald-400 font-mono">
@@ -281,7 +395,7 @@ export function AthleteDetailModal({ athlete, onClose }: AthleteDetailModalProps
               </span>
             </div>
 
-            <div className="p-3.5 rounded-xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-md">
+            <div className="athlete-deepdive-card p-3.5 rounded-xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-md">
               <div className="flex items-center justify-between">
                 <span className="text-xs text-[#A2A3AA] font-semibold">Push-Up (1 Minit)</span>
                 <span className="text-xs font-bold text-emerald-400 font-mono">
@@ -307,7 +421,7 @@ export function AthleteDetailModal({ athlete, onClose }: AthleteDetailModalProps
               </span>
             </div>
 
-            <div className="p-3.5 rounded-xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-md">
+            <div className="athlete-deepdive-card p-3.5 rounded-xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-md">
               <div className="flex items-center justify-between">
                 <span className="text-xs text-[#A2A3AA] font-semibold">Ujian Plank Teras</span>
                 <span className="text-xs font-bold text-emerald-400 font-mono">

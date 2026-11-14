@@ -1,0 +1,80 @@
+[
+  {
+    "id": "A11Y-REDMOT-01",
+    "name": "Homepage ambient smoke loop settled to static layer without keyframe drift",
+    "passed": true,
+    "details": "animationName: \"none\", opacity: 0.25"
+  },
+  {
+    "id": "A11Y-REDMOT-02",
+    "name": "Homepage hero headline immediately settled at opacity 1 on reduced motion",
+    "passed": true,
+    "details": "opacity: 1, visibility: visible"
+  },
+  {
+    "id": "A11Y-REDMOT-03",
+    "name": "Guidelines hero title lines settle immediately to autoAlpha 1 under reduced motion",
+    "passed": true,
+    "details": "Found .guidelines-title-line settled with full visibility"
+  },
+  {
+    "id": "A11Y-REDMOT-04",
+    "name": "Disciplines Seni & Olahraga paired cards settle immediately without delay",
+    "passed": true,
+    "details": "Cards have opacity >= 0.9 without animation delay"
+  },
+  {
+    "id": "A11Y-MODAL-01",
+    "name": "Competitions tournament modal: focus auto-contained, Tab trapped, Escape dismissed",
+    "passed": true,
+    "details": "modalOpen: true, focusInside: true, tabTrapped: true, modalClosed: true"
+  },
+  {
+    "id": "A11Y-MODAL-02",
+    "name": "Leaderboard athlete detail modal: focus trapped within dialog and dismisses on Escape",
+    "passed": true,
+    "details": "modalOpen: true, focusInside: true, tabTrapped: true, closed: true"
+  },
+  {
+    "id": "A11Y-MODAL-03",
+    "name": "Associations detail modal: keyboard focus containment and Escape dismissal verified",
+    "passed": true,
+    "details": "modalOpen: true, focusInside: true, tabTrapped: true, closed: true"
+  },
+  {
+    "id": "A11Y-MODAL-04",
+    "name": "Moments lightbox modal: focus trapping and Escape dismissal verified",
+    "passed": true,
+    "details": "modalOpen: true, focusInside: true, tabTrapped: true, closed: true"
+  },
+  {
+    "id": "A11Y-NOJS-HOME",
+    "name": "No-JS baseline for Homepage: content and semantic markup rendered cleanly in SSR",
+    "passed": true,
+    "details": "Heading: \"TRAINSMARTER.FIGHTSTRONGER.\", TextLen: 8041, Links: 95, Buttons: 3"
+  },
+  {
+    "id": "A11Y-NOJS-GUID",
+    "name": "No-JS baseline for Guidelines: content and semantic markup rendered cleanly in SSR",
+    "passed": true,
+    "details": "Heading: \"COMPETITION RULES\nEXPLORER\", TextLen: 17018, Links: 21, Buttons: 53"
+  },
+  {
+    "id": "A11Y-NOJS-DISC",
+    "name": "No-JS baseline for Disciplines: content and semantic markup rendered cleanly in SSR",
+    "passed": true,
+    "details": "Heading: \"DUALITI KATEGORI.\nSATU JIWA PERSILATAN.\", TextLen: 13953, Links: 21, Buttons: 23"
+  },
+  {
+    "id": "A11Y-NOJS-COMP",
+    "name": "No-JS baseline for Competitions: content and semantic markup rendered cleanly in SSR",
+    "passed": true,
+    "details": "Heading: \"MALAYSIAN SILAT COMPETITION CALENDAR\", TextLen: 3564, Links: 29, Buttons: 37"
+  },
+  {
+    "id": "A11Y-NOJS-KNOW",
+    "name": "No-JS baseline for Knowledge Hub: content and semantic markup rendered cleanly in SSR",
+    "passed": true,
+    "details": "Heading: \"SPORT SCIENCE\", TextLen: 12508, Links: 57, Buttons: 32"
+  }
+]

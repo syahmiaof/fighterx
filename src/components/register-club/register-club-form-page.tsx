@@ -1,10 +1,16 @@
+"use client";
+
 import Link from "next/link";
 import { Suspense } from "react";
 import { SiteHeader } from "@/components/site-header";
 import { RegisterClubForm } from "@/components/register-club/register-club-form";
 import { ShieldCheck, Sparkles, Trophy } from "lucide-react";
+import { useLanguage } from "@/lib/i18n";
 
 export function RegisterClubFormPage() {
+  const { dict, locale } = useLanguage();
+  const rf = dict.auth.registerForm;
+
   return (
     <>
       <SiteHeader currentPage="register" />
@@ -12,7 +18,7 @@ export function RegisterClubFormPage() {
         <div className="register-wrap max-w-4xl mx-auto px-4 pt-10 sm:pt-14">
           <section className="register-intro text-center mb-8" aria-labelledby="register-title">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-red-500/30 bg-red-950/30 text-red-400 text-xs font-bold uppercase tracking-wider mb-3">
-              <Sparkles size={13} /> Pendaftaran Kelab Silat Malaysia
+              <Sparkles size={13} /> {rf.badge}
             </div>
 
             <h1
@@ -20,11 +26,12 @@ export function RegisterClubFormPage() {
               className="text-4xl sm:text-5xl md:text-6xl font-bold uppercase text-white tracking-tight"
               style={{ fontFamily: "var(--font-athletic)" }}
             >
-              DAFTAR KELAB <span className="text-red-600">FIGHTERX</span>
+              {locale === "bm" ? "DAFTAR KELAB" : "REGISTER CLUB"}{" "}
+              <span className="text-red-600">FIGHTERX</span>
             </h1>
 
             <p className="mt-3 text-sm sm:text-base text-neutral-300 max-w-2xl mx-auto leading-relaxed">
-              Sertai platform digital atlet silat nombor satu negara. Pantau perkembangan atlet, selaraskan kurikulum Silat Seni &amp; Olahraga, serta bersiap siaga untuk kejohanan berprestij.
+              {rf.subtitle}
             </p>
 
             {/* Trial & Pricing Banner */}
@@ -38,8 +45,10 @@ export function RegisterClubFormPage() {
                     <ShieldCheck size={20} />
                   </div>
                   <div>
-                    <strong className="block text-sm font-bold text-white">30 Hari Percuma</strong>
-                    <span className="text-[11px] text-neutral-400">Bermula selepas pengesahan akaun</span>
+                    <strong className="block text-sm font-bold text-white">{rf.pricingTrial}</strong>
+                    <span className="text-[11px] text-neutral-400">
+                      {locale === "en" ? "Starts after account verification" : "Bermula selepas pengesahan akaun"}
+                    </span>
                   </div>
                 </div>
 
@@ -49,21 +58,23 @@ export function RegisterClubFormPage() {
                   </div>
                   <div>
                     <strong className="block text-sm font-bold text-white">
-                      RM20 <small className="text-neutral-400 font-normal">/bulan</small>
+                      {rf.pricingRate}
                     </strong>
-                    <span className="text-[11px] text-neutral-400">Untuk 1 kelab · Tiada bayaran awal</span>
+                    <span className="text-[11px] text-neutral-400">
+                      {locale === "en" ? "For 1 club · No upfront payment" : "Untuk 1 kelab · Tiada bayaran awal"}
+                    </span>
                   </div>
                 </div>
               </div>
             </div>
 
             <p className="register-signin mt-4 text-xs text-neutral-400">
-              Sudah mempunyai akaun berdaftar?{" "}
+              {rf.alreadyRegistered}{" "}
               <Link
                 href="/login"
                 className="text-white font-semibold underline underline-offset-4 hover:text-red-400 transition-colors"
               >
-                Log Masuk Portal
+                {locale === "en" ? "Portal Sign In" : "Log Masuk Portal"}
               </Link>
             </p>
           </section>
@@ -71,7 +82,9 @@ export function RegisterClubFormPage() {
           <Suspense
             fallback={
               <div className="text-white text-center py-12">
-                <p className="text-sm text-neutral-400">Memuatkan borang pendaftaran kelab...</p>
+                <p className="text-sm text-neutral-400">
+                  {locale === "en" ? "Loading club registration form..." : "Memuatkan borang pendaftaran kelab..."}
+                </p>
               </div>
             }
           >

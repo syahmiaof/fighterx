@@ -5,12 +5,14 @@ import Image from "next/image";
 import { Heart, MessageCircle, Share2, ZoomIn, ShieldCheck, Eye } from "lucide-react";
 import { AthleteMoment } from "@/lib/moments/types";
 import { useMoments } from "@/lib/moments/moments-context";
+import { useLanguage } from "@/lib/i18n";
 
 interface MomentCardProps {
   moment: AthleteMoment;
 }
 
 export function MomentCard({ moment }: MomentCardProps) {
+  const { dict, locale } = useLanguage();
   const { toggleLike, setLightboxMoment, showToast } = useMoments();
   const [isLiking, setIsLiking] = useState(false);
 
@@ -23,7 +25,7 @@ export function MomentCard({ moment }: MomentCardProps) {
   const handleShare = () => {
     if (typeof window !== "undefined") {
       navigator.clipboard?.writeText(window.location.href);
-      showToast("Pautan moment disalin!");
+      showToast(locale === "bm" ? "Pautan moment disalin!" : "Moment link copied!");
     }
   };
 
@@ -34,16 +36,16 @@ export function MomentCard({ moment }: MomentCardProps) {
       case "seni":
         return "Silat Seni";
       case "fitness":
-        return "Kecergasan";
+        return locale === "bm" ? "Kecergasan" : "Fitness";
       case "kejohanan":
-        return "Kejohanan";
+        return locale === "bm" ? "Kejohanan" : "Championship";
       default:
-        return "Umum";
+        return locale === "bm" ? "Umum" : "General";
     }
   };
 
   return (
-    <article className="group relative flex flex-col rounded-2xl border border-white/10 hover:border-white/30 bg-transparent hover:bg-white/[0.03] backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.12)] hover:-translate-y-1.5 transition-all duration-300 overflow-hidden">
+    <article className="moment-card group relative flex flex-col rounded-2xl border border-white/10 hover:border-white/30 bg-transparent hover:bg-white/[0.03] backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.12)] hover:-translate-y-1.5 transition-all duration-300 overflow-hidden">
       {/* 1. Minimalist Athlete Header (Jernih Transparent Glass) */}
       <div className="p-3.5 sm:p-4 flex items-center justify-between border-b border-white/[0.08]">
         <div className="flex items-center gap-2.5 min-w-0">
@@ -121,7 +123,7 @@ export function MomentCard({ moment }: MomentCardProps) {
             <button
               type="button"
               onClick={handleLike}
-              className={`inline-flex items-center gap-1 font-semibold transition-all duration-200 cursor-pointer ${
+              className={`moments-like-btn inline-flex items-center gap-1 font-semibold transition-all duration-200 cursor-pointer ${
                 moment.userLiked ? "text-[#FF3845]" : "text-[#96989F] hover:text-white"
               } ${isLiking ? "scale-125" : "scale-100"}`}
               title="Suka Moment ini"
@@ -152,7 +154,7 @@ export function MomentCard({ moment }: MomentCardProps) {
           <button
             type="button"
             onClick={handleShare}
-            className="p-1 text-[#73757F] hover:text-white transition-colors cursor-pointer"
+            className="moments-share-btn p-1 text-[#73757F] hover:text-white transition-colors cursor-pointer"
             title="Kongsi Pautan"
           >
             <Share2 size={13} />

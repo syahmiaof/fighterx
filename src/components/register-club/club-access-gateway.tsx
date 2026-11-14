@@ -5,8 +5,11 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { ArrowRight, Building2, ChevronRight, ShieldCheck } from "lucide-react";
 import { uiOnlyAuthGateway } from "@/lib/auth/ui-only-auth";
+import { useLanguage } from "@/lib/i18n";
 
 function ClubAccessGatewayContent() {
+  const { dict, locale } = useLanguage();
+  const gw = dict.auth.gateway;
   const router = useRouter();
   const searchParams = useSearchParams();
   const [checkingSession, setCheckingSession] = useState(false);
@@ -37,36 +40,36 @@ function ClubAccessGatewayContent() {
     <main className="club-gateway-page">
       <div className="club-gateway-wrap">
         <header className="club-gateway-intro">
-          <p className="club-gateway-eyebrow"><span /> FIGHTERX CLUB ACCESS <span /></p>
+          <p className="club-gateway-eyebrow"><span /> {gw.eyebrow} <span /></p>
           <h1>Your Club. <em>Your Journey.</em></h1>
-          <p className="club-gateway-lede">Daftarkan kelab silat anda, atau akses ruang kelab sedia ada.</p>
+          <p className="club-gateway-lede">{gw.subtitle}</p>
         </header>
         <section className="club-gateway-options" aria-label="Club access options">
           <article className="club-gateway-card club-gateway-card-register">
             <div className="club-gateway-card-top">
               <span className="club-gateway-icon"><Building2 size={23} strokeWidth={1.7} aria-hidden="true" /></span>
-              <span className="club-gateway-kicker">30 DAYS FREE TRIAL</span>
+              <span className="club-gateway-kicker">{gw.registerCardTrial}</span>
             </div>
-            <h2>Register New Club</h2>
-            <p>Daftarkan kelab atau akademi silat anda dan mulakan perjalanan bersama FighterX.</p>
+            <h2>{gw.registerCardTitle}</h2>
+            <p>{gw.registerCardDesc}</p>
             <Link className="club-gateway-action club-gateway-action-primary" href={registerHref}>
-              Register Club <ArrowRight size={17} aria-hidden="true" />
+              {gw.registerCardBtn} <ArrowRight size={17} aria-hidden="true" />
             </Link>
           </article>
           <article className="club-gateway-card club-gateway-card-access">
             <div className="club-gateway-card-top">
               <span className="club-gateway-icon"><ShieldCheck size={23} strokeWidth={1.7} aria-hidden="true" /></span>
-              <span className="club-gateway-kicker">FOR REGISTERED CLUBS</span>
+              <span className="club-gateway-kicker">{gw.myClubCardEyebrow}</span>
             </div>
-            <h2>My Club</h2>
-            <p>Sign in to check access to your club workspace and application status.</p>
+            <h2>{gw.myClubCardTitle}</h2>
+            <p>{gw.myClubCardDesc}</p>
             <button className="club-gateway-action club-gateway-action-secondary" type="button" onClick={openClubAccess} disabled={checkingSession}>
-              {checkingSession ? "Checking access…" : "Access My Club"}
+              {checkingSession ? "Checking access..." : gw.myClubCardBtn}
               {!checkingSession && <ChevronRight size={18} aria-hidden="true" />}
             </button>
           </article>
         </section>
-        <p className="club-gateway-boundary">Authentication, membership and management permissions are not connected in this preview. No club data is loaded.</p>
+        <p className="club-gateway-boundary">{gw.boundaryNote}</p>
       </div>
     </main>
   );

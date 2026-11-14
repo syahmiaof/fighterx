@@ -41,17 +41,20 @@ export function MomentsProvider({ children }: { children: React.ReactNode }) {
 
   // Load from local storage if available
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) {
-        const parsed = JSON.parse(stored);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          setMoments(parsed);
+    const timer = setTimeout(() => {
+      try {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            setMoments(parsed);
+          }
         }
+      } catch {
+        // ignore JSON parse errors
       }
-    } catch {
-      // ignore JSON parse errors
-    }
+    }, 0);
+    return () => clearTimeout(timer);
   }, []);
 
   // Save to local storage on change

@@ -7,7 +7,6 @@ import {
   ArrowRight,
   Menu,
   X,
-  Shield,
   BookOpen,
   Layers,
   Users,
@@ -15,12 +14,13 @@ import {
   UserCheck,
   Trophy,
   CalendarDays,
-  Handshake,
   BookMarked,
   Sparkles,
 } from "lucide-react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { useLanguage } from "@/lib/i18n";
+import { LanguageSwitcher } from "./language-switcher";
 
 gsap.registerPlugin(useGSAP);
 
@@ -54,11 +54,8 @@ const NAV_ITEMS: NavItem[] = [
   { id: "home", label: "Utama", href: "/", icon: Home },
   { id: "guidelines", label: "Guidelines", href: "/guidelines", icon: BookOpen },
   { id: "knowledge", label: "Sport Science", href: "/knowledge", icon: BookMarked },
-  { id: "leaderboard", label: "Leaderboard", href: "/leaderboard", icon: Trophy },
   { id: "competitions", label: "Kalendar", href: "/competitions", icon: CalendarDays },
-  { id: "moments", label: "Moment", href: "/moments", icon: Sparkles },
-  { id: "associations", label: "Persatuan", href: "/associations", icon: Shield },
-  { id: "disciplines", label: "Disiplin", href: "/disciplines", icon: Layers },
+  { id: "disciplines", label: "Kategori", href: "/disciplines", icon: Layers },
 ];
 
 function BrandWordmark() {
@@ -75,19 +72,30 @@ function BrandWordmark() {
 }
 
 export function SiteHeader({ currentPage = "home" }: SiteHeaderProps) {
+  const { d } = useLanguage();
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [optimisticHref, setOptimisticHref] = useState<string | null>(null);
+  const [prevPathname, setPrevPathname] = useState(pathname);
+
+  const navItems: NavItem[] = [
+    { id: "home", label: d.nav.home, href: "/", icon: Home },
+    { id: "guidelines", label: d.nav.guidelines, href: "/guidelines", icon: BookOpen },
+    { id: "knowledge", label: d.nav.knowledge, href: "/knowledge", icon: BookMarked },
+    { id: "competitions", label: d.nav.competitions, href: "/competitions", icon: CalendarDays },
+    { id: "disciplines", label: d.nav.disciplines, href: "/disciplines", icon: Layers },
+  ];
 
   const headerRef = useRef<HTMLElement>(null);
   const headerInnerRef = useRef<HTMLDivElement>(null);
   const toggleBtnRef = useRef<HTMLButtonElement>(null);
   const mobileMenuRef = useRef<HTMLElement>(null);
 
-  // Clear optimistic active indicator whenever route changes
-  useEffect(() => {
+  // Clear optimistic active indicator whenever route changes (during render)
+  if (prevPathname !== pathname) {
+    setPrevPathname(pathname);
     setOptimisticHref(null);
-  }, [pathname]);
+  }
 
   const isPageActive = useCallback(
     (item: NavItem): boolean => {
@@ -233,14 +241,12 @@ export function SiteHeader({ currentPage = "home" }: SiteHeaderProps) {
             <Link href="/" prefetch={true}>Utama</Link>
             <Link href="/guidelines" prefetch={true}>Guidelines</Link>
             <Link href="/knowledge" prefetch={true}>Sport Science</Link>
-            <Link href="/leaderboard" prefetch={true}>Leaderboard</Link>
             <Link href="/competitions" prefetch={true}>Kalendar</Link>
-            <Link href="/moments" prefetch={true}>Moment</Link>
-            <Link href="/associations" prefetch={true}>Persatuan</Link>
-            <Link href="/disciplines" prefetch={true}>Disiplin</Link>
+            <Link href="/collaboration" prefetch={true}>Kolaborasi</Link>
+            <Link href="/disciplines" prefetch={true}>Kategori</Link>
           </span>
 
-          {NAV_ITEMS.map((item) => {
+          {navItems.map((item) => {
             const active = isPageActive(item);
             return (
               <Link
@@ -264,11 +270,12 @@ export function SiteHeader({ currentPage = "home" }: SiteHeaderProps) {
           })}
         </nav>
 
-        {/* Action Controls (Login & Register Club) */}
+        {/* Action Controls (Language Switcher & Login & Register Club) */}
         <div
           className="header-actions"
           style={{ display: "flex", alignItems: "center", gap: "10px", flexShrink: 0 }}
         >
+          <LanguageSwitcher />
           <div
             className="header-action-pill"
             role="group"
@@ -298,7 +305,7 @@ export function SiteHeader({ currentPage = "home" }: SiteHeaderProps) {
                 transition: "color 0.15s ease",
               }}
             >
-              Login
+              {d.nav.login}
             </Link>
             <div
               className="pill-action-divider"
@@ -332,10 +339,15 @@ export function SiteHeader({ currentPage = "home" }: SiteHeaderProps) {
                 boxShadow: "0 2px 10px rgba(225, 6, 0, 0.35)",
               }}
             >
-              <span>Register Club</span>
+              <span>{d.nav.registerClub}</span>
               <ArrowRight size={13} aria-hidden="true" />
             </Link>
           </div>
+        </div>
+
+        {/* Mobile Top Bar Language Switcher */}
+        <div className="mobile-header-actions">
+          <LanguageSwitcher showIcon={false} />
         </div>
 
         {/* Mobile Hamburger Toggle Button */}
@@ -364,8 +376,8 @@ export function SiteHeader({ currentPage = "home" }: SiteHeaderProps) {
           aria-hidden={!menuOpen}
           style={{ display: "none" }}
         >
-          <div className="mobile-section-label">Semua Modul FighterX</div>
-          {NAV_ITEMS.map((item) => {
+          <div className="mobile-section-label">{d.nav.allModules}</div>
+          {navItems.map((item) => {
             const Icon = item.icon || Home;
             const active = isPageActive(item);
             return (
@@ -398,7 +410,7 @@ export function SiteHeader({ currentPage = "home" }: SiteHeaderProps) {
               className="mobile-btn-login"
             >
               <UserCheck size={16} aria-hidden="true" />
-              <span>Login</span>
+              <span>{d.nav.login}</span>
             </Link>
             <Link
               href="/register-club"
@@ -412,9 +424,21 @@ export function SiteHeader({ currentPage = "home" }: SiteHeaderProps) {
               className="mobile-btn-register"
             >
               <Users size={16} aria-hidden="true" />
-              <span>Register Club</span>
+              <span>{d.nav.registerClub}</span>
               <ArrowRight size={14} aria-hidden="true" />
             </Link>
+          </div>
+
+          <div
+            className="mobile-drawer-lang-row"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              paddingTop: "12px",
+              paddingBottom: "4px",
+            }}
+          >
+            <LanguageSwitcher />
           </div>
         </nav>
       </div>

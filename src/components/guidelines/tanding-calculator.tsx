@@ -138,7 +138,7 @@ export function TandingCalculator() {
         <button
           type="button"
           onClick={handleResetBout}
-          className="self-start sm:self-auto inline-flex items-center gap-2 rounded-xl border border-white/[0.12] bg-white/[0.04] hover:bg-white/[0.08] hover:border-white/20 text-[#d6d6da] hover:text-white px-3.5 py-2 text-xs font-semibold backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition-all cursor-pointer"
+          className="self-start sm:self-auto inline-flex items-center gap-2 rounded-xl border border-white/[0.12] bg-white/[0.04] hover:bg-white/[0.08] hover:border-white/20 text-[#d6d6da] hover:text-white px-3.5 py-2 text-xs font-semibold backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition-colors cursor-pointer"
           aria-label="Set semula pengiraan mata"
         >
           <RotateCcw size={14} aria-hidden="true" />
@@ -170,7 +170,7 @@ export function TandingCalculator() {
 
       {/* Main Scoreboard Display (Frosted Glass) */}
       <div className="mt-6 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-md p-4 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] hover:bg-white/[0.04] transition-all">
+        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-md p-4 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] hover:bg-white/[0.04] transition-colors">
           <span className="block text-[11px] font-bold text-[#8d8e95] uppercase tracking-wider">Mata Serangan</span>
           <div className="mt-1 text-3xl sm:text-4xl font-extrabold text-white font-[var(--font-athletic)]">
             {rawStrikePoints}
@@ -178,7 +178,7 @@ export function TandingCalculator() {
           <span className="text-[10px] text-[#6d6e75]">Pukulan + Sepakan + Jatuhan</span>
         </div>
 
-        <div className="rounded-xl border border-[rgba(240,180,40,0.25)] bg-[rgba(240,180,40,0.04)] backdrop-blur-md p-4 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] hover:bg-[rgba(240,180,40,0.07)] transition-all">
+        <div className="rounded-xl border border-[rgba(240,180,40,0.25)] bg-[rgba(240,180,40,0.04)] backdrop-blur-md p-4 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] hover:bg-[rgba(240,180,40,0.07)] transition-colors">
           <span className="block text-[11px] font-bold text-[#ffd24c] uppercase tracking-wider">Potongan Hukuman</span>
           <div className="mt-1 text-3xl sm:text-4xl font-extrabold text-[#ffd24c] font-[var(--font-athletic)]">
             {totalDeductions > 0 ? `−${totalDeductions}` : "0"}
@@ -211,7 +211,7 @@ export function TandingCalculator() {
         </h4>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5">
           {/* Punch */}
-          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.15] backdrop-blur-md p-4 flex flex-col justify-between shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-all">
+          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.15] backdrop-blur-md p-4 flex flex-col justify-between shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-colors">
             <div className="flex items-center justify-between">
               <div>
                 <span className="inline-block rounded-md bg-white/[0.06] border border-white/[0.1] px-2 py-0.5 text-[10px] font-bold text-white/90 font-mono">
@@ -230,7 +230,7 @@ export function TandingCalculator() {
                 type="button"
                 onClick={() => setPunches((p) => Math.max(0, p - 1))}
                 disabled={punches === 0}
-                className="flex-1 inline-flex items-center justify-center gap-1 rounded-lg border border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.08] hover:border-white/20 disabled:opacity-30 text-white py-2 text-xs font-bold backdrop-blur-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-all cursor-pointer"
+                className="flex-1 inline-flex items-center justify-center gap-1 rounded-lg border border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.08] hover:border-white/20 disabled:opacity-30 text-white py-2 text-xs font-bold backdrop-blur-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-colors cursor-pointer"
                 aria-label="Kurangkan 1 pukulan"
               >
                 <Minus size={14} aria-hidden="true" /> −1
@@ -238,7 +238,7 @@ export function TandingCalculator() {
               <button
                 type="button"
                 onClick={() => setPunches((p) => p + 1)}
-                className="flex-1 inline-flex items-center justify-center gap-1 rounded-lg bg-[#e10600] border border-[#ff3845] hover:brightness-110 text-white py-2 text-xs font-bold shadow-[0_0_12px_rgba(225,6,0,0.35)] transition-all cursor-pointer"
+                className="flex-1 inline-flex items-center justify-center gap-1 rounded-lg bg-[#e10600] border border-[#ff3845] hover:brightness-110 text-white py-2 text-xs font-bold shadow-[0_0_12px_rgba(225,6,0,0.35)] transition-[filter,background-color] cursor-pointer"
                 aria-label="Tambah 1 pukulan"
               >
                 <Plus size={14} aria-hidden="true" /> +1
@@ -246,7 +246,7 @@ export function TandingCalculator() {
               <button
                 type="button"
                 onClick={() => setPunches((p) => p + 5)}
-                className="rounded-lg border border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.08] hover:border-white/20 text-[#e0e0e4] px-2.5 py-2 text-xs font-bold backdrop-blur-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-all cursor-pointer"
+                className="rounded-lg border border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.08] hover:border-white/20 text-[#e0e0e4] px-2.5 py-2 text-xs font-bold backdrop-blur-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-colors cursor-pointer"
                 aria-label="Tambah 5 pukulan"
               >
                 +5
@@ -255,7 +255,7 @@ export function TandingCalculator() {
           </div>
 
           {/* Kick */}
-          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.15] backdrop-blur-md p-4 flex flex-col justify-between shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-all">
+          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.15] backdrop-blur-md p-4 flex flex-col justify-between shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-colors">
             <div className="flex items-center justify-between">
               <div>
                 <span className="inline-block rounded-md bg-white/[0.06] border border-white/[0.1] px-2 py-0.5 text-[10px] font-bold text-white/90 font-mono">
@@ -274,7 +274,7 @@ export function TandingCalculator() {
                 type="button"
                 onClick={() => setKicks((k) => Math.max(0, k - 1))}
                 disabled={kicks === 0}
-                className="flex-1 inline-flex items-center justify-center gap-1 rounded-lg border border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.08] hover:border-white/20 disabled:opacity-30 text-white py-2 text-xs font-bold backdrop-blur-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-all cursor-pointer"
+                className="flex-1 inline-flex items-center justify-center gap-1 rounded-lg border border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.08] hover:border-white/20 disabled:opacity-30 text-white py-2 text-xs font-bold backdrop-blur-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-colors cursor-pointer"
                 aria-label="Kurangkan 1 tendangan"
               >
                 <Minus size={14} aria-hidden="true" /> −1
@@ -282,7 +282,7 @@ export function TandingCalculator() {
               <button
                 type="button"
                 onClick={() => setKicks((k) => k + 1)}
-                className="flex-1 inline-flex items-center justify-center gap-1 rounded-lg bg-[#e10600] border border-[#ff3845] hover:brightness-110 text-white py-2 text-xs font-bold shadow-[0_0_12px_rgba(225,6,0,0.35)] transition-all cursor-pointer"
+                className="flex-1 inline-flex items-center justify-center gap-1 rounded-lg bg-[#e10600] border border-[#ff3845] hover:brightness-110 text-white py-2 text-xs font-bold shadow-[0_0_12px_rgba(225,6,0,0.35)] transition-[filter,background-color] cursor-pointer"
                 aria-label="Tambah 1 tendangan"
               >
                 <Plus size={14} aria-hidden="true" /> +1
@@ -290,7 +290,7 @@ export function TandingCalculator() {
               <button
                 type="button"
                 onClick={() => setKicks((k) => k + 5)}
-                className="rounded-lg border border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.08] hover:border-white/20 text-[#e0e0e4] px-2.5 py-2 text-xs font-bold backdrop-blur-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-all cursor-pointer"
+                className="rounded-lg border border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.08] hover:border-white/20 text-[#e0e0e4] px-2.5 py-2 text-xs font-bold backdrop-blur-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-colors cursor-pointer"
                 aria-label="Tambah 5 tendangan"
               >
                 +5
@@ -299,7 +299,7 @@ export function TandingCalculator() {
           </div>
 
           {/* Takedown */}
-          <div className="rounded-xl border border-[rgba(255,56,69,0.25)] bg-[rgba(255,56,69,0.04)] hover:bg-[rgba(255,56,69,0.07)] hover:border-[rgba(255,56,69,0.45)] backdrop-blur-md p-4 flex flex-col justify-between shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-all">
+          <div className="rounded-xl border border-[rgba(255,56,69,0.25)] bg-[rgba(255,56,69,0.04)] hover:bg-[rgba(255,56,69,0.07)] hover:border-[rgba(255,56,69,0.45)] backdrop-blur-md p-4 flex flex-col justify-between shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-colors">
             <div className="flex items-center justify-between">
               <div>
                 <span className="inline-block rounded-md bg-[rgba(255,56,69,0.12)] border border-[rgba(255,56,69,0.3)] px-2 py-0.5 text-[10px] font-bold text-[#ff4d5a] font-mono">
@@ -318,7 +318,7 @@ export function TandingCalculator() {
                 type="button"
                 onClick={() => setTakedowns((t) => Math.max(0, t - 1))}
                 disabled={takedowns === 0}
-                className="flex-1 inline-flex items-center justify-center gap-1 rounded-lg border border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.08] hover:border-white/20 disabled:opacity-30 text-white py-2 text-xs font-bold backdrop-blur-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-all cursor-pointer"
+                className="flex-1 inline-flex items-center justify-center gap-1 rounded-lg border border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.08] hover:border-white/20 disabled:opacity-30 text-white py-2 text-xs font-bold backdrop-blur-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-colors cursor-pointer"
                 aria-label="Kurangkan 1 jatuhan"
               >
                 <Minus size={14} aria-hidden="true" /> −1
@@ -326,7 +326,7 @@ export function TandingCalculator() {
               <button
                 type="button"
                 onClick={() => setTakedowns((t) => t + 1)}
-                className="flex-1 inline-flex items-center justify-center gap-1 rounded-lg bg-[#e10600] border border-[#ff3845] hover:brightness-110 text-white py-2 text-xs font-bold shadow-[0_0_12px_rgba(225,6,0,0.35)] transition-all cursor-pointer"
+                className="flex-1 inline-flex items-center justify-center gap-1 rounded-lg bg-[#e10600] border border-[#ff3845] hover:brightness-110 text-white py-2 text-xs font-bold shadow-[0_0_12px_rgba(225,6,0,0.35)] transition-[filter,background-color] cursor-pointer"
                 aria-label="Tambah 1 jatuhan"
               >
                 <Plus size={14} aria-hidden="true" /> +1
@@ -334,7 +334,7 @@ export function TandingCalculator() {
               <button
                 type="button"
                 onClick={() => setTakedowns((t) => t + 5)}
-                className="rounded-lg border border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.08] hover:border-white/20 text-[#e0e0e4] px-2.5 py-2 text-xs font-bold backdrop-blur-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-all cursor-pointer"
+                className="rounded-lg border border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.08] hover:border-white/20 text-[#e0e0e4] px-2.5 py-2 text-xs font-bold backdrop-blur-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-colors cursor-pointer"
                 aria-label="Tambah 5 jatuhan"
               >
                 +5
@@ -374,7 +374,7 @@ export function TandingCalculator() {
         {/* Progress Bar */}
         <div className="mt-3 w-full bg-white/[0.06] rounded-full h-2.5 overflow-hidden border border-white/10 backdrop-blur-sm">
           <div
-            className={`h-full transition-all duration-75 ${
+            className={`h-full transition-[width,background-color] duration-75 ${
               grappleTimeMs === 0 ? "bg-[#ff4d5a]" : grappleTimeMs < 2000 ? "bg-[#ffd24c]" : "bg-[rgba(60,160,255,0.85)]"
             }`}
             style={{ width: `${(grappleTimeMs / 5000) * 100}%` }}
@@ -387,7 +387,7 @@ export function TandingCalculator() {
             <button
               type="button"
               onClick={handleStartGrapple}
-              className="inline-flex items-center gap-2 rounded-xl bg-[rgba(60,160,255,0.2)] border border-[rgba(60,160,255,0.45)] hover:bg-[rgba(60,160,255,0.3)] text-white px-4 py-2 text-xs font-bold transition-all cursor-pointer shadow-[0_0_16px_rgba(60,160,255,0.25)]"
+              className="inline-flex items-center gap-2 rounded-xl bg-[rgba(60,160,255,0.2)] border border-[rgba(60,160,255,0.45)] hover:bg-[rgba(60,160,255,0.3)] text-white px-4 py-2 text-xs font-bold transition-colors cursor-pointer shadow-[0_0_16px_rgba(60,160,255,0.25)]"
             >
               <Clock size={14} aria-hidden="true" />
               Mula Tangkapan (Start 5s Grapple)
@@ -397,7 +397,7 @@ export function TandingCalculator() {
               type="button"
               onClick={handleCompleteTakedownInTime}
               disabled={!isGrappling || grappleTimeMs <= 0}
-              className="inline-flex items-center gap-2 rounded-xl bg-emerald-600/80 border border-emerald-500/50 hover:bg-emerald-600 text-white px-4 py-2 text-xs font-bold transition-all cursor-pointer shadow-[0_0_16px_rgba(16,185,129,0.3)] animate-pulse"
+              className="inline-flex items-center gap-2 rounded-xl bg-emerald-600/80 border border-emerald-500/50 hover:bg-emerald-600 text-white px-4 py-2 text-xs font-bold transition-colors cursor-pointer shadow-[0_0_16px_rgba(16,185,129,0.3)] animate-pulse"
             >
               <CheckCircle2 size={15} aria-hidden="true" />
               Sempurnakan Jatuhan Sah (+3 Mata)
@@ -408,7 +408,7 @@ export function TandingCalculator() {
             <button
               type="button"
               onClick={handleResetGrapple}
-              className="inline-flex items-center gap-1.5 rounded-xl border border-white/[0.12] bg-white/[0.04] hover:bg-white/[0.08] text-white px-3 py-2 text-xs font-semibold backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition-all cursor-pointer"
+              className="inline-flex items-center gap-1.5 rounded-xl border border-white/[0.12] bg-white/[0.04] hover:bg-white/[0.08] text-white px-3 py-2 text-xs font-semibold backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition-colors cursor-pointer"
             >
               <RotateCcw size={13} aria-hidden="true" />
               Semula
@@ -451,7 +451,7 @@ export function TandingCalculator() {
                 key={item.id}
                 type="button"
                 onClick={() => togglePenalty(item.id)}
-                className={`relative rounded-xl p-3 text-left transition-all border backdrop-blur-md cursor-pointer ${
+                className={`relative rounded-xl p-3 text-left transition-[border-color,background-color,box-shadow,color] border backdrop-blur-md cursor-pointer ${
                   isSelected
                     ? isDQ
                       ? "border-[rgba(255,56,69,0.5)] bg-[rgba(255,56,69,0.18)] text-white shadow-[0_0_20px_rgba(225,6,0,0.3),inset_0_1px_0_rgba(255,255,255,0.1)] ring-1 ring-[rgba(255,56,69,0.6)]"

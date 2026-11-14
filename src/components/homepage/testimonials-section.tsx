@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { Star, ShieldCheck, CheckCircle2, ChevronLeft, ChevronRight, MessageSquareQuote } from "lucide-react";
+import { useLanguage } from "@/lib/i18n";
 
 interface Testimonial {
   id: string;
@@ -67,6 +68,7 @@ const testimonials: Testimonial[] = [
 ];
 
 export function TestimonialsSection() {
+  const { d } = useLanguage();
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scroll = (direction: "left" | "right") => {
@@ -91,13 +93,13 @@ export function TestimonialsSection() {
             </div>
             <div>
               <span className="text-[10px] font-mono font-bold tracking-widest text-[#FF3845] uppercase block">
-                MAKLUM BALAS KELAB
+                {d.home.testimonials.overline}
               </span>
               <h2
                 id="testimonials-heading"
                 className="text-2xl sm:text-3xl font-bold font-athletic tracking-wide text-white uppercase leading-none"
               >
-                Suara Jurulatih &amp; Gelanggang
+                {d.home.testimonials.title}
               </h2>
             </div>
           </div>
@@ -107,14 +109,14 @@ export function TestimonialsSection() {
             <button
               onClick={() => scroll("left")}
               aria-label="Scroll testimoni ke kiri"
-              className="w-8 h-8 rounded-full border border-[#3E4048] bg-[#14151B]/90 hover:border-[#FF3845] hover:bg-[#FF3845]/15 hover:text-[#FF3845] text-white flex items-center justify-center transition-all duration-200"
+              className="tactile-btn w-8 h-8 rounded-full border border-[#3E4048] bg-[#14151B]/90 hover:border-[#FF3845] hover:bg-[#FF3845]/15 hover:text-[#FF3845] text-white flex items-center justify-center transition-colors duration-200"
             >
               <ChevronLeft size={16} />
             </button>
             <button
               onClick={() => scroll("right")}
               aria-label="Scroll testimoni ke kanan"
-              className="w-8 h-8 rounded-full border border-[#3E4048] bg-[#14151B]/90 hover:border-[#FF3845] hover:bg-[#FF3845]/15 hover:text-[#FF3845] text-white flex items-center justify-center transition-all duration-200"
+              className="tactile-btn w-8 h-8 rounded-full border border-[#3E4048] bg-[#14151B]/90 hover:border-[#FF3845] hover:bg-[#FF3845]/15 hover:text-[#FF3845] text-white flex items-center justify-center transition-colors duration-200"
             >
               <ChevronRight size={16} />
             </button>
@@ -127,12 +129,12 @@ export function TestimonialsSection() {
           tabIndex={0}
           role="region"
           aria-label="Koleksi maklum balas jurulatih silat yang boleh diskrol secara mendatar"
-          className="flex gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory scroll-smooth pb-2 pt-1 focus:outline-none focus:ring-1 focus:ring-[#FF3845]/50 rounded-xl"
+          className="flex gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory scroll-smooth pb-2 pt-1 focus:outline-none focus:ring-1 focus:ring-[#FF3845]/50 rounded-xl motion-grid"
         >
           {testimonials.map((item) => (
             <article
               key={item.id}
-              className="w-[310px] sm:w-[380px] md:w-[420px] shrink-0 snap-start p-5 rounded-xl border border-[#34353D]/80 bg-gradient-to-br from-[#16171D]/90 via-[#111215]/85 to-[#0A0B0E]/90 backdrop-blur-md shadow-lg flex flex-col justify-between hover:border-[#FF3845]/60 transition-all duration-300"
+              className="testimonial-card w-[310px] sm:w-[380px] md:w-[420px] shrink-0 snap-start p-5 rounded-xl border border-[#34353D]/80 bg-gradient-to-br from-[#16171D]/90 via-[#111215]/85 to-[#0A0B0E]/90 backdrop-blur-md shadow-lg flex flex-col justify-between hover:border-[#FF3845]/60 hover:-translate-y-0.5 hover:shadow-[0_16px_36px_rgba(0,0,0,0.7),0_0_20px_rgba(225,6,0,0.2)] transition-all duration-300"
             >
               <div>
                 {/* Header: 5 Stars + Verified Tag */}
@@ -144,7 +146,7 @@ export function TestimonialsSection() {
                   </div>
                   <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-[#3A3B43] bg-[#0E0F14] text-[9.5px] font-mono text-[#A2A4AC]">
                     <ShieldCheck size={11} className="text-[#FF3845]" />
-                    <span>Disahkan</span>
+                    <span>{d.home.testimonials.verified}</span>
                   </div>
                 </div>
 

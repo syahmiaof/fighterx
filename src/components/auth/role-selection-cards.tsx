@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowRight, ArrowLeft, ClipboardCheck, ShieldCheck, User, Zap } from "lucide-react";
 import { ROLE_DESTINATIONS } from "@/lib/auth/auth-contract";
 import type { AppRole } from "@/types/platform";
+import { useLanguage } from "@/lib/i18n";
 
 interface RoleCard {
   id: "athlete" | "coach" | "admin";
@@ -50,6 +51,42 @@ const ROLES: RoleCard[] = [
 ];
 
 export function RoleSelectionCards() {
+  const { dict } = useLanguage();
+  const ad = dict.auth;
+
+  const roles = [
+    {
+      id: "athlete" as const,
+      role: "ATHLETE" as AppRole,
+      title: ad.roleAthleteTitle,
+      tagline: ad.roleAthleteDesc,
+      icon: User,
+      destination: ROLE_DESTINATIONS.ATHLETE,
+      roleHref: "/login/athlete",
+      buttonLabel: ad.bypassButton,
+    },
+    {
+      id: "coach" as const,
+      role: "COACH" as AppRole,
+      title: ad.roleCoachTitle,
+      tagline: ad.roleCoachDesc,
+      icon: ClipboardCheck,
+      destination: ROLE_DESTINATIONS.COACH,
+      roleHref: "/login/coach",
+      buttonLabel: ad.bypassButton,
+    },
+    {
+      id: "admin" as const,
+      role: "ADMIN" as AppRole,
+      title: ad.roleAdminTitle,
+      tagline: ad.roleAdminDesc,
+      icon: ShieldCheck,
+      destination: ROLE_DESTINATIONS.ADMIN,
+      roleHref: "/login/admin",
+      buttonLabel: ad.bypassButton,
+    },
+  ];
+
   function handleSyncSession(role: AppRole) {
     try {
       if (typeof window !== "undefined") {
@@ -64,13 +101,13 @@ export function RoleSelectionCards() {
     <div className="glass-login-stage">
       {/* Minimal Header */}
       <header className="glass-login-header">
-        <span className="glass-login-kicker">FIGHTERX</span>
-        <h1 className="glass-login-title">Log Masuk</h1>
+        <span className="glass-login-kicker">{ad.loginOverline}</span>
+        <h1 className="glass-login-title">{ad.loginTitle}</h1>
       </header>
 
       {/* 3 Glassmorphism Cards */}
       <div className="glass-cards-grid" role="region" aria-label="Pilih Peranan">
-        {ROLES.map((role) => {
+        {roles.map((role) => {
           const Icon = role.icon;
           return (
             <div
@@ -104,7 +141,7 @@ export function RoleSelectionCards() {
                   href={role.roleHref}
                   className="text-xs text-zinc-400 hover:text-white underline"
                 >
-                  Halaman Login Rasmi
+                  {ad.officialLoginButton}
                 </Link>
               </div>
             </div>
@@ -116,7 +153,7 @@ export function RoleSelectionCards() {
       <footer className="glass-login-footer">
         <Link href="/" className="glass-back-link">
           <ArrowLeft size={14} aria-hidden="true" />
-          <span>Kembali ke Homepage</span>
+          <span>{ad.backHome}</span>
         </Link>
       </footer>
     </div>

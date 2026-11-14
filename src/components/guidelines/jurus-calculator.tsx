@@ -110,7 +110,7 @@ export function JurusCalculator() {
         <button
           type="button"
           onClick={handleReset}
-          className="self-start sm:self-auto inline-flex items-center gap-2 rounded-xl border border-white/[0.12] bg-white/[0.04] hover:bg-white/[0.08] hover:border-white/20 text-[#d6d6da] hover:text-white px-3.5 py-2 text-xs font-semibold backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition-all cursor-pointer"
+          className="self-start sm:self-auto inline-flex items-center gap-2 rounded-xl border border-white/[0.12] bg-white/[0.04] hover:bg-white/[0.08] hover:border-white/20 text-[#d6d6da] hover:text-white px-3.5 py-2 text-xs font-semibold backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition-colors cursor-pointer"
           aria-label="Set semula rubrik jurus"
         >
           <RotateCcw size={14} aria-hidden="true" />
@@ -131,7 +131,7 @@ export function JurusCalculator() {
                 key={cat.id}
                 type="button"
                 onClick={() => setSelectedCategory(cat.id)}
-                className={`rounded-xl p-3 text-left border transition-all cursor-pointer backdrop-blur-md ${
+                className={`rounded-xl p-3 text-left border transition-[border-color,background-color,box-shadow,color] cursor-pointer backdrop-blur-md ${
                   isSelected
                     ? "border-[rgba(60,160,255,0.45)] bg-[rgba(60,160,255,0.12)] text-white shadow-[0_0_20px_rgba(60,160,255,0.25),inset_0_1px_0_rgba(255,255,255,0.1)] ring-1 ring-[rgba(60,160,255,0.5)]"
                     : "border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/[0.15] text-[#9a9ba2] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
@@ -163,7 +163,7 @@ export function JurusCalculator() {
 
       {/* Main Jurus Scoreboard */}
       <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3.5">
-        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-md p-4 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] hover:bg-white/[0.04] transition-all">
+        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-md p-4 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] hover:bg-white/[0.04] transition-colors">
           <span className="block text-[11px] font-bold text-[#8d8e95] uppercase tracking-wider">
             Nilai Asas (Kebenaran + Kemantapan)
           </span>
@@ -175,7 +175,7 @@ export function JurusCalculator() {
           </span>
         </div>
 
-        <div className="rounded-xl border border-[rgba(255,56,69,0.25)] bg-[rgba(255,56,69,0.04)] backdrop-blur-md p-4 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] hover:bg-[rgba(255,56,69,0.07)] transition-all">
+        <div className="rounded-xl border border-[rgba(255,56,69,0.25)] bg-[rgba(255,56,69,0.04)] backdrop-blur-md p-4 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] hover:bg-[rgba(255,56,69,0.07)] transition-colors">
           <span className="block text-[11px] font-bold text-[#ff4d5a] uppercase tracking-wider">
             Jumlah Potongan Juri
           </span>
@@ -199,7 +199,7 @@ export function JurusCalculator() {
       {/* Accuracy & Expression Sliders */}
       <div className="mt-7 grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Nilai Kebenaran */}
-        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-md p-4.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] hover:border-white/[0.15] transition-all">
+        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-md p-4.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] hover:border-white/[0.15] transition-colors">
           <div className="flex items-center justify-between">
             <div>
               <span className="text-xs font-bold uppercase tracking-wider text-white">
@@ -232,7 +232,7 @@ export function JurusCalculator() {
         </div>
 
         {/* Nilai Kemantapan */}
-        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-md p-4.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] hover:border-white/[0.15] transition-all">
+        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-md p-4.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] hover:border-white/[0.15] transition-colors">
           <div className="flex items-center justify-between">
             <div>
               <span className="text-xs font-bold uppercase tracking-wider text-white">
@@ -274,7 +274,7 @@ export function JurusCalculator() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {/* Dropped Weapon */}
-          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.15] backdrop-blur-md p-3.5 flex flex-col justify-between shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-all">
+          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.15] backdrop-blur-md p-3.5 flex flex-col justify-between shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-colors">
             <div className="flex items-start justify-between">
               <div>
                 <span className="text-xs font-bold text-white">Senjata Terjatuh</span>
@@ -294,7 +294,7 @@ export function JurusCalculator() {
                     setDeductions((d) => ({ ...d, weaponDrops: Math.max(0, d.weaponDrops - 1) }))
                   }
                   disabled={deductions.weaponDrops === 0}
-                  className="w-7 h-7 rounded-lg border border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.08] disabled:opacity-30 text-white flex items-center justify-center transition-all cursor-pointer backdrop-blur-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
+                  className="w-7 h-7 rounded-lg border border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.08] disabled:opacity-30 text-white flex items-center justify-center transition-colors cursor-pointer backdrop-blur-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
                   aria-label="Kurangkan senjata jatuh"
                 >
                   <Minus size={13} aria-hidden="true" />
@@ -302,7 +302,7 @@ export function JurusCalculator() {
                 <button
                   type="button"
                   onClick={() => setDeductions((d) => ({ ...d, weaponDrops: d.weaponDrops + 1 }))}
-                  className="w-7 h-7 rounded-lg bg-[#e10600] border border-[#ff3845] hover:brightness-110 text-white flex items-center justify-center transition-all cursor-pointer shadow-[0_0_10px_rgba(225,6,0,0.3)]"
+                  className="w-7 h-7 rounded-lg bg-[#e10600] border border-[#ff3845] hover:brightness-110 text-white flex items-center justify-center transition-[filter,background-color] cursor-pointer shadow-[0_0_10px_rgba(225,6,0,0.3)]"
                   aria-label="Tambah senjata jatuh"
                 >
                   <Plus size={13} aria-hidden="true" />
@@ -312,7 +312,7 @@ export function JurusCalculator() {
           </div>
 
           {/* Time Fault */}
-          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.15] backdrop-blur-md p-3.5 flex flex-col justify-between shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-all">
+          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.15] backdrop-blur-md p-3.5 flex flex-col justify-between shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-colors">
             <div className="flex items-start justify-between">
               <div>
                 <span className="text-xs font-bold text-white">Ralat Masa (Kurang/Lebih)</span>
@@ -337,7 +337,7 @@ export function JurusCalculator() {
                     }))
                   }
                   disabled={deductions.timeOverUnderSeconds === 0}
-                  className="w-7 h-7 rounded-lg border border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.08] disabled:opacity-30 text-white flex items-center justify-center transition-all cursor-pointer backdrop-blur-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
+                  className="w-7 h-7 rounded-lg border border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.08] disabled:opacity-30 text-white flex items-center justify-center transition-colors cursor-pointer backdrop-blur-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
                   aria-label="Kurangkan 5 saat"
                 >
                   −5s
@@ -350,7 +350,7 @@ export function JurusCalculator() {
                       timeOverUnderSeconds: d.timeOverUnderSeconds + 5,
                     }))
                   }
-                  className="w-7 h-7 rounded-lg bg-[#e10600] border border-[#ff3845] hover:brightness-110 text-white flex items-center justify-center transition-all cursor-pointer shadow-[0_0_10px_rgba(225,6,0,0.3)] text-xs font-bold"
+                  className="w-7 h-7 rounded-lg bg-[#e10600] border border-[#ff3845] hover:brightness-110 text-white flex items-center justify-center transition-[filter,background-color] cursor-pointer shadow-[0_0_10px_rgba(225,6,0,0.3)] text-xs font-bold"
                   aria-label="Tambah 5 saat"
                 >
                   +5s
@@ -360,7 +360,7 @@ export function JurusCalculator() {
           </div>
 
           {/* Boundary Violation */}
-          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.15] backdrop-blur-md p-3.5 flex flex-col justify-between shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-all">
+          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.15] backdrop-blur-md p-3.5 flex flex-col justify-between shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-colors">
             <div className="flex items-start justify-between">
               <div>
                 <span className="text-xs font-bold text-white">Keluar Gelanggang (10m x 10m)</span>
@@ -385,7 +385,7 @@ export function JurusCalculator() {
                     }))
                   }
                   disabled={deductions.boundaryViolations === 0}
-                  className="w-7 h-7 rounded-lg border border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.08] disabled:opacity-30 text-white flex items-center justify-center transition-all cursor-pointer backdrop-blur-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
+                  className="w-7 h-7 rounded-lg border border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.08] disabled:opacity-30 text-white flex items-center justify-center transition-colors cursor-pointer backdrop-blur-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
                   aria-label="Kurangkan keluar gelanggang"
                 >
                   <Minus size={13} aria-hidden="true" />
@@ -398,7 +398,7 @@ export function JurusCalculator() {
                       boundaryViolations: d.boundaryViolations + 1,
                     }))
                   }
-                  className="w-7 h-7 rounded-lg bg-[#e10600] border border-[#ff3845] hover:brightness-110 text-white flex items-center justify-center transition-all cursor-pointer shadow-[0_0_10px_rgba(225,6,0,0.3)]"
+                  className="w-7 h-7 rounded-lg bg-[#e10600] border border-[#ff3845] hover:brightness-110 text-white flex items-center justify-center transition-[filter,background-color] cursor-pointer shadow-[0_0_10px_rgba(225,6,0,0.3)]"
                   aria-label="Tambah keluar gelanggang"
                 >
                   <Plus size={13} aria-hidden="true" />
@@ -408,7 +408,7 @@ export function JurusCalculator() {
           </div>
 
           {/* Costume Malfunction */}
-          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.15] backdrop-blur-md p-3.5 flex flex-col justify-between shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-all">
+          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.15] backdrop-blur-md p-3.5 flex flex-col justify-between shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-colors">
             <div className="flex items-start justify-between">
               <div>
                 <span className="text-xs font-bold text-white">Kesalahan Pakaian</span>
@@ -433,7 +433,7 @@ export function JurusCalculator() {
                     }))
                   }
                   disabled={deductions.costumeFaults === 0}
-                  className="w-7 h-7 rounded-lg border border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.08] disabled:opacity-30 text-white flex items-center justify-center transition-all cursor-pointer backdrop-blur-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
+                  className="w-7 h-7 rounded-lg border border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.08] disabled:opacity-30 text-white flex items-center justify-center transition-colors cursor-pointer backdrop-blur-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
                   aria-label="Kurangkan ralat pakaian"
                 >
                   <Minus size={13} aria-hidden="true" />
@@ -446,7 +446,7 @@ export function JurusCalculator() {
                       costumeFaults: d.costumeFaults + 1,
                     }))
                   }
-                  className="w-7 h-7 rounded-lg bg-[#e10600] border border-[#ff3845] hover:brightness-110 text-white flex items-center justify-center transition-all cursor-pointer shadow-[0_0_10px_rgba(225,6,0,0.3)]"
+                  className="w-7 h-7 rounded-lg bg-[#e10600] border border-[#ff3845] hover:brightness-110 text-white flex items-center justify-center transition-[filter,background-color] cursor-pointer shadow-[0_0_10px_rgba(225,6,0,0.3)]"
                   aria-label="Tambah ralat pakaian"
                 >
                   <Plus size={13} aria-hidden="true" />
@@ -456,7 +456,7 @@ export function JurusCalculator() {
           </div>
 
           {/* Movement Accuracy Fault */}
-          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.15] backdrop-blur-md p-3.5 flex flex-col justify-between shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-all">
+          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.15] backdrop-blur-md p-3.5 flex flex-col justify-between shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-colors">
             <div className="flex items-start justify-between">
               <div>
                 <span className="text-xs font-bold text-white">Kesalahan Gerakan</span>
@@ -481,7 +481,7 @@ export function JurusCalculator() {
                     }))
                   }
                   disabled={deductions.movementFaults === 0}
-                  className="w-7 h-7 rounded-lg border border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.08] disabled:opacity-30 text-white flex items-center justify-center transition-all cursor-pointer backdrop-blur-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
+                  className="w-7 h-7 rounded-lg border border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.08] disabled:opacity-30 text-white flex items-center justify-center transition-colors cursor-pointer backdrop-blur-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
                   aria-label="Kurangkan ralat gerakan"
                 >
                   <Minus size={13} aria-hidden="true" />
@@ -494,7 +494,7 @@ export function JurusCalculator() {
                       movementFaults: d.movementFaults + 1,
                     }))
                   }
-                  className="w-7 h-7 rounded-lg bg-[#e10600] border border-[#ff3845] hover:brightness-110 text-white flex items-center justify-center transition-all cursor-pointer shadow-[0_0_10px_rgba(225,6,0,0.3)]"
+                  className="w-7 h-7 rounded-lg bg-[#e10600] border border-[#ff3845] hover:brightness-110 text-white flex items-center justify-center transition-[filter,background-color] cursor-pointer shadow-[0_0_10px_rgba(225,6,0,0.3)]"
                   aria-label="Tambah ralat gerakan"
                 >
                   <Plus size={13} aria-hidden="true" />

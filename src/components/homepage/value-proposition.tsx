@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { ArrowUpRight, Activity, CalendarCheck, ShieldCheck } from "lucide-react";
+import { useLanguage } from "@/lib/i18n";
 
 const valuePillars = [
   {
@@ -11,7 +12,7 @@ const valuePillars = [
     tagline: "Verifikasi Latihan & Keletihan (RPE)",
     description:
       "Merekod log latihan harian, bukti video teknik, dan skala keletihan kardio secara telus untuk menilai kesiapsiagaan atlet sebelum kejohanan.",
-    linkText: "Ketahui Disiplin Silat",
+    linkText: "Ketahui Kategori Silat",
     href: "/disciplines",
   },
   {
@@ -37,6 +38,37 @@ const valuePillars = [
 ];
 
 export function ValueProposition() {
+  const { d } = useLanguage();
+  const localizedPillars = [
+    {
+      number: "01",
+      icon: Activity,
+      title: d.home.valueProp.pillar1Title,
+      tagline: d.home.valueProp.pillar1Title,
+      description: d.home.valueProp.pillar1Desc,
+      linkText: d.home.valueProp.pillar1Cta,
+      href: "/disciplines",
+    },
+    {
+      number: "02",
+      icon: CalendarCheck,
+      title: d.home.valueProp.pillar2Title,
+      tagline: d.home.valueProp.pillar2Title,
+      description: d.home.valueProp.pillar2Desc,
+      linkText: d.home.valueProp.pillar2Cta,
+      href: "/knowledge",
+    },
+    {
+      number: "03",
+      icon: ShieldCheck,
+      title: d.home.valueProp.pillar3Title,
+      tagline: d.home.valueProp.pillar3Title,
+      description: d.home.valueProp.pillar3Desc,
+      linkText: d.home.valueProp.pillar3Cta,
+      href: "/guidelines",
+    },
+  ];
+
   return (
     <section
       className="relative z-10 py-14 md:py-20 bg-black/25 backdrop-blur-[2px] border-b border-[#26272C]/40 overflow-hidden"
@@ -47,31 +79,31 @@ export function ValueProposition() {
         {/* Minimalist Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
           <p className="text-[11px] sm:text-xs font-mono font-semibold tracking-[0.25em] text-[#FF3845] uppercase mb-2">
-            — NILAI TERAS FIGHTERX —
+            {d.home.valueProp.eyebrow}
           </p>
           <h2
             id="value-prop-heading"
             className="text-3xl sm:text-4xl lg:text-5xl font-bold font-athletic tracking-wider text-white uppercase"
           >
-            Sains Sukan Bertemu Warisan Silat
+            {d.home.valueProp.title}
           </h2>
           <p className="text-xs sm:text-sm text-[#96989F] mt-2 max-w-xl mx-auto leading-relaxed">
-            Tiga tunjang utama yang memperkasa pengurusan kelab silat moden dan membimbing pesilat mencapai potensi tertinggi di pentas kebangsaan.
+            {d.home.heroDescription}
           </p>
         </div>
 
         {/* 3 Balanced Minimalist Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-          {valuePillars.map((pillar) => {
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 motion-grid">
+          {localizedPillars.map((pillar) => {
             const Icon = pillar.icon;
             return (
               <div
                 key={pillar.number}
-                className="group relative p-7 sm:p-8 rounded-2xl border border-white/10 bg-gradient-to-b from-white/[0.04] to-transparent hover:border-[#FF3845]/50 hover:bg-white/[0.06] hover:shadow-[0_12px_40px_rgba(225,6,0,0.12)] transition-all duration-300 flex flex-col justify-between"
+                className="group relative p-7 sm:p-8 rounded-2xl border border-white/10 bg-gradient-to-b from-white/[0.04] to-transparent hover:border-[#FF3845]/50 hover:bg-white/[0.06] hover:shadow-[0_12px_40px_rgba(225,6,0,0.12)] transition-colors duration-300 flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between mb-6">
-                    <div className="w-12 h-12 rounded-xl bg-white/[0.05] border border-white/10 flex items-center justify-center text-[#FF3845] group-hover:scale-105 group-hover:border-[#FF3845]/40 transition-all">
+                    <div className="w-12 h-12 rounded-xl bg-white/[0.05] border border-white/10 flex items-center justify-center text-[#FF3845] group-hover:scale-105 group-hover:border-[#FF3845]/40 transition-[transform,border-color] duration-200">
                       <Icon size={24} strokeWidth={2} />
                     </div>
                     <span className="text-xs font-mono font-bold text-white/30 group-hover:text-[#FF3845] transition-colors">

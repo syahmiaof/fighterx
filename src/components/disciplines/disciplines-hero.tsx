@@ -1,7 +1,12 @@
 "use client";
 
+import { useRef, useState } from "react";
 import Image from "next/image";
-import { ArrowRight, Award, Flame, Swords } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { useLanguage } from "@/lib/i18n";
+gsap.registerPlugin(useGSAP);
 
 interface DisciplinesHeroProps {
   activeSection: string;
@@ -12,30 +17,316 @@ export function DisciplinesHero({
   activeSection,
   onNavigateSection,
 }: DisciplinesHeroProps) {
+  const { dict } = useLanguage();
+  const dd = dict.disciplines;
+  const rootRef = useRef<HTMLElement>(null);
+  const navRef = useRef<HTMLDivElement>(null);
+  const pillRef = useRef<HTMLDivElement>(null);
+  const prevTabIdx = useRef(0);
+  const [internalActive, setInternalActive] = useState(activeSection);
+
+  useGSAP(
+    () => {
+      const el = rootRef.current;
+      if (!el) return;
+
+      // Align elastic pill to active tab on mount
+      if (navRef.current && pillRef.current) {
+        const activeBtn =
+          navRef.current.querySelector<HTMLButtonElement>(
+            ".disc-tab-btn[aria-selected='true']"
+          ) ||
+          navRef.current.querySelector<HTMLButtonElement>(".disc-tab-btn");
+        if (activeBtn) {
+          const cRect = navRef.current.getBoundingClientRect();
+          const tRect = activeBtn.getBoundingClientRect();
+          gsap.set(pillRef.current, {
+            left: tRect.left - cRect.left,
+            width: tRect.width,
+            autoAlpha: 1,
+          });
+        }
+      }
+
+      const media = gsap.matchMedia();
+
+      // Desktop: Elegant title entrance and paired Seni vs. Olahraga card reveal
+      media.add(
+        "(min-width: 768px) and (prefers-reduced-motion: no-preference)",
+        () => {
+          const tl = gsap.timeline({
+            delay: 0.08,
+            defaults: { ease: "power3.out" },
+          });
+
+          tl.fromTo(
+            el.querySelector(".disciplines-overline"),
+            { y: -10, autoAlpha: 0 },
+            { y: 0, autoAlpha: 1, duration: 0.55, clearProps: "transform" }
+          )
+            .fromTo(
+              el.querySelector(".disciplines-hero-title"),
+              { yPercent: 40, autoAlpha: 0 },
+              {
+                yPercent: 0,
+                autoAlpha: 1,
+                duration: 0.75,
+                clearProps: "transform",
+              },
+              "-=0.3"
+            )
+            .fromTo(
+              el.querySelector(".disciplines-hero-desc"),
+              { y: 16, autoAlpha: 0 },
+              { y: 0, autoAlpha: 1, duration: 0.6, clearProps: "transform" },
+              "-=0.4"
+            )
+            .fromTo(
+              el.querySelector(".disciplines-quote"),
+              { y: 10, autoAlpha: 0 },
+              { y: 0, autoAlpha: 1, duration: 0.5, clearProps: "transform" },
+              "-=0.35"
+            )
+            .fromTo(
+              [
+                el.querySelector(".discipline-card-seni"),
+                el.querySelector(".discipline-card-olahraga"),
+              ],
+              {
+                autoAlpha: 0,
+                y: 20,
+                scale: 0.96,
+                clipPath: "inset(0 50% 0 50% round 14px)",
+              },
+              {
+                autoAlpha: 1,
+                y: 0,
+                scale: 1,
+                clipPath: "inset(0 0% 0 0% round 14px)",
+                duration: 0.95,
+                stagger: 0.08,
+                ease: "expo.out",
+                clearProps: "transform,scale,opacity,clipPath,clip-path,willChange",
+                onComplete: () => {
+                  const cards = [
+                    el.querySelector<HTMLElement>(".discipline-card-seni"),
+                    el.querySelector<HTMLElement>(".discipline-card-olahraga"),
+                  ];
+                  cards.forEach((c) => {
+                    if (c) {
+                      c.style.removeProperty("clip-path");
+                      c.style.removeProperty("clipPath");
+                      c.style.removeProperty("transform");
+                      c.style.removeProperty("opacity");
+                      c.style.removeProperty("scale");
+                    }
+                  });
+                },
+              },
+              "-=0.2"
+            )
+            .fromTo(
+              el.querySelector(".disciplines-nav-tabs"),
+              { y: 12, autoAlpha: 0 },
+              { y: 0, autoAlpha: 1, duration: 0.5, clearProps: "transform" },
+              "-=0.3"
+            );
+        }
+      );
+
+      // Mobile: Fast entrance (duration <= 0.4s), strictly zero blur, strictly zero clipPath, pure transform/opacity
+      media.add(
+        "(max-width: 767px) and (prefers-reduced-motion: no-preference)",
+        () => {
+          const mobileTl = gsap.timeline({
+            defaults: { ease: "power2.out" },
+          });
+
+          mobileTl
+            .fromTo(
+              el.querySelector(".disciplines-overline"),
+              { y: -6, autoAlpha: 0 },
+              { y: 0, autoAlpha: 1, duration: 0.3, clearProps: "transform" }
+            )
+            .fromTo(
+              el.querySelector(".disciplines-hero-title"),
+              { y: 15, autoAlpha: 0 },
+              { y: 0, autoAlpha: 1, duration: 0.35, clearProps: "transform" },
+              "-=0.15"
+            )
+            .fromTo(
+              el.querySelector(".disciplines-hero-desc"),
+              { y: 10, autoAlpha: 0 },
+              { y: 0, autoAlpha: 1, duration: 0.3, clearProps: "transform" },
+              "-=0.15"
+            )
+            .fromTo(
+              el.querySelector(".disciplines-quote"),
+              { y: 8, autoAlpha: 0 },
+              { y: 0, autoAlpha: 1, duration: 0.25, clearProps: "transform" },
+              "-=0.1"
+            )
+            .fromTo(
+              el.querySelector(".discipline-card-seni"),
+              { y: 16, autoAlpha: 0 },
+              {
+                y: 0,
+                autoAlpha: 1,
+                duration: 0.35,
+                ease: "power2.out",
+                clearProps: "all",
+              },
+              "-=0.1"
+            )
+            .fromTo(
+              el.querySelector(".discipline-card-olahraga"),
+              { y: 16, autoAlpha: 0 },
+              {
+                y: 0,
+                autoAlpha: 1,
+                duration: 0.35,
+                ease: "power2.out",
+                clearProps: "all",
+              },
+              "-=0.23"
+            )
+            .fromTo(
+              el.querySelector(".disciplines-nav-tabs"),
+              { y: 8, autoAlpha: 0 },
+              { y: 0, autoAlpha: 1, duration: 0.3, clearProps: "transform" },
+              "-=0.15"
+            );
+        }
+      );
+
+      // Reduced motion: immediate settle into static resting layer
+      media.add("(prefers-reduced-motion: reduce)", () => {
+        gsap.set(
+          el.querySelectorAll(
+            ".disciplines-overline, .disciplines-hero-title, .disciplines-hero-desc, .disciplines-quote, .discipline-card-seni, .discipline-card-olahraga, .disciplines-nav-tabs"
+          ),
+          { autoAlpha: 1, y: 0, yPercent: 0, scale: 1, clearProps: "all" }
+        );
+      });
+
+      // Interactive 3D Tactile Physics
+      const interactiveSelector = ".discipline-card-seni, .discipline-card-olahraga, .disc-tab-btn";
+      const handlePointerDown = (e: PointerEvent) => {
+        const target = (e.target as HTMLElement).closest<HTMLElement>(interactiveSelector);
+        if (!target) return;
+        gsap.to(target, { scale: 0.97, duration: 0.14, ease: "power2.out", overwrite: "auto" });
+      };
+      const handlePointerUp = (e: PointerEvent) => {
+        const target = (e.target as HTMLElement).closest<HTMLElement>(interactiveSelector);
+        if (!target) return;
+        gsap.to(target, { scale: 1, duration: 0.28, ease: "back.out(2)", overwrite: "auto", clearProps: "transform,scale" });
+      };
+      const handlePointerLeave = (e: PointerEvent) => {
+        const target = (e.target as HTMLElement).closest<HTMLElement>(interactiveSelector);
+        if (!target) return;
+        gsap.to(target, { scale: 1, duration: 0.28, ease: "back.out(2)", overwrite: "auto", clearProps: "transform,scale" });
+      };
+
+      el.addEventListener("pointerdown", handlePointerDown, { passive: true });
+      el.addEventListener("pointerup", handlePointerUp, { passive: true });
+      el.addEventListener("pointerleave", handlePointerLeave, { passive: true, capture: true });
+
+      return () => {
+        el.removeEventListener("pointerdown", handlePointerDown);
+        el.removeEventListener("pointerup", handlePointerUp);
+        el.removeEventListener("pointerleave", handlePointerLeave, { capture: true });
+        media.revert();
+      };
+    },
+    { scope: rootRef }
+  );
+
   return (
-    <section className="relative overflow-hidden pt-8 pb-12 sm:pt-14 sm:pb-16 border-b border-white/[0.08]">
-      {/* Top Tagline */}
+    <section
+      ref={rootRef}
+      className="relative overflow-hidden pt-10 pb-12 sm:pt-14 sm:pb-16 border-b border-white/[0.08]"
+    >
       <div className="max-w-6xl mx-auto px-4 text-center">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-[rgba(255,56,69,0.35)] bg-[rgba(255,56,69,0.12)] text-[#ff4d5a] text-xs font-bold uppercase tracking-widest mb-4">
-          <Flame size={14} className="text-red-500 animate-pulse" />
-          <span>Eksplorasi Disiplin Pencak Silat Moden</span>
+
+        {/* Overline — Persatuan style accent rules */}
+        <div className="disciplines-overline flex items-center justify-center gap-3 mb-4">
+          <span
+            className="flex-1 max-w-[80px] h-px bg-gradient-to-r from-transparent to-[#e10600]"
+            aria-hidden="true"
+          />
+          <span
+            className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#ff4d5a]"
+          >
+            {dd.overline}
+          </span>
+          <span
+            className="flex-1 max-w-[80px] h-px bg-gradient-to-l from-transparent to-[#e10600]"
+            aria-hidden="true"
+          />
         </div>
 
-        <h1 className="hero-display-title mb-4">
-          <span className="title-white">DUA CABANG.</span>{" "}
-          <span className="title-crimson">SATU JIWA PERSILATAN.</span>
+        {/* Main title — Persatuan two-tone Athletic style */}
+        <h1
+          className="disciplines-hero-title select-none uppercase mb-4"
+          style={{
+            font: "italic 700 clamp(40px, 6vw, 76px)/0.88 var(--font-athletic)",
+            letterSpacing: "-0.012em",
+          }}
+        >
+          <span
+            className="block text-white"
+            style={{
+              textShadow: "0 2px 0 #aaaab0, 0 5px 0 #66676d, 0 9px 14px rgba(0,0,0,0.7)",
+            }}
+          >
+            DUA CABANG.
+          </span>
+          <em
+            className="block"
+            style={{
+              fontStyle: "italic",
+              color: "#f51c25",
+              textShadow:
+                "0 2px 0 #a10a11, 0 5px 0 #65050a, 0 9px 14px rgba(0,0,0,0.7)",
+              filter: "drop-shadow(0 4px 8px rgba(225,6,0,0.35))",
+            }}
+          >
+            SATU JIWA PERSILATAN.
+          </em>
         </h1>
 
-        <p className="mt-3 text-sm sm:text-lg text-neutral-300 max-w-3xl mx-auto leading-relaxed">
-          Pencak Silat menggabungkan keindahan estetika warisan seni Melayu purba dengan ketangkasan pertarungan sukan sentuhan penuh moden bertaraf dunia di bawah peraturan rasmi PERSILAT 2026.
+        {/* Narrative */}
+        <p className="disciplines-hero-desc mt-3 text-sm sm:text-base text-[#A8ABB5] max-w-2xl mx-auto leading-relaxed">
+          {dd.subtitle}
         </p>
 
-        {/* Dual Athlete Graphic Showcase */}
+        {/* Quote callout — Persatuan style */}
+        <div
+          className="disciplines-quote flex items-center justify-center gap-3 mt-5"
+          role="note"
+          aria-label={dd.quote}
+        >
+          <span
+            className="flex-1 max-w-[60px] h-px bg-gradient-to-r from-transparent to-white/15"
+            aria-hidden="true"
+          />
+          <blockquote
+            className="text-xs sm:text-sm italic text-[#96989F]"
+          >
+            &mdash; <span className="text-[#f51c25]">&ldquo;</span>{dd.quote}<span className="text-[#f51c25]">&rdquo;</span> &mdash;
+          </blockquote>
+          <span
+            className="flex-1 max-w-[60px] h-px bg-gradient-to-l from-transparent to-white/15"
+            aria-hidden="true"
+          />
+        </div>
+
+        {/* Category Cards */}
         <div className="relative mt-8 sm:mt-10 max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Silat Seni Card */}
           <div
             onClick={() => onNavigateSection("silat-seni")}
-            className="group relative rounded-[14px] border border-white/[0.08] bg-white/[0.025] backdrop-blur-[16px] p-6 text-left cursor-pointer overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.06)] hover:border-[rgba(255,56,69,0.45)] hover:bg-white/[0.045] hover:-translate-y-1 hover:shadow-[0_14px_32px_rgba(0,0,0,0.5),0_0_20px_rgba(225,6,0,0.15),inset_0_1px_0_rgba(255,255,255,0.12)] transition-all duration-300"
+            className="discipline-card-seni group relative rounded-[14px] border border-white/[0.08] bg-white/[0.025] backdrop-blur-[16px] p-6 text-left cursor-pointer overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.06)] hover:border-[rgba(255,56,69,0.45)] hover:bg-white/[0.045] hover:-translate-y-1 hover:shadow-[0_14px_32px_rgba(0,0,0,0.5),0_0_20px_rgba(225,6,0,0.15),inset_0_1px_0_rgba(255,255,255,0.12)] transition-all duration-300"
           >
             <div className="absolute -right-4 -bottom-4 w-40 h-40 opacity-15 pointer-events-none group-hover:opacity-25 transition-opacity">
               <Image
@@ -46,20 +337,18 @@ export function DisciplinesHero({
               />
             </div>
             <div className="relative z-10">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] font-bold bg-[rgba(240,180,40,0.12)] border border-[rgba(240,180,40,0.35)] text-[#ffd24c] uppercase tracking-wider mb-2">
-                <Award size={12} /> Warisan Estetika &amp; Jurus
-              </span>
+
               <h2
-                className="text-2xl sm:text-3xl font-display font-bold text-white uppercase"
-                style={{ fontFamily: "var(--font-athletic)" }}
+                className="text-2xl sm:text-3xl font-bold text-white uppercase"
+                style={{ fontFamily: "var(--font-athletic)", fontStyle: "italic" }}
               >
                 Silat Seni
               </h2>
               <p className="text-xs text-neutral-400 mt-2 line-clamp-3 leading-relaxed">
-                Tunggal 100 Jurus Baku (Tangan Kosong, Golok &amp; Toya), Ganda tempur koreografi bercorak realistik, Regu keseragaman mutlak trio, dan Solo Bebas Nusantara.
+                {dd.cardSeniDesc}
               </p>
               <div className="mt-4 flex items-center gap-2 text-xs font-bold text-red-400 group-hover:text-red-300 transition-colors">
-                Terokai Silat Seni <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                {dd.cardSeniCta} <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
               </div>
             </div>
           </div>
@@ -67,7 +356,7 @@ export function DisciplinesHero({
           {/* Silat Olahraga Card */}
           <div
             onClick={() => onNavigateSection("silat-olahraga")}
-            className="group relative rounded-[14px] border border-white/[0.08] bg-white/[0.025] backdrop-blur-[16px] p-6 text-left cursor-pointer overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.06)] hover:border-[rgba(255,56,69,0.45)] hover:bg-white/[0.045] hover:-translate-y-1 hover:shadow-[0_14px_32px_rgba(0,0,0,0.5),0_0_20px_rgba(225,6,0,0.15),inset_0_1px_0_rgba(255,255,255,0.12)] transition-all duration-300"
+            className="discipline-card-olahraga group relative rounded-[14px] border border-white/[0.08] bg-white/[0.025] backdrop-blur-[16px] p-6 text-left cursor-pointer overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.06)] hover:border-[rgba(255,56,69,0.45)] hover:bg-white/[0.045] hover:-translate-y-1 hover:shadow-[0_14px_32px_rgba(0,0,0,0.5),0_0_20px_rgba(225,6,0,0.15),inset_0_1px_0_rgba(255,255,255,0.12)] transition-all duration-300"
           >
             <div className="absolute -right-4 -bottom-4 w-40 h-40 opacity-15 pointer-events-none group-hover:opacity-25 transition-opacity">
               <Image
@@ -78,53 +367,118 @@ export function DisciplinesHero({
               />
             </div>
             <div className="relative z-10">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] font-bold bg-[rgba(255,56,69,0.12)] border border-[rgba(255,56,69,0.35)] text-[#ff4d5a] uppercase tracking-wider mb-2">
-                <Swords size={12} /> Pertarungan Tanding Penuh
-              </span>
+
               <h2
-                className="text-2xl sm:text-3xl font-display font-bold text-white uppercase"
-                style={{ fontFamily: "var(--font-athletic)" }}
+                className="text-2xl sm:text-3xl font-bold text-white uppercase"
+                style={{ fontFamily: "var(--font-athletic)", fontStyle: "italic" }}
               >
                 Silat Olahraga
               </h2>
               <p className="text-xs text-neutral-400 mt-2 line-clamp-3 leading-relaxed">
-                Sistem perlawanan tanding digital PERSILAT 2026: Pukulan (1 pt), Tendangan (2 pts), Jatuhan (3 pts), zon sasaran vest, had tangkapan 5 saat &amp; divisyen berat badan.
+                {dd.cardOlahragaDesc}
               </p>
               <div className="mt-4 flex items-center gap-2 text-xs font-bold text-red-400 group-hover:text-red-300 transition-colors">
-                Terokai Silat Olahraga <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                {dd.cardOlahragaCta} <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
               </div>
             </div>
           </div>
         </div>
 
-        {/* Section Navigation Tabs */}
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-2 sm:gap-3" role="tablist">
-          {[
-            { id: "overview", label: "Perbandingan Asas" },
-            { id: "silat-seni", label: "Silat Seni (4 Kategori)" },
-            { id: "silat-olahraga", label: "Silat Olahraga & Taktikal" },
-            { id: "equipment", label: "Peralatan & Keselamatan" },
-            { id: "weight-classes", label: "Kategori Berat Senior" },
-          ].map((item) => {
-            const isActive = activeSection === item.id;
-            return (
-              <button
-                key={item.id}
-                type="button"
-                role="tab"
-                aria-selected={isActive}
-                onClick={() => onNavigateSection(item.id)}
-                className={`px-3.5 py-2 rounded-full text-xs font-bold tracking-wide transition-all cursor-pointer ${
-                  isActive
-                    ? "bg-[#e10600] border border-[#ff3845] text-white shadow-[0_0_16px_rgba(225,6,0,0.4)]"
-                    : "bg-white/[0.035] backdrop-blur-[8px] border border-white/[0.08] text-[#b5b6bc] hover:bg-white/[0.08] hover:border-white/20 hover:text-white hover:-translate-y-0.5"
-                }`}
-              >
-                {item.label}
-              </button>
-            );
-          })}
-        </div>
+        {/* Section Navigation Tabs — Elastic pill switcher (Nemo style) */}
+        {(() => {
+          const tabs = [
+            { id: "overview", label: dd.navOverview },
+            { id: "silat-seni", label: dd.navSeni },
+            { id: "silat-olahraga", label: dd.navOlahraga },
+            { id: "equipment", label: dd.navEquipment },
+            { id: "weight-classes", label: dd.navWeights },
+          ];
+
+          const handleTabClick = (id: string, index: number) => {
+            if (!navRef.current || !pillRef.current) {
+              onNavigateSection(id);
+              setInternalActive(id);
+              return;
+            }
+            const isReduced =
+              typeof window !== "undefined" &&
+              window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+            const btns = navRef.current.querySelectorAll<HTMLButtonElement>(".disc-tab-btn");
+            const target = btns[index];
+            if (!target) { onNavigateSection(id); setInternalActive(id); return; }
+
+            const containerRect = navRef.current.getBoundingClientRect();
+            const targetRect = target.getBoundingClientRect();
+            const targetLeft = targetRect.left - containerRect.left;
+            const targetWidth = targetRect.width;
+            const isMovingRight = index > prevTabIdx.current;
+
+            if (isReduced) {
+              gsap.set(pillRef.current, { left: targetLeft, width: targetWidth });
+            } else {
+              const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+              if (isMovingRight) {
+                tl.to(pillRef.current, {
+                  width: targetLeft + targetWidth - (pillRef.current.offsetLeft),
+                  duration: 0.2,
+                }).to(pillRef.current, {
+                  left: targetLeft,
+                  width: targetWidth,
+                  duration: 0.28,
+                  ease: "elastic.out(1, 0.75)",
+                }, "-=0.06");
+              } else {
+                tl.to(pillRef.current, {
+                  left: targetLeft,
+                  width: (pillRef.current.offsetLeft + pillRef.current.offsetWidth) - targetLeft,
+                  duration: 0.2,
+                }).to(pillRef.current, {
+                  width: targetWidth,
+                  duration: 0.28,
+                  ease: "elastic.out(1, 0.75)",
+                }, "-=0.06");
+              }
+            }
+
+            prevTabIdx.current = index;
+            setInternalActive(id);
+            onNavigateSection(id);
+          };
+
+          return (
+            <div
+              ref={navRef}
+              className="disciplines-nav-tabs mt-8 relative flex flex-wrap items-center justify-center gap-0 p-1 rounded-full bg-white/[0.035] border border-white/[0.08] backdrop-blur-[8px] max-w-fit mx-auto"
+              role="tablist"
+            >
+              {/* Elastic active pill */}
+              <div
+                ref={pillRef}
+                className="absolute top-1 bottom-1 bg-[#e10600] rounded-full pointer-events-none shadow-[0_0_16px_rgba(225,6,0,0.4)]"
+                style={{ left: 4, width: 120 }}
+                aria-hidden="true"
+              />
+              {tabs.map((item, idx) => {
+                const isActive = internalActive === item.id;
+                return (
+                  <button
+                    key={item.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={isActive}
+                    onClick={() => handleTabClick(item.id, idx)}
+                    className={`disc-tab-btn relative z-10 px-3.5 py-2 rounded-full text-xs font-bold tracking-wide cursor-pointer transition-colors duration-200 ${
+                      isActive ? "text-white" : "text-[#b5b6bc] hover:text-white"
+                    }`}
+                  >
+                    {item.label}
+                  </button>
+                );
+              })}
+            </div>
+          );
+        })()}
       </div>
     </section>
   );

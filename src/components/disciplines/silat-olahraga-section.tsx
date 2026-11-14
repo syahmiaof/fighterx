@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import {
   TARGET_ZONES,
   WEIGHT_CLASSES,
@@ -13,10 +13,113 @@ import {
   Timer,
   Zap,
 } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useCollectionMotion } from "@/hooks/useCollectionMotion";
+import { useLanguage } from "@/lib/i18n";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export function SilatOlahragaSection() {
+  const { dict, locale } = useLanguage();
   const [selectedZone, setSelectedZone] = useState<string>("dada");
   const [weightSearch, setWeightSearch] = useState("");
+  const sectionRef = useRef<HTMLElement>(null);
+  const weightMotionRef = useCollectionMotion<HTMLDivElement>(weightSearch);
+  const entranceTriggeredRef = useRef(false);
+
+  // Helper to remove inline overrides after GSAP finishes
+  const cleanInline = useCallback((elements: HTMLElement[]) => {
+    elements.forEach((el) => {
+      el.style.removeProperty("clip-path");
+      el.style.removeProperty("clipPath");
+      el.style.removeProperty("transform");
+      el.style.removeProperty("opacity");
+      el.style.removeProperty("scale");
+      el.style.removeProperty("will-change");
+    });
+  }, []);
+
+  useEffect(() => {
+    if (entranceTriggeredRef.current) return;
+    const el = sectionRef.current;
+    if (!el) return;
+
+    const isReduced =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (isReduced) return;
+
+    const pillarCards = Array.from(el.querySelectorAll<HTMLElement>(".tactical-pillar-card")).slice(0, 3);
+    if (!pillarCards.length) return;
+
+    gsap.set(pillarCards, {
+      opacity: 0,
+      y: 20,
+      scale: 0.96,
+      clipPath: "inset(0 50% 0 50% round 14px)",
+      willChange: "transform, opacity, clip-path",
+    });
+
+    const st = ScrollTrigger.create({
+      trigger: el,
+      start: "top 75%",
+      once: true,
+      onEnter: () => {
+        entranceTriggeredRef.current = true;
+        gsap.to(pillarCards, {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          clipPath: "inset(0 0% 0 0% round 14px)",
+          duration: 0.95,
+          stagger: 0.08,
+          ease: "expo.out",
+          clearProps: "transform,scale,opacity,clipPath,clip-path,willChange",
+          onComplete: () => {
+            cleanInline(pillarCards);
+          },
+        });
+      },
+    });
+
+    return () => {
+      st.kill();
+    };
+  }, [cleanInline]);
+
+  // Interactive 3D Tactile Physics
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    const interactiveSelector = ".zone-toggle-btn, .tactical-pillar-card, .weight-class-card";
+    const handlePointerDown = (e: PointerEvent) => {
+      const target = (e.target as HTMLElement).closest<HTMLElement>(interactiveSelector);
+      if (!target) return;
+      gsap.to(target, { scale: 0.97, duration: 0.14, ease: "power2.out", overwrite: "auto" });
+    };
+    const handlePointerUp = (e: PointerEvent) => {
+      const target = (e.target as HTMLElement).closest<HTMLElement>(interactiveSelector);
+      if (!target) return;
+      gsap.to(target, { scale: 1, duration: 0.28, ease: "back.out(2)", overwrite: "auto", clearProps: "transform,scale" });
+    };
+    const handlePointerLeave = (e: PointerEvent) => {
+      const target = (e.target as HTMLElement).closest<HTMLElement>(interactiveSelector);
+      if (!target) return;
+      gsap.to(target, { scale: 1, duration: 0.28, ease: "back.out(2)", overwrite: "auto", clearProps: "transform,scale" });
+    };
+
+    el.addEventListener("pointerdown", handlePointerDown, { passive: true });
+    el.addEventListener("pointerup", handlePointerUp, { passive: true });
+    el.addEventListener("pointerleave", handlePointerLeave, { passive: true, capture: true });
+
+    return () => {
+      el.removeEventListener("pointerdown", handlePointerDown);
+      el.removeEventListener("pointerup", handlePointerUp);
+      el.removeEventListener("pointerleave", handlePointerLeave, { capture: true });
+    };
+  }, []);
 
   const activeZone = TARGET_ZONES.find((z) => z.id === selectedZone) || TARGET_ZONES[0];
 
@@ -32,28 +135,34 @@ export function SilatOlahragaSection() {
   });
 
   return (
-    <section id="silat-olahraga" className="py-12 sm:py-16 border-b border-white/[0.08]">
+    <section ref={sectionRef} id="silat-olahraga" className="py-12 sm:py-16 border-b border-white/[0.08]">
       <div className="max-w-6xl mx-auto px-4">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-10">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[rgba(255,56,69,0.35)] bg-[rgba(255,56,69,0.12)] text-[#ff4d5a] text-xs font-bold uppercase tracking-wider mb-2">
-            <Swords size={13} /> Disiplin Silat Olahraga (Tanding)
+            <Swords size={13} /> {locale === "bm" ? "Disiplin Silat Olahraga (Tanding)" : "Silat Olahraga (Combat Sparring) Discipline"}
           </div>
           <h2
             className="text-3xl sm:text-4xl md:text-5xl font-display font-bold uppercase text-white tracking-tight"
             style={{ fontFamily: "var(--font-athletic)" }}
           >
-            TAKTIKAL PERTARUNGAN &amp; <span className="text-red-600">SISTEM SKOR DIGITAL</span>
+            {locale === "bm" ? (
+              <>TAKTIKAL PERTARUNGAN &amp; <span className="text-red-600">SISTEM SKOR DIGITAL</span></>
+            ) : (
+              <>COMBAT TACTICS &amp; <span className="text-red-600">DIGITAL SCORING SYSTEM</span></>
+            )}
           </h2>
           <p className="mt-2 text-xs sm:text-sm text-neutral-400 leading-relaxed">
-            Peraturan pertandingan tanding moden PERSILAT 2026 menuntut kepantasan langkah silat, kawalan jarak taktikal, kuasa bantingan sah, dan ketepatan serangan ke atas zon sasaran vest berlapik.
+            {locale === "bm"
+              ? "Peraturan pertandingan tanding moden PERSILAT 2026 menuntut kepantasan langkah silat, kawalan jarak taktikal, kuasa bantingan sah, dan ketepatan serangan ke atas zon sasaran vest berlapik."
+              : "Modern PERSILAT 2026 competition rules demand agile footwork, tactical distance control, legal takedown power, and accurate strikes on padded vest target zones."}
           </p>
         </div>
 
         {/* 3 Tactical Pillar Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
           {/* Card 1: Pola Langkah & Jarak */}
-          <div className="rounded-[14px] border border-white/[0.08] bg-white/[0.025] backdrop-blur-[16px] p-5 shadow-[0_8px_32px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.06)] hover:border-white/[0.18] hover:bg-white/[0.04] transition-all">
+          <div className="tactical-pillar-card rounded-[14px] border border-white/[0.08] bg-white/[0.025] backdrop-blur-[16px] p-5 shadow-[0_8px_32px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.06)] hover:border-white/[0.18] hover:bg-white/[0.04] transition-all">
             <div className="w-10 h-10 rounded-lg bg-[rgba(255,56,69,0.12)] border border-[rgba(255,56,69,0.35)] flex items-center justify-center text-[#ff4d5a] mb-3">
               <Zap size={20} />
             </div>
@@ -69,7 +178,7 @@ export function SilatOlahragaSection() {
           </div>
 
           {/* Card 2: Peraturan 5 Saat Tangkapan */}
-          <div className="rounded-[14px] border border-[rgba(255,56,69,0.4)] bg-[rgba(255,56,69,0.04)] backdrop-blur-[16px] p-5 shadow-[0_8px_32px_rgba(0,0,0,0.45),0_0_20px_rgba(225,6,0,0.12),inset_0_1px_0_rgba(255,255,255,0.08)] hover:border-[rgba(255,56,69,0.6)] hover:bg-[rgba(255,56,69,0.06)] transition-all">
+          <div className="tactical-pillar-card rounded-[14px] border border-[rgba(255,56,69,0.4)] bg-[rgba(255,56,69,0.04)] backdrop-blur-[16px] p-5 shadow-[0_8px_32px_rgba(0,0,0,0.45),0_0_20px_rgba(225,6,0,0.12),inset_0_1px_0_rgba(255,255,255,0.08)] hover:border-[rgba(255,56,69,0.6)] hover:bg-[rgba(255,56,69,0.06)] transition-all">
             <div className="w-10 h-10 rounded-lg bg-[rgba(255,56,69,0.2)] border border-[rgba(255,56,69,0.5)] flex items-center justify-center text-[#ff4d5a] mb-3">
               <Timer size={20} />
             </div>
@@ -88,7 +197,7 @@ export function SilatOlahragaSection() {
           </div>
 
           {/* Card 3: Variasi Bantingan & Sapuan */}
-          <div className="rounded-[14px] border border-white/[0.08] bg-white/[0.025] backdrop-blur-[16px] p-5 shadow-[0_8px_32px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.06)] hover:border-white/[0.18] hover:bg-white/[0.04] transition-all">
+          <div className="tactical-pillar-card rounded-[14px] border border-white/[0.08] bg-white/[0.025] backdrop-blur-[16px] p-5 shadow-[0_8px_32px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.06)] hover:border-white/[0.18] hover:bg-white/[0.04] transition-all">
             <div className="w-10 h-10 rounded-lg bg-[rgba(255,56,69,0.12)] border border-[rgba(255,56,69,0.35)] flex items-center justify-center text-[#ff4d5a] mb-3">
               <Shield size={20} />
             </div>
@@ -133,7 +242,7 @@ export function SilatOlahragaSection() {
                     key={zone.id}
                     type="button"
                     onClick={() => setSelectedZone(zone.id)}
-                    className={`p-3 rounded-lg border text-left cursor-pointer transition-all ${
+                    className={`zone-toggle-btn p-3 rounded-lg border text-left cursor-pointer transition-all ${
                       selectedZone === zone.id
                         ? "border-emerald-500/50 bg-emerald-500/10 text-white shadow-[0_0_14px_rgba(16,185,129,0.25),inset_0_1px_0_rgba(255,255,255,0.1)]"
                         : "border-white/[0.08] bg-white/[0.02] text-[#d1d1d5] hover:border-white/20 hover:bg-white/[0.05] backdrop-blur-sm"
@@ -156,7 +265,7 @@ export function SilatOlahragaSection() {
                     key={zone.id}
                     type="button"
                     onClick={() => setSelectedZone(zone.id)}
-                    className={`p-3 rounded-lg border text-left cursor-pointer transition-all ${
+                    className={`zone-toggle-btn p-3 rounded-lg border text-left cursor-pointer transition-all ${
                       selectedZone === zone.id
                         ? "border-[rgba(255,56,69,0.5)] bg-[rgba(255,56,69,0.12)] text-white shadow-[0_0_14px_rgba(225,6,0,0.25),inset_0_1px_0_rgba(255,255,255,0.1)]"
                         : "border-white/[0.08] bg-white/[0.02] text-[#d1d1d5] hover:border-white/20 hover:bg-white/[0.05] backdrop-blur-sm"
@@ -273,11 +382,11 @@ export function SilatOlahragaSection() {
           </div>
 
           {/* Weight Cards Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+          <div ref={weightMotionRef} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
             {filteredWeights.map((wc) => (
               <div
                 key={wc.classCode}
-                className="rounded-xl border border-white/[0.08] bg-white/[0.025] backdrop-blur-[12px] p-3.5 shadow-[0_4px_16px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.05)] hover:border-[rgba(255,56,69,0.45)] hover:bg-white/[0.045] hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(0,0,0,0.4),0_0_16px_rgba(225,6,0,0.12),inset_0_1px_0_rgba(255,255,255,0.1)] transition-all duration-200"
+                className="weight-class-card rounded-xl border border-white/[0.08] bg-white/[0.025] backdrop-blur-[12px] p-3.5 shadow-[0_4px_16px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.05)] hover:border-[rgba(255,56,69,0.45)] hover:bg-white/[0.045]"
               >
                 <div className="flex items-center justify-between mb-2">
                   <span className="font-bold text-sm text-white">{wc.classCode}</span>

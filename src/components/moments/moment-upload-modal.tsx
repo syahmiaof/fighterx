@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import gsap from "gsap";
 import { X, Upload, Camera, Sparkles, Check, ShieldCheck, AlertCircle } from "lucide-react";
 import { useMoments } from "@/lib/moments/moments-context";
 import { ALL_MALAYSIA_STATES } from "@/lib/moments/mock-data";
@@ -38,25 +39,76 @@ export function MomentUploadModal() {
     caption?: boolean;
   }>({});
 
-  // Prefill verified athlete info on open
+  const modalContainerRef = useRef<HTMLDivElement>(null);
+
+  // Prefill verified athlete info on open & Nemo iris entrance
   useEffect(() => {
     if (!isUploadModalOpen) return;
-    try {
-      const role = window.sessionStorage.getItem("fighterx_session_role");
-      if (role === "ATHLETE") {
-        setAthleteName("Alya Nabilah");
-        setClubName("FighterX Demo Club");
-        setState("Selangor");
-        setDiscipline("seni");
-        setIsVerifiedAthlete(true);
-      } else {
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    if (modalContainerRef.current) {
+      gsap.fromTo(
+        modalContainerRef.current,
+        {
+          opacity: 0,
+          scale: 0.96,
+          y: 16,
+          clipPath: "inset(0 45% 0 45% round 24px)",
+          willChange: "transform, opacity, clip-path",
+        },
+        {
+          opacity: 1,
+          scale: 1,
+          y: 0,
+          clipPath: "inset(0 0% 0 0% round 24px)",
+          duration: 0.55,
+          ease: "expo.out",
+          clearProps: "transform,scale,opacity,clipPath,clip-path,willChange",
+        }
+      );
+
+      const presets = modalContainerRef.current.querySelectorAll<HTMLElement>(".upload-preset-card");
+      if (presets.length > 0) {
+        gsap.fromTo(
+          presets,
+          { scale: 0.9, opacity: 0 },
+          {
+            scale: 1,
+            opacity: 1,
+            duration: 0.4,
+            stagger: 0.04,
+            ease: "back.out(1.5)",
+            delay: 0.15,
+            clearProps: "transform,scale,opacity",
+          }
+        );
+      }
+    }
+
+    const timer = setTimeout(() => {
+      try {
+        const role = window.sessionStorage.getItem("fighterx_session_role");
+        if (role === "ATHLETE") {
+          setAthleteName("Alya Nabilah");
+          setClubName("FighterX Demo Club");
+          setState("Selangor");
+          setDiscipline("seni");
+          setIsVerifiedAthlete(true);
+        } else {
+          setIsVerifiedAthlete(false);
+        }
+      } catch {
         setIsVerifiedAthlete(false);
       }
-    } catch {
-      setIsVerifiedAthlete(false);
-    }
-    setErrorMessage(null);
-    setFieldErrors({});
+      setErrorMessage(null);
+      setFieldErrors({});
+    }, 0);
+
+    return () => {
+      clearTimeout(timer);
+      document.body.style.overflow = originalOverflow;
+    };
   }, [isUploadModalOpen]);
 
   if (!isUploadModalOpen) return null;
@@ -128,6 +180,7 @@ export function MomentUploadModal() {
       aria-modal="true"
     >
       <div
+        ref={modalContainerRef}
         className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl bg-[#0c0d12]/95 border border-white/10 shadow-[0_25px_60px_rgba(0,0,0,0.9),inset_0_1px_0_rgba(255,255,255,0.12)] p-6 sm:p-8 text-white backdrop-blur-2xl"
         onClick={(e) => e.stopPropagation()}
       >
@@ -291,7 +344,7 @@ export function MomentUploadModal() {
                     setSelectedPhoto(preset.url);
                     setCustomPhotoUrl("");
                   }}
-                  className={`relative aspect-square rounded-xl overflow-hidden border cursor-pointer group ${
+                  className={`upload-preset-card relative aspect-square rounded-xl overflow-hidden border cursor-pointer group ${
                     selectedPhoto === preset.url && !customPhotoUrl
                       ? "border-[#E10600] ring-2 ring-[#E10600]/50"
                       : "border-white/10 hover:border-white/30"

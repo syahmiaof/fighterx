@@ -1,0 +1,123 @@
+[
+  {
+    "name": "Hero Seni Athlete (LCP Priority)",
+    "type": "Hero Cutout (Desktop LCP)",
+    "sourceRel": "assets/fighterx/hero-silat-seni-athlete-lit.png",
+    "sourceBytes": 1843136,
+    "sourceKb": "1799.9",
+    "optimizedBytes": 55222,
+    "optimizedKb": "53.9",
+    "contentType": "image/avif",
+    "savingsPercent": "97.0%"
+  },
+  {
+    "name": "Hero Olahraga Athlete (LCP Priority)",
+    "type": "Hero Cutout (Desktop LCP)",
+    "sourceRel": "assets/fighterx/hero-silat-olahraga-athlete-lit.png",
+    "sourceBytes": 1043650,
+    "sourceKb": "1019.2",
+    "optimizedBytes": 29080,
+    "optimizedKb": "28.4",
+    "contentType": "image/avif",
+    "savingsPercent": "97.2%"
+  },
+  {
+    "name": "Hero Seni Athlete (Mobile w=640)",
+    "type": "Hero Cutout (Mobile)",
+    "sourceRel": "assets/fighterx/hero-silat-seni-athlete-lit.png",
+    "sourceBytes": 1843136,
+    "sourceKb": "1799.9",
+    "optimizedBytes": 33199,
+    "optimizedKb": "32.4",
+    "contentType": "image/avif",
+    "savingsPercent": "98.2%"
+  },
+  {
+    "name": "Programme Silat Seni (Below-Fold)",
+    "type": "Programme Card (Deferred)",
+    "sourceRel": "assets/fighterx/programme-silat-seni-lit.png",
+    "sourceBytes": 2250878,
+    "sourceKb": "2198.1",
+    "optimizedBytes": 29486,
+    "optimizedKb": "28.8",
+    "contentType": "image/avif",
+    "savingsPercent": "98.7%"
+  },
+  {
+    "name": "Programme Silat Olahraga (Below-Fold)",
+    "type": "Programme Card (Deferred)",
+    "sourceRel": "assets/fighterx/programme-silat-olahraga-lit.png",
+    "sourceBytes": 1342743,
+    "sourceKb": "1311.3",
+    "optimizedBytes": 25913,
+    "optimizedKb": "25.3",
+    "contentType": "image/avif",
+    "savingsPercent": "98.1%"
+  },
+  {
+    "name": "Coach Spotlight Portrait (Below-Fold)",
+    "type": "Spotlight Card (Deferred)",
+    "sourceRel": "assets/fighterx/coach-portrait-spotlight.png",
+    "sourceBytes": 1298365,
+    "sourceKb": "1267.9",
+    "optimizedBytes": 19687,
+    "optimizedKb": "19.2",
+    "contentType": "image/avif",
+    "savingsPercent": "98.5%"
+  },
+  {
+    "name": "Guidelines Referee Waist (Desktop)",
+    "type": "Guidelines Cutout",
+    "sourceRel": "assets/fighterx/referee-waist-large.png",
+    "sourceBytes": 731153,
+    "sourceKb": "714.0",
+    "optimizedBytes": 30245,
+    "optimizedKb": "29.5",
+    "contentType": "image/avif",
+    "savingsPercent": "95.9%"
+  },
+  {
+    "name": "Hero Smoke Overlay (Settled)",
+    "type": "Decorative Ambient",
+    "sourceRel": "assets/fighterx/overlay-red-smoke-transparent.png",
+    "sourceBytes": 269840,
+    "sourceKb": "263.5",
+    "optimizedBytes": 6160,
+    "optimizedKb": "6.0",
+    "contentType": "image/avif",
+    "savingsPercent": "97.7%"
+  },
+  {
+    "name": "Gayong Malaysia Emblem (Logo)",
+    "type": "Association Logo",
+    "sourceRel": "assets/silat-logos/pertubuhan-silat-seni-gayong-malaysia.png",
+    "sourceBytes": 828047,
+    "sourceKb": "808.6",
+    "optimizedBytes": 11145,
+    "optimizedKb": "10.9",
+    "contentType": "image/avif",
+    "savingsPercent": "98.7%"
+  },
+  {
+    "name": "Sendeng Malaysia Emblem (Logo)",
+    "type": "Association Logo",
+    "sourceRel": "assets/silat-logos/persatuan-seni-silat-sendeng-malaysia.png",
+    "sourceBytes": 1005804,
+    "sourceKb": "982.2",
+    "optimizedBytes": 8229,
+    "optimizedKb": "8.0",
+    "contentType": "image/avif",
+    "savingsPercent": "99.2%"
+  },
+  {
+    "name": "Moments Action Photo (Gallery)",
+    "type": "Moments Photo",
+    "sourceRel": "assets/moments/galeri-77.jpg",
+    "sourceBytes": 1021919,
+    "sourceKb": "998.0",
+    "optimizedBytes": 138072,
+    "optimizedKb": "134.8",
+    "contentType": "image/avif",
+    "savingsPercent": "86.5%"
+  }
+]

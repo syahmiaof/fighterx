@@ -1,3 +1,14 @@
+import { redirect } from "next/navigation";
+
+// Halaman disorok sementara waktu mengikut permintaan pengguna
+export default function AssociationsPage() {
+  redirect("/");
+}
+
+/*
+// ============================================================================
+// Original Associations Page (Preserved for future re-enabling)
+// ============================================================================
 import type { Metadata } from "next";
 import { SiteHeader } from "@/components/layout/site-header";
 import { AssociationsDirectory } from "@/components/associations/associations-directory";
@@ -30,19 +41,17 @@ export const metadata: Metadata = {
   },
 };
 
-export default function AssociationsPage() {
+export function OriginalAssociationsPage() {
   return (
     <div className="associations-page-wrap">
-      {/* Shared Wallpaper System: 72% opacity over #08090B base */}
       <div className="associations-wallpaper" aria-hidden="true" />
       <div className="associations-vignette" aria-hidden="true" />
       <div className="associations-ambient-smoke" aria-hidden="true" />
 
-      {/* Shared Global SiteHeader */}
       <SiteHeader currentPage="associations" />
 
-      {/* Interactive Associations Directory */}
       <AssociationsDirectory />
     </div>
   );
 }
+*/

@@ -632,19 +632,19 @@ function runSection5Associations() {
   {
     const start = performance.now();
     try {
-      assertEqual(SILAT_ASSOCIATIONS.length, 26, "Exact 26 associations loaded");
+      assertEqual(SILAT_ASSOCIATIONS.length, 27, "Exact 27 associations loaded");
 
       const counts = getCategoryCounts();
-      assertEqual(counts.ALL, 26, "Total ALL count = 26");
+      assertEqual(counts.ALL, 27, "Total ALL count = 27");
       assertEqual(counts.BADAN_INDUK, 4, "Badan Induk count = 4");
       assertEqual(counts.PENGASAS_TERAS, 4, "4 Pengasas Teras count = 4");
-      assertEqual(counts.PERGURUAN_UTAMA, 9, "Perguruan Utama count = 9");
+      assertEqual(counts.PERGURUAN_UTAMA, 10, "Perguruan Utama count = 10");
       assertEqual(counts.ANTARABANGSA, 9, "Antarabangsa count = 9");
-      assertEqual(counts.BADAN_INDUK + counts.PENGASAS_TERAS + counts.PERGURUAN_UTAMA + counts.ANTARABANGSA, 26, "Sum of categories = 26");
+      assertEqual(counts.BADAN_INDUK + counts.PENGASAS_TERAS + counts.PERGURUAN_UTAMA + counts.ANTARABANGSA, 27, "Sum of categories = 27");
 
-      recordPass(section, "Association registry partitions exactly into 4+4+9+9 = 26 associations", performance.now() - start);
+      recordPass(section, "Association registry partitions exactly into 4+4+10+9 = 27 associations", performance.now() - start);
     } catch (e) {
-      recordFail(section, "Association registry partitions exactly into 4+4+9+9 = 26 associations", performance.now() - start, e);
+      recordFail(section, "Association registry partitions exactly into 4+4+10+9 = 27 associations", performance.now() - start, e);
     }
   }
 
@@ -653,9 +653,9 @@ function runSection5Associations() {
     const start = performance.now();
     try {
       // Empty queries
-      assertEqual(searchAssociations("").length, 26, "Empty string returns 26");
-      assertEqual(searchAssociations("   ").length, 26, "Spaces-only returns 26");
-      assertEqual(searchAssociations("\t\n\r  ").length, 26, "Whitespace escapes returns 26");
+      assertEqual(searchAssociations("").length, 27, "Empty string returns 27");
+      assertEqual(searchAssociations("   ").length, 27, "Spaces-only returns 27");
+      assertEqual(searchAssociations("\t\n\r  ").length, 27, "Whitespace escapes returns 27");
 
       // Case-insensitivity tests
       const pesakaUpper = searchAssociations("PESAKA");

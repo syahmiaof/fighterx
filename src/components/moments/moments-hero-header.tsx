@@ -3,8 +3,11 @@
 import React, { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { useLanguage } from "@/lib/i18n";
 
 export function MomentsHeroHeader() {
+  const { dict } = useLanguage();
+  const md = dict.moments;
   const headerRef = useRef<HTMLElement>(null);
 
   useGSAP(
@@ -14,30 +17,39 @@ export function MomentsHeroHeader() {
 
       const mm = gsap.matchMedia();
       mm.add("(prefers-reduced-motion: no-preference)", () => {
-        const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
+        const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
         tl.fromTo(
-          el.querySelectorAll(".hero-display-title .title-word"),
-          { yPercent: 110, rotateX: -24, autoAlpha: 0, filter: "blur(6px)" },
-          { yPercent: 0, rotateX: 0, autoAlpha: 1, filter: "blur(0px)", duration: 0.8, stagger: 0.08 }
+          el.querySelector(".hero-overline"),
+          { y: -6, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, duration: 0.45 }
         )
           .fromTo(
-            el.querySelector(".hero-overline"),
-            { clipPath: "inset(0 50% 0 50%)", autoAlpha: 0.3 },
-            { clipPath: "inset(0 0% 0 0%)", autoAlpha: 1, duration: 0.55 },
-            "<0.1"
+            el.querySelector(".hero-display-title"),
+            { y: 8, autoAlpha: 0 },
+            { y: 0, autoAlpha: 1, duration: 0.5 },
+            "-=0.25"
           )
           .fromTo(
             el.querySelector(".hero-narrative"),
-            { y: 15, autoAlpha: 0 },
-            { y: 0, autoAlpha: 1, duration: 0.45 },
-            "<0.2"
+            { y: 6, autoAlpha: 0 },
+            { y: 0, autoAlpha: 1, duration: 0.4 },
+            "-=0.2"
           )
           .fromTo(
             el.querySelector(".hero-quote-callout"),
-            { y: 15, autoAlpha: 0 },
-            { y: 0, autoAlpha: 1, duration: 0.45 },
-            "<0.15"
+            { y: 4, autoAlpha: 0 },
+            { y: 0, autoAlpha: 1, duration: 0.35 },
+            "-=0.15"
           );
+      });
+
+      mm.add("(prefers-reduced-motion: reduce)", () => {
+        gsap.set(
+          el.querySelectorAll(
+            ".hero-overline, .hero-display-title, .hero-narrative, .hero-quote-callout"
+          ),
+          { autoAlpha: 1, y: 0, clearProps: "transform" }
+        );
       });
     },
     { scope: headerRef }
@@ -53,7 +65,7 @@ export function MomentsHeroHeader() {
         {/* 1. Official Hero Overline */}
         <div className="hero-overline mb-3">
           <span className="hero-overline-rule" aria-hidden="true" />
-          — GALERI &amp; AKSI LATIHAN ATLET SILAT MALAYSIA —
+          — {md.overline} —
           <span className="hero-overline-rule" aria-hidden="true" />
         </div>
 
@@ -74,14 +86,14 @@ export function MomentsHeroHeader() {
 
         {/* 3. Hero Narrative Minimalis */}
         <p className="hero-narrative max-w-xl mx-auto text-xs sm:text-sm text-[#96989F] leading-relaxed">
-          Rakaman dedikasi, keringat, dan disiplin pesilat tanah air dari gelanggang latihan seluruh negeri.
+          {md.subtitle}
         </p>
 
         {/* 4. Signature National Silat Quote Callout */}
-        <div className="hero-quote-callout mt-4" role="note" aria-label="Semangat Juang. Jiwa Malaysia.">
+        <div className="hero-quote-callout mt-4" role="note" aria-label={md.quote}>
           <span className="hero-quote-rule" aria-hidden="true" />
           <blockquote className="hero-quote-text">
-            &ldquo;Semangat Juang. <span className="hero-quote-highlight">Jiwa Malaysia.</span>&rdquo;
+            &ldquo;{md.quote}&rdquo;
           </blockquote>
           <span className="hero-quote-rule" aria-hidden="true" />
         </div>

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, Trophy, Award, Scale } from "lucide-react";
+import { useLanguage } from "@/lib/i18n";
 
 interface SpotlightFigure {
   id: string;
@@ -28,8 +29,8 @@ const SPOTLIGHT_FIGURES: SpotlightFigure[] = [
     achievement: "Pingat Emas Sirkit Remaja Kebangsaan 2025",
     image: "/assets/fighterx/spotlight-athlete-standard.png",
     alt: "Megat Zulkarnain - MVP Atlet Bulan Ini",
-    href: "/leaderboard",
-    linkLabel: "Leaderboard",
+    href: "/competitions",
+    linkLabel: "Kalendar",
     accentColor: "#FFB800",
     badgeClass: "text-[#FFB800] bg-[#FFB800]/15 border-[#FFB800]/40 shadow-[0_0_15px_rgba(255,184,0,0.2)]",
     icon: Trophy,
@@ -65,6 +66,7 @@ const SPOTLIGHT_FIGURES: SpotlightFigure[] = [
 ];
 
 export function AthleteCoachSpotlight() {
+  const { d, locale } = useLanguage();
   return (
     <section
       className="relative z-10 py-16 sm:py-24 bg-black/25 backdrop-blur-[2px] border-b border-white/[0.08] overflow-hidden"
@@ -81,27 +83,27 @@ export function AthleteCoachSpotlight() {
         {/* Minimalist Section Header */}
         <div className="text-center max-w-xl mx-auto mb-14 sm:mb-18">
           <p className="text-[11px] sm:text-xs font-mono font-semibold tracking-[0.25em] text-[#FF3845] uppercase mb-2">
-            — DEWAN KEHORMAT —
+            {d.home.spotlight.eyebrow}
           </p>
           <h2
             id="spotlight-heading"
             className="text-4xl sm:text-5xl lg:text-6xl font-bold font-athletic tracking-wide text-white uppercase"
           >
-            MVP OF NOVEMBER
+            {d.home.spotlight.title}
           </h2>
           <p className="text-xs sm:text-sm text-[#C5C6CA] mt-2 font-medium">
-            Pengiktirafan tokoh silat kebangsaan paling cemerlang bulan ini.
+            {d.home.spotlight.subtitle}
           </p>
         </div>
 
         {/* 3-Card 3D Pop-Out Grid with Equal Sizing */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 pt-12 sm:pt-16 mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 pt-12 sm:pt-16 mb-10 motion-grid">
           {SPOTLIGHT_FIGURES.map((figure) => {
             const Icon = figure.icon;
             return (
               <div
                 key={figure.id}
-                className="group relative flex flex-col justify-between rounded-2xl border border-white/15 bg-gradient-to-b from-white/[0.08] via-black/40 to-black/75 p-6 pt-0 backdrop-blur-2xl transition-all duration-300 hover:-translate-y-2 hover:border-white/30 hover:shadow-[0_20px_50px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.2)]"
+                className="spotlight-card group relative flex flex-col justify-between rounded-2xl border border-white/15 bg-gradient-to-b from-white/[0.08] via-black/40 to-black/75 p-6 pt-0 backdrop-blur-2xl transition-all duration-300 hover:-translate-y-0.5 hover:border-white/30 hover:shadow-[0_20px_50px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.2)]"
                 style={{
                   boxShadow: "0 8px 32px 0 rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.12)",
                 }}
@@ -122,7 +124,6 @@ export function AthleteCoachSpotlight() {
                       width={400}
                       height={450}
                       className="object-contain h-full w-auto max-h-[310px] drop-shadow-[0_16px_28px_rgba(0,0,0,0.85)] transition-transform duration-300 group-hover:scale-105"
-                      priority
                     />
                   </div>
 
@@ -139,7 +140,13 @@ export function AthleteCoachSpotlight() {
                         className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase border ${figure.badgeClass}`}
                       >
                         <Icon size={11} aria-hidden="true" />
-                        <span>{figure.role}</span>
+                        <span>
+                          {figure.role === "ATLET"
+                            ? d.home.spotlight.roleAthlete
+                            : figure.role === "COACH"
+                            ? d.home.spotlight.roleCoach
+                            : d.home.spotlight.roleWasit}
+                        </span>
                       </span>
                     </div>
 
@@ -171,7 +178,7 @@ export function AthleteCoachSpotlight() {
                     </span>
                     <Link
                       href={figure.href}
-                      className="inline-flex items-center gap-1 text-xs font-semibold text-white/80 hover:text-white transition-colors group-hover:underline"
+                      className="tactile-btn inline-flex items-center gap-1 text-xs font-semibold text-white/80 hover:text-white transition-colors group-hover:underline"
                     >
                       <span>{figure.linkLabel}</span>
                       <ArrowUpRight size={13} aria-hidden="true" className="text-[#FF3845]" />
@@ -186,10 +193,14 @@ export function AthleteCoachSpotlight() {
         {/* Minimalist Bottom Disclaimer */}
         <div className="text-center">
           <Link
-            href="/leaderboard"
+            href="/competitions"
             className="inline-flex items-center gap-2 text-xs font-medium text-[#96989F] hover:text-white transition-colors"
           >
-            <span>Kemaskini rasmi setiap awal bulan · Semak kedudukan penuh kebangsaan</span>
+            <span>
+              {locale === "en"
+                ? "Official monthly updates · Explore national tournament calendar"
+                : "Kemaskini rasmi setiap awal bulan · Terokai takwim kejohanan kebangsaan"}
+            </span>
             <ArrowUpRight size={13} aria-hidden="true" className="text-[#FF3845]" />
           </Link>
         </div>

@@ -1,9 +1,15 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+import { useCollectionMotion } from "@/hooks/useCollectionMotion";
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 import Link from "next/link";
+import dynamic from "next/dynamic";
+import { useLanguage } from "@/lib/i18n";
 import {
-  BookOpen,
   Search,
   CalendarDays,
   Clock,
@@ -20,12 +26,8 @@ import {
   Zap,
   Award,
   Activity,
-  HeartPulse,
-  Layers,
-  ChevronRight,
   Sparkles,
   Target,
-  Flame,
   Check,
 } from "lucide-react";
 import {
@@ -41,18 +43,128 @@ import {
   KnowledgeCategory,
   FrameworkMonth,
 } from "./knowledge-data";
-import { PeriodizationMatrix } from "./periodization-matrix";
-import { WeightCutPlanner } from "./weight-cut-planner";
-import { SweatRateCalculator } from "./sweat-rate-calculator";
-import { StakeholderGuideSwitcher } from "./stakeholder-guide-switcher";
 import { CitationsDrawer } from "./citations-drawer";
 
+// Code-splitting: lazily load interactive calculation tools on demand
+const PeriodizationMatrix = dynamic(
+  () => import("./periodization-matrix").then((mod) => mod.PeriodizationMatrix),
+  {
+    loading: () => (
+      <div className="p-8 text-center text-sm text-[#A2A3AA] animate-pulse">
+        Memuatkan Matriks Periodisasi...
+      </div>
+    ),
+  }
+);
+
+const WeightCutPlanner = dynamic(
+  () => import("./weight-cut-planner").then((mod) => mod.WeightCutPlanner),
+  {
+    loading: () => (
+      <div className="p-8 text-center text-sm text-[#A2A3AA] animate-pulse">
+        Memuatkan Kalkulator Weight Cut...
+      </div>
+    ),
+  }
+);
+
+const SweatRateCalculator = dynamic(
+  () => import("./sweat-rate-calculator").then((mod) => mod.SweatRateCalculator),
+  {
+    loading: () => (
+      <div className="p-8 text-center text-sm text-[#A2A3AA] animate-pulse">
+        Memuatkan Kalkulator Kadar Peluh...
+      </div>
+    ),
+  }
+);
+
+const StakeholderGuideSwitcher = dynamic(
+  () => import("./stakeholder-guide-switcher").then((mod) => mod.StakeholderGuideSwitcher),
+  {
+    loading: () => (
+      <div className="p-8 text-center text-sm text-[#A2A3AA] animate-pulse">
+        Memuatkan Panduan Stakeholder...
+      </div>
+    ),
+  }
+);
+
 export function KnowledgeHubClient() {
+  const { dict, locale } = useLanguage();
+  const kd = dict.knowledge;
   const [selectedCategory, setSelectedCategory] = useState<KnowledgeCategory>("all");
   const [searchQuery, setSearchQuery] = useState("");
+  const articleFilterKey = `${selectedCategory}|${searchQuery}`;
+  const articlesMotionRef = useCollectionMotion<HTMLDivElement>(articleFilterKey);
   const [activeArticle, setActiveArticle] = useState<KnowledgeArticle | null>(null);
   const [citationsDrawerOpen, setCitationsDrawerOpen] = useState(false);
   const [activeToolTab, setActiveToolTab] = useState<"periodization" | "weight" | "sweat" | "stakeholder">("periodization");
+
+  const articleModalRef = useRef<HTMLDivElement>(null);
+  const articleCloseBtnRef = useRef<HTMLButtonElement>(null);
+  const articleTriggerRef = useRef<HTMLElement | null>(null);
+
+  // Focus trap, Escape key, and trigger restoration for Article Reader modal
+  useEffect(() => {
+    if (!activeArticle) return;
+
+    document.body.style.overflow = "hidden";
+    const timer = setTimeout(() => {
+      articleCloseBtnRef.current?.focus();
+    }, 40);
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        setActiveArticle(null);
+        return;
+      }
+
+      if (e.key === "Tab") {
+        if (!articleModalRef.current) return;
+        const focusables = Array.from(
+          articleModalRef.current.querySelectorAll<HTMLElement>(
+            'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+          )
+        ).filter((el) => el.offsetParent !== null || el.offsetWidth > 0 || el.offsetHeight > 0);
+
+        if (focusables.length === 0) {
+          e.preventDefault();
+          return;
+        }
+
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+
+        if (e.shiftKey) {
+          if (document.activeElement === first || !articleModalRef.current.contains(document.activeElement)) {
+            e.preventDefault();
+            last.focus();
+          }
+        } else {
+          if (document.activeElement === last || !articleModalRef.current.contains(document.activeElement)) {
+            e.preventDefault();
+            first.focus();
+          }
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      clearTimeout(timer);
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", handleKeyDown);
+      articleTriggerRef.current?.focus();
+    };
+  }, [activeArticle]);
+
+  const handleOpenArticle = (article: KnowledgeArticle) => {
+    articleTriggerRef.current = (document.activeElement as HTMLElement) || null;
+    setActiveArticle(article);
+  };
 
   // Master Annual Training Framework state
   const [selectedBlock, setSelectedBlock] = useState<1 | 2>(1);
@@ -92,8 +204,592 @@ export function KnowledgeHubClient() {
     return BASELINE_ASSESSMENTS.filter((t) => t.session === baselineSessionFilter);
   }, [baselineSessionFilter]);
 
+  const heroRef = useRef<HTMLDivElement>(null);
+  const isFirstFrameworkTabMount = useRef(true);
+  const isFirstToolMount = useRef(true);
+  const isFirstMonthMount = useRef(true);
+
+  // Helper to remove all temporary animation inline properties so hover micro-interactions work cleanly
+  const cleanInline = (el: HTMLElement) => {
+    el.style.removeProperty("clip-path");
+    el.style.removeProperty("-webkit-clip-path");
+    el.style.removeProperty("transform");
+    el.style.removeProperty("scale");
+    el.style.removeProperty("opacity");
+    el.style.removeProperty("will-change");
+  };
+
+  useGSAP(
+    () => {
+      const media = gsap.matchMedia();
+      media.add("(prefers-reduced-motion: no-preference)", () => {
+        // 1. Hero title cinematic sweep & text reveals
+        gsap.fromTo(
+          ".knowledge-hero-title",
+          { y: 50, autoAlpha: 0, filter: "blur(6px)" },
+          { y: 0, autoAlpha: 1, filter: "blur(0px)", duration: 1.0, ease: "power4.out", clearProps: "transform,filter", delay: 0.05 }
+        );
+        gsap.fromTo(
+          ".knowledge-hero-overline",
+          { y: -16, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, duration: 0.7, ease: "power2.out", clearProps: "transform", delay: 0.15 }
+        );
+        gsap.fromTo(
+          ".knowledge-hero-desc",
+          { y: 20, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, duration: 0.75, ease: "power2.out", clearProps: "transform", delay: 0.25 }
+        );
+        gsap.fromTo(
+          ".hero-quote-callout",
+          { y: 20, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, duration: 0.75, ease: "power2.out", clearProps: "transform", delay: 0.35 }
+        );
+        gsap.fromTo(
+          ".knowledge-hero-actions",
+          { y: 18, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, duration: 0.7, ease: "power2.out", clearProps: "transform", delay: 0.45 }
+        );
+        gsap.fromTo(
+          ".accreditation-pill",
+          { y: 14, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, duration: 0.6, stagger: 0.06, ease: "power2.out", clearProps: "transform", delay: 0.55 }
+        );
+
+        // 2. Hero 4 KPI Stat Cards - Nemo Iris Reveal Physics
+        const statCards = gsap.utils.toArray<HTMLElement>(".knowledge-stat-card");
+        if (statCards.length > 0) {
+          gsap.fromTo(
+            statCards,
+            {
+              opacity: 0,
+              y: 22,
+              scale: 0.96,
+              clipPath: "inset(0 50% 0 50% round 14px)",
+              willChange: "transform, opacity, clip-path",
+            },
+            {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              clipPath: "inset(0 0% 0 0% round 14px)",
+              duration: 0.95,
+              stagger: 0.085,
+              ease: "expo.out",
+              delay: 0.35,
+              clearProps: "transform,scale,opacity,clipPath,clip-path,willChange",
+              onComplete: () => {
+                statCards.forEach(cleanInline);
+              },
+            }
+          );
+        }
+
+        // 3. Master Annual Training Framework 2027 Section Scroll Reveal
+        const frameworkSection = document.getElementById("master-framework");
+        if (frameworkSection) {
+          gsap.fromTo(
+            "#master-framework .framework-header-content",
+            { opacity: 0, y: 20 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.7,
+              ease: "power2.out",
+              clearProps: "transform,opacity",
+              scrollTrigger: { trigger: "#master-framework", start: "top 78%", once: true },
+            }
+          );
+
+          const blockCards = gsap.utils.toArray<HTMLElement>(".framework-block-card");
+          if (blockCards.length > 0) {
+            gsap.fromTo(
+              blockCards,
+              {
+                opacity: 0,
+                y: 20,
+                scale: 0.96,
+                clipPath: "inset(0 50% 0 50% round 14px)",
+                willChange: "transform, opacity, clip-path",
+              },
+              {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                clipPath: "inset(0 0% 0 0% round 14px)",
+                duration: 0.9,
+                stagger: 0.085,
+                ease: "expo.out",
+                clearProps: "transform,scale,opacity,clipPath,clip-path,willChange",
+                scrollTrigger: { trigger: "#master-framework", start: "top 78%", once: true },
+                onComplete: () => {
+                  blockCards.forEach(cleanInline);
+                },
+              }
+            );
+          }
+
+          const monthButtons = gsap.utils.toArray<HTMLElement>(".timeline-month-btn");
+          if (monthButtons.length > 0) {
+            gsap.fromTo(
+              monthButtons,
+              {
+                opacity: 0,
+                scale: 0.92,
+                y: 12,
+                willChange: "transform, opacity",
+              },
+              {
+                opacity: 1,
+                scale: 1,
+                y: 0,
+                duration: 0.6,
+                stagger: 0.045,
+                ease: "back.out(1.6)",
+                clearProps: "transform,scale,opacity,willChange",
+                scrollTrigger: { trigger: ".timeline-month-btn", start: "top 80%", once: true },
+                onComplete: () => {
+                  monthButtons.forEach(cleanInline);
+                },
+              }
+            );
+          }
+
+          const detailCard = document.querySelector<HTMLElement>(".framework-detail-card");
+          if (detailCard) {
+            gsap.fromTo(
+              detailCard,
+              {
+                opacity: 0,
+                y: 22,
+                scale: 0.97,
+                clipPath: "inset(0 50% 0 50% round 16px)",
+                willChange: "transform, opacity, clip-path",
+              },
+              {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                clipPath: "inset(0 0% 0 0% round 16px)",
+                duration: 0.95,
+                ease: "expo.out",
+                clearProps: "transform,scale,opacity,clipPath,clip-path,willChange",
+                scrollTrigger: { trigger: detailCard, start: "top 80%", once: true },
+                onComplete: () => {
+                  cleanInline(detailCard);
+                },
+              }
+            );
+          }
+        }
+
+        // 4. Main Practical Articles Grid - Nemo Iris Reveal Physics
+        const articleCards = gsap.utils.toArray<HTMLElement>(".knowledge-article-card");
+        if (articleCards.length > 0) {
+          gsap.fromTo(
+            articleCards,
+            {
+              opacity: 0,
+              y: 22,
+              scale: 0.96,
+              clipPath: "inset(0 50% 0 50% round 16px)",
+              willChange: "transform, opacity, clip-path",
+            },
+            {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              clipPath: "inset(0 0% 0 0% round 16px)",
+              duration: 0.95,
+              stagger: 0.085,
+              ease: "expo.out",
+              clearProps: "transform,scale,opacity,clipPath,clip-path,willChange",
+              scrollTrigger: {
+                trigger: "#articles-section",
+                start: "top 82%",
+                once: true,
+              },
+              onComplete: () => {
+                articleCards.forEach(cleanInline);
+              },
+            }
+          );
+        }
+
+        // 5. Interactive Sports-Science Tools Suite Entrance
+        const toolsSection = document.getElementById("interactive-tools");
+        if (toolsSection) {
+          gsap.fromTo(
+            "#interactive-tools .tools-header-anim",
+            { opacity: 0, y: 20 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.7,
+              ease: "power2.out",
+              clearProps: "transform,opacity",
+              scrollTrigger: { trigger: "#interactive-tools", start: "top 78%", once: true },
+            }
+          );
+
+          const toolTabs = gsap.utils.toArray<HTMLElement>("#interactive-tools .tool-tab-btn");
+          if (toolTabs.length > 0) {
+            gsap.fromTo(
+              toolTabs,
+              { opacity: 0, scale: 0.92, y: 12 },
+              {
+                opacity: 1,
+                scale: 1,
+                y: 0,
+                duration: 0.6,
+                stagger: 0.06,
+                ease: "back.out(1.6)",
+                clearProps: "transform,scale,opacity",
+                scrollTrigger: { trigger: "#interactive-tools", start: "top 78%", once: true },
+                onComplete: () => {
+                  toolTabs.forEach(cleanInline);
+                },
+              }
+            );
+          }
+
+          const toolContainer = document.querySelector<HTMLElement>(".knowledge-tool-container");
+          if (toolContainer) {
+            gsap.fromTo(
+              toolContainer,
+              {
+                opacity: 0,
+                y: 22,
+                scale: 0.97,
+                clipPath: "inset(0 50% 0 50% round 16px)",
+                willChange: "transform, opacity, clip-path",
+              },
+              {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                clipPath: "inset(0 0% 0 0% round 16px)",
+                duration: 0.95,
+                ease: "expo.out",
+                clearProps: "transform,scale,opacity,clipPath,clip-path,willChange",
+                scrollTrigger: { trigger: "#interactive-tools", start: "top 78%", once: true },
+                onComplete: () => {
+                  cleanInline(toolContainer);
+                },
+              }
+            );
+          }
+        }
+
+        // 6. PERSILAT 2026 Weight Categories Reference Strip Entrance
+        const weightSection = document.getElementById("weight-categories");
+        if (weightSection) {
+          gsap.fromTo(
+            "#weight-categories .weight-header-anim",
+            { opacity: 0, y: 16 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.65,
+              ease: "power2.out",
+              clearProps: "transform,opacity",
+              scrollTrigger: { trigger: "#weight-categories", start: "top 80%", once: true },
+            }
+          );
+
+          const weightCards = gsap.utils.toArray<HTMLElement>(".weight-category-card");
+          if (weightCards.length > 0) {
+            gsap.fromTo(
+              weightCards,
+              {
+                opacity: 0,
+                scale: 0.92,
+                y: 16,
+                willChange: "transform, opacity",
+              },
+              {
+                opacity: 1,
+                scale: 1,
+                y: 0,
+                duration: 0.65,
+                stagger: 0.045,
+                ease: "back.out(1.5)",
+                clearProps: "transform,scale,opacity,willChange",
+                scrollTrigger: { trigger: "#weight-categories", start: "top 80%", once: true },
+                onComplete: () => {
+                  weightCards.forEach(cleanInline);
+                },
+              }
+            );
+          }
+
+          const weightNotice = document.querySelector<HTMLElement>("#weight-categories .weight-notice-anim");
+          if (weightNotice) {
+            gsap.fromTo(
+              weightNotice,
+              { opacity: 0, y: 14 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.65,
+                ease: "power2.out",
+                delay: 0.35,
+                clearProps: "transform,opacity",
+                scrollTrigger: { trigger: "#weight-categories", start: "top 80%", once: true },
+              }
+            );
+          }
+        }
+
+        // 7. Tactile 3D Button & Chip Spring Interactions
+        const interactiveBtns = Array.from(
+          document.querySelectorAll<HTMLElement>(
+            ".btn-crimson, .timeline-month-btn, .framework-block-card, .accreditation-pill, .tool-tab-btn, .knowledge-pill-switcher button"
+          )
+        );
+        const handleDown = (e: Event) => {
+          const target = e.currentTarget as HTMLElement;
+          gsap.to(target, { scale: 0.96, duration: 0.08, ease: "power2.out" });
+        };
+        const handleUp = (e: Event) => {
+          const target = e.currentTarget as HTMLElement;
+          gsap.to(target, {
+            scale: 1,
+            duration: 0.34,
+            ease: "back.out(2)",
+            clearProps: "transform,scale",
+            onComplete: () => {
+              target.style.removeProperty("transform");
+              target.style.removeProperty("scale");
+            },
+          });
+        };
+        interactiveBtns.forEach((btn) => {
+          btn.addEventListener("pointerdown", handleDown);
+          btn.addEventListener("pointerup", handleUp);
+          btn.addEventListener("pointercancel", handleUp);
+          btn.addEventListener("pointerleave", handleUp);
+        });
+      });
+
+      media.add("(prefers-reduced-motion: reduce)", () => {
+        gsap.set(
+          ".knowledge-hero-title, .knowledge-hero-overline, .knowledge-hero-desc, .hero-quote-callout, .knowledge-hero-actions, .accreditation-pill, .knowledge-stat-card, .framework-block-card, .timeline-month-btn, .framework-detail-card, .framework-policy-card, .framework-baseline-card, .framework-priority-card, .knowledge-article-card, .knowledge-tool-container, .weight-category-card, .fight-week-banner",
+          { autoAlpha: 1, opacity: 1, y: 0, scale: 1, clearProps: "all" }
+        );
+      });
+
+      return () => media.revert();
+    },
+    { scope: heroRef }
+  );
+
+  // Framework Sub-View Tab Switches Transition
+  useGSAP(
+    () => {
+      if (isFirstFrameworkTabMount.current) {
+        isFirstFrameworkTabMount.current = false;
+        return;
+      }
+
+      const isReduced =
+        typeof window !== "undefined" &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (isReduced) return;
+
+      if (frameworkViewTab === "competition") {
+        const policyCards = gsap.utils.toArray<HTMLElement>(".framework-policy-card");
+        if (policyCards.length > 0) {
+          gsap.fromTo(
+            policyCards,
+            {
+              opacity: 0,
+              y: 22,
+              scale: 0.96,
+              clipPath: "inset(0 50% 0 50% round 16px)",
+              willChange: "transform, opacity, clip-path",
+            },
+            {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              clipPath: "inset(0 0% 0 0% round 16px)",
+              duration: 0.85,
+              stagger: 0.085,
+              ease: "expo.out",
+              clearProps: "transform,scale,opacity,clipPath,clip-path,willChange",
+              onComplete: () => {
+                policyCards.forEach(cleanInline);
+              },
+            }
+          );
+        }
+      } else if (frameworkViewTab === "baseline") {
+        const baselineCards = gsap.utils.toArray<HTMLElement>(".framework-baseline-card");
+        if (baselineCards.length > 0) {
+          gsap.fromTo(
+            baselineCards,
+            {
+              opacity: 0,
+              y: 22,
+              scale: 0.96,
+              clipPath: "inset(0 50% 0 50% round 16px)",
+              willChange: "transform, opacity, clip-path",
+            },
+            {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              clipPath: "inset(0 0% 0 0% round 16px)",
+              duration: 0.85,
+              stagger: 0.07,
+              ease: "expo.out",
+              clearProps: "transform,scale,opacity,clipPath,clip-path,willChange",
+              onComplete: () => {
+                baselineCards.forEach(cleanInline);
+              },
+            }
+          );
+        }
+      } else if (frameworkViewTab === "priorities") {
+        const priorityCards = gsap.utils.toArray<HTMLElement>(".framework-priority-card");
+        if (priorityCards.length > 0) {
+          gsap.fromTo(
+            priorityCards,
+            {
+              opacity: 0,
+              y: 22,
+              scale: 0.96,
+              clipPath: "inset(0 50% 0 50% round 16px)",
+              willChange: "transform, opacity, clip-path",
+            },
+            {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              clipPath: "inset(0 0% 0 0% round 16px)",
+              duration: 0.85,
+              stagger: 0.07,
+              ease: "expo.out",
+              clearProps: "transform,scale,opacity,clipPath,clip-path,willChange",
+              onComplete: () => {
+                priorityCards.forEach(cleanInline);
+              },
+            }
+          );
+        }
+      } else if (frameworkViewTab === "calendar") {
+        const blockCards = gsap.utils.toArray<HTMLElement>(".framework-block-card");
+        if (blockCards.length > 0) {
+          gsap.fromTo(
+            blockCards,
+            {
+              opacity: 0,
+              y: 18,
+              scale: 0.97,
+              clipPath: "inset(0 50% 0 50% round 14px)",
+            },
+            {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              clipPath: "inset(0 0% 0 0% round 14px)",
+              duration: 0.8,
+              stagger: 0.08,
+              ease: "expo.out",
+              clearProps: "transform,scale,opacity,clipPath,clip-path,willChange",
+              onComplete: () => {
+                blockCards.forEach(cleanInline);
+              },
+            }
+          );
+        }
+      }
+
+      // Recalculate ScrollTrigger markers after sub-tab height changes
+      setTimeout(() => {
+        ScrollTrigger.refresh();
+      }, 120);
+    },
+    { dependencies: [frameworkViewTab], scope: heroRef }
+  );
+
+  // Active Tool Tab Switch Transition
+  useGSAP(
+    () => {
+      if (isFirstToolMount.current) {
+        isFirstToolMount.current = false;
+        return;
+      }
+      const isReduced =
+        typeof window !== "undefined" &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (isReduced) return;
+
+      const toolContainer = document.querySelector<HTMLElement>(".knowledge-tool-container");
+      if (toolContainer) {
+        gsap.fromTo(
+          toolContainer,
+          {
+            opacity: 0,
+            scale: 0.97,
+            y: 16,
+            clipPath: "inset(0 50% 0 50% round 16px)",
+            willChange: "transform, opacity, clip-path",
+          },
+          {
+            opacity: 1,
+            scale: 1,
+            y: 0,
+            clipPath: "inset(0 0% 0 0% round 16px)",
+            duration: 0.85,
+            ease: "expo.out",
+            clearProps: "transform,scale,opacity,clipPath,clip-path,willChange",
+            onComplete: () => {
+              cleanInline(toolContainer);
+            },
+          }
+        );
+      }
+    },
+    { dependencies: [activeToolTab], scope: heroRef }
+  );
+
+  // Selected Month Switch Transition
+  useGSAP(
+    () => {
+      if (isFirstMonthMount.current) {
+        isFirstMonthMount.current = false;
+        return;
+      }
+      const isReduced =
+        typeof window !== "undefined" &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (isReduced) return;
+
+      const detailCard = document.querySelector<HTMLElement>(".framework-detail-card");
+      if (detailCard) {
+        gsap.fromTo(
+          detailCard,
+          { opacity: 0.85, y: 10, scale: 0.985 },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.45,
+            ease: "power2.out",
+            clearProps: "transform,scale,opacity",
+            onComplete: () => {
+              cleanInline(detailCard);
+            },
+          }
+        );
+      }
+    },
+    { dependencies: [selectedMonthIndex], scope: heroRef }
+  );
+
   return (
-    <div className="min-h-screen text-white pb-24">
+    <div ref={heroRef} className="min-h-screen text-white pb-24">
       {/* Executive Hero Header */}
       <section className="relative pt-12 pb-16 md:pt-16 md:pb-20 lg:pt-20 lg:pb-24 border-b border-white/[0.08] overflow-hidden">
         {/* Atmospheric ambient glow */}
@@ -108,7 +804,7 @@ export function KnowledgeHubClient() {
             <div className="lg:col-span-7">
               <div className="knowledge-hero-overline">
                 <span className="accent-rule" aria-hidden="true" />
-                <span className="overline-text">MAKMAL PRESTASI &amp; SAINS SUKAN SILAT</span>
+                <span className="overline-text">{kd.overline}</span>
                 <span className="accent-rule" aria-hidden="true" />
               </div>
 
@@ -119,30 +815,30 @@ export function KnowledgeHubClient() {
 
               <div className="text-sm sm:text-base font-semibold text-[#FF555C] tracking-wide mb-3 flex items-center gap-2">
                 <Sparkles size={16} className="text-[#FF3845]" />
-                <span>Sains Sukan Silat &amp; Kerangka Prestasi 2027</span>
+                <span>{kd.subtitle}</span>
               </div>
 
-              <p className="text-sm sm:text-base text-[#D1D1D6] mt-1 leading-relaxed max-w-2xl font-normal">
-                Sistem periodisasi 52-minggu, pemantauan beban latihan, protokol pengurusan berat badan selamat, dan 6 ujian baseline berpandukan piawaian saintifik Institut Sukan Negara (ISN), Kod Perubatan PERSILAT 2026, dan Majlis Sukan Negara (MSN).
+              <p className="knowledge-hero-desc text-sm sm:text-base text-[#D1D1D6] mt-1 leading-relaxed max-w-2xl font-normal">
+                {kd.description}
               </p>
 
               {/* Exact quote callout matching homepage athletic design language */}
-              <div className="hero-quote-callout mt-4 mb-6" role="note" aria-label="Latihan Saintifik. Disiplin Pendekar. Kemuncak Prestasi Tanpa Kompromi.">
+              <div className="hero-quote-callout mt-4 mb-6" role="note" aria-label={kd.quote}>
                 <span className="hero-quote-rule" aria-hidden="true" />
                 <blockquote className="hero-quote-text">
-                  &ldquo;Latihan Saintifik. Disiplin Pendekar. <span className="hero-quote-highlight">Kemuncak Prestasi Tanpa Kompromi.</span>&rdquo;
+                  &ldquo;{kd.quote}&rdquo;
                 </blockquote>
                 <span className="hero-quote-rule" aria-hidden="true" />
               </div>
 
               {/* Action Buttons */}
-              <div className="mt-6 flex flex-wrap items-center gap-3">
+              <div className="knowledge-hero-actions mt-6 flex flex-wrap items-center gap-3">
                 <a
                   href="#master-framework"
                   className="btn-crimson px-5 py-2.5 text-xs font-bold uppercase tracking-wider"
                 >
                   <CalendarDays size={14} />
-                  <span>Kerangka Tahunan 2027</span>
+                  <span>{kd.ctaFramework}</span>
                 </a>
 
                 <button
@@ -151,7 +847,7 @@ export function KnowledgeHubClient() {
                   className="px-4 py-2.5 rounded-xl border border-white/10 bg-white/[0.04] hover:bg-white/[0.08] hover:border-[#FF3845]/60 text-xs font-bold text-white flex items-center gap-2 transition-all backdrop-blur-sm"
                 >
                   <BookMarked size={14} className="text-[#FF3845]" />
-                  <span>Arkib Rujukan ISN &amp; PERSILAT</span>
+                  <span>{kd.ctaCitations}</span>
                   <span className="px-1.5 py-0.5 rounded text-[10px] bg-[#E10600]/20 text-[#FF555C] font-mono">
                     {SCIENTIFIC_CITATIONS.length}
                   </span>
@@ -215,7 +911,7 @@ export function KnowledgeHubClient() {
             <div className="lg:col-span-5">
               <div className="grid grid-cols-2 gap-3.5 sm:gap-4">
                 {/* Metric 1 */}
-                <div className="kpi-matrix-card p-4 sm:p-5">
+                <div className="knowledge-stat-card kpi-matrix-card p-4 sm:p-5">
                   <div className="flex items-center justify-between text-[#ff4d5a] mb-2.5">
                     <CalendarDays size={20} />
                     <span className="category-tag badge-crimson font-mono font-bold">
@@ -234,7 +930,7 @@ export function KnowledgeHubClient() {
                 </div>
 
                 {/* Metric 2 */}
-                <div className="kpi-matrix-card p-4 sm:p-5">
+                <div className="knowledge-stat-card kpi-matrix-card p-4 sm:p-5">
                   <div className="flex items-center justify-between text-[#e5e5e7] mb-2.5">
                     <Activity size={20} />
                     <span className="category-tag badge-silver font-mono font-bold">
@@ -253,7 +949,7 @@ export function KnowledgeHubClient() {
                 </div>
 
                 {/* Metric 3 */}
-                <div className="kpi-matrix-card p-4 sm:p-5">
+                <div className="knowledge-stat-card kpi-matrix-card p-4 sm:p-5">
                   <div className="flex items-center justify-between text-[#64b7ff] mb-2.5">
                     <Users size={20} />
                     <span className="category-tag badge-blue font-mono font-bold">
@@ -272,7 +968,7 @@ export function KnowledgeHubClient() {
                 </div>
 
                 {/* Metric 4 */}
-                <div className="kpi-matrix-card p-4 sm:p-5">
+                <div className="knowledge-stat-card kpi-matrix-card p-4 sm:p-5">
                   <div className="flex items-center justify-between text-[#ffd24c] mb-2.5">
                     <ShieldCheck size={20} />
                     <span className="category-tag badge-gold font-mono font-bold">
@@ -299,7 +995,7 @@ export function KnowledgeHubClient() {
               <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#858790]" size={18} />
               <input
                 type="text"
-                placeholder="Cari topik: periodisasi, berat badan, hidrasi, mobiliti, pemulihan..."
+                placeholder={kd.articles.searchPlaceholder}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="search-input-glow w-full pl-11 pr-4 py-3 rounded-xl border border-white/10 bg-white/[0.04] backdrop-blur-md text-sm text-white placeholder-[#787A82] focus:outline-none focus:border-[#FF3845] transition-all"
@@ -310,12 +1006,12 @@ export function KnowledgeHubClient() {
                   onClick={() => setSearchQuery("")}
                   className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs text-[#858790] hover:text-white"
                 >
-                  Padam
+                  {locale === "en" ? "Clear" : "Padam"}
                 </button>
               )}
             </div>
             <div className="px-4 py-3 rounded-xl border border-white/10 bg-white/[0.04] backdrop-blur-md text-xs text-[#A2A3AA] flex items-center justify-center gap-1.5 whitespace-nowrap">
-              <span className="font-bold text-white">{filteredArticles.length}</span> artikel dijumpai
+              <span className="font-bold text-white">{filteredArticles.length}</span> {locale === "en" ? "articles found" : "artikel dijumpai"}
             </div>
           </div>
 
@@ -360,7 +1056,7 @@ export function KnowledgeHubClient() {
       {/* Master Annual Training Framework 2027 Section */}
       <section id="master-framework" className="py-14 md:py-20 border-b border-white/[0.08] relative">
         <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+          <div className="framework-header-content flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#FF3845]/40 bg-[#FF3845]/10 text-[#FF3845] text-xs font-bold tracking-wider uppercase mb-2">
                 <Target size={13} />
@@ -385,7 +1081,7 @@ export function KnowledgeHubClient() {
                     : "text-[#8E9099] hover:text-white"
                 }`}
               >
-                1. Takwim 12 Bulan
+                1. {kd.framework.subtabCalendar}
               </button>
               <button
                 type="button"
@@ -396,7 +1092,7 @@ export function KnowledgeHubClient() {
                     : "text-[#8E9099] hover:text-white"
                 }`}
               >
-                2. Dasar Pertandingan
+                2. {kd.framework.subtabPolicy}
               </button>
               <button
                 type="button"
@@ -407,7 +1103,7 @@ export function KnowledgeHubClient() {
                     : "text-[#8E9099] hover:text-white"
                 }`}
               >
-                3. 6 Ujian Baseline
+                3. {kd.framework.subtabTests}
               </button>
               <button
                 type="button"
@@ -418,7 +1114,7 @@ export function KnowledgeHubClient() {
                     : "text-[#8E9099] hover:text-white"
                 }`}
               >
-                4. 5 Training Priorities
+                4. {kd.framework.subtabPriorities}
               </button>
             </div>
           </div>
@@ -738,7 +1434,7 @@ export function KnowledgeHubClient() {
               </div>
 
               {/* Fight Week Compliance Immunity Banner */}
-              <div className="p-5 rounded-2xl border border-white/[0.08] bg-white/[0.025] backdrop-blur-[16px] shadow-[0_8px_32px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.06)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="fight-week-banner p-5 rounded-2xl border border-white/[0.08] bg-white/[0.025] backdrop-blur-[16px] shadow-[0_8px_32px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.06)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div className="flex items-start gap-3">
                   <ShieldCheck size={24} className="text-[#ffd24c] shrink-0 mt-0.5" />
                   <div>
@@ -980,7 +1676,7 @@ export function KnowledgeHubClient() {
       </section>
 
       {/* Main Articles Grid Section (Practical 3-Tier Structure & Official Links) */}
-      <section className="py-12 md:py-16">
+      <section id="articles-section" className="py-12 md:py-16">
         <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
             <div>
@@ -1018,7 +1714,7 @@ export function KnowledgeHubClient() {
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            <div ref={articlesMotionRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
               {filteredArticles.map((article) => (
                 <article
                   key={article.id}
@@ -1113,7 +1809,7 @@ export function KnowledgeHubClient() {
 
                     <button
                       type="button"
-                      onClick={() => setActiveArticle(article)}
+                      onClick={() => handleOpenArticle(article)}
                       className="inline-flex items-center gap-1.5 text-xs font-bold text-[#FF555C] group-hover:translate-x-1 transition-all"
                     >
                       Baca Penuh <ArrowRight size={14} />
@@ -1129,70 +1825,70 @@ export function KnowledgeHubClient() {
       {/* Interactive Sports-Science Tools Suite */}
       <section id="interactive-tools" className="py-14 border-t border-white/[0.08] relative">
         <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-8">
+          <div className="tools-header-anim text-center max-w-2xl mx-auto mb-8">
             <span className="text-xs font-bold text-[#FF3845] uppercase tracking-wider block mb-1">
-              Peralatan Interaktif Sains Sukan
+              {kd.tools.title}
             </span>
             <h2 className="text-2xl sm:text-3xl font-bold font-athletic text-white tracking-wide uppercase">
-              ALAT KAJIAN &amp; KALKULATOR PRESTASI
+              {kd.tools.title}
             </h2>
             <p className="text-xs sm:text-sm text-[#A2A3AA] mt-1">
-              Gunakan alatan digital berikut untuk merancang fasa periodisasi, mengira weight-cut selamat, mengukur kadar peluh, atau menyemak panduan stakeholder.
+              {kd.tools.subtitle}
             </p>
           </div>
 
           {/* Tool Switcher Tabs */}
-          <div className="flex items-center justify-center gap-2 overflow-x-auto pb-4 mb-8">
+          <div className="flex items-center justify-start sm:justify-center gap-2 overflow-x-auto pb-4 mb-8">
             <button
               type="button"
               onClick={() => setActiveToolTab("periodization")}
-              className={`px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all ${
+              className={`tool-tab-btn px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all ${
                 activeToolTab === "periodization"
                   ? "bg-[#E10600] text-white shadow-[0_4px_16px_rgba(225,6,0,0.35)] border border-[#FF3845]"
                   : "bg-white/[0.04] text-[#A2A3AA] border border-white/[0.08] hover:text-white hover:bg-white/[0.08] backdrop-blur-sm"
               }`}
             >
               <CalendarDays size={14} />
-              <span>1. Periodisasi 4 Fasa</span>
+              <span>1. {kd.tools.tabPeriodization}</span>
             </button>
 
             <button
               type="button"
               onClick={() => setActiveToolTab("weight")}
-              className={`px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all ${
+              className={`tool-tab-btn px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all ${
                 activeToolTab === "weight"
                   ? "bg-[#E10600] text-white shadow-[0_4px_16px_rgba(225,6,0,0.35)] border border-[#FF3845]"
                   : "bg-white/[0.04] text-[#A2A3AA] border border-white/[0.08] hover:text-white hover:bg-white/[0.08] backdrop-blur-sm"
               }`}
             >
               <Scale size={14} />
-              <span>2. Perancang Weight-Cut</span>
+              <span>2. {kd.tools.tabWeightCut}</span>
             </button>
 
             <button
               type="button"
               onClick={() => setActiveToolTab("sweat")}
-              className={`px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all ${
+              className={`tool-tab-btn px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all ${
                 activeToolTab === "sweat"
                   ? "bg-[#E10600] text-white shadow-[0_4px_16px_rgba(225,6,0,0.35)] border border-[#FF3845]"
                   : "bg-white/[0.04] text-[#A2A3AA] border border-white/[0.08] hover:text-white hover:bg-white/[0.08] backdrop-blur-sm"
               }`}
             >
               <Droplets size={14} />
-              <span>3. Ujian Kadar Peluh</span>
+              <span>3. {kd.tools.tabSweatRate}</span>
             </button>
 
             <button
               type="button"
               onClick={() => setActiveToolTab("stakeholder")}
-              className={`px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all ${
+              className={`tool-tab-btn px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all ${
                 activeToolTab === "stakeholder"
                   ? "bg-[#E10600] text-white shadow-[0_4px_16px_rgba(225,6,0,0.35)] border border-[#FF3845]"
                   : "bg-white/[0.04] text-[#A2A3AA] border border-white/[0.08] hover:text-white hover:bg-white/[0.08] backdrop-blur-sm"
               }`}
             >
               <Users size={14} />
-              <span>4. Panduan Stakeholder</span>
+              <span>4. {kd.tools.tabStakeholders}</span>
             </button>
           </div>
 
@@ -1205,9 +1901,9 @@ export function KnowledgeHubClient() {
       </section>
 
       {/* PERSILAT 2026 Weight Categories Reference Strip */}
-      <section className="py-12 border-t border-white/[0.08] bg-transparent">
+      <section id="weight-categories" className="py-12 border-t border-white/[0.08] bg-transparent">
         <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+          <div className="weight-header-anim flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
             <div>
               <span className="text-xs font-bold text-[#FF555C] uppercase tracking-wider block mb-0.5">
                 Piawaian Rasmi Pertandingan
@@ -1236,7 +1932,7 @@ export function KnowledgeHubClient() {
             ))}
           </div>
 
-          <div className="mt-4 p-3.5 rounded-xl border border-[rgba(255,56,69,0.3)] bg-[rgba(255,56,69,0.05)] backdrop-blur-md flex items-center gap-2.5 text-xs text-[#FF858B]">
+          <div className="weight-notice-anim mt-4 p-3.5 rounded-xl border border-[rgba(255,56,69,0.3)] bg-[rgba(255,56,69,0.05)] backdrop-blur-md flex items-center gap-2.5 text-xs text-[#FF858B]">
             <ShieldCheck size={16} className="shrink-0 text-[#FF3845]" />
             <span>
               PERSILAT 2026: Timbang berat rasmi dilakukan 1 hari sebelum kejohanan bermula dengan toleransi 0.00 kg. Pematuhan had berat badan selamat adalah mandatori.
@@ -1252,8 +1948,15 @@ export function KnowledgeHubClient() {
           role="dialog"
           aria-modal="true"
           aria-labelledby="article-reader-title"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setActiveArticle(null);
+          }}
         >
-          <div className="knowledge-modal-shell relative w-full max-w-4xl max-h-[92vh] rounded-2xl overflow-hidden flex flex-col">
+          <div
+            ref={articleModalRef}
+            className="knowledge-modal-shell relative w-full max-w-4xl max-h-[92vh] rounded-2xl overflow-hidden flex flex-col"
+            onClick={(e) => e.stopPropagation()}
+          >
             {/* Modal Header */}
             <div className="p-6 border-b border-white/[0.08] bg-white/[0.02] flex items-start justify-between gap-4 sticky top-0 z-10 backdrop-blur-md">
               <div className="min-w-0">
@@ -1272,9 +1975,10 @@ export function KnowledgeHubClient() {
                 <p className="text-xs text-[#A8A9B2] mt-1">{activeArticle.subtitle}</p>
               </div>
               <button
+                ref={articleCloseBtnRef}
                 type="button"
                 onClick={() => setActiveArticle(null)}
-                className="p-2 rounded-lg bg-white/10 text-[#A2A3AA] hover:text-white hover:bg-white/15 transition-colors shrink-0"
+                className="p-2 rounded-lg bg-white/10 text-[#A2A3AA] hover:text-white hover:bg-white/15 transition-colors shrink-0 cursor-pointer"
                 aria-label="Tutup artikel"
               >
                 ✕

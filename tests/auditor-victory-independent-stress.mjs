@@ -11,7 +11,6 @@ import {
   getPosterOrBulletin,
   isValidDocumentUrl,
   formatDisplayDateRange,
-  formatEventDates,
   TIER_CONFIG,
 } from '../src/components/competitions/competitions-data.ts';
 
