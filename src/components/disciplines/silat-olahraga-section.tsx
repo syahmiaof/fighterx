@@ -343,20 +343,12 @@ export function SilatOlahragaSection() {
         <div id="weight-classes" className="rounded-2xl border border-white/[0.08] bg-white/[0.025] backdrop-blur-[16px] p-6 sm:p-8 shadow-[0_8px_32px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.06)]">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/[0.08] pb-4 mb-6">
             <div>
-              <span className="text-xs font-bold uppercase tracking-widest text-[#ff4d5a]">
-                {locale === "bm" ? "Kategori Tanding Dewasa (Senior)" : "Senior Combat Category"}
-              </span>
               <h3
-                className="text-2xl sm:text-3xl font-display font-bold uppercase text-white mt-0.5"
-                style={{ fontFamily: "var(--font-athletic)" }}
+                className="text-2xl sm:text-3xl font-bold uppercase text-white"
+                style={{ fontFamily: "var(--font-athletic)", fontStyle: "italic" }}
               >
                 {locale === "bm" ? "Divisyen Berat Badan (Kelas A hingga Terbuka)" : "Weight Divisions (Class A to Open)"}
               </h3>
-              <p className="text-xs text-neutral-400 mt-1">
-                {locale === "bm"
-                  ? "Kategori umur Dewasa (17 hingga 45 tahun) dipertandingkan mengikut braket berat badan piawai."
-                  : "Senior age category (17 to 45 years) contested across standardized weight brackets."}
-              </p>
             </div>
 
             {/* Zero weight tolerance badge */}
