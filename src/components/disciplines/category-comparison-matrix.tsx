@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import { COMPARISON_MATRIX } from "@/components/disciplines/disciplines-data";
-import { Award, Scale, Swords } from "lucide-react";
+import { Award, Swords } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useCollectionMotion } from "@/hooks/useCollectionMotion";
@@ -115,20 +115,12 @@ export function CategoryComparisonMatrix() {
       <div className="max-w-6xl mx-auto px-4">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[rgba(255,56,69,0.35)] bg-[rgba(255,56,69,0.12)] text-[#ff4d5a] text-xs font-bold uppercase tracking-wider mb-2">
-            <Scale size={13} /> {locale === "bm" ? "Matriks Perbandingan Komprehensif" : "Comprehensive Comparison Matrix"}
-          </div>
           <h2
-            className="text-3xl sm:text-4xl md:text-5xl font-display font-bold uppercase text-white tracking-tight"
-            style={{ fontFamily: "var(--font-athletic)" }}
+            className="text-3xl sm:text-4xl md:text-5xl font-bold uppercase text-white tracking-tight"
+            style={{ fontFamily: "var(--font-athletic)", fontStyle: "italic" }}
           >
             SILAT SENI VS. <span className="text-red-600">SILAT OLAHRAGA</span>
           </h2>
-          <p className="mt-2 text-xs sm:text-sm text-neutral-400 leading-relaxed">
-            {locale === "bm"
-              ? "Perbandingan mendalam antara dua cabang utama sukan silat moden bagi memahami keunikan objektif latihan, peraturan kejohanan, dan profil kecergasan atlet."
-              : "In-depth comparison between the two major branches of modern silat sports to understand training objectives, tournament rules, and athlete fitness profiles."}
-          </p>
 
           {/* Toggle buttons */}
           <div className="mt-5 inline-flex flex-wrap justify-center gap-1.5 p-1.5 rounded-2xl sm:rounded-full border border-white/[0.08] bg-white/[0.03] backdrop-blur-[12px] max-w-full">

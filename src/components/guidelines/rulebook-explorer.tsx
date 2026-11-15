@@ -34,8 +34,8 @@ export function RulebookExplorer() {
 
   const categoryTabs: { id: RuleCategory; label: string; icon: typeof Swords }[] = [
     { id: "ALL", label: isEn ? "All Rules" : "Semua Peraturan", icon: BookOpen },
-    { id: "TANDING_SCORING", label: isEn ? "Tanding Scoring" : "Mata Tanding", icon: Swords },
-    { id: "JURUS_RUBRICS", label: isEn ? "Seni Rubrics" : "Rubrik Seni", icon: Sparkles },
+    { id: "TANDING_SCORING", label: isEn ? "Silat Olahraga Scoring" : "Mata Silat Olahraga", icon: Swords },
+    { id: "JURUS_RUBRICS", label: isEn ? "Silat Seni Rubrics" : "Rubrik Silat Seni", icon: Sparkles },
     { id: "TARGET_ZONES_FOULS", label: isEn ? "Targets & Fouls" : "Sasaran & Kesalahan", icon: Target },
     { id: "VAR_PROTOCOL", label: isEn ? "VAR Protocol" : "Protokol VAR", icon: Video },
     { id: "WEIGHT_AGE_CLASSES", label: isEn ? "Weight & Age Classes" : "Kelas Berat & Umur", icon: Scale },

@@ -39,8 +39,8 @@ export function JurusCalculator() {
     },
     {
       id: "GANDA",
-      name: isEn ? "Ganda (Doubles)" : "Jurus Ganda",
-      tagline: isEn ? "Choreographed Combat Pair" : "Pertarungan Koreografi Berpasangan",
+      name: isEn ? "Ganda (Silat Seni Paired)" : "Silat Seni Ganda",
+      tagline: isEn ? "Choreographed Silat Seni Pair" : "Persembahan Berpasangan (Ganda)",
       participants: isEn ? "2 Athletes" : "2 Pesilat",
       duration: isEn ? "Exact 3:00 min (180s)" : "Tepat 3:00 min (180s)",
       elements: isEn
@@ -109,10 +109,10 @@ export function JurusCalculator() {
         <div>
           <div className="inline-flex items-center gap-2 rounded-full bg-[rgba(60,160,255,0.12)] border border-[rgba(60,160,255,0.35)] px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-[#64b7ff] backdrop-blur-sm">
             <Sparkles size={13} aria-hidden="true" />
-            {isEn ? "PERSILAT 2026 Seni Rubrics" : "Rubrik Penilaian Seni PERSILAT 2026"}
+            {isEn ? "PERSILAT 2026 Silat Seni Rubrics" : "Rubrik Penilaian Silat Seni PERSILAT 2026"}
           </div>
           <h3 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-white font-[var(--font-athletic)] uppercase">
-            {isEn ? "Jurus & Seni Scoring Calculator" : "Kalkulator Skor Jurus & Seni"}
+            {isEn ? "Silat Seni Scoring Calculator" : "Kalkulator Skor Silat Seni"}
           </h3>
           <p className="text-xs text-[#a3a4ab] max-w-xl">
             {isEn
@@ -135,7 +135,7 @@ export function JurusCalculator() {
       {/* Category Selector Tabs */}
       <div className="mt-6">
         <label className="block text-xs font-bold uppercase tracking-wider text-white/70 mb-2.5">
-          {isEn ? "Select Seni Competition Category" : "Pilih Kategori Acara Seni"}
+          {isEn ? "Select Silat Seni Category" : "Pilih Kategori Silat Seni"}
         </label>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5">
           {categories.map((cat) => {

@@ -125,12 +125,9 @@ export function SilatSeniSection() {
       <div className="max-w-6xl mx-auto px-4">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[rgba(240,180,40,0.35)] bg-[rgba(240,180,40,0.12)] text-[#ffd24c] text-xs font-bold uppercase tracking-wider mb-2">
-            <Award size={13} /> {locale === "bm" ? "Disiplin Silat Seni" : "Silat Seni Discipline"}
-          </div>
           <h2
-            className="text-3xl sm:text-4xl md:text-5xl font-display font-bold uppercase text-white tracking-tight"
-            style={{ fontFamily: "var(--font-athletic)" }}
+            className="text-3xl sm:text-4xl md:text-5xl font-bold uppercase text-white tracking-tight"
+            style={{ fontFamily: "var(--font-athletic)", fontStyle: "italic" }}
           >
             {locale === "bm" ? (
               <>WARISAN &amp; <span className="text-amber-500">JURUS BAKU KEBANGSAAN</span></>
@@ -138,11 +135,6 @@ export function SilatSeniSection() {
               <>HERITAGE &amp; <span className="text-amber-500">STANDARDIZED NATIONAL FORMS</span></>
             )}
           </h2>
-          <p className="mt-2 text-xs sm:text-sm text-neutral-400 leading-relaxed">
-            {locale === "bm"
-              ? "Silat Seni mengangkat ketinggian martabat pusaka warisan Melayu melalui kesempurnaan gerak, ketajaman mata bilah, dan keharmonian jiwa pahlawan."
-              : "Silat Seni elevates the heritage of Malay martial art through movement perfection, weapon sharpness, and harmonious warrior spirit."}
-          </p>
 
           {/* 4 Category Filter Pills */}
           <div className="mt-6 flex flex-wrap justify-center gap-2" role="tablist">
@@ -173,18 +165,12 @@ export function SilatSeniSection() {
           {/* Top metadata strip */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/[0.08] pb-4 mb-6">
             <div>
-              <span className="text-xs font-bold uppercase tracking-widest text-[#ffd24c]">
-                {locale === "bm" ? "Kategori Rasmi PERSILAT" : "Official PERSILAT Category"}
-              </span>
               <h3
-                className="text-2xl sm:text-3xl font-display font-bold uppercase text-white mt-0.5"
-                style={{ fontFamily: "var(--font-athletic)" }}
+                className="text-2xl sm:text-3xl font-bold uppercase text-white"
+                style={{ fontFamily: "var(--font-athletic)", fontStyle: "italic" }}
               >
                 {locale === "en" ? (category.nameEn || category.name) : category.name}
               </h3>
-              <p className="text-xs text-neutral-400 mt-1">
-                {locale === "en" ? (category.taglineEn || category.tagline) : category.tagline}
-              </p>
             </div>
 
             <div className="flex flex-wrap items-center gap-3">

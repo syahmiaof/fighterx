@@ -129,10 +129,10 @@ export function TandingCalculator() {
         <div>
           <div className="inline-flex items-center gap-2 rounded-full bg-[rgba(255,56,69,0.12)] border border-[rgba(255,56,69,0.35)] px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-[#ff4d5a] backdrop-blur-sm">
             <Flame size={13} aria-hidden="true" />
-            {isEn ? "PERSILAT 2026 Tanding Simulator" : "Simulator Tanding PERSILAT 2026"}
+            {isEn ? "PERSILAT 2026 Silat Olahraga Simulator" : "Simulator Silat Olahraga PERSILAT 2026"}
           </div>
           <h3 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-white font-[var(--font-athletic)] uppercase">
-            {isEn ? "Tanding Bout Scorer & Penalties" : "Kalkulator Mata & Pelanggaran Tanding"}
+            {isEn ? "Silat Olahraga Match Scorer & Penalties" : "Kalkulator Mata & Penalti Silat Olahraga"}
           </h3>
           <p className="text-xs text-[#a3a4ab] max-w-xl">
             {isEn

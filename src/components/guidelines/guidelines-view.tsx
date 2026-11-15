@@ -234,7 +234,7 @@ export function GuidelinesView() {
           <section id="teras-peraturan" className="mb-16 scroll-mt-24">
             <SectionTitle
               badge={isEn ? "TECHNICAL SUMMARY" : "RINGKASAN TEKNIKAL"}
-              title={isEn ? "4 Core Pillars of Tanding Rules" : "4 Tunjang Utama Peraturan Tanding"}
+              title={isEn ? "4 Core Pillars of Silat Olahraga Rules" : "4 Tunjang Utama Peraturan Silat Olahraga"}
               subtitle={
                 isEn
                   ? "Official standards every athlete, coach, and referee must master before stepping onto the arena mat."
@@ -279,19 +279,19 @@ export function GuidelinesView() {
           <section id="format-pertandingan" className="mb-16 scroll-mt-24">
             <SectionTitle
               badge={isEn ? "TWO DISCIPLINES" : "DUA DISIPLIN"}
-              title={isEn ? "Competition Formats: Tanding vs. Seni" : "Format Pertandingan: Tanding vs. Seni"}
+              title={isEn ? "Competition Formats: Silat Olahraga & Silat Seni" : "Format Acara: Silat Olahraga & Silat Seni"}
               subtitle={
                 isEn
-                  ? "Technical differences, clean time, and judging rubrics between combat sparring and artistic forms."
-                  : "Perbezaan objektif teknikal, masa bersih, dan kriteria penilaian antara sukan kombat dan seni jurus."
+                  ? "Match duration, scoring systems, and judging criteria between Silat Olahraga and Silat Seni."
+                  : "Perbezaan masa perlawanan, kiraan mata, dan kriteria penilaian antara Silat Olahraga dan Silat Seni."
               }
             />
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 guidelines-card-grid">
-              {/* Tanding Card */}
+              {/* Silat Olahraga Card */}
               <div className="guidelines-card rounded-[14px] sm:rounded-2xl border border-white/[0.08] bg-white/[0.025] p-6 sm:p-7 backdrop-blur-[16px] shadow-[0_8px_32px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.06)]">
                 <span className="text-[10px] font-mono text-[#ff4d5a] font-bold uppercase tracking-widest block mb-2">
-                  {isEn ? "COMBAT DISCIPLINE" : "DISIPLIN KOMBAT"}
+                  {isEn ? "SILAT OLAHRAGA DISCIPLINE" : "KATEGORI SILAT OLAHRAGA"}
                 </span>
                 <h3 className="text-2xl font-bold font-athletic text-white uppercase mb-4">
                   {d.guidelines.formats.tandingTitle}
@@ -312,10 +312,10 @@ export function GuidelinesView() {
                 </ul>
               </div>
 
-              {/* Seni Card */}
+              {/* Silat Seni Card */}
               <div className="guidelines-card rounded-[14px] sm:rounded-2xl border border-white/[0.08] bg-white/[0.025] p-6 sm:p-7 backdrop-blur-[16px] shadow-[0_8px_32px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.06)]">
                 <span className="text-[10px] font-mono text-[#ffd24c] font-bold uppercase tracking-widest block mb-2">
-                  {isEn ? "ARTISTIC DISCIPLINE" : "DISIPLIN ARTISTIK"}
+                  {isEn ? "SILAT SENI DISCIPLINE" : "KATEGORI SILAT SENI"}
                 </span>
                 <h3 className="text-2xl font-bold font-athletic text-white uppercase mb-4">
                   {d.guidelines.formats.seniTitle}
@@ -378,8 +378,8 @@ export function GuidelinesView() {
               title={isEn ? "PERSILAT 2026 Points & Rubric System" : "Sistem Mata & Rubrik PERSILAT 2026"}
               subtitle={
                 isEn
-                  ? "Standardized combat points for strikes, kicks, and takedowns, alongside official artistic judging rubrics."
-                  : "Pecahan mata tanding bagi pukulan, tendangan dan jatuhan serta rubrik penilaian juri untuk kategori seni."
+                  ? "Standardized Silat Olahraga points for strikes, kicks, and takedowns, alongside official Silat Seni judging rubrics."
+                  : "Pecahan mata Silat Olahraga bagi pukulan, tendangan dan jatuhan serta rubrik penilaian juri untuk Silat Seni."
               }
             />
 
@@ -461,7 +461,7 @@ export function GuidelinesView() {
 
             <div className="guidelines-motion-item rounded-[14px] sm:rounded-2xl border border-white/[0.08] bg-white/[0.025] p-5 sm:p-7 backdrop-blur-[16px] shadow-[0_8px_32px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.06)]">
               <h3 className="text-lg font-bold text-white font-athletic uppercase mb-4">
-                {isEn ? "PERSILAT 2026 Tanding Penalty Points Ladder" : "Tangga Potongan Mata Tanding PERSILAT 2026"}
+                {isEn ? "PERSILAT 2026 Silat Olahraga Penalty Points Ladder" : "Tangga Potongan Mata Silat Olahraga PERSILAT 2026"}
               </h3>
 
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-6 guidelines-motion-chips">
@@ -632,8 +632,8 @@ export function GuidelinesView() {
                     <Check size={14} className="text-emerald-400 shrink-0 mt-0.5" />
                     <span>
                       {isEn
-                        ? "Maximum 2 certified coaches in Tanding corner wearing official black silat uniform."
-                        : "Maksimum 2 jurulatih bertauliah di sudut Tanding berpakaian seragam hitam rasmi silat."}
+                        ? "Maximum 2 certified coaches in Silat Olahraga corner wearing official black silat uniform."
+                        : "Maksimum 2 jurulatih bertauliah di sudut Silat Olahraga berpakaian seragam hitam rasmi silat."}
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -648,9 +648,9 @@ export function GuidelinesView() {
                     <Check size={14} className="text-emerald-400 shrink-0 mt-0.5" />
                     <span>
                       {isEn ? (
-                        <><strong>Tanding VAR:</strong> 2 protest cards per match (3 rounds); card returned if video review is successful.</>
+                        <><strong>VAR Silat Olahraga:</strong> 2 protest cards per match (3 rounds); card returned if video review is successful.</>
                       ) : (
-                        <><strong>Tanding VAR:</strong> 2 kad protes setiap perlawanan (3 pusingan); kad dipulangkan jika semakan video berjaya.</>
+                        <><strong>VAR Silat Olahraga:</strong> 2 kad protes setiap perlawanan (3 pusingan); kad dipulangkan jika semakan video berjaya.</>
                       )}
                     </span>
                   </li>
@@ -658,9 +658,9 @@ export function GuidelinesView() {
                     <Check size={14} className="text-emerald-400 shrink-0 mt-0.5" />
                     <span>
                       {isEn ? (
-                        <><strong>Jurus VAR:</strong> 1 protest card per performance before winner is declared; fact-checking penalties only.</>
+                        <><strong>VAR Silat Seni:</strong> 1 protest card per performance before winner is declared; fact-checking penalties only.</>
                       ) : (
-                        <><strong>Jurus VAR:</strong> 1 kad protes bagi setiap persembahan sebelum pemenang diumumkan; hanya untuk semakan fakta hukuman.</>
+                        <><strong>VAR Silat Seni:</strong> 1 kad protes bagi setiap persembahan sebelum pemenang diumumkan; hanya untuk semakan fakta hukuman.</>
                       )}
                     </span>
                   </li>

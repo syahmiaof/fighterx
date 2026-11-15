@@ -60,7 +60,7 @@ const NAV_ITEMS: NavItem[] = [
 
 function BrandWordmark() {
   return (
-    <Link className="brand" href="/" prefetch={true} aria-label="FighterX homepage">
+    <Link className="brand" href="/" prefetch={true} aria-label="FighterX homepage" style={{ flexShrink: 0 }}>
       <span className="brand-copy">
         <strong>
           FIGHTER<span>X</span>
@@ -260,6 +260,7 @@ export function SiteHeader({ currentPage = "home" }: SiteHeaderProps) {
           width: "min(100% - 32px, 1440px)",
           margin: "0 auto",
           gap: "12px",
+          position: "relative",
         }}
       >
         <BrandWordmark />
@@ -306,7 +307,7 @@ export function SiteHeader({ currentPage = "home" }: SiteHeaderProps) {
         {/* Action Controls (Language Switcher & Login & Register Club) */}
         <div
           className="header-actions"
-          style={{ display: "flex", alignItems: "center", gap: "10px", flexShrink: 0 }}
+          style={{ display: "flex", alignItems: "center", gap: "10px", flexShrink: 0, marginLeft: "auto" }}
         >
           <LanguageSwitcher />
           <div

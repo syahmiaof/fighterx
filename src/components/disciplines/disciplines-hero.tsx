@@ -84,12 +84,6 @@ export function DisciplinesHero({
         "(prefers-reduced-motion: no-preference)",
         () => {
           gsap.fromTo(
-            el.querySelector(".disciplines-overline"),
-            { y: -10, autoAlpha: 0 },
-            { y: 0, autoAlpha: 1, duration: 0.5, ease: "power2.out", clearProps: "transform", delay: 0.05 }
-          );
-
-          gsap.fromTo(
             el.querySelector(".disciplines-hero-title"),
             { y: 25, autoAlpha: 0 },
             { y: 0, autoAlpha: 1, duration: 0.6, ease: "power3.out", clearProps: "transform", delay: 0.15 }
@@ -129,7 +123,7 @@ export function DisciplinesHero({
       // Reduced motion: immediate settle into static resting layer
       media.add("(prefers-reduced-motion: reduce)", () => {
         const all = el.querySelectorAll<HTMLElement>(
-          ".disciplines-overline, .disciplines-hero-title, .discipline-card-seni, .discipline-card-olahraga, .disciplines-nav-tabs"
+          ".disciplines-hero-title, .discipline-card-seni, .discipline-card-olahraga, .disciplines-nav-tabs"
         );
         all.forEach((item) => {
           item.removeAttribute("style");
@@ -149,24 +143,6 @@ export function DisciplinesHero({
       className="relative overflow-hidden pt-10 pb-12 sm:pt-14 sm:pb-16 border-b border-white/[0.08]"
     >
       <div className="max-w-6xl mx-auto px-4 text-center">
-
-        {/* Overline — Persatuan style accent rules */}
-        <div className="disciplines-overline flex items-center justify-center gap-3 mb-4">
-          <span
-            className="flex-1 max-w-[80px] h-px bg-gradient-to-r from-transparent to-[#e10600]"
-            aria-hidden="true"
-          />
-          <span
-            className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#ff4d5a]"
-          >
-            {dd.overline}
-          </span>
-          <span
-            className="flex-1 max-w-[80px] h-px bg-gradient-to-l from-transparent to-[#e10600]"
-            aria-hidden="true"
-          />
-        </div>
-
         {/* Main title — Persatuan two-tone Athletic style */}
         <h1
           className="disciplines-hero-title select-none uppercase mb-4"

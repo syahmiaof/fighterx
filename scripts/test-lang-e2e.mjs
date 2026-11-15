@@ -161,23 +161,20 @@ async function run() {
   // BM Mode
   await toggleLanguage(page, "bm");
   bodyBm = await page.innerText("body");
-  if (!bodyBm.includes("KERANGKA INDUK LATIHAN TAHUNAN 2027") && !bodyBm.includes("Kerangka Induk Latihan Tahunan 2027")) {
-    throw new Error("Missing 'Kerangka Induk Latihan Tahunan 2027' in /knowledge BM!");
-  }
-  if (bodyBm.includes("MASTER ANNUAL TRAINING FRAMEWORK 2027")) {
-    throw new Error("Found leftover English header 'MASTER ANNUAL TRAINING FRAMEWORK 2027' in BM mode!");
+  if (!bodyBm.includes("SAINS SUKAN") && !bodyBm.includes("Sains Sukan")) {
+    throw new Error("Missing 'SAINS SUKAN' in /knowledge BM!");
   }
   await verifyNoBannedRojak(page, "/knowledge", "BM");
-  console.log("  ✓ /knowledge in BM: localized Master Annual Framework & pure sports science calculators");
+  console.log("  ✓ /knowledge in BM: localized Sports Science Hub & pure sports science calculators");
 
   // EN Mode
   await toggleLanguage(page, "en");
   bodyEn = await page.innerText("body");
-  if (!bodyEn.includes("MASTER ANNUAL TRAINING FRAMEWORK 2027") && !bodyEn.includes("Master Annual Training Framework 2027")) {
-    throw new Error("Missing 'Master Annual Training Framework 2027' in /knowledge EN!");
+  if (!bodyEn.includes("SPORT SCIENCE") && !bodyEn.includes("Sport Science")) {
+    throw new Error("Missing 'SPORT SCIENCE' in /knowledge EN!");
   }
   await verifyNoBannedRojak(page, "/knowledge", "EN");
-  console.log("  ✓ /knowledge in EN: pure English Master Annual Framework & calculators");
+  console.log("  ✓ /knowledge in EN: pure English Sport Science Hub & calculators");
   passedTests++;
 
   // --------------------------------------------------------------------------

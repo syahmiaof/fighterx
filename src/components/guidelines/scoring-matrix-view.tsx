@@ -139,12 +139,12 @@ export function ScoringMatrixView() {
       points: isEn
         ? [
             "Harmony between speed, explosive power (tenaga), and fluid transition.",
-            "Ganda: Realistic combat choreography, dynamic impact sounds, and disarms.",
+            "Ganda: Realistic paired performance choreography, solid impact sounds, and clean weapon disarms.",
             "Solo Bebas: Cultural authenticity, weapon handling flair, and musical synchrony.",
           ]
         : [
             "Keseimbangan antara kepantasan, ledakan tenaga (explosive power), dan transisi lembut.",
-            "Ganda: Koreografi pertempuran realistik, bunyi impak tangkisan, dan rampasan senjata.",
+            "Ganda: Koreografi persembahan berpasangan yang realistik, bunyi impak tangkisan padu, dan rampasan senjata bersih.",
             "Solo Bebas: Keaslian unsur warisan silat, kelincahan senjata, dan kesepaduan muzik.",
           ],
     },
@@ -199,7 +199,7 @@ export function ScoringMatrixView() {
           }`}
         >
           <Swords size={16} />
-          <span>{isEn ? "Combat Scoring (Tanding)" : "Mata Tanding (Silat Olahraga)"}</span>
+          <span>{isEn ? "Silat Olahraga Scoring" : "Mata Silat Olahraga"}</span>
         </button>
 
         <button
@@ -212,7 +212,7 @@ export function ScoringMatrixView() {
           }`}
         >
           <Sparkles size={16} />
-          <span>{isEn ? "Artistic Rubric (Seni)" : "Rubrik Seni (Jurus Baku & Koreografi)"}</span>
+          <span>{isEn ? "Silat Seni Rubric" : "Rubrik Silat Seni"}</span>
         </button>
       </div>
 
@@ -334,12 +334,12 @@ export function ScoringMatrixView() {
           <div className="guidelines-card rounded-2xl border border-white/[0.08] bg-white/[0.025] p-6 backdrop-blur-[16px] shadow-[0_8px_32px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.06)]">
             <h4 className="text-base font-bold font-athletic text-white uppercase mb-1 flex items-center gap-2">
               <ShieldAlert size={16} className="text-[#ff4d5a]" />
-              <span>{isEn ? "Standard Technical Deductions (Jurus Penalties)" : "Jadual Potongan Rasmi Wasit Juri (Kategori Seni)"}</span>
+              <span>{isEn ? "Standard Technical Deductions (Silat Seni Penalties)" : "Jadual Potongan Rasmi Wasit Juri (Silat Seni)"}</span>
             </h4>
             <p className="text-xs text-[#96989f] mb-4">
               {isEn
-                ? "Deductions applied automatically by digital jury systems for technical infractions in Solo, Ganda, and Regu categories."
-                : "Potongan markah rasmi yang dikenakan juri digital sekiranya berlaku kesilapan teknikal dalam kategori Tunggal, Ganda, Regu dan Solo Bebas."}
+                ? "Deductions applied automatically by digital jury systems for technical infractions in Silat Seni (Tunggal, Ganda, Regu, and Solo Kreatif)."
+                : "Potongan markah rasmi oleh juri digital sekiranya berlaku kesilapan teknikal dalam Silat Seni (Tunggal, Ganda, Regu, dan Solo Kreatif)."}
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
