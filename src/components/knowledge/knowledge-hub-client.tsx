@@ -49,6 +49,7 @@ import { CitationsDrawer } from "./citations-drawer";
 const PeriodizationMatrix = dynamic(
   () => import("./periodization-matrix").then((mod) => mod.PeriodizationMatrix),
   {
+    ssr: false,
     loading: () => (
       <div className="p-8 text-center text-sm text-[#A2A3AA] animate-pulse">
         Memuatkan Matriks Periodisasi...
@@ -60,6 +61,7 @@ const PeriodizationMatrix = dynamic(
 const WeightCutPlanner = dynamic(
   () => import("./weight-cut-planner").then((mod) => mod.WeightCutPlanner),
   {
+    ssr: false,
     loading: () => (
       <div className="p-8 text-center text-sm text-[#A2A3AA] animate-pulse">
         Memuatkan Kalkulator Weight Cut...
@@ -71,6 +73,7 @@ const WeightCutPlanner = dynamic(
 const SweatRateCalculator = dynamic(
   () => import("./sweat-rate-calculator").then((mod) => mod.SweatRateCalculator),
   {
+    ssr: false,
     loading: () => (
       <div className="p-8 text-center text-sm text-[#A2A3AA] animate-pulse">
         Memuatkan Kalkulator Kadar Peluh...
@@ -82,6 +85,7 @@ const SweatRateCalculator = dynamic(
 const StakeholderGuideSwitcher = dynamic(
   () => import("./stakeholder-guide-switcher").then((mod) => mod.StakeholderGuideSwitcher),
   {
+    ssr: false,
     loading: () => (
       <div className="p-8 text-center text-sm text-[#A2A3AA] animate-pulse">
         Loading...
