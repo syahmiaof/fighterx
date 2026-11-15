@@ -196,7 +196,7 @@ export function PeriodizationMatrix() {
               {isEn ? "Silat Athletic Periodisation Matrix" : "Matriks Periodisasi Sukan Silat"}
             </span>
           </div>
-          <h3 className="text-2xl sm:text-3xl font-bold font-athletic text-white tracking-wide uppercase">
+          <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
             {isEn ? "4-PHASE TOURNAMENT PERIODISATION" : "PERIODISASI 4 FASA KEJOHANAN"}
           </h3>
           <p className="text-xs sm:text-sm text-[#A2A3AA] mt-1 max-w-2xl">
@@ -265,7 +265,7 @@ export function PeriodizationMatrix() {
                 {isEn ? "Recommended Duration:" : "Tempoh Disyorkan:"} {getDurationText(currentPhase)}
               </span>
             </div>
-            <h4 className="text-xl sm:text-2xl font-bold font-athletic text-white uppercase tracking-wide">
+            <h4 className="text-xl sm:text-2xl font-bold tracking-tight text-white">
               {getPhaseTitle(currentPhase)}
             </h4>
             <p className="text-xs sm:text-sm text-[#C5C6CA] mt-1 leading-relaxed">

@@ -54,7 +54,7 @@ export function HomeTrainingCurriculum() {
             <Sparkles size={13} />
             <span>PANDUAN LENGKAP LATIHAN DI RUMAH UNTUK ATLET & IBU BAPA</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-athletic text-white uppercase tracking-wide">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white">
             5 MODUL TERAS SAINS SUKAN SILAT
           </h2>
           <p className="text-sm text-[#A2A3AA] mt-2">
@@ -97,7 +97,7 @@ export function HomeTrainingCurriculum() {
                 <span>ASAS SISTEM & FALSAFAH LATIHAN</span>
               </div>
 
-              <h3 className="text-2xl sm:text-3xl font-bold font-athletic text-white uppercase mb-4">
+              <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-white mb-4">
                 Falsafah Latihan: SAID Principle & Quality Over Sweat
               </h3>
 
@@ -214,7 +214,7 @@ export function HomeTrainingCurriculum() {
                   <Scale size={13} />
                   <span>MODUL 1: WEIGHT MANAGEMENT</span>
                 </div>
-                <h3 className="text-2xl sm:text-3xl font-bold font-athletic text-white uppercase">
+                <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
                   Pengurusan Berat Badan & Komposisi Badan (Weight Management)
                 </h3>
                 <p className="text-sm text-[#D4D5D9] mt-2 leading-relaxed">
@@ -301,7 +301,7 @@ export function HomeTrainingCurriculum() {
                   <Utensils size={13} />
                   <span>MODUL 2: SPORTS NUTRITION</span>
                 </div>
-                <h3 className="text-2xl sm:text-3xl font-bold font-athletic text-white uppercase">
+                <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
                   Pemakanan Prestasi & Hidrasi (Sports Nutrition)
                 </h3>
                 <p className="text-sm text-[#D4D5D9] mt-2 leading-relaxed">
@@ -429,7 +429,7 @@ export function HomeTrainingCurriculum() {
                   <Dumbbell size={13} />
                   <span>MODUL 3: STRENGTH &amp; CONDITIONING</span>
                 </div>
-                <h3 className="text-2xl sm:text-3xl font-bold font-athletic text-white uppercase">
+                <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
                   Latihan Fizikal &amp; Neuromuskular Spesifik Silat (S&amp;C)
                 </h3>
                 <p className="text-sm text-[#D4D5D9] mt-2 leading-relaxed">
@@ -602,7 +602,7 @@ export function HomeTrainingCurriculum() {
                   <HeartPulse size={13} />
                   <span>MODUL 4: RECOVERY &amp; PREHAB</span>
                 </div>
-                <h3 className="text-2xl sm:text-3xl font-bold font-athletic text-white uppercase">
+                <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
                   Pemulihan, Mobiliti &amp; Pencegahan Kecederaan (Recovery &amp; Prehab)
                 </h3>
                 <p className="text-sm text-[#D4D5D9] mt-2 leading-relaxed">
@@ -689,7 +689,7 @@ export function HomeTrainingCurriculum() {
                   <Award size={13} />
                   <span>MODUL 5: KPI &amp; MONITORING</span>
                 </div>
-                <h3 className="text-2xl sm:text-3xl font-bold font-athletic text-white uppercase">
+                <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
                   Sistem Pantauan Kemajuan &amp; KPI (Anti-Latihan Kosong)
                 </h3>
                 <p className="text-sm text-[#D4D5D9] mt-2 leading-relaxed">
@@ -779,7 +779,7 @@ export function HomeTrainingCurriculum() {
                   <Calendar size={13} />
                   <span>PERIODIZATION &amp; HOME MICROCYCLE</span>
                 </div>
-                <h3 className="text-2xl sm:text-3xl font-bold font-athletic text-white uppercase">
+                <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
                   Pelan Pelaksanaan: Susunan Silibus Ikut Fasa (Periodization)
                 </h3>
                 <p className="text-sm text-[#D4D5D9] mt-2 leading-relaxed">

@@ -121,7 +121,7 @@ export function TestimonialsSection() {
               </span>
               <h2
                 id="testimonials-heading"
-                className="text-2xl sm:text-3xl font-bold font-athletic tracking-wide text-white uppercase leading-none"
+                className="text-2xl sm:text-3xl font-bold tracking-tight text-white leading-none"
               >
                 {d.home.testimonials.title}
               </h2>

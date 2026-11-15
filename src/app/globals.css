@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-:root { color-scheme: dark; --bg:#08090b; --wallpaper-opacity:0.72; --surface:#17191e; --surface-2:#202126; --white:#fff; --silver:#e5e5e7; --muted:#c5c6ca; --subtle:#96989f; --red:#e10600; --hot:#ff3845; --line:#45464b; --font-ui:var(--font-body),Arial,sans-serif; --font-athletic:var(--font-display),sans-serif; --font-heritage:var(--font-display),sans-serif; }
+:root { color-scheme: dark; --bg:#08090b; --wallpaper-opacity:0.72; --surface:#17191e; --surface-2:#202126; --white:#fff; --silver:#e5e5e7; --muted:#c5c6ca; --subtle:#96989f; --red:#e10600; --hot:#ff3845; --line:#45464b; --font-ui:var(--font-body),Arial,sans-serif; --font-athletic:var(--font-display),sans-serif; --font-heritage:var(--font-body),Arial,sans-serif; }
 * { box-sizing:border-box; }
 html { scroll-behavior:smooth; scroll-padding-top:88px; background:var(--bg); }
 body { margin:0; background:var(--bg); color:var(--white); font-family:var(--font-ui); font-size:15px; -webkit-font-smoothing:antialiased; }
@@ -669,7 +669,7 @@ img { display:block; }
 .programme-title { display:flex; align-items:center; gap:10px; padding-bottom:8px; border-bottom:1px solid #595a5f; }
 .discipline-icon { flex:none; display:block; width:25px; height:25px; background-position:center; background-repeat:no-repeat; background-size:contain; }
 .discipline-icon-seni { background-image:url('/assets/fighterx/silhouette-silat-action-transparent.png'); }.discipline-icon-olahraga { width:31px; height:24px; background-image:url('/assets/fighterx/silhouette-silat-sparring-transparent.png'); }
-.programme-title h3 { margin:0; font:600 19px/.95 var(--font-athletic); letter-spacing:.055em; }
+.programme-title h3 { margin:0; font:700 18px/1.1 var(--font-ui); letter-spacing:.015em; }
 .programme-info p { max-width:290px; margin:12px 0 14px; color:#e1e1e4; font-size:11px; line-height:1.5; }
 .text-link { min-height:34px; padding:0 11px; display:inline-flex; align-items:center; gap:13px; border:1px solid #d92a30; border-radius:5px; font-size:10px; font-weight:700; }
 .text-link:hover { background:#9e1115; }

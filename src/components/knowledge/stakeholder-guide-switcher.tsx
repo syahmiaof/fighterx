@@ -29,7 +29,7 @@ export function StakeholderGuideSwitcher() {
               : "Panduan Ekosistem Silat Kebangsaan"}
           </span>
         </div>
-        <h3 className="text-2xl sm:text-3xl font-bold font-athletic text-white tracking-wide uppercase">
+        <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
           {isEn ? "STRUCTURED STAKEHOLDER GUIDE" : "PANDUAN STAKEHOLDER TERSUSUN"}
         </h3>
         <p className="text-xs sm:text-sm text-[#A2A3AA] mt-1 max-w-2xl">

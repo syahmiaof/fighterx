@@ -99,7 +99,7 @@ export function AthleteCoachSpotlight() {
           </p>
           <h2
             id="spotlight-heading"
-            className="text-4xl sm:text-5xl lg:text-6xl font-bold font-athletic tracking-wide text-white uppercase"
+            className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white"
           >
             {d.home.spotlight.title}
           </h2>
@@ -163,7 +163,7 @@ export function AthleteCoachSpotlight() {
                     </div>
 
                     {/* Name — Full name, no truncate ... */}
-                    <h3 className="text-2xl sm:text-3xl font-bold font-athletic text-white tracking-wide uppercase leading-tight">
+                    <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight leading-tight">
                       {figure.name}
                     </h3>
 

@@ -34,7 +34,7 @@ export function SweatRateCalculator() {
               : "Protokol Hidrasi Institut Sukan Negara (ISN)"}
           </span>
         </div>
-        <h3 className="text-2xl sm:text-3xl font-bold font-athletic text-white tracking-wide uppercase">
+        <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
           {isEn ? "SWEAT RATE & REHYDRATION TEST" : "UJIAN KADAR PELUH & REHIDRASI"}
         </h3>
         <p className="text-xs sm:text-sm text-[#A2A3AA] mt-1 max-w-2xl">

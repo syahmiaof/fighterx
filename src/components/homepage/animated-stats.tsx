@@ -362,7 +362,7 @@ export function AnimatedStats() {
           <p className="text-[11px] sm:text-xs font-mono font-semibold tracking-[0.25em] text-[#FF3845] uppercase mb-2">
             {d.home.stats.eyebrow}
           </p>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-athletic tracking-wider text-white uppercase">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white">
             {d.home.stats.title}
           </h2>
           <p className="text-xs sm:text-sm text-[#96989F] mt-2 max-w-xl mx-auto leading-relaxed">
@@ -389,11 +389,11 @@ export function AnimatedStats() {
                 <div className="flex items-baseline gap-1">
                   <span
                     ref={kpiKelabRef}
-                    className="font-athletic text-3xl sm:text-4xl font-bold text-white tracking-tight"
+                    className="text-3xl sm:text-4xl font-bold text-white tracking-tight"
                   >
                     52
                   </span>
-                  <span className="text-[#FF3845] font-athletic text-xl font-bold">+</span>
+                  <span className="text-[#FF3845] text-xl font-bold">+</span>
                 </div>
                 <div className="text-xs font-bold text-white">{d.home.stats.kpiClubs.split(" (")[0]}</div>
                 <div className="text-[10px] text-[#8C8E97]">{d.home.stats.kpiClubs.split(" (")[1]?.replace(")", "") || ""}</div>
@@ -409,11 +409,11 @@ export function AnimatedStats() {
                 <div className="flex items-baseline gap-1">
                   <span
                     ref={kpiPesilatRef}
-                    className="font-athletic text-3xl sm:text-4xl font-bold text-white tracking-tight"
+                    className="text-3xl sm:text-4xl font-bold text-white tracking-tight"
                   >
                     1,250
                   </span>
-                  <span className="text-[#FF3845] font-athletic text-xl font-bold">+</span>
+                  <span className="text-[#FF3845] text-xl font-bold">+</span>
                 </div>
                 <div className="text-xs font-bold text-white">{d.home.stats.kpiAthletes.split(" (")[0]}</div>
                 <div className="text-[10px] text-[#8C8E97]">{d.home.stats.kpiAthletes.split(" (")[1]?.replace(")", "") || ""}</div>
@@ -429,11 +429,11 @@ export function AnimatedStats() {
                 <div className="flex items-baseline gap-1">
                   <span
                     ref={kpiJurulatihRef}
-                    className="font-athletic text-3xl sm:text-4xl font-bold text-white tracking-tight"
+                    className="text-3xl sm:text-4xl font-bold text-white tracking-tight"
                   >
                     85
                   </span>
-                  <span className="text-[#FF3845] font-athletic text-xl font-bold">+</span>
+                  <span className="text-[#FF3845] text-xl font-bold">+</span>
                 </div>
                 <div className="text-xs font-bold text-white">{d.home.stats.kpiCoaches.split(" (")[0]}</div>
                 <div className="text-[10px] text-[#8C8E97]">{d.home.stats.kpiCoaches.split(" (")[1]?.replace(")", "") || ""}</div>
@@ -449,11 +449,11 @@ export function AnimatedStats() {
                 <div className="flex items-baseline gap-1">
                   <span
                     ref={kpiSesiRef}
-                    className="font-athletic text-3xl sm:text-4xl font-bold text-white tracking-tight"
+                    className="text-3xl sm:text-4xl font-bold text-white tracking-tight"
                   >
                     14,250
                   </span>
-                  <span className="text-[#FF3845] font-athletic text-xl font-bold">+</span>
+                  <span className="text-[#FF3845] text-xl font-bold">+</span>
                 </div>
                 <div className="text-xs font-bold text-white">{d.home.stats.kpiSessions.split(" (")[0]}</div>
                 <div className="text-[10px] text-[#22C55E] flex items-center gap-1 font-mono">

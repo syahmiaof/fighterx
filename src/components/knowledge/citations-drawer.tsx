@@ -64,7 +64,7 @@ export function CitationsDrawer({ isOpen, onClose }: CitationsDrawerProps) {
                 {isEn ? "Sports Science Bibliographic Archive" : "Arkib Bibliografi Sains Sukan"}
               </span>
             </div>
-            <h3 id="citations-drawer-title" className="text-2xl font-bold font-athletic text-white tracking-wide uppercase">
+            <h3 id="citations-drawer-title" className="text-2xl font-bold tracking-tight text-white">
               {isEn ? "SCIENTIFIC REFERENCES & RESEARCH STUDIES" : "SUMBER RUJUKAN & KAJIAN SAINTIFIK"}
             </h3>
             <p className="text-xs text-[#A2A3AA] mt-1">

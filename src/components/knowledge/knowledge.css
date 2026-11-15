@@ -10,10 +10,10 @@
   overflow-x: hidden;
 }
 
-/* Teko Athletic Heading Accents */
+/* Clean Disciplined Typography for Headings & Accents */
 .font-athletic {
-  font-family: var(--font-athletic), "Teko", sans-serif;
-  letter-spacing: 0.02em;
+  font-family: var(--font-ui), var(--font-body), sans-serif;
+  letter-spacing: -0.01em;
 }
 
 /* ==========================================================================

@@ -83,7 +83,7 @@ export function ValueProposition() {
           </p>
           <h2
             id="value-prop-heading"
-            className="text-3xl sm:text-4xl lg:text-5xl font-bold font-athletic tracking-wider text-white uppercase"
+            className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white"
           >
             {d.home.valueProp.title}
           </h2>
@@ -111,7 +111,7 @@ export function ValueProposition() {
                     </span>
                   </div>
 
-                  <h3 className="text-xl sm:text-2xl font-bold font-athletic text-white tracking-wide uppercase mb-1">
+                  <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight mb-1">
                     {pillar.title}
                   </h3>
                   <div className="text-[11px] font-mono text-[#FF3845] uppercase font-semibold mb-3">

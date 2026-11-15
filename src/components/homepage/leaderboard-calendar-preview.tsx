@@ -130,7 +130,7 @@ export function LeaderboardCalendarPreview() {
                       <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#FFB800] block leading-tight font-semibold">
                         {d.home.preview.leaderboardOverline}
                       </span>
-                      <h3 className="text-xl sm:text-2xl font-bold text-white font-athletic tracking-wide uppercase">
+                      <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
                         {d.home.preview.leaderboardTitle}
                       </h3>
                     </div>
@@ -226,7 +226,7 @@ export function LeaderboardCalendarPreview() {
                     <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#FF3845] block leading-tight font-semibold">
                       {d.home.preview.calendarOverline}
                     </span>
-                    <h3 className="text-xl sm:text-2xl font-bold text-white font-athletic tracking-wide uppercase">
+                    <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
                       {d.home.preview.calendarTitle}
                     </h3>
                   </div>

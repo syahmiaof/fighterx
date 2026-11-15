@@ -198,7 +198,7 @@ export function AssociationMarquee() {
         <p className="marquee-eyebrow text-xs tracking-[0.3em] text-[#FF3845] uppercase mb-2 font-semibold">
           {d.home.marquee.eyebrow}
         </p>
-        <h2 id="marquee-heading" className="marquee-title font-athletic text-2xl md:text-3xl font-bold text-white tracking-wide">
+        <h2 id="marquee-heading" className="marquee-title text-2xl md:text-3xl font-bold text-white tracking-tight">
           {d.home.marquee.title}
         </h2>
         <p className="marquee-subtitle text-xs md:text-sm text-[#C5C6CA] max-w-2xl mx-auto mt-2">

@@ -1097,7 +1097,7 @@ export function KnowledgeHubClient() {
                 <Target size={13} />
                 <span>{isEn ? "ANNUAL TRAINING PROGRAM FRAMEWORK 2027" : "KERANGKA PROGRAM LATIHAN TAHUNAN 2027"}</span>
               </div>
-              <h2 className="text-3xl sm:text-4xl font-bold font-athletic text-white uppercase tracking-wide">
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
                 {isEn ? "MASTER ANNUAL TRAINING FRAMEWORK 2027" : "KERANGKA INDUK LATIHAN TAHUNAN 2027"}
               </h2>
               <p className="text-xs sm:text-sm text-[#A2A3AA] mt-1">
@@ -1289,7 +1289,7 @@ export function KnowledgeHubClient() {
                       )}
                     </div>
 
-                    <h3 className="text-2xl sm:text-3xl font-bold font-athletic text-white uppercase tracking-wide">
+                    <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
                       {getMonthName(activeMonthData.monthIndex, activeMonthData.monthName)}: {activeMonthData.theme}
                     </h3>
                     <p className="text-xs sm:text-sm text-[#A2A3AA] mt-0.5">
@@ -1430,7 +1430,7 @@ export function KnowledgeHubClient() {
                           </span>
                         </div>
 
-                        <h3 className="text-xl font-bold font-athletic text-white uppercase tracking-wide mb-2">
+                        <h3 className="text-xl font-bold tracking-tight text-white mb-2">
                           {isEn
                             ? policy.priority === "A"
                               ? "Priority A (Major / Key Competition)"
@@ -1584,7 +1584,7 @@ export function KnowledgeHubClient() {
                         </span>
                       </div>
 
-                      <h3 className="text-xl sm:text-2xl font-bold font-athletic text-white uppercase tracking-wide mb-1">
+                      <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-white mb-1">
                         {test.title}
                       </h3>
 
@@ -1682,7 +1682,7 @@ export function KnowledgeHubClient() {
                           <span className="text-[10px] text-[#8E9099] font-mono">{isEn ? "Track #2027" : "Trek #2027"}</span>
                         </div>
 
-                        <h3 className="text-xl font-bold font-athletic text-white uppercase tracking-wide mb-1">
+                        <h3 className="text-xl font-bold tracking-tight text-white mb-1">
                           {priority.title}
                         </h3>
 
@@ -1759,7 +1759,7 @@ export function KnowledgeHubClient() {
               <span className="text-xs font-bold text-[#FF555C] uppercase tracking-wider block mb-1">
                 {isEn ? "Sports Science Practical Reference Collection" : "Koleksi Rujukan Praktikal Sains Sukan"}
               </span>
-              <h2 className="text-2xl sm:text-3xl font-bold font-athletic text-white uppercase tracking-wide">
+              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
                 {isEn ? "SPORTS SCIENCE ARTICLES & PRACTICAL GUIDES" : "ARTIKEL & PANDUAN PRAKTIKAL SAINS SUKAN"}
               </h2>
               <p className="text-xs text-[#8E9099] mt-0.5">
@@ -1815,7 +1815,7 @@ export function KnowledgeHubClient() {
                       </span>
                     </div>
 
-                    <h3 className="text-xl sm:text-2xl font-bold font-athletic text-white tracking-wide group-hover:text-[#FF555C] transition-colors leading-snug">
+                    <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-white group-hover:text-[#FF555C] transition-colors leading-snug">
                       {isEn ? article.titleEn || article.title : article.title}
                     </h3>
                     <p className="text-xs font-semibold text-[#B0B1B8] mt-1 mb-3 line-clamp-1">
@@ -1913,7 +1913,7 @@ export function KnowledgeHubClient() {
             <span className="text-xs font-bold text-[#FF3845] uppercase tracking-wider block mb-1">
               {kd.tools.title}
             </span>
-            <h2 className="text-2xl sm:text-3xl font-bold font-athletic text-white tracking-wide uppercase">
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
               {kd.tools.title}
             </h2>
             <p className="text-xs sm:text-sm text-[#A2A3AA] mt-1">
@@ -1992,7 +1992,7 @@ export function KnowledgeHubClient() {
               <span className="text-xs font-bold text-[#FF555C] uppercase tracking-wider block mb-0.5">
                 {isEn ? "Official Tournament Standards" : "Piawaian Rasmi Pertandingan"}
               </span>
-              <h3 className="text-xl sm:text-2xl font-bold font-athletic text-white uppercase tracking-wide">
+              <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-white">
                 {isEn ? "PERSILAT 2026 TANDING WEIGHT CLASS STANDARDS" : "STANDARD KELAS BERAT TANDING PERSILAT 2026"}
               </h3>
             </div>
@@ -2061,7 +2061,7 @@ export function KnowledgeHubClient() {
                     {isEn ? `· Reviewed by: ${activeArticle.reviewedByEn || activeArticle.reviewedBy}` : `· Semakan: ${activeArticle.reviewedBy}`}
                   </span>
                 </div>
-                <h2 id="article-reader-title" className="text-2xl sm:text-3xl font-bold font-athletic text-white uppercase tracking-wide">
+                <h2 id="article-reader-title" className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
                   {isEn ? activeArticle.titleEn || activeArticle.title : activeArticle.title}
                 </h2>
                 <p className="text-xs text-[#A8A9B2] mt-1">{isEn ? activeArticle.subtitleEn || activeArticle.subtitle : activeArticle.subtitle}</p>
@@ -2135,7 +2135,7 @@ export function KnowledgeHubClient() {
               {/* Sections */}
               {(isEn && activeArticle.sectionsEn ? activeArticle.sectionsEn : activeArticle.sections).map((section, sIdx) => (
                 <div key={sIdx} className="space-y-3 pt-4 border-t border-white/[0.08]">
-                  <h4 className="text-lg font-bold font-athletic text-white uppercase tracking-wide">
+                  <h4 className="text-lg font-bold tracking-tight text-white">
                     {section.heading}
                   </h4>
                   {section.content.map((p, pIdx) => (

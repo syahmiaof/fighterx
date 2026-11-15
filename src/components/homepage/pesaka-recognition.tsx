@@ -52,7 +52,7 @@ export function PesakaRecognition() {
           </p>
           <h2
             id="pesaka-heading"
-            className="text-3xl sm:text-4xl lg:text-5xl font-bold font-athletic tracking-wider text-white uppercase"
+            className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white"
           >
             {d.home.pesaka.title}
           </h2>
@@ -100,7 +100,7 @@ export function PesakaRecognition() {
                       : "Guaranteed Standards & Curriculum Alignment"}
                   </span>
                 </div>
-                <h3 className="text-2xl sm:text-3xl font-bold font-athletic text-white tracking-wide uppercase mb-3">
+                <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-3">
                   {locale === "bm"
                     ? "Sokongan Penuh Terhadap Ekosistem Digital Pesilat"
                     : "Full Support for the Digital Silat Ecosystem"}
@@ -157,7 +157,7 @@ export function PesakaRecognition() {
               <p className="text-[10px] font-mono font-bold tracking-widest text-[#FF3845] uppercase">
                 {locale === "bm" ? "TONGGAK SEJARAH PERSILATAN NEGARA" : "HISTORICAL PILLARS OF NATIONAL SILAT"}
               </p>
-              <h3 className="text-xl sm:text-2xl font-bold font-athletic text-white tracking-wide uppercase">
+              <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
                 {d.home.pesaka.fourFoundersTitle}
               </h3>
             </div>
