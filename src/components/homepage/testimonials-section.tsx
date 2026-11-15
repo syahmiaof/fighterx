@@ -32,9 +32,9 @@ const testimonials: Testimonial[] = [
     discipline: "Silat Olahraga & Seni",
     disciplineEn: "Silat Olahraga & Seni",
     quote:
-      "Dengan FighterX, pemantauan kehadiran dan log latihan fizikal atlet remaja kami kini 100% telus. Kami dapat kenal pasti pesilat paling berdisiplin sebelum menyenaraikan mereka ke Sirkit Remaja Kebangsaan.",
+      "Senang sangat nak pantau budak-budak sekarang. Tak payah pening kepala nak tanda buku kehadiran lagi — buka FighterX je, terus nampak siapa yang rajin turun latihan petang dan betul-betul berdisiplin sebelum kita bawa ke tournament.",
     quoteEn:
-      "With FighterX, tracking attendance and physical training logs for our youth athletes is 100% transparent. We can accurately identify disciplined exponents before shortlisting them for the National Youth Circuit.",
+      "Tracking our youth athletes is so much easier now. No more manual logbooks — one check on FighterX and we instantly see who's showing up consistently and putting in the work before tournaments.",
     stats: "48 Atlet Aktif · 96% Kehadiran",
     statsEn: "48 Active Athletes · 96% Attendance",
   },
@@ -49,9 +49,9 @@ const testimonials: Testimonial[] = [
     discipline: "Silat Olahraga",
     disciplineEn: "Combat Sparring",
     quote:
-      "Modul pemantauan berat badan berjadual dalam FighterX benar-benar menyelamatkan atlet kami daripada dehidrasi melampau menjelang timbang berat rasmi. Ketahanan kardio atlet dalam pusingan ke-3 meningkat ketara.",
+      "Bab potong berat badan memang selalu jadi igauan pesilat. Sejak guna FighterX, budak-budak takde dah siksa diri berlapar last minute sampai lesu masa timbang. Masuk pusingan ketiga pun stamina masih padu!",
     quoteEn:
-      "The scheduled weight monitoring module in FighterX protected our athletes from extreme dehydration ahead of official weigh-ins. Athlete cardio stamina in the 3rd round has improved noticeably.",
+      "Weight cuts used to be a nightmare for our fighters. Since using FighterX, nobody has to starve themselves last minute. Even into round 3, the fighters still have solid gas in the tank!",
     stats: "32 Atlet Kombat · 6 Emas",
     statsEn: "32 Combat Athletes · 6 Gold",
   },
@@ -66,9 +66,9 @@ const testimonials: Testimonial[] = [
     discipline: "Silat Seni",
     disciplineEn: "Artistic Silat",
     quote:
-      "Struktur log penilaian jurus seni sangat tersusun. Pesilat IPT dapat meneliti rekod masa dan ketepatan kaedah mereka sendiri dengan bimbingan kami. Ini memudahkan penilaian kemajuan kontinjen universiti.",
+      "Untuk Silat Seni, kemas dan tepat itu nombor satu. Sistem log kat sini memudahkan pesilat semak sendiri masa dan pergerakan jurus lepas habis sesi latihan. Nampak jelas peningkatan setiap minggu.",
     quoteEn:
-      "The artistic form assessment logs are thoroughly structured. University athletes can review their timing and movement precision under our mentorship, streamlining progress evaluations across our squad.",
+      "In artistic silat, clean precision is everything. The logs let our athletes review their timing and forms right after training. You can clearly see them leveling up week by week.",
     stats: "65 Atlet Mahasiswa · 4 Jurulatih",
     statsEn: "65 University Athletes · 4 Coaches",
   },
@@ -83,9 +83,9 @@ const testimonials: Testimonial[] = [
     discipline: "Silat Seni & Olahraga",
     disciplineEn: "Silat Seni & Olahraga",
     quote:
-      "Antara muka FighterX sangat garang dan membakar semangat anak-anak murid. Mereka ternanti-nanti markah latihan mingguan mereka bertambah setiap kali kami mengesahkan sesi petang di gelanggang.",
+      "Budak-budak gelanggang memang teruja tengok skor latihan naik setiap minggu. Rasa macam main game tapi untuk silat betul — makin hari makin bersemangat dorang nak turun gelanggang.",
     quoteEn:
-      "The FighterX interface is inspiring and ignites our students' motivation. They look forward to their weekly training scores rising each time we certify evening dojo sessions.",
+      "The students love seeing their training scores jump up every week. It feels like leveling up in a game, but for real silat — they're always pumped to hit the mats.",
     stats: "40 Pesilat · 100% Verifikasi",
     statsEn: "40 Athletes · 100% Verified",
   },

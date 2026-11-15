@@ -406,9 +406,9 @@ function FAQ() {
 }
 
 function FooterCTA() {
-  const { d } = useLanguage();
+  const { d, locale } = useLanguage();
   return (
-    <section className="footer-cta" id="register">
+    <footer className="footer-cta relative" id="register">
       <Image
         className="footer-smoke"
         src="/assets/fighterx/bg-silat-mountains.webp"
@@ -416,7 +416,7 @@ function FooterCTA() {
         fill
         sizes="100vw"
       />
-      <div className="footer-cta-inner">
+      <div className="footer-cta-inner pt-10 pb-8 sm:pt-14 sm:pb-10">
         <span className="footer-silhouette">
           <Image
             src="/assets/fighterx/silhouette-silat-stance-transparent.png"
@@ -434,7 +434,32 @@ function FooterCTA() {
           {d.home.cta.button} <ArrowRight size={17} />
         </Link>
       </div>
-    </section>
+
+      {/* Integrated Footer Bar */}
+      <div className="footer-bottom-bar border-t border-white/10 relative z-10 max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="footer-brand-left">
+          <BrandWordmark />
+        </div>
+        <p className="footer-author-right text-xs text-[#96989F] m-0 text-center sm:text-right">
+          Built by{" "}
+          <a
+            href="https://syahmiaof.my"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-white hover:text-[#FF3845] transition-colors font-medium underline-offset-4 hover:underline"
+          >
+            syahmiaof.my
+          </a>
+        </p>
+      </div>
+
+      {/* Screen Reader Links */}
+      <div className="sr-only" aria-hidden="true">
+        <Link href="/associations">{locale === "bm" ? "Direktori Persatuan" : "Association Directory"}</Link>
+        <Link href="/guidelines">{locale === "bm" ? "Peraturan PERSILAT" : "PERSILAT Rules"}</Link>
+        <Link href="/disciplines">{locale === "bm" ? "Kategori Silat" : "Silat Disciplines"}</Link>
+      </div>
+    </footer>
   );
 }
 
@@ -719,8 +744,9 @@ export function HomePage() {
         <AnimatedStats />
         <ValueProposition />
         <PesakaRecognition />
-        <AthleteCoachSpotlight />
-        <LeaderboardCalendarPreview />
+        {/* MVP Spotlight & Calendar Preview temporarily hidden per user request */}
+        {/* <AthleteCoachSpotlight /> */}
+        {/* <LeaderboardCalendarPreview /> */}
         <CollaborationPreview />
         <TestimonialsSection />
         <HowItWorks />
@@ -728,20 +754,6 @@ export function HomePage() {
         <FAQ />
         <FooterCTA />
       </main>
-      <footer className="site-footer relative">
-        <BrandWordmark />
-        <p className="site-footer-author sm:absolute sm:left-1/2 sm:-translate-x-1/2 text-center">
-          Built by{" "}
-          <a href="https://syahmiaof.my" target="_blank" rel="noopener noreferrer">
-            syahmiaof.my
-          </a>
-        </p>
-        <div className="sr-only" aria-hidden="true">
-          <Link href="/associations">{locale === "bm" ? "Direktori Persatuan" : "Association Directory"}</Link>
-          <Link href="/guidelines">{locale === "bm" ? "Peraturan PERSILAT" : "PERSILAT Rules"}</Link>
-          <Link href="/disciplines">{locale === "bm" ? "Kategori Silat" : "Silat Disciplines"}</Link>
-        </div>
-      </footer>
     </div>
   );
 }
