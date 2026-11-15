@@ -1,0 +1,223 @@
+/* ==========================================================================
+   FIGHTERX LOGIN PORTAL — CRYSTAL GLASS & ATHLETIC HERO SYSTEM
+   ========================================================================== */
+
+.glass-login-stage {
+  width: min(100% - 48px, 1080px);
+  min-height: calc(100svh - 64px);
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-block: 48px 40px;
+}
+
+.glass-login-header {
+  text-align: center;
+  margin-bottom: 38px;
+}
+
+/* Public Hero Display Title Dual-Tone (Matching Public Zone) */
+.glass-login-header .hero-display-title {
+  font-family: var(--font-athletic), sans-serif;
+  font-weight: 700;
+  font-style: italic;
+  font-size: clamp(48px, 6.5vw, 76px);
+  line-height: 0.88;
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
+  margin: 0;
+  padding: 0;
+}
+
+.glass-login-header .hero-display-title .title-white {
+  color: #ffffff;
+  text-shadow: 0 2px 0 #aaaab0, 0 4px 0 #66676d, 0 8px 16px rgba(0, 0, 0, 0.7);
+}
+
+.glass-login-header .hero-display-title .title-crimson {
+  color: #f51c25;
+  text-shadow: 0 2px 0 #a10a11, 0 4px 0 #65050a, 0 8px 16px rgba(0, 0, 0, 0.7);
+  filter: drop-shadow(0 0 14px rgba(225, 6, 0, 0.45));
+}
+
+/* 3 Glassmorphism Cards Grid */
+.glass-cards-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+/* Crystal-Clear Glass Card (Matching Public Zone Silat Seni & Olahraga) */
+.glass-login-stage .glass-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 38px 26px 32px;
+  background: rgba(255, 255, 255, 0.025) !important;
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.14) !important;
+  border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
+  text-decoration: none;
+  color: #ffffff;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.28s ease,
+              background 0.28s ease !important;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.glass-login-stage .glass-card:hover {
+  transform: translateY(-4px) !important;
+  background: rgba(255, 255, 255, 0.045) !important;
+  border-color: rgba(255, 56, 69, 0.45) !important;
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.5), 0 0 20px rgba(225, 6, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+}
+
+/* Glass Icon Circle */
+.glass-login-stage .glass-icon-wrapper {
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 22px;
+}
+
+.glass-login-stage .glass-icon-circle {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: grid;
+  place-items: center;
+  color: #e5e5e7;
+  transition: border-color 0.22s ease, background 0.22s ease, color 0.22s ease, box-shadow 0.22s ease;
+}
+
+.glass-login-stage .glass-card:hover .glass-icon-circle {
+  border-color: rgba(255, 56, 69, 0.55);
+  background: rgba(225, 6, 0, 0.16);
+  color: #ff474f;
+  box-shadow: 0 0 18px rgba(225, 6, 0, 0.3);
+}
+
+/* Role Title (Matching Silat Seni & Silat Olahraga Cards) */
+.glass-login-stage .glass-card-title {
+  margin: 0;
+  font-family: var(--font-athletic), sans-serif;
+  font-weight: 700;
+  font-style: italic;
+  font-size: clamp(32px, 3.4vw, 40px);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+  text-transform: uppercase;
+  transition: color 0.22s ease, text-shadow 0.22s ease;
+}
+
+.glass-login-stage .glass-card:hover .glass-card-title {
+  color: #ffffff;
+  text-shadow: 0 0 16px rgba(255, 255, 255, 0.35);
+}
+
+/* Minimalist Card CTA Area */
+.glass-login-stage .glass-card-cta {
+  width: 100%;
+  margin-top: 30px;
+}
+
+/* Bypass Login Button */
+.glass-login-stage .glass-card-btn {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 18px;
+  border-radius: 8px;
+  background: #e10600;
+  color: #ffffff;
+  font-family: var(--font-ui), Arial, sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+}
+
+.glass-login-stage .glass-card:hover .glass-card-btn {
+  background: #ff1f27;
+  box-shadow: 0 6px 20px rgba(225, 6, 0, 0.45);
+}
+
+.glass-login-stage .glass-card-btn:active {
+  transform: scale(0.98);
+}
+
+.glass-login-stage .glass-card-arrow {
+  transition: transform 0.2s ease;
+}
+
+.glass-login-stage .glass-card:hover .glass-card-arrow {
+  transform: translateX(3px);
+}
+
+/* Minimal Back Action */
+.glass-login-footer {
+  margin-top: 36px;
+  text-align: center;
+}
+
+.glass-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #9da0a8;
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: color 0.18s ease, background 0.18s ease;
+}
+
+.glass-back-link:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+@media (max-width: 880px) {
+  .glass-cards-grid {
+    gap: 16px;
+  }
+  .glass-login-stage .glass-card {
+    padding: 30px 18px 24px;
+  }
+  .glass-login-stage .glass-card-title {
+    font-size: 30px;
+  }
+}
+
+@media (max-width: 720px) {
+  .glass-cards-grid {
+    grid-template-columns: 1fr;
+    max-width: 380px;
+    margin-inline: auto;
+  }
+  .glass-login-stage {
+    padding-block: 36px 36px;
+  }
+  .glass-login-header .hero-display-title {
+    font-size: clamp(40px, 9.5vw, 54px);
+  }
+}
