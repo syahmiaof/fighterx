@@ -17,8 +17,7 @@ import {
 } from "lucide-react";
 import { GuidelinesMotion } from "@/components/guidelines/guidelines-motion";
 import { SiteHeader } from "@/components/site-header";
-import { TandingCalculator } from "@/components/guidelines/tanding-calculator";
-import { JurusCalculator } from "@/components/guidelines/jurus-calculator";
+import { ScoringMatrixView } from "@/components/guidelines/scoring-matrix-view";
 import { RulebookExplorer } from "@/components/guidelines/rulebook-explorer";
 import { OfficialDisclaimer } from "@/components/guidelines/official-disclaimer";
 import { useLanguage } from "@/lib/i18n";
@@ -374,21 +373,20 @@ export function GuidelinesView() {
             </div>
           </section>
 
-          {/* SECTION 3: INTERACTIVE SIMULATORS */}
-          <section id="simulators" className="mb-16 scroll-mt-24">
+          {/* SECTION 3: SCORING MATRIX & RUBRICS */}
+          <section id="pemarkahan-rasmi" className="mb-16 scroll-mt-24">
             <SectionTitle
-              badge={isEn ? "INTERACTIVE TOOLS" : "ALAT INTERAKTIF"}
-              title={d.guidelines.calculators.title}
-              subtitle={d.guidelines.calculators.subtitle}
+              badge={isEn ? "OFFICIAL SCORING ARCHITECTURE" : "STRUKTUR PEMARKAHAN RASMI"}
+              title={isEn ? "PERSILAT 2026 Points & Rubric System" : "Sistem Mata & Rubrik PERSILAT 2026"}
+              subtitle={
+                isEn
+                  ? "Standardized combat points for strikes, kicks, and takedowns, alongside official artistic judging rubrics."
+                  : "Pecahan mata tanding bagi pukulan, tendangan dan jatuhan serta rubrik penilaian juri untuk kategori seni."
+              }
             />
 
-            <div className="space-y-8">
-              <div id="tanding-simulator" className="guidelines-motion-item scroll-mt-28">
-                <TandingCalculator />
-              </div>
-              <div id="jurus-simulator" className="guidelines-motion-item scroll-mt-28">
-                <JurusCalculator />
-              </div>
+            <div className="guidelines-motion-item">
+              <ScoringMatrixView />
             </div>
           </section>
 
