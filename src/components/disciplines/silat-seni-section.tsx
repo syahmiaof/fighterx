@@ -27,12 +27,7 @@ export function SilatSeniSection() {
   // Helper to remove inline overrides after GSAP finishes
   const cleanInline = useCallback((elements: HTMLElement[]) => {
     elements.forEach((el) => {
-      el.style.removeProperty("clip-path");
-      el.style.removeProperty("clipPath");
-      el.style.removeProperty("transform");
-      el.style.removeProperty("opacity");
-      el.style.removeProperty("scale");
-      el.style.removeProperty("will-change");
+      el.removeAttribute("style");
     });
   }, []);
 
@@ -53,33 +48,37 @@ export function SilatSeniSection() {
 
     gsap.set(targetCards, {
       opacity: 0,
-      y: 20,
-      scale: 0.96,
-      clipPath: "inset(0 50% 0 50% round 16px)",
-      willChange: "transform, opacity, clip-path",
+      y: 24,
+      scale: 0.97,
     });
+
+    const triggerAnimation = () => {
+      entranceTriggeredRef.current = true;
+      gsap.to(targetCards, {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: 0.75,
+        stagger: 0.05,
+        ease: "power3.out",
+        clearProps: "all",
+        onComplete: () => {
+          cleanInline(targetCards);
+        },
+      });
+    };
 
     const st = ScrollTrigger.create({
       trigger: el,
-      start: "top 75%",
+      start: "top 85%",
       once: true,
-      onEnter: () => {
-        entranceTriggeredRef.current = true;
-        gsap.to(targetCards, {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          clipPath: "inset(0 0% 0 0% round 16px)",
-          duration: 0.95,
-          stagger: 0.075,
-          ease: "expo.out",
-          clearProps: "transform,scale,opacity,clipPath,clip-path,willChange",
-          onComplete: () => {
-            cleanInline(targetCards);
-          },
-        });
-      },
+      onEnter: triggerAnimation,
     });
+
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight * 0.85) {
+      triggerAnimation();
+    }
 
     return () => {
       st.kill();

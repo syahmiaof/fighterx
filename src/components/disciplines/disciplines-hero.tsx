@@ -80,171 +80,67 @@ export function DisciplinesHero({
 
       const media = gsap.matchMedia();
 
-      // Desktop: Elegant title entrance and paired Seni vs. Olahraga card reveal
       media.add(
-        "(min-width: 768px) and (prefers-reduced-motion: no-preference)",
+        "(prefers-reduced-motion: no-preference)",
         () => {
-          const tl = gsap.timeline({
-            delay: 0.08,
-            defaults: { ease: "power3.out" },
-          });
-
-          tl.fromTo(
+          gsap.fromTo(
             el.querySelector(".disciplines-overline"),
             { y: -10, autoAlpha: 0 },
-            { y: 0, autoAlpha: 1, duration: 0.55, clearProps: "transform" }
-          )
-            .fromTo(
-              el.querySelector(".disciplines-hero-title"),
-              { yPercent: 40, autoAlpha: 0 },
+            { y: 0, autoAlpha: 1, duration: 0.5, ease: "power2.out", clearProps: "transform", delay: 0.05 }
+          );
+
+          gsap.fromTo(
+            el.querySelector(".disciplines-hero-title"),
+            { y: 25, autoAlpha: 0 },
+            { y: 0, autoAlpha: 1, duration: 0.6, ease: "power3.out", clearProps: "transform", delay: 0.15 }
+          );
+
+          const cards = el.querySelectorAll<HTMLElement>(".discipline-card-seni, .discipline-card-olahraga");
+          if (cards.length > 0) {
+            gsap.fromTo(
+              cards,
+              { y: 22, autoAlpha: 0, scale: 0.98 },
               {
-                yPercent: 0,
-                autoAlpha: 1,
-                duration: 0.75,
-                clearProps: "transform",
-              },
-              "-=0.3"
-            )
-            .fromTo(
-              [
-                el.querySelector(".discipline-card-seni"),
-                el.querySelector(".discipline-card-olahraga"),
-              ],
-              {
-                autoAlpha: 0,
-                y: 20,
-                scale: 0.96,
-                clipPath: "inset(0 50% 0 50% round 14px)",
-              },
-              {
-                autoAlpha: 1,
                 y: 0,
+                autoAlpha: 1,
                 scale: 1,
-                clipPath: "inset(0 0% 0 0% round 14px)",
-                duration: 0.95,
+                duration: 0.65,
                 stagger: 0.08,
-                ease: "expo.out",
-                clearProps: "transform,scale,opacity,clipPath,clip-path,willChange",
+                ease: "power3.out",
+                delay: 0.25,
+                clearProps: "all",
                 onComplete: () => {
-                  const cards = [
-                    el.querySelector<HTMLElement>(".discipline-card-seni"),
-                    el.querySelector<HTMLElement>(".discipline-card-olahraga"),
-                  ];
                   cards.forEach((c) => {
-                    if (c) {
-                      c.style.removeProperty("clip-path");
-                      c.style.removeProperty("clipPath");
-                      c.style.removeProperty("transform");
-                      c.style.removeProperty("opacity");
-                      c.style.removeProperty("scale");
-                    }
+                    c.removeAttribute("style");
                   });
                 },
-              },
-              "-=0.2"
-            )
-            .fromTo(
-              el.querySelector(".disciplines-nav-tabs"),
-              { y: 12, autoAlpha: 0 },
-              { y: 0, autoAlpha: 1, duration: 0.5, clearProps: "transform" },
-              "-=0.3"
+              }
             );
-        }
-      );
+          }
 
-      // Mobile: Fast entrance (duration <= 0.4s), strictly zero blur, strictly zero clipPath, pure transform/opacity
-      media.add(
-        "(max-width: 767px) and (prefers-reduced-motion: no-preference)",
-        () => {
-          const mobileTl = gsap.timeline({
-            defaults: { ease: "power2.out" },
-          });
-
-          mobileTl
-            .fromTo(
-              el.querySelector(".disciplines-overline"),
-              { y: -6, autoAlpha: 0 },
-              { y: 0, autoAlpha: 1, duration: 0.3, clearProps: "transform" }
-            )
-            .fromTo(
-              el.querySelector(".disciplines-hero-title"),
-              { y: 15, autoAlpha: 0 },
-              { y: 0, autoAlpha: 1, duration: 0.35, clearProps: "transform" },
-              "-=0.15"
-            )
-            .fromTo(
-              el.querySelector(".discipline-card-seni"),
-              { y: 16, autoAlpha: 0 },
-              {
-                y: 0,
-                autoAlpha: 1,
-                duration: 0.35,
-                ease: "power2.out",
-                clearProps: "all",
-              },
-              "-=0.1"
-            )
-            .fromTo(
-              el.querySelector(".discipline-card-olahraga"),
-              { y: 16, autoAlpha: 0 },
-              {
-                y: 0,
-                autoAlpha: 1,
-                duration: 0.35,
-                ease: "power2.out",
-                clearProps: "all",
-              },
-              "-=0.23"
-            )
-            .fromTo(
-              el.querySelector(".disciplines-nav-tabs"),
-              { y: 8, autoAlpha: 0 },
-              { y: 0, autoAlpha: 1, duration: 0.3, clearProps: "transform" },
-              "-=0.15"
-            );
+          gsap.fromTo(
+            el.querySelector(".disciplines-nav-tabs"),
+            { y: 10, autoAlpha: 0 },
+            { y: 0, autoAlpha: 1, duration: 0.45, ease: "power2.out", clearProps: "transform", delay: 0.35 }
+          );
         }
       );
 
       // Reduced motion: immediate settle into static resting layer
       media.add("(prefers-reduced-motion: reduce)", () => {
-        gsap.set(
-          el.querySelectorAll(
-            ".disciplines-overline, .disciplines-hero-title, .discipline-card-seni, .discipline-card-olahraga, .disciplines-nav-tabs"
-          ),
-          { autoAlpha: 1, y: 0, yPercent: 0, scale: 1, clearProps: "all" }
+        const all = el.querySelectorAll<HTMLElement>(
+          ".disciplines-overline, .disciplines-hero-title, .discipline-card-seni, .discipline-card-olahraga, .disciplines-nav-tabs"
         );
+        all.forEach((item) => {
+          item.removeAttribute("style");
+        });
       });
 
-      // Interactive 3D Tactile Physics
-      const interactiveSelector = ".discipline-card-seni, .discipline-card-olahraga, .disc-tab-btn";
-      const handlePointerDown = (e: PointerEvent) => {
-        const target = (e.target as HTMLElement).closest<HTMLElement>(interactiveSelector);
-        if (!target) return;
-        gsap.to(target, { scale: 0.97, duration: 0.14, ease: "power2.out", overwrite: "auto" });
-      };
-      const handlePointerUp = (e: PointerEvent) => {
-        const target = (e.target as HTMLElement).closest<HTMLElement>(interactiveSelector);
-        if (!target) return;
-        gsap.to(target, { scale: 1, duration: 0.28, ease: "back.out(2)", overwrite: "auto", clearProps: "transform,scale" });
-      };
-      const handlePointerLeave = (e: PointerEvent) => {
-        const target = (e.target as HTMLElement).closest<HTMLElement>(interactiveSelector);
-        if (!target) return;
-        gsap.to(target, { scale: 1, duration: 0.28, ease: "back.out(2)", overwrite: "auto", clearProps: "transform,scale" });
-      };
-
-      el.addEventListener("pointerdown", handlePointerDown, { passive: true });
-      el.addEventListener("pointerup", handlePointerUp, { passive: true });
-      el.addEventListener("pointerleave", handlePointerLeave, { passive: true, capture: true });
-
       return () => {
-        el.removeEventListener("pointerdown", handlePointerDown);
-        el.removeEventListener("pointerup", handlePointerUp);
-        el.removeEventListener("pointerleave", handlePointerLeave, { capture: true });
         media.revert();
       };
     },
-    { scope: rootRef }
+    { scope: rootRef, dependencies: [] }
   );
 
   return (

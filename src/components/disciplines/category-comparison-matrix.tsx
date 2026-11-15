@@ -20,12 +20,7 @@ export function CategoryComparisonMatrix() {
   // Helper to remove inline overrides after GSAP finishes
   const cleanInline = useCallback((elements: HTMLElement[]) => {
     elements.forEach((el) => {
-      el.style.removeProperty("clip-path");
-      el.style.removeProperty("clipPath");
-      el.style.removeProperty("transform");
-      el.style.removeProperty("opacity");
-      el.style.removeProperty("scale");
-      el.style.removeProperty("will-change");
+      el.removeAttribute("style");
     });
   }, []);
 
@@ -44,33 +39,38 @@ export function CategoryComparisonMatrix() {
 
     gsap.set(cards, {
       opacity: 0,
-      y: 20,
-      scale: 0.96,
-      clipPath: "inset(0 50% 0 50% round 14px)",
-      willChange: "transform, opacity, clip-path",
+      y: 24,
+      scale: 0.97,
     });
+
+    const triggerAnimation = () => {
+      entranceTriggeredRef.current = true;
+      gsap.to(cards, {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: 0.75,
+        stagger: 0.05,
+        ease: "power3.out",
+        clearProps: "all",
+        onComplete: () => {
+          cleanInline(cards);
+        },
+      });
+    };
 
     const st = ScrollTrigger.create({
       trigger: container,
-      start: "top 78%",
+      start: "top 85%",
       once: true,
-      onEnter: () => {
-        entranceTriggeredRef.current = true;
-        gsap.to(cards, {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          clipPath: "inset(0 0% 0 0% round 14px)",
-          duration: 0.95,
-          stagger: 0.075,
-          ease: "expo.out",
-          clearProps: "transform,scale,opacity,clipPath,clip-path,willChange",
-          onComplete: () => {
-            cleanInline(cards);
-          },
-        });
-      },
+      onEnter: triggerAnimation,
     });
+
+    // Check if element is already within viewport
+    const rect = container.getBoundingClientRect();
+    if (rect.top < window.innerHeight * 0.85) {
+      triggerAnimation();
+    }
 
     return () => {
       st.kill();
