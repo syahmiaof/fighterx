@@ -2050,10 +2050,10 @@ img { display:block; }
   animation: scrollLogos 30s linear infinite;
 }
 
-/* Allow pausing on hover or focus so partner links can be read and clicked comfortably */
+/* Marquee flows continuously without stopping on hover */
 .partner-scroll-wrapper:hover .partner-scroll-track,
 .partner-scroll-wrapper:focus-within .partner-scroll-track {
-  animation-play-state: paused;
+  animation-play-state: running;
 }
 
 @keyframes scrollLogos {
