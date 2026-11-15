@@ -44,6 +44,7 @@ import {
   FrameworkMonth,
 } from "./knowledge-data";
 import { CitationsDrawer } from "./citations-drawer";
+import { HomeTrainingCurriculum } from "./home-training-curriculum";
 
 // Code-splitting: lazily load interactive calculation tools on demand
 const PeriodizationMatrix = dynamic(
@@ -1075,6 +1076,14 @@ export function KnowledgeHubClient() {
               <CalendarDays size={13} />
               <span>{isEn ? "2027 Framework" : "Kerangka 2027"}</span>
             </a>
+
+            <a
+              href="#silibus-latihan-rumah"
+              className="px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all flex items-center gap-1.5 border border-amber-500/40 bg-amber-500/15 text-amber-400 hover:bg-amber-500/25 backdrop-blur-sm shadow-sm"
+            >
+              <Sparkles size={13} />
+              <span>{isEn ? "5 Core Modules (Home Training)" : "5 Modul Teras Latihan Rumah"}</span>
+            </a>
           </div>
         </div>
       </section>
@@ -1738,6 +1747,9 @@ export function KnowledgeHubClient() {
           )}
         </div>
       </section>
+
+      {/* Silibus Sains Sukan 5 Modul Teras Latihan di Rumah */}
+      <HomeTrainingCurriculum />
 
       {/* Main Articles Grid Section (Practical 3-Tier Structure & Official Links) */}
       <section id="articles-section" className="py-12 md:py-16">
