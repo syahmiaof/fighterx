@@ -10,7 +10,7 @@ import { useLanguage } from "@/lib/i18n";
 import "./login-portal.css";
 
 export function RoleSelectionCards() {
-  const { dict } = useLanguage();
+  const { dict, locale } = useLanguage();
   const ad = dict.auth;
   const headerRef = useRef<HTMLElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
@@ -121,7 +121,7 @@ export function RoleSelectionCards() {
         ref={gridRef}
         className="glass-cards-grid"
         role="region"
-        aria-label="Pilih Peranan"
+        aria-label={locale === "bm" ? "Pilih Peranan" : "Select Role"}
       >
         {roles.map((role) => {
           const Icon = role.icon;
@@ -146,7 +146,11 @@ export function RoleSelectionCards() {
                   href={role.destination}
                   className="glass-card-btn"
                   onClick={() => handleSyncSession(role.role)}
-                  aria-label={`Bypass masuk ke dashboard ${role.title}`}
+                  aria-label={
+                    locale === "bm"
+                      ? `Pintas masuk ke papan pemuka ${role.title}`
+                      : `Bypass login to ${role.title} dashboard`
+                  }
                 >
                   <Zap size={14} aria-hidden="true" className="bypass-zap-icon" />
                   <span>{role.buttonLabel}</span>

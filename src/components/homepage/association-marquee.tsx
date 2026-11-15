@@ -177,7 +177,7 @@ export const partnerLogos: PartnerLogo[] = [
 ];
 
 export function AssociationMarquee() {
-  const { d } = useLanguage();
+  const { d, locale } = useLanguage();
   return (
     <section
       className="association-marquee-section relative py-12 md:py-16 overflow-hidden bg-black/25 backdrop-blur-[2px] border-y border-[#26272C]/40"
@@ -211,7 +211,11 @@ export function AssociationMarquee() {
         className="partner-scroll-wrapper relative w-full items-center overflow-hidden"
         tabIndex={0}
         role="region"
-        aria-label="Marquee logo kelab dan badan perguruan silat bersekutu"
+        aria-label={
+          locale === "bm"
+            ? "Marquee logo kelab dan badan perguruan silat bersekutu"
+            : "Marquee of affiliated silat clubs and martial bodies"
+        }
       >
         {/* Track 1 */}
         <div className="partner-scroll-track flex items-center shrink-0">

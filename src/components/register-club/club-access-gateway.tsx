@@ -6,6 +6,7 @@ import Link from "next/link";
 import { ArrowRight, Building2, ChevronRight, ShieldCheck } from "lucide-react";
 import { uiOnlyAuthGateway } from "@/lib/auth/ui-only-auth";
 import { useLanguage } from "@/lib/i18n";
+import "./register-club-glass.css";
 
 function ClubAccessGatewayContent() {
   const { dict, locale } = useLanguage();
@@ -41,10 +42,25 @@ function ClubAccessGatewayContent() {
       <div className="club-gateway-wrap">
         <header className="club-gateway-intro">
           <p className="club-gateway-eyebrow"><span /> {gw.eyebrow} <span /></p>
-          <h1>Your Club. <em>Your Journey.</em></h1>
+          <h1 className="hero-display-title">
+            {locale === "bm" ? (
+              <>
+                <span className="title-white">KELAB ANDA. </span>
+                <span className="title-crimson">PERJALANAN ANDA.</span>
+              </>
+            ) : (
+              <>
+                <span className="title-white">YOUR CLUB. </span>
+                <span className="title-crimson">YOUR JOURNEY.</span>
+              </>
+            )}
+          </h1>
           <p className="club-gateway-lede">{gw.subtitle}</p>
         </header>
-        <section className="club-gateway-options" aria-label="Club access options">
+        <section
+          className="club-gateway-options"
+          aria-label={locale === "bm" ? "Pilihan akses kelab" : "Club access options"}
+        >
           <article className="club-gateway-card club-gateway-card-register">
             <div className="club-gateway-card-top">
               <span className="club-gateway-icon"><Building2 size={23} strokeWidth={1.7} aria-hidden="true" /></span>
@@ -64,7 +80,7 @@ function ClubAccessGatewayContent() {
             <h2>{gw.myClubCardTitle}</h2>
             <p>{gw.myClubCardDesc}</p>
             <button className="club-gateway-action club-gateway-action-secondary" type="button" onClick={openClubAccess} disabled={checkingSession}>
-              {checkingSession ? "Checking access..." : gw.myClubCardBtn}
+              {checkingSession ? (locale === "bm" ? "Menyemak akses..." : "Checking access...") : gw.myClubCardBtn}
               {!checkingSession && <ChevronRight size={18} aria-hidden="true" />}
             </button>
           </article>
@@ -76,11 +92,12 @@ function ClubAccessGatewayContent() {
 }
 
 export function ClubAccessGateway() {
+  const { locale } = useLanguage();
   return (
     <Suspense
       fallback={
         <main className="club-gateway-page min-h-[50vh] flex items-center justify-center text-white">
-          <p>Memuatkan FighterX Club Access...</p>
+          <p>{locale === "bm" ? "Memuatkan Akses Kelab FighterX..." : "Loading FighterX Club Access..."}</p>
         </main>
       }
     >

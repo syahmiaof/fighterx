@@ -19,6 +19,7 @@ import type {
   CoachActions,
   SubmissionStatus,
 } from "./types";
+import { platformStore } from "@/lib/platform/platform-state";
 import {
   MOCK_COACH,
   MOCK_ATHLETES,
@@ -120,6 +121,71 @@ export function CoachProvider({ children }: { children: React.ReactNode }) {
     return () => clearTimeout(timer);
   }, []);
 
+  // Listen and synchronize submissions from central platformStore
+  useEffect(() => {
+    const syncPlatformSubmissions = () => {
+      try {
+        const platformSubs = platformStore.getState().submissions;
+        setSubmissions((prev) => {
+          const existingIds = new Set(prev.map((s) => s.id));
+          const newFromPlatform: TrainingSubmission[] = platformSubs
+            .filter((ps) => !existingIds.has(ps.id))
+            .map((ps) => ({
+              id: ps.id,
+              athleteId: ps.athleteId,
+              athleteName: ps.athleteName,
+              athleteAvatar:
+                ps.discipline === "SENI"
+                  ? "/assets/fighterx/hero-silat-seni.png"
+                  : "/assets/fighterx/hero-silat-olahraga-athlete.png",
+              discipline: ps.discipline === "SENI" ? "Silat Seni" : "Silat Olahraga",
+              exerciseType: ps.taskSource === "ADMIN_FRAMEWORK" ? "Kerangka Kebangsaan" : "Cabaran Jurulatih",
+              exerciseName: ps.taskTitle,
+              category: "Teknik Seni",
+              submittedAt: new Date(ps.submittedAt).toLocaleDateString("ms-MY", {
+                day: "numeric",
+                month: "short",
+                year: "numeric",
+              }),
+              videoThumbnailUrl:
+                ps.discipline === "SENI"
+                  ? "/assets/fighterx/hero-silat-seni.png"
+                  : "/assets/fighterx/hero-silat-olahraga-athlete.png",
+              videoUrl: ps.evidenceUrl || "/assets/fighterx/character-silat-seni-transparent.png",
+              notes: `${ps.athleteNotes || ""} [RPE: ${ps.rpeScore}/10, Sasaran: ${ps.repsOrDuration}]`,
+              status:
+                ps.status === "VERIFIED"
+                  ? "VERIFIED"
+                  : ps.status === "CORRECTION_NEEDED"
+                  ? "CORRECTION"
+                  : "PENDING",
+              coachFeedback: ps.coachFeedback,
+              metrics: [
+                { label: "Skor RPE", prescribed: "7-8/10", reported: `${ps.rpeScore}/10` },
+                { label: "Sasaran Ulangan", prescribed: ps.repsOrDuration, reported: ps.repsOrDuration },
+                {
+                  label: "Bukti",
+                  prescribed: "Video Semakan",
+                  reported: ps.evidenceType === "VIDEO_URL" ? "Pautan URL" : ps.evidenceFileName || "Fail Video",
+                },
+              ],
+            }));
+
+          if (newFromPlatform.length > 0) {
+            return [...newFromPlatform, ...prev];
+          }
+          return prev;
+        });
+      } catch {
+        // ignore
+      }
+    };
+
+    syncPlatformSubmissions();
+    const unsubscribe = platformStore.subscribe(syncPlatformSubmissions);
+    return () => unsubscribe();
+  }, []);
+
   // Helper to persist state to localStorage
   const saveState = useCallback(
     (data: {
@@ -159,6 +225,18 @@ export function CoachProvider({ children }: { children: React.ReactNode }) {
         year: "numeric",
       });
 
+      // Synchronize with central platform store
+      try {
+        platformStore.verifySubmission(
+          submissionId,
+          status === "CORRECTION" ? "CORRECTION_NEEDED" : "VERIFIED",
+          feedback || "Disahkan oleh jurulatih.",
+          coach.name || "Cikgu Farid"
+        );
+      } catch {
+        // safe fallback
+      }
+
       setSubmissions((prev) => {
         const updated = prev.map((sub) => {
           if (sub.id === submissionId) {
@@ -175,7 +253,7 @@ export function CoachProvider({ children }: { children: React.ReactNode }) {
         return updated;
       });
     },
-    [saveState]
+    [coach.name, saveState]
   );
 
   // Action: Register or update assessment

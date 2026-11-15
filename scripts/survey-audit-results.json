@@ -1,0 +1,5275 @@
+{
+  "overflowIssues": [],
+  "drawerAudit": [
+    {
+      "route": "/",
+      "viewport": 375,
+      "state": {
+        "menuDisplay": "grid",
+        "menuOpacity": "1",
+        "menuGridCols": "125.406px 209.594px",
+        "menuPosition": "static",
+        "menuRect": {
+          "top": 70,
+          "bottom": 351,
+          "left": 16,
+          "right": 359,
+          "width": 343,
+          "height": 281
+        },
+        "headerRect": {
+          "top": 0,
+          "bottom": 64,
+          "height": 64
+        },
+        "innerRect": {
+          "flexWrap": "wrap",
+          "height": 64
+        },
+        "visibleLangSwitchersCount": 0,
+        "visibleLangLocations": [],
+        "drawerLinksCount": 9,
+        "drawerLinks": [
+          {
+            "text": "Home",
+            "rect": {
+              "x": 149.40625,
+              "y": 83,
+              "width": 209.59375,
+              "height": 42,
+              "top": 83,
+              "right": 359,
+              "bottom": 125,
+              "left": 149.40625
+            }
+          },
+          {
+            "text": "Guidelines",
+            "rect": {
+              "x": 16,
+              "y": 133,
+              "width": 125.40625,
+              "height": 42,
+              "top": 133,
+              "right": 141.40625,
+              "bottom": 175,
+              "left": 16
+            }
+          },
+          {
+            "text": "Sport Science",
+            "rect": {
+              "x": 149.40625,
+              "y": 133,
+              "width": 209.59375,
+              "height": 42,
+              "top": 133,
+              "right": 359,
+              "bottom": 175,
+              "left": 149.40625
+            }
+          },
+          {
+            "text": "Calendar",
+            "rect": {
+              "x": 16,
+              "y": 183,
+              "width": 125.40625,
+              "height": 42,
+              "top": 183,
+              "right": 141.40625,
+              "bottom": 225,
+              "left": 16
+            }
+          },
+          {
+            "text": "Disciplines",
+            "rect": {
+              "x": 149.40625,
+              "y": 183,
+              "width": 209.59375,
+              "height": 42,
+              "top": 183,
+              "right": 359,
+              "bottom": 225,
+              "left": 149.40625
+            }
+          },
+          {
+            "text": "Login",
+            "rect": {
+              "x": 149.40625,
+              "y": 239,
+              "width": 80.765625,
+              "height": 59,
+              "top": 239,
+              "right": 230.171875,
+              "bottom": 298,
+              "left": 149.40625
+            }
+          },
+          {
+            "text": "Register Club",
+            "rect": {
+              "x": 240.171875,
+              "y": 239,
+              "width": 118.828125,
+              "height": 59,
+              "top": 239,
+              "right": 359,
+              "bottom": 298,
+              "left": 240.171875
+            }
+          },
+          {
+            "text": "ENG",
+            "rect": {
+              "x": 50.578125,
+              "y": 321,
+              "width": 42.3125,
+              "height": 19,
+              "top": 321,
+              "right": 92.890625,
+              "bottom": 340,
+              "left": 50.578125
+            }
+          }
+        ],
+        "hasCloseButtonIcon": true
+      }
+    },
+    {
+      "route": "/guidelines",
+      "viewport": 375,
+      "state": {
+        "menuDisplay": "grid",
+        "menuOpacity": "1",
+        "menuGridCols": "139.844px 209.594px",
+        "menuPosition": "static",
+        "menuRect": {
+          "top": 70,
+          "bottom": 351,
+          "left": 16,
+          "right": 373,
+          "width": 357,
+          "height": 281
+        },
+        "headerRect": {
+          "top": 0,
+          "bottom": 64,
+          "height": 64
+        },
+        "innerRect": {
+          "flexWrap": "wrap",
+          "height": 64
+        },
+        "visibleLangSwitchersCount": 0,
+        "visibleLangLocations": [],
+        "drawerLinksCount": 9,
+        "drawerLinks": [
+          {
+            "text": "Home",
+            "rect": {
+              "x": 163.84375,
+              "y": 83,
+              "width": 209.59375,
+              "height": 42,
+              "top": 83,
+              "right": 373.4375,
+              "bottom": 125,
+              "left": 163.84375
+            }
+          },
+          {
+            "text": "Guidelines",
+            "rect": {
+              "x": 16,
+              "y": 133,
+              "width": 139.84375,
+              "height": 42,
+              "top": 133,
+              "right": 155.84375,
+              "bottom": 175,
+              "left": 16
+            }
+          },
+          {
+            "text": "Sport Science",
+            "rect": {
+              "x": 163.84375,
+              "y": 133,
+              "width": 209.59375,
+              "height": 42,
+              "top": 133,
+              "right": 373.4375,
+              "bottom": 175,
+              "left": 163.84375
+            }
+          },
+          {
+            "text": "Calendar",
+            "rect": {
+              "x": 16,
+              "y": 183,
+              "width": 139.84375,
+              "height": 42,
+              "top": 183,
+              "right": 155.84375,
+              "bottom": 225,
+              "left": 16
+            }
+          },
+          {
+            "text": "Disciplines",
+            "rect": {
+              "x": 163.84375,
+              "y": 183,
+              "width": 209.59375,
+              "height": 42,
+              "top": 183,
+              "right": 373.4375,
+              "bottom": 225,
+              "left": 163.84375
+            }
+          },
+          {
+            "text": "Login",
+            "rect": {
+              "x": 163.84375,
+              "y": 239,
+              "width": 80.765625,
+              "height": 59,
+              "top": 239,
+              "right": 244.609375,
+              "bottom": 298,
+              "left": 163.84375
+            }
+          },
+          {
+            "text": "Register Club",
+            "rect": {
+              "x": 254.609375,
+              "y": 239,
+              "width": 118.828125,
+              "height": 59,
+              "top": 239,
+              "right": 373.4375,
+              "bottom": 298,
+              "left": 254.609375
+            }
+          },
+          {
+            "text": "ENG",
+            "rect": {
+              "x": 57.796875,
+              "y": 321,
+              "width": 42.3125,
+              "height": 19,
+              "top": 321,
+              "right": 100.109375,
+              "bottom": 340,
+              "left": 57.796875
+            }
+          }
+        ],
+        "hasCloseButtonIcon": true
+      }
+    },
+    {
+      "route": "/knowledge",
+      "viewport": 375,
+      "state": {
+        "menuDisplay": "grid",
+        "menuOpacity": "1",
+        "menuGridCols": "125.406px 209.594px",
+        "menuPosition": "static",
+        "menuRect": {
+          "top": 70,
+          "bottom": 351,
+          "left": 16,
+          "right": 359,
+          "width": 343,
+          "height": 281
+        },
+        "headerRect": {
+          "top": 0,
+          "bottom": 64,
+          "height": 64
+        },
+        "innerRect": {
+          "flexWrap": "wrap",
+          "height": 64
+        },
+        "visibleLangSwitchersCount": 0,
+        "visibleLangLocations": [],
+        "drawerLinksCount": 9,
+        "drawerLinks": [
+          {
+            "text": "Home",
+            "rect": {
+              "x": 149.40625,
+              "y": 83,
+              "width": 209.59375,
+              "height": 42,
+              "top": 83,
+              "right": 359,
+              "bottom": 125,
+              "left": 149.40625
+            }
+          },
+          {
+            "text": "Guidelines",
+            "rect": {
+              "x": 16,
+              "y": 133,
+              "width": 125.40625,
+              "height": 42,
+              "top": 133,
+              "right": 141.40625,
+              "bottom": 175,
+              "left": 16
+            }
+          },
+          {
+            "text": "Sport Science",
+            "rect": {
+              "x": 149.40625,
+              "y": 133,
+              "width": 209.59375,
+              "height": 42,
+              "top": 133,
+              "right": 359,
+              "bottom": 175,
+              "left": 149.40625
+            }
+          },
+          {
+            "text": "Calendar",
+            "rect": {
+              "x": 16,
+              "y": 183,
+              "width": 125.40625,
+              "height": 42,
+              "top": 183,
+              "right": 141.40625,
+              "bottom": 225,
+              "left": 16
+            }
+          },
+          {
+            "text": "Disciplines",
+            "rect": {
+              "x": 149.40625,
+              "y": 183,
+              "width": 209.59375,
+              "height": 42,
+              "top": 183,
+              "right": 359,
+              "bottom": 225,
+              "left": 149.40625
+            }
+          },
+          {
+            "text": "Login",
+            "rect": {
+              "x": 149.40625,
+              "y": 239,
+              "width": 80.765625,
+              "height": 59,
+              "top": 239,
+              "right": 230.171875,
+              "bottom": 298,
+              "left": 149.40625
+            }
+          },
+          {
+            "text": "Register Club",
+            "rect": {
+              "x": 240.171875,
+              "y": 239,
+              "width": 118.828125,
+              "height": 59,
+              "top": 239,
+              "right": 359,
+              "bottom": 298,
+              "left": 240.171875
+            }
+          },
+          {
+            "text": "ENG",
+            "rect": {
+              "x": 50.578125,
+              "y": 321,
+              "width": 42.3125,
+              "height": 19,
+              "top": 321,
+              "right": 92.890625,
+              "bottom": 340,
+              "left": 50.578125
+            }
+          }
+        ],
+        "hasCloseButtonIcon": true
+      }
+    },
+    {
+      "route": "/competitions",
+      "viewport": 375,
+      "state": {
+        "menuDisplay": "grid",
+        "menuOpacity": "1",
+        "menuGridCols": "130.797px 209.594px",
+        "menuPosition": "static",
+        "menuRect": {
+          "top": 70,
+          "bottom": 351,
+          "left": 16,
+          "right": 364,
+          "width": 348,
+          "height": 281
+        },
+        "headerRect": {
+          "top": 0,
+          "bottom": 64,
+          "height": 64
+        },
+        "innerRect": {
+          "flexWrap": "wrap",
+          "height": 64
+        },
+        "visibleLangSwitchersCount": 0,
+        "visibleLangLocations": [],
+        "drawerLinksCount": 9,
+        "drawerLinks": [
+          {
+            "text": "Home",
+            "rect": {
+              "x": 154.796875,
+              "y": 83,
+              "width": 209.59375,
+              "height": 42,
+              "top": 83,
+              "right": 364.390625,
+              "bottom": 125,
+              "left": 154.796875
+            }
+          },
+          {
+            "text": "Guidelines",
+            "rect": {
+              "x": 16,
+              "y": 133,
+              "width": 130.796875,
+              "height": 42,
+              "top": 133,
+              "right": 146.796875,
+              "bottom": 175,
+              "left": 16
+            }
+          },
+          {
+            "text": "Sport Science",
+            "rect": {
+              "x": 154.796875,
+              "y": 133,
+              "width": 209.59375,
+              "height": 42,
+              "top": 133,
+              "right": 364.390625,
+              "bottom": 175,
+              "left": 154.796875
+            }
+          },
+          {
+            "text": "Calendar",
+            "rect": {
+              "x": 16,
+              "y": 183,
+              "width": 130.796875,
+              "height": 42,
+              "top": 183,
+              "right": 146.796875,
+              "bottom": 225,
+              "left": 16
+            }
+          },
+          {
+            "text": "Disciplines",
+            "rect": {
+              "x": 154.796875,
+              "y": 183,
+              "width": 209.59375,
+              "height": 42,
+              "top": 183,
+              "right": 364.390625,
+              "bottom": 225,
+              "left": 154.796875
+            }
+          },
+          {
+            "text": "Login",
+            "rect": {
+              "x": 154.796875,
+              "y": 239,
+              "width": 80.765625,
+              "height": 59,
+              "top": 239,
+              "right": 235.5625,
+              "bottom": 298,
+              "left": 154.796875
+            }
+          },
+          {
+            "text": "Register Club",
+            "rect": {
+              "x": 245.5625,
+              "y": 239,
+              "width": 118.828125,
+              "height": 59,
+              "top": 239,
+              "right": 364.390625,
+              "bottom": 298,
+              "left": 245.5625
+            }
+          },
+          {
+            "text": "ENG",
+            "rect": {
+              "x": 53.265625,
+              "y": 321,
+              "width": 42.3125,
+              "height": 19,
+              "top": 321,
+              "right": 95.578125,
+              "bottom": 340,
+              "left": 53.265625
+            }
+          }
+        ],
+        "hasCloseButtonIcon": true
+      }
+    },
+    {
+      "route": "/disciplines",
+      "viewport": 375,
+      "state": {
+        "menuDisplay": "grid",
+        "menuOpacity": "1",
+        "menuGridCols": "125.406px 209.594px",
+        "menuPosition": "static",
+        "menuRect": {
+          "top": 70,
+          "bottom": 351,
+          "left": 16,
+          "right": 359,
+          "width": 343,
+          "height": 281
+        },
+        "headerRect": {
+          "top": 0,
+          "bottom": 64,
+          "height": 64
+        },
+        "innerRect": {
+          "flexWrap": "wrap",
+          "height": 64
+        },
+        "visibleLangSwitchersCount": 0,
+        "visibleLangLocations": [],
+        "drawerLinksCount": 9,
+        "drawerLinks": [
+          {
+            "text": "Home",
+            "rect": {
+              "x": 149.40625,
+              "y": 83,
+              "width": 209.59375,
+              "height": 42,
+              "top": 83,
+              "right": 359,
+              "bottom": 125,
+              "left": 149.40625
+            }
+          },
+          {
+            "text": "Guidelines",
+            "rect": {
+              "x": 16,
+              "y": 133,
+              "width": 125.40625,
+              "height": 42,
+              "top": 133,
+              "right": 141.40625,
+              "bottom": 175,
+              "left": 16
+            }
+          },
+          {
+            "text": "Sport Science",
+            "rect": {
+              "x": 149.40625,
+              "y": 133,
+              "width": 209.59375,
+              "height": 42,
+              "top": 133,
+              "right": 359,
+              "bottom": 175,
+              "left": 149.40625
+            }
+          },
+          {
+            "text": "Calendar",
+            "rect": {
+              "x": 16,
+              "y": 183,
+              "width": 125.40625,
+              "height": 42,
+              "top": 183,
+              "right": 141.40625,
+              "bottom": 225,
+              "left": 16
+            }
+          },
+          {
+            "text": "Disciplines",
+            "rect": {
+              "x": 149.40625,
+              "y": 183,
+              "width": 209.59375,
+              "height": 42,
+              "top": 183,
+              "right": 359,
+              "bottom": 225,
+              "left": 149.40625
+            }
+          },
+          {
+            "text": "Login",
+            "rect": {
+              "x": 149.40625,
+              "y": 239,
+              "width": 80.765625,
+              "height": 59,
+              "top": 239,
+              "right": 230.171875,
+              "bottom": 298,
+              "left": 149.40625
+            }
+          },
+          {
+            "text": "Register Club",
+            "rect": {
+              "x": 240.171875,
+              "y": 239,
+              "width": 118.828125,
+              "height": 59,
+              "top": 239,
+              "right": 359,
+              "bottom": 298,
+              "left": 240.171875
+            }
+          },
+          {
+            "text": "ENG",
+            "rect": {
+              "x": 50.578125,
+              "y": 321,
+              "width": 42.3125,
+              "height": 19,
+              "top": 321,
+              "right": 92.890625,
+              "bottom": 340,
+              "left": 50.578125
+            }
+          }
+        ],
+        "hasCloseButtonIcon": true
+      }
+    },
+    {
+      "route": "/login",
+      "viewport": 375,
+      "state": {
+        "menuDisplay": "grid",
+        "menuOpacity": "1",
+        "menuGridCols": "125.406px 209.594px",
+        "menuPosition": "static",
+        "menuRect": {
+          "top": 70,
+          "bottom": 351,
+          "left": 16,
+          "right": 359,
+          "width": 343,
+          "height": 281
+        },
+        "headerRect": {
+          "top": 0,
+          "bottom": 64,
+          "height": 64
+        },
+        "innerRect": {
+          "flexWrap": "wrap",
+          "height": 64
+        },
+        "visibleLangSwitchersCount": 0,
+        "visibleLangLocations": [],
+        "drawerLinksCount": 9,
+        "drawerLinks": [
+          {
+            "text": "Home",
+            "rect": {
+              "x": 149.40625,
+              "y": 83,
+              "width": 209.59375,
+              "height": 42,
+              "top": 83,
+              "right": 359,
+              "bottom": 125,
+              "left": 149.40625
+            }
+          },
+          {
+            "text": "Guidelines",
+            "rect": {
+              "x": 16,
+              "y": 133,
+              "width": 125.40625,
+              "height": 42,
+              "top": 133,
+              "right": 141.40625,
+              "bottom": 175,
+              "left": 16
+            }
+          },
+          {
+            "text": "Sport Science",
+            "rect": {
+              "x": 149.40625,
+              "y": 133,
+              "width": 209.59375,
+              "height": 42,
+              "top": 133,
+              "right": 359,
+              "bottom": 175,
+              "left": 149.40625
+            }
+          },
+          {
+            "text": "Calendar",
+            "rect": {
+              "x": 16,
+              "y": 183,
+              "width": 125.40625,
+              "height": 42,
+              "top": 183,
+              "right": 141.40625,
+              "bottom": 225,
+              "left": 16
+            }
+          },
+          {
+            "text": "Disciplines",
+            "rect": {
+              "x": 149.40625,
+              "y": 183,
+              "width": 209.59375,
+              "height": 42,
+              "top": 183,
+              "right": 359,
+              "bottom": 225,
+              "left": 149.40625
+            }
+          },
+          {
+            "text": "Login",
+            "rect": {
+              "x": 149.40625,
+              "y": 239,
+              "width": 80.765625,
+              "height": 59,
+              "top": 239,
+              "right": 230.171875,
+              "bottom": 298,
+              "left": 149.40625
+            }
+          },
+          {
+            "text": "Register Club",
+            "rect": {
+              "x": 240.171875,
+              "y": 239,
+              "width": 118.828125,
+              "height": 59,
+              "top": 239,
+              "right": 359,
+              "bottom": 298,
+              "left": 240.171875
+            }
+          },
+          {
+            "text": "ENG",
+            "rect": {
+              "x": 50.578125,
+              "y": 321,
+              "width": 42.3125,
+              "height": 19,
+              "top": 321,
+              "right": 92.890625,
+              "bottom": 340,
+              "left": 50.578125
+            }
+          }
+        ],
+        "hasCloseButtonIcon": true
+      }
+    },
+    {
+      "route": "/register-club",
+      "viewport": 375,
+      "state": {
+        "menuDisplay": "grid",
+        "menuOpacity": "1",
+        "menuGridCols": "125.406px 209.594px",
+        "menuPosition": "static",
+        "menuRect": {
+          "top": 70,
+          "bottom": 351,
+          "left": 16,
+          "right": 359,
+          "width": 343,
+          "height": 281
+        },
+        "headerRect": {
+          "top": 0,
+          "bottom": 64,
+          "height": 64
+        },
+        "innerRect": {
+          "flexWrap": "wrap",
+          "height": 64
+        },
+        "visibleLangSwitchersCount": 0,
+        "visibleLangLocations": [],
+        "drawerLinksCount": 9,
+        "drawerLinks": [
+          {
+            "text": "Home",
+            "rect": {
+              "x": 149.40625,
+              "y": 83,
+              "width": 209.59375,
+              "height": 42,
+              "top": 83,
+              "right": 359,
+              "bottom": 125,
+              "left": 149.40625
+            }
+          },
+          {
+            "text": "Guidelines",
+            "rect": {
+              "x": 16,
+              "y": 133,
+              "width": 125.40625,
+              "height": 42,
+              "top": 133,
+              "right": 141.40625,
+              "bottom": 175,
+              "left": 16
+            }
+          },
+          {
+            "text": "Sport Science",
+            "rect": {
+              "x": 149.40625,
+              "y": 133,
+              "width": 209.59375,
+              "height": 42,
+              "top": 133,
+              "right": 359,
+              "bottom": 175,
+              "left": 149.40625
+            }
+          },
+          {
+            "text": "Calendar",
+            "rect": {
+              "x": 16,
+              "y": 183,
+              "width": 125.40625,
+              "height": 42,
+              "top": 183,
+              "right": 141.40625,
+              "bottom": 225,
+              "left": 16
+            }
+          },
+          {
+            "text": "Disciplines",
+            "rect": {
+              "x": 149.40625,
+              "y": 183,
+              "width": 209.59375,
+              "height": 42,
+              "top": 183,
+              "right": 359,
+              "bottom": 225,
+              "left": 149.40625
+            }
+          },
+          {
+            "text": "Login",
+            "rect": {
+              "x": 149.40625,
+              "y": 239,
+              "width": 80.765625,
+              "height": 59,
+              "top": 239,
+              "right": 230.171875,
+              "bottom": 298,
+              "left": 149.40625
+            }
+          },
+          {
+            "text": "Register Club",
+            "rect": {
+              "x": 240.171875,
+              "y": 239,
+              "width": 118.828125,
+              "height": 59,
+              "top": 239,
+              "right": 359,
+              "bottom": 298,
+              "left": 240.171875
+            }
+          },
+          {
+            "text": "ENG",
+            "rect": {
+              "x": 50.578125,
+              "y": 321,
+              "width": 42.3125,
+              "height": 19,
+              "top": 321,
+              "right": 92.890625,
+              "bottom": 340,
+              "left": 50.578125
+            }
+          }
+        ],
+        "hasCloseButtonIcon": true
+      }
+    },
+    {
+      "route": "/",
+      "viewport": 390,
+      "state": {
+        "menuDisplay": "grid",
+        "menuOpacity": "1",
+        "menuGridCols": "140.406px 209.594px",
+        "menuPosition": "static",
+        "menuRect": {
+          "top": 70,
+          "bottom": 351,
+          "left": 16,
+          "right": 374,
+          "width": 358,
+          "height": 281
+        },
+        "headerRect": {
+          "top": 0,
+          "bottom": 64,
+          "height": 64
+        },
+        "innerRect": {
+          "flexWrap": "wrap",
+          "height": 64
+        },
+        "visibleLangSwitchersCount": 0,
+        "visibleLangLocations": [],
+        "drawerLinksCount": 9,
+        "drawerLinks": [
+          {
+            "text": "Home",
+            "rect": {
+              "x": 164.40625,
+              "y": 83,
+              "width": 209.59375,
+              "height": 42,
+              "top": 83,
+              "right": 374,
+              "bottom": 125,
+              "left": 164.40625
+            }
+          },
+          {
+            "text": "Guidelines",
+            "rect": {
+              "x": 16,
+              "y": 133,
+              "width": 140.40625,
+              "height": 42,
+              "top": 133,
+              "right": 156.40625,
+              "bottom": 175,
+              "left": 16
+            }
+          },
+          {
+            "text": "Sport Science",
+            "rect": {
+              "x": 164.40625,
+              "y": 133,
+              "width": 209.59375,
+              "height": 42,
+              "top": 133,
+              "right": 374,
+              "bottom": 175,
+              "left": 164.40625
+            }
+          },
+          {
+            "text": "Calendar",
+            "rect": {
+              "x": 16,
+              "y": 183,
+              "width": 140.40625,
+              "height": 42,
+              "top": 183,
+              "right": 156.40625,
+              "bottom": 225,
+              "left": 16
+            }
+          },
+          {
+            "text": "Disciplines",
+            "rect": {
+              "x": 164.40625,
+              "y": 183,
+              "width": 209.59375,
+              "height": 42,
+              "top": 183,
+              "right": 374,
+              "bottom": 225,
+              "left": 164.40625
+            }
+          },
+          {
+            "text": "Login",
+            "rect": {
+              "x": 164.40625,
+              "y": 239,
+              "width": 80.765625,
+              "height": 59,
+              "top": 239,
+              "right": 245.171875,
+              "bottom": 298,
+              "left": 164.40625
+            }
+          },
+          {
+            "text": "Register Club",
+            "rect": {
+              "x": 255.171875,
+              "y": 239,
+              "width": 118.828125,
+              "height": 59,
+              "top": 239,
+              "right": 374,
+              "bottom": 298,
+              "left": 255.171875
+            }
+          },
+          {
+            "text": "ENG",
+            "rect": {
+              "x": 58.078125,
+              "y": 321,
+              "width": 42.3125,
+              "height": 19,
+              "top": 321,
+              "right": 100.390625,
+              "bottom": 340,
+              "left": 58.078125
+            }
+          }
+        ],
+        "hasCloseButtonIcon": true
+      }
+    },
+    {
+      "route": "/guidelines",
+      "viewport": 390,
+      "state": {
+        "menuDisplay": "grid",
+        "menuOpacity": "1",
+        "menuGridCols": "140.406px 209.594px",
+        "menuPosition": "static",
+        "menuRect": {
+          "top": 70,
+          "bottom": 351,
+          "left": 16,
+          "right": 374,
+          "width": 358,
+          "height": 281
+        },
+        "headerRect": {
+          "top": 0,
+          "bottom": 64,
+          "height": 64
+        },
+        "innerRect": {
+          "flexWrap": "wrap",
+          "height": 64
+        },
+        "visibleLangSwitchersCount": 0,
+        "visibleLangLocations": [],
+        "drawerLinksCount": 9,
+        "drawerLinks": [
+          {
+            "text": "Home",
+            "rect": {
+              "x": 164.40625,
+              "y": 83,
+              "width": 209.59375,
+              "height": 42,
+              "top": 83,
+              "right": 374,
+              "bottom": 125,
+              "left": 164.40625
+            }
+          },
+          {
+            "text": "Guidelines",
+            "rect": {
+              "x": 16,
+              "y": 133,
+              "width": 140.40625,
+              "height": 42,
+              "top": 133,
+              "right": 156.40625,
+              "bottom": 175,
+              "left": 16
+            }
+          },
+          {
+            "text": "Sport Science",
+            "rect": {
+              "x": 164.40625,
+              "y": 133,
+              "width": 209.59375,
+              "height": 42,
+              "top": 133,
+              "right": 374,
+              "bottom": 175,
+              "left": 164.40625
+            }
+          },
+          {
+            "text": "Calendar",
+            "rect": {
+              "x": 16,
+              "y": 183,
+              "width": 140.40625,
+              "height": 42,
+              "top": 183,
+              "right": 156.40625,
+              "bottom": 225,
+              "left": 16
+            }
+          },
+          {
+            "text": "Disciplines",
+            "rect": {
+              "x": 164.40625,
+              "y": 183,
+              "width": 209.59375,
+              "height": 42,
+              "top": 183,
+              "right": 374,
+              "bottom": 225,
+              "left": 164.40625
+            }
+          },
+          {
+            "text": "Login",
+            "rect": {
+              "x": 164.40625,
+              "y": 239,
+              "width": 80.765625,
+              "height": 59,
+              "top": 239,
+              "right": 245.171875,
+              "bottom": 298,
+              "left": 164.40625
+            }
+          },
+          {
+            "text": "Register Club",
+            "rect": {
+              "x": 255.171875,
+              "y": 239,
+              "width": 118.828125,
+              "height": 59,
+              "top": 239,
+              "right": 374,
+              "bottom": 298,
+              "left": 255.171875
+            }
+          },
+          {
+            "text": "ENG",
+            "rect": {
+              "x": 58.078125,
+              "y": 321,
+              "width": 42.3125,
+              "height": 19,
+              "top": 321,
+              "right": 100.390625,
+              "bottom": 340,
+              "left": 58.078125
+            }
+          }
+        ],
+        "hasCloseButtonIcon": true
+      }
+    },
+    {
+      "route": "/knowledge",
+      "viewport": 390,
+      "state": {
+        "menuDisplay": "grid",
+        "menuOpacity": "1",
+        "menuGridCols": "140.406px 209.594px",
+        "menuPosition": "static",
+        "menuRect": {
+          "top": 70,
+          "bottom": 351,
+          "left": 16,
+          "right": 374,
+          "width": 358,
+          "height": 281
+        },
+        "headerRect": {
+          "top": 0,
+          "bottom": 64,
+          "height": 64
+        },
+        "innerRect": {
+          "flexWrap": "wrap",
+          "height": 64
+        },
+        "visibleLangSwitchersCount": 0,
+        "visibleLangLocations": [],
+        "drawerLinksCount": 9,
+        "drawerLinks": [
+          {
+            "text": "Home",
+            "rect": {
+              "x": 164.40625,
+              "y": 83,
+              "width": 209.59375,
+              "height": 42,
+              "top": 83,
+              "right": 374,
+              "bottom": 125,
+              "left": 164.40625
+            }
+          },
+          {
+            "text": "Guidelines",
+            "rect": {
+              "x": 16,
+              "y": 133,
+              "width": 140.40625,
+              "height": 42,
+              "top": 133,
+              "right": 156.40625,
+              "bottom": 175,
+              "left": 16
+            }
+          },
+          {
+            "text": "Sport Science",
+            "rect": {
+              "x": 164.40625,
+              "y": 133,
+              "width": 209.59375,
+              "height": 42,
+              "top": 133,
+              "right": 374,
+              "bottom": 175,
+              "left": 164.40625
+            }
+          },
+          {
+            "text": "Calendar",
+            "rect": {
+              "x": 16,
+              "y": 183,
+              "width": 140.40625,
+              "height": 42,
+              "top": 183,
+              "right": 156.40625,
+              "bottom": 225,
+              "left": 16
+            }
+          },
+          {
+            "text": "Disciplines",
+            "rect": {
+              "x": 164.40625,
+              "y": 183,
+              "width": 209.59375,
+              "height": 42,
+              "top": 183,
+              "right": 374,
+              "bottom": 225,
+              "left": 164.40625
+            }
+          },
+          {
+            "text": "Login",
+            "rect": {
+              "x": 164.40625,
+              "y": 239,
+              "width": 80.765625,
+              "height": 59,
+              "top": 239,
+              "right": 245.171875,
+              "bottom": 298,
+              "left": 164.40625
+            }
+          },
+          {
+            "text": "Register Club",
+            "rect": {
+              "x": 255.171875,
+              "y": 239,
+              "width": 118.828125,
+              "height": 59,
+              "top": 239,
+              "right": 374,
+              "bottom": 298,
+              "left": 255.171875
+            }
+          },
+          {
+            "text": "ENG",
+            "rect": {
+              "x": 58.078125,
+              "y": 321,
+              "width": 42.3125,
+              "height": 19,
+              "top": 321,
+              "right": 100.390625,
+              "bottom": 340,
+              "left": 58.078125
+            }
+          }
+        ],
+        "hasCloseButtonIcon": true
+      }
+    },
+    {
+      "route": "/competitions",
+      "viewport": 390,
+      "state": {
+        "menuDisplay": "grid",
+        "menuOpacity": "1",
+        "menuGridCols": "140.406px 209.594px",
+        "menuPosition": "static",
+        "menuRect": {
+          "top": 70,
+          "bottom": 351,
+          "left": 16,
+          "right": 374,
+          "width": 358,
+          "height": 281
+        },
+        "headerRect": {
+          "top": 0,
+          "bottom": 64,
+          "height": 64
+        },
+        "innerRect": {
+          "flexWrap": "wrap",
+          "height": 64
+        },
+        "visibleLangSwitchersCount": 0,
+        "visibleLangLocations": [],
+        "drawerLinksCount": 9,
+        "drawerLinks": [
+          {
+            "text": "Home",
+            "rect": {
+              "x": 164.40625,
+              "y": 83,
+              "width": 209.59375,
+              "height": 42,
+              "top": 83,
+              "right": 374,
+              "bottom": 125,
+              "left": 164.40625
+            }
+          },
+          {
+            "text": "Guidelines",
+            "rect": {
+              "x": 16,
+              "y": 133,
+              "width": 140.40625,
+              "height": 42,
+              "top": 133,
+              "right": 156.40625,
+              "bottom": 175,
+              "left": 16
+            }
+          },
+          {
+            "text": "Sport Science",
+            "rect": {
+              "x": 164.40625,
+              "y": 133,
+              "width": 209.59375,
+              "height": 42,
+              "top": 133,
+              "right": 374,
+              "bottom": 175,
+              "left": 164.40625
+            }
+          },
+          {
+            "text": "Calendar",
+            "rect": {
+              "x": 16,
+              "y": 183,
+              "width": 140.40625,
+              "height": 42,
+              "top": 183,
+              "right": 156.40625,
+              "bottom": 225,
+              "left": 16
+            }
+          },
+          {
+            "text": "Disciplines",
+            "rect": {
+              "x": 164.40625,
+              "y": 183,
+              "width": 209.59375,
+              "height": 42,
+              "top": 183,
+              "right": 374,
+              "bottom": 225,
+              "left": 164.40625
+            }
+          },
+          {
+            "text": "Login",
+            "rect": {
+              "x": 164.40625,
+              "y": 239,
+              "width": 80.765625,
+              "height": 59,
+              "top": 239,
+              "right": 245.171875,
+              "bottom": 298,
+              "left": 164.40625
+            }
+          },
+          {
+            "text": "Register Club",
+            "rect": {
+              "x": 255.171875,
+              "y": 239,
+              "width": 118.828125,
+              "height": 59,
+              "top": 239,
+              "right": 374,
+              "bottom": 298,
+              "left": 255.171875
+            }
+          },
+          {
+            "text": "ENG",
+            "rect": {
+              "x": 58.078125,
+              "y": 321,
+              "width": 42.3125,
+              "height": 19,
+              "top": 321,
+              "right": 100.390625,
+              "bottom": 340,
+              "left": 58.078125
+            }
+          }
+        ],
+        "hasCloseButtonIcon": true
+      }
+    },
+    {
+      "route": "/disciplines",
+      "viewport": 390,
+      "state": {
+        "menuDisplay": "grid",
+        "menuOpacity": "1",
+        "menuGridCols": "140.406px 209.594px",
+        "menuPosition": "static",
+        "menuRect": {
+          "top": 70,
+          "bottom": 351,
+          "left": 16,
+          "right": 374,
+          "width": 358,
+          "height": 281
+        },
+        "headerRect": {
+          "top": 0,
+          "bottom": 64,
+          "height": 64
+        },
+        "innerRect": {
+          "flexWrap": "wrap",
+          "height": 64
+        },
+        "visibleLangSwitchersCount": 0,
+        "visibleLangLocations": [],
+        "drawerLinksCount": 9,
+        "drawerLinks": [
+          {
+            "text": "Home",
+            "rect": {
+              "x": 164.40625,
+              "y": 83,
+              "width": 209.59375,
+              "height": 42,
+              "top": 83,
+              "right": 374,
+              "bottom": 125,
+              "left": 164.40625
+            }
+          },
+          {
+            "text": "Guidelines",
+            "rect": {
+              "x": 16,
+              "y": 133,
+              "width": 140.40625,
+              "height": 42,
+              "top": 133,
+              "right": 156.40625,
+              "bottom": 175,
+              "left": 16
+            }
+          },
+          {
+            "text": "Sport Science",
+            "rect": {
+              "x": 164.40625,
+              "y": 133,
+              "width": 209.59375,
+              "height": 42,
+              "top": 133,
+              "right": 374,
+              "bottom": 175,
+              "left": 164.40625
+            }
+          },
+          {
+            "text": "Calendar",
+            "rect": {
+              "x": 16,
+              "y": 183,
+              "width": 140.40625,
+              "height": 42,
+              "top": 183,
+              "right": 156.40625,
+              "bottom": 225,
+              "left": 16
+            }
+          },
+          {
+            "text": "Disciplines",
+            "rect": {
+              "x": 164.40625,
+              "y": 183,
+              "width": 209.59375,
+              "height": 42,
+              "top": 183,
+              "right": 374,
+              "bottom": 225,
+              "left": 164.40625
+            }
+          },
+          {
+            "text": "Login",
+            "rect": {
+              "x": 164.40625,
+              "y": 239,
+              "width": 80.765625,
+              "height": 59,
+              "top": 239,
+              "right": 245.171875,
+              "bottom": 298,
+              "left": 164.40625
+            }
+          },
+          {
+            "text": "Register Club",
+            "rect": {
+              "x": 255.171875,
+              "y": 239,
+              "width": 118.828125,
+              "height": 59,
+              "top": 239,
+              "right": 374,
+              "bottom": 298,
+              "left": 255.171875
+            }
+          },
+          {
+            "text": "ENG",
+            "rect": {
+              "x": 58.078125,
+              "y": 321,
+              "width": 42.3125,
+              "height": 19,
+              "top": 321,
+              "right": 100.390625,
+              "bottom": 340,
+              "left": 58.078125
+            }
+          }
+        ],
+        "hasCloseButtonIcon": true
+      }
+    },
+    {
+      "route": "/login",
+      "viewport": 390,
+      "state": {
+        "menuDisplay": "grid",
+        "menuOpacity": "1",
+        "menuGridCols": "140.406px 209.594px",
+        "menuPosition": "static",
+        "menuRect": {
+          "top": 70,
+          "bottom": 351,
+          "left": 16,
+          "right": 374,
+          "width": 358,
+          "height": 281
+        },
+        "headerRect": {
+          "top": 0,
+          "bottom": 64,
+          "height": 64
+        },
+        "innerRect": {
+          "flexWrap": "wrap",
+          "height": 64
+        },
+        "visibleLangSwitchersCount": 0,
+        "visibleLangLocations": [],
+        "drawerLinksCount": 9,
+        "drawerLinks": [
+          {
+            "text": "Home",
+            "rect": {
+              "x": 164.40625,
+              "y": 83,
+              "width": 209.59375,
+              "height": 42,
+              "top": 83,
+              "right": 374,
+              "bottom": 125,
+              "left": 164.40625
+            }
+          },
+          {
+            "text": "Guidelines",
+            "rect": {
+              "x": 16,
+              "y": 133,
+              "width": 140.40625,
+              "height": 42,
+              "top": 133,
+              "right": 156.40625,
+              "bottom": 175,
+              "left": 16
+            }
+          },
+          {
+            "text": "Sport Science",
+            "rect": {
+              "x": 164.40625,
+              "y": 133,
+              "width": 209.59375,
+              "height": 42,
+              "top": 133,
+              "right": 374,
+              "bottom": 175,
+              "left": 164.40625
+            }
+          },
+          {
+            "text": "Calendar",
+            "rect": {
+              "x": 16,
+              "y": 183,
+              "width": 140.40625,
+              "height": 42,
+              "top": 183,
+              "right": 156.40625,
+              "bottom": 225,
+              "left": 16
+            }
+          },
+          {
+            "text": "Disciplines",
+            "rect": {
+              "x": 164.40625,
+              "y": 183,
+              "width": 209.59375,
+              "height": 42,
+              "top": 183,
+              "right": 374,
+              "bottom": 225,
+              "left": 164.40625
+            }
+          },
+          {
+            "text": "Login",
+            "rect": {
+              "x": 164.40625,
+              "y": 239,
+              "width": 80.765625,
+              "height": 59,
+              "top": 239,
+              "right": 245.171875,
+              "bottom": 298,
+              "left": 164.40625
+            }
+          },
+          {
+            "text": "Register Club",
+            "rect": {
+              "x": 255.171875,
+              "y": 239,
+              "width": 118.828125,
+              "height": 59,
+              "top": 239,
+              "right": 374,
+              "bottom": 298,
+              "left": 255.171875
+            }
+          },
+          {
+            "text": "ENG",
+            "rect": {
+              "x": 58.078125,
+              "y": 321,
+              "width": 42.3125,
+              "height": 19,
+              "top": 321,
+              "right": 100.390625,
+              "bottom": 340,
+              "left": 58.078125
+            }
+          }
+        ],
+        "hasCloseButtonIcon": true
+      }
+    },
+    {
+      "route": "/register-club",
+      "viewport": 390,
+      "state": {
+        "menuDisplay": "grid",
+        "menuOpacity": "1",
+        "menuGridCols": "140.406px 209.594px",
+        "menuPosition": "static",
+        "menuRect": {
+          "top": 70,
+          "bottom": 351,
+          "left": 16,
+          "right": 374,
+          "width": 358,
+          "height": 281
+        },
+        "headerRect": {
+          "top": 0,
+          "bottom": 64,
+          "height": 64
+        },
+        "innerRect": {
+          "flexWrap": "wrap",
+          "height": 64
+        },
+        "visibleLangSwitchersCount": 0,
+        "visibleLangLocations": [],
+        "drawerLinksCount": 9,
+        "drawerLinks": [
+          {
+            "text": "Home",
+            "rect": {
+              "x": 164.40625,
+              "y": 83,
+              "width": 209.59375,
+              "height": 42,
+              "top": 83,
+              "right": 374,
+              "bottom": 125,
+              "left": 164.40625
+            }
+          },
+          {
+            "text": "Guidelines",
+            "rect": {
+              "x": 16,
+              "y": 133,
+              "width": 140.40625,
+              "height": 42,
+              "top": 133,
+              "right": 156.40625,
+              "bottom": 175,
+              "left": 16
+            }
+          },
+          {
+            "text": "Sport Science",
+            "rect": {
+              "x": 164.40625,
+              "y": 133,
+              "width": 209.59375,
+              "height": 42,
+              "top": 133,
+              "right": 374,
+              "bottom": 175,
+              "left": 164.40625
+            }
+          },
+          {
+            "text": "Calendar",
+            "rect": {
+              "x": 16,
+              "y": 183,
+              "width": 140.40625,
+              "height": 42,
+              "top": 183,
+              "right": 156.40625,
+              "bottom": 225,
+              "left": 16
+            }
+          },
+          {
+            "text": "Disciplines",
+            "rect": {
+              "x": 164.40625,
+              "y": 183,
+              "width": 209.59375,
+              "height": 42,
+              "top": 183,
+              "right": 374,
+              "bottom": 225,
+              "left": 164.40625
+            }
+          },
+          {
+            "text": "Login",
+            "rect": {
+              "x": 164.40625,
+              "y": 239,
+              "width": 80.765625,
+              "height": 59,
+              "top": 239,
+              "right": 245.171875,
+              "bottom": 298,
+              "left": 164.40625
+            }
+          },
+          {
+            "text": "Register Club",
+            "rect": {
+              "x": 255.171875,
+              "y": 239,
+              "width": 118.828125,
+              "height": 59,
+              "top": 239,
+              "right": 374,
+              "bottom": 298,
+              "left": 255.171875
+            }
+          },
+          {
+            "text": "ENG",
+            "rect": {
+              "x": 58.078125,
+              "y": 321,
+              "width": 42.3125,
+              "height": 19,
+              "top": 321,
+              "right": 100.390625,
+              "bottom": 340,
+              "left": 58.078125
+            }
+          }
+        ],
+        "hasCloseButtonIcon": true
+      }
+    },
+    {
+      "route": "/",
+      "viewport": 768,
+      "state": {
+        "menuDisplay": "grid",
+        "menuOpacity": "1",
+        "menuGridCols": "454.25px",
+        "menuPosition": "static",
+        "menuRect": {
+          "top": -168,
+          "bottom": 241,
+          "left": 290,
+          "right": 752,
+          "width": 462,
+          "height": 409
+        },
+        "headerRect": {
+          "top": 0,
+          "bottom": 64,
+          "height": 64
+        },
+        "innerRect": {
+          "flexWrap": "nowrap",
+          "height": 63
+        },
+        "visibleLangSwitchersCount": 0,
+        "visibleLangLocations": [],
+        "drawerLinksCount": 9,
+        "drawerLinks": [
+          {
+            "text": "Home",
+            "rect": {
+              "x": 293.75,
+              "y": -129.875,
+              "width": 454.25,
+              "height": 42.25,
+              "top": -129.875,
+              "right": 748,
+              "bottom": -87.625,
+              "left": 293.75
+            }
+          },
+          {
+            "text": "Guidelines",
+            "rect": {
+              "x": 293.75,
+              "y": -81.625,
+              "width": 454.25,
+              "height": 42.25,
+              "top": -81.625,
+              "right": 748,
+              "bottom": -39.375,
+              "left": 293.75
+            }
+          },
+          {
+            "text": "Sport Science",
+            "rect": {
+              "x": 293.75,
+              "y": -33.375,
+              "width": 454.25,
+              "height": 42.25,
+              "top": -33.375,
+              "right": 748,
+              "bottom": 8.875,
+              "left": 293.75
+            }
+          },
+          {
+            "text": "Calendar",
+            "rect": {
+              "x": 293.75,
+              "y": 14.875,
+              "width": 454.25,
+              "height": 42.25,
+              "top": 14.875,
+              "right": 748,
+              "bottom": 57.125,
+              "left": 293.75
+            }
+          },
+          {
+            "text": "Disciplines",
+            "rect": {
+              "x": 293.75,
+              "y": 63.125,
+              "width": 454.25,
+              "height": 42.25,
+              "top": 63.125,
+              "right": 748,
+              "bottom": 105.375,
+              "left": 293.75
+            }
+          },
+          {
+            "text": "Login",
+            "rect": {
+              "x": 293.75,
+              "y": 142.375,
+              "width": 193.140625,
+              "height": 41.5,
+              "top": 142.375,
+              "right": 486.890625,
+              "bottom": 183.875,
+              "left": 293.75
+            }
+          },
+          {
+            "text": "Register Club",
+            "rect": {
+              "x": 496.890625,
+              "y": 142.375,
+              "width": 251.109375,
+              "height": 41.5,
+              "top": 142.375,
+              "right": 748,
+              "bottom": 183.875,
+              "left": 496.890625
+            }
+          },
+          {
+            "text": "ENG",
+            "rect": {
+              "x": 492.75,
+              "y": 204.875,
+              "width": 42.3125,
+              "height": 19,
+              "top": 204.875,
+              "right": 535.0625,
+              "bottom": 223.875,
+              "left": 492.75
+            }
+          }
+        ],
+        "hasCloseButtonIcon": true
+      }
+    },
+    {
+      "route": "/guidelines",
+      "viewport": 768,
+      "state": {
+        "menuDisplay": "grid",
+        "menuOpacity": "1",
+        "menuGridCols": "454.25px",
+        "menuPosition": "static",
+        "menuRect": {
+          "top": -168,
+          "bottom": 241,
+          "left": 290,
+          "right": 752,
+          "width": 462,
+          "height": 409
+        },
+        "headerRect": {
+          "top": 0,
+          "bottom": 64,
+          "height": 64
+        },
+        "innerRect": {
+          "flexWrap": "nowrap",
+          "height": 63
+        },
+        "visibleLangSwitchersCount": 0,
+        "visibleLangLocations": [],
+        "drawerLinksCount": 9,
+        "drawerLinks": [
+          {
+            "text": "Home",
+            "rect": {
+              "x": 293.75,
+              "y": -129.875,
+              "width": 454.25,
+              "height": 42.25,
+              "top": -129.875,
+              "right": 748,
+              "bottom": -87.625,
+              "left": 293.75
+            }
+          },
+          {
+            "text": "Guidelines",
+            "rect": {
+              "x": 293.75,
+              "y": -81.625,
+              "width": 454.25,
+              "height": 42.25,
+              "top": -81.625,
+              "right": 748,
+              "bottom": -39.375,
+              "left": 293.75
+            }
+          },
+          {
+            "text": "Sport Science",
+            "rect": {
+              "x": 293.75,
+              "y": -33.375,
+              "width": 454.25,
+              "height": 42.25,
+              "top": -33.375,
+              "right": 748,
+              "bottom": 8.875,
+              "left": 293.75
+            }
+          },
+          {
+            "text": "Calendar",
+            "rect": {
+              "x": 293.75,
+              "y": 14.875,
+              "width": 454.25,
+              "height": 42.25,
+              "top": 14.875,
+              "right": 748,
+              "bottom": 57.125,
+              "left": 293.75
+            }
+          },
+          {
+            "text": "Disciplines",
+            "rect": {
+              "x": 293.75,
+              "y": 63.125,
+              "width": 454.25,
+              "height": 42.25,
+              "top": 63.125,
+              "right": 748,
+              "bottom": 105.375,
+              "left": 293.75
+            }
+          },
+          {
+            "text": "Login",
+            "rect": {
+              "x": 293.75,
+              "y": 142.375,
+              "width": 193.140625,
+              "height": 41.5,
+              "top": 142.375,
+              "right": 486.890625,
+              "bottom": 183.875,
+              "left": 293.75
+            }
+          },
+          {
+            "text": "Register Club",
+            "rect": {
+              "x": 496.890625,
+              "y": 142.375,
+              "width": 251.109375,
+              "height": 41.5,
+              "top": 142.375,
+              "right": 748,
+              "bottom": 183.875,
+              "left": 496.890625
+            }
+          },
+          {
+            "text": "ENG",
+            "rect": {
+              "x": 492.75,
+              "y": 204.875,
+              "width": 42.3125,
+              "height": 19,
+              "top": 204.875,
+              "right": 535.0625,
+              "bottom": 223.875,
+              "left": 492.75
+            }
+          }
+        ],
+        "hasCloseButtonIcon": true
+      }
+    },
+    {
+      "route": "/knowledge",
+      "viewport": 768,
+      "state": {
+        "menuDisplay": "grid",
+        "menuOpacity": "1",
+        "menuGridCols": "454.25px",
+        "menuPosition": "static",
+        "menuRect": {
+          "top": -168,
+          "bottom": 241,
+          "left": 290,
+          "right": 752,
+          "width": 462,
+          "height": 409
+        },
+        "headerRect": {
+          "top": 0,
+          "bottom": 64,
+          "height": 64
+        },
+        "innerRect": {
+          "flexWrap": "nowrap",
+          "height": 63
+        },
+        "visibleLangSwitchersCount": 0,
+        "visibleLangLocations": [],
+        "drawerLinksCount": 9,
+        "drawerLinks": [
+          {
+            "text": "Home",
+            "rect": {
+              "x": 293.75,
+              "y": -129.875,
+              "width": 454.25,
+              "height": 42.25,
+              "top": -129.875,
+              "right": 748,
+              "bottom": -87.625,
+              "left": 293.75
+            }
+          },
+          {
+            "text": "Guidelines",
+            "rect": {
+              "x": 293.75,
+              "y": -81.625,
+              "width": 454.25,
+              "height": 42.25,
+              "top": -81.625,
+              "right": 748,
+              "bottom": -39.375,
+              "left": 293.75
+            }
+          },
+          {
+            "text": "Sport Science",
+            "rect": {
+              "x": 293.75,
+              "y": -33.375,
+              "width": 454.25,
+              "height": 42.25,
+              "top": -33.375,
+              "right": 748,
+              "bottom": 8.875,
+              "left": 293.75
+            }
+          },
+          {
+            "text": "Calendar",
+            "rect": {
+              "x": 293.75,
+              "y": 14.875,
+              "width": 454.25,
+              "height": 42.25,
+              "top": 14.875,
+              "right": 748,
+              "bottom": 57.125,
+              "left": 293.75
+            }
+          },
+          {
+            "text": "Disciplines",
+            "rect": {
+              "x": 293.75,
+              "y": 63.125,
+              "width": 454.25,
+              "height": 42.25,
+              "top": 63.125,
+              "right": 748,
+              "bottom": 105.375,
+              "left": 293.75
+            }
+          },
+          {
+            "text": "Login",
+            "rect": {
+              "x": 293.75,
+              "y": 142.375,
+              "width": 193.140625,
+              "height": 41.5,
+              "top": 142.375,
+              "right": 486.890625,
+              "bottom": 183.875,
+              "left": 293.75
+            }
+          },
+          {
+            "text": "Register Club",
+            "rect": {
+              "x": 496.890625,
+              "y": 142.375,
+              "width": 251.109375,
+              "height": 41.5,
+              "top": 142.375,
+              "right": 748,
+              "bottom": 183.875,
+              "left": 496.890625
+            }
+          },
+          {
+            "text": "ENG",
+            "rect": {
+              "x": 492.75,
+              "y": 204.875,
+              "width": 42.3125,
+              "height": 19,
+              "top": 204.875,
+              "right": 535.0625,
+              "bottom": 223.875,
+              "left": 492.75
+            }
+          }
+        ],
+        "hasCloseButtonIcon": true
+      }
+    },
+    {
+      "route": "/competitions",
+      "viewport": 768,
+      "state": {
+        "menuDisplay": "grid",
+        "menuOpacity": "1",
+        "menuGridCols": "454.25px",
+        "menuPosition": "static",
+        "menuRect": {
+          "top": -168,
+          "bottom": 241,
+          "left": 290,
+          "right": 752,
+          "width": 462,
+          "height": 409
+        },
+        "headerRect": {
+          "top": 0,
+          "bottom": 64,
+          "height": 64
+        },
+        "innerRect": {
+          "flexWrap": "nowrap",
+          "height": 63
+        },
+        "visibleLangSwitchersCount": 0,
+        "visibleLangLocations": [],
+        "drawerLinksCount": 9,
+        "drawerLinks": [
+          {
+            "text": "Home",
+            "rect": {
+              "x": 293.75,
+              "y": -129.875,
+              "width": 454.25,
+              "height": 42.25,
+              "top": -129.875,
+              "right": 748,
+              "bottom": -87.625,
+              "left": 293.75
+            }
+          },
+          {
+            "text": "Guidelines",
+            "rect": {
+              "x": 293.75,
+              "y": -81.625,
+              "width": 454.25,
+              "height": 42.25,
+              "top": -81.625,
+              "right": 748,
+              "bottom": -39.375,
+              "left": 293.75
+            }
+          },
+          {
+            "text": "Sport Science",
+            "rect": {
+              "x": 293.75,
+              "y": -33.375,
+              "width": 454.25,
+              "height": 42.25,
+              "top": -33.375,
+              "right": 748,
+              "bottom": 8.875,
+              "left": 293.75
+            }
+          },
+          {
+            "text": "Calendar",
+            "rect": {
+              "x": 293.75,
+              "y": 14.875,
+              "width": 454.25,
+              "height": 42.25,
+              "top": 14.875,
+              "right": 748,
+              "bottom": 57.125,
+              "left": 293.75
+            }
+          },
+          {
+            "text": "Disciplines",
+            "rect": {
+              "x": 293.75,
+              "y": 63.125,
+              "width": 454.25,
+              "height": 42.25,
+              "top": 63.125,
+              "right": 748,
+              "bottom": 105.375,
+              "left": 293.75
+            }
+          },
+          {
+            "text": "Login",
+            "rect": {
+              "x": 293.75,
+              "y": 142.375,
+              "width": 193.140625,
+              "height": 41.5,
+              "top": 142.375,
+              "right": 486.890625,
+              "bottom": 183.875,
+              "left": 293.75
+            }
+          },
+          {
+            "text": "Register Club",
+            "rect": {
+              "x": 496.890625,
+              "y": 142.375,
+              "width": 251.109375,
+              "height": 41.5,
+              "top": 142.375,
+              "right": 748,
+              "bottom": 183.875,
+              "left": 496.890625
+            }
+          },
+          {
+            "text": "ENG",
+            "rect": {
+              "x": 492.75,
+              "y": 204.875,
+              "width": 42.3125,
+              "height": 19,
+              "top": 204.875,
+              "right": 535.0625,
+              "bottom": 223.875,
+              "left": 492.75
+            }
+          }
+        ],
+        "hasCloseButtonIcon": true
+      }
+    },
+    {
+      "route": "/disciplines",
+      "viewport": 768,
+      "state": {
+        "menuDisplay": "grid",
+        "menuOpacity": "1",
+        "menuGridCols": "454.25px",
+        "menuPosition": "static",
+        "menuRect": {
+          "top": -168,
+          "bottom": 241,
+          "left": 290,
+          "right": 752,
+          "width": 462,
+          "height": 409
+        },
+        "headerRect": {
+          "top": 0,
+          "bottom": 64,
+          "height": 64
+        },
+        "innerRect": {
+          "flexWrap": "nowrap",
+          "height": 63
+        },
+        "visibleLangSwitchersCount": 0,
+        "visibleLangLocations": [],
+        "drawerLinksCount": 9,
+        "drawerLinks": [
+          {
+            "text": "Home",
+            "rect": {
+              "x": 293.75,
+              "y": -129.875,
+              "width": 454.25,
+              "height": 42.25,
+              "top": -129.875,
+              "right": 748,
+              "bottom": -87.625,
+              "left": 293.75
+            }
+          },
+          {
+            "text": "Guidelines",
+            "rect": {
+              "x": 293.75,
+              "y": -81.625,
+              "width": 454.25,
+              "height": 42.25,
+              "top": -81.625,
+              "right": 748,
+              "bottom": -39.375,
+              "left": 293.75
+            }
+          },
+          {
+            "text": "Sport Science",
+            "rect": {
+              "x": 293.75,
+              "y": -33.375,
+              "width": 454.25,
+              "height": 42.25,
+              "top": -33.375,
+              "right": 748,
+              "bottom": 8.875,
+              "left": 293.75
+            }
+          },
+          {
+            "text": "Calendar",
+            "rect": {
+              "x": 293.75,
+              "y": 14.875,
+              "width": 454.25,
+              "height": 42.25,
+              "top": 14.875,
+              "right": 748,
+              "bottom": 57.125,
+              "left": 293.75
+            }
+          },
+          {
+            "text": "Disciplines",
+            "rect": {
+              "x": 293.75,
+              "y": 63.125,
+              "width": 454.25,
+              "height": 42.25,
+              "top": 63.125,
+              "right": 748,
+              "bottom": 105.375,
+              "left": 293.75
+            }
+          },
+          {
+            "text": "Login",
+            "rect": {
+              "x": 293.75,
+              "y": 142.375,
+              "width": 193.140625,
+              "height": 41.5,
+              "top": 142.375,
+              "right": 486.890625,
+              "bottom": 183.875,
+              "left": 293.75
+            }
+          },
+          {
+            "text": "Register Club",
+            "rect": {
+              "x": 496.890625,
+              "y": 142.375,
+              "width": 251.109375,
+              "height": 41.5,
+              "top": 142.375,
+              "right": 748,
+              "bottom": 183.875,
+              "left": 496.890625
+            }
+          },
+          {
+            "text": "ENG",
+            "rect": {
+              "x": 492.75,
+              "y": 204.875,
+              "width": 42.3125,
+              "height": 19,
+              "top": 204.875,
+              "right": 535.0625,
+              "bottom": 223.875,
+              "left": 492.75
+            }
+          }
+        ],
+        "hasCloseButtonIcon": true
+      }
+    },
+    {
+      "route": "/login",
+      "viewport": 768,
+      "state": {
+        "menuDisplay": "grid",
+        "menuOpacity": "1",
+        "menuGridCols": "454.25px",
+        "menuPosition": "static",
+        "menuRect": {
+          "top": -168,
+          "bottom": 241,
+          "left": 290,
+          "right": 752,
+          "width": 462,
+          "height": 409
+        },
+        "headerRect": {
+          "top": 0,
+          "bottom": 64,
+          "height": 64
+        },
+        "innerRect": {
+          "flexWrap": "nowrap",
+          "height": 63
+        },
+        "visibleLangSwitchersCount": 0,
+        "visibleLangLocations": [],
+        "drawerLinksCount": 9,
+        "drawerLinks": [
+          {
+            "text": "Home",
+            "rect": {
+              "x": 293.75,
+              "y": -129.875,
+              "width": 454.25,
+              "height": 42.25,
+              "top": -129.875,
+              "right": 748,
+              "bottom": -87.625,
+              "left": 293.75
+            }
+          },
+          {
+            "text": "Guidelines",
+            "rect": {
+              "x": 293.75,
+              "y": -81.625,
+              "width": 454.25,
+              "height": 42.25,
+              "top": -81.625,
+              "right": 748,
+              "bottom": -39.375,
+              "left": 293.75
+            }
+          },
+          {
+            "text": "Sport Science",
+            "rect": {
+              "x": 293.75,
+              "y": -33.375,
+              "width": 454.25,
+              "height": 42.25,
+              "top": -33.375,
+              "right": 748,
+              "bottom": 8.875,
+              "left": 293.75
+            }
+          },
+          {
+            "text": "Calendar",
+            "rect": {
+              "x": 293.75,
+              "y": 14.875,
+              "width": 454.25,
+              "height": 42.25,
+              "top": 14.875,
+              "right": 748,
+              "bottom": 57.125,
+              "left": 293.75
+            }
+          },
+          {
+            "text": "Disciplines",
+            "rect": {
+              "x": 293.75,
+              "y": 63.125,
+              "width": 454.25,
+              "height": 42.25,
+              "top": 63.125,
+              "right": 748,
+              "bottom": 105.375,
+              "left": 293.75
+            }
+          },
+          {
+            "text": "Login",
+            "rect": {
+              "x": 293.75,
+              "y": 142.375,
+              "width": 193.140625,
+              "height": 41.5,
+              "top": 142.375,
+              "right": 486.890625,
+              "bottom": 183.875,
+              "left": 293.75
+            }
+          },
+          {
+            "text": "Register Club",
+            "rect": {
+              "x": 496.890625,
+              "y": 142.375,
+              "width": 251.109375,
+              "height": 41.5,
+              "top": 142.375,
+              "right": 748,
+              "bottom": 183.875,
+              "left": 496.890625
+            }
+          },
+          {
+            "text": "ENG",
+            "rect": {
+              "x": 492.75,
+              "y": 204.875,
+              "width": 42.3125,
+              "height": 19,
+              "top": 204.875,
+              "right": 535.0625,
+              "bottom": 223.875,
+              "left": 492.75
+            }
+          }
+        ],
+        "hasCloseButtonIcon": true
+      }
+    },
+    {
+      "route": "/register-club",
+      "viewport": 768,
+      "state": {
+        "menuDisplay": "grid",
+        "menuOpacity": "1",
+        "menuGridCols": "454.25px",
+        "menuPosition": "static",
+        "menuRect": {
+          "top": -168,
+          "bottom": 241,
+          "left": 290,
+          "right": 752,
+          "width": 462,
+          "height": 409
+        },
+        "headerRect": {
+          "top": 0,
+          "bottom": 64,
+          "height": 64
+        },
+        "innerRect": {
+          "flexWrap": "nowrap",
+          "height": 63
+        },
+        "visibleLangSwitchersCount": 0,
+        "visibleLangLocations": [],
+        "drawerLinksCount": 9,
+        "drawerLinks": [
+          {
+            "text": "Home",
+            "rect": {
+              "x": 293.75,
+              "y": -129.875,
+              "width": 454.25,
+              "height": 42.25,
+              "top": -129.875,
+              "right": 748,
+              "bottom": -87.625,
+              "left": 293.75
+            }
+          },
+          {
+            "text": "Guidelines",
+            "rect": {
+              "x": 293.75,
+              "y": -81.625,
+              "width": 454.25,
+              "height": 42.25,
+              "top": -81.625,
+              "right": 748,
+              "bottom": -39.375,
+              "left": 293.75
+            }
+          },
+          {
+            "text": "Sport Science",
+            "rect": {
+              "x": 293.75,
+              "y": -33.375,
+              "width": 454.25,
+              "height": 42.25,
+              "top": -33.375,
+              "right": 748,
+              "bottom": 8.875,
+              "left": 293.75
+            }
+          },
+          {
+            "text": "Calendar",
+            "rect": {
+              "x": 293.75,
+              "y": 14.875,
+              "width": 454.25,
+              "height": 42.25,
+              "top": 14.875,
+              "right": 748,
+              "bottom": 57.125,
+              "left": 293.75
+            }
+          },
+          {
+            "text": "Disciplines",
+            "rect": {
+              "x": 293.75,
+              "y": 63.125,
+              "width": 454.25,
+              "height": 42.25,
+              "top": 63.125,
+              "right": 748,
+              "bottom": 105.375,
+              "left": 293.75
+            }
+          },
+          {
+            "text": "Login",
+            "rect": {
+              "x": 293.75,
+              "y": 142.375,
+              "width": 193.140625,
+              "height": 41.5,
+              "top": 142.375,
+              "right": 486.890625,
+              "bottom": 183.875,
+              "left": 293.75
+            }
+          },
+          {
+            "text": "Register Club",
+            "rect": {
+              "x": 496.890625,
+              "y": 142.375,
+              "width": 251.109375,
+              "height": 41.5,
+              "top": 142.375,
+              "right": 748,
+              "bottom": 183.875,
+              "left": 496.890625
+            }
+          },
+          {
+            "text": "ENG",
+            "rect": {
+              "x": 492.75,
+              "y": 204.875,
+              "width": 42.3125,
+              "height": 19,
+              "top": 204.875,
+              "right": 535.0625,
+              "bottom": 223.875,
+              "left": 492.75
+            }
+          }
+        ],
+        "hasCloseButtonIcon": true
+      }
+    }
+  ],
+  "touchTargetIssues": [
+    {
+      "route": "/",
+      "viewport": 375,
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "FIGHTERXSILAT ATHLETE PLATFORM",
+          "width": 93,
+          "height": 30,
+          "className": "brand"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "ENG",
+          "width": 42,
+          "height": 19,
+          "className": ""
+        },
+        {
+          "tag": "BUTTON",
+          "text": "BM",
+          "width": 36,
+          "height": 19,
+          "className": ""
+        }
+      ],
+      "collisions": []
+    },
+    {
+      "route": "/guidelines",
+      "viewport": 375,
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "FIGHTERXSILAT ATHLETE PLATFORM",
+          "width": 93,
+          "height": 30,
+          "className": "brand"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "ENG",
+          "width": 42,
+          "height": 19,
+          "className": ""
+        },
+        {
+          "tag": "BUTTON",
+          "text": "BM",
+          "width": 36,
+          "height": 19,
+          "className": ""
+        }
+      ],
+      "collisions": []
+    },
+    {
+      "route": "/knowledge",
+      "viewport": 375,
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "FIGHTERXSILAT ATHLETE PLATFORM",
+          "width": 93,
+          "height": 30,
+          "className": "brand"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "ENG",
+          "width": 42,
+          "height": 19,
+          "className": ""
+        },
+        {
+          "tag": "BUTTON",
+          "text": "BM",
+          "width": 36,
+          "height": 19,
+          "className": ""
+        }
+      ],
+      "collisions": []
+    },
+    {
+      "route": "/competitions",
+      "viewport": 375,
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "FIGHTERXSILAT ATHLETE PLATFORM",
+          "width": 93,
+          "height": 30,
+          "className": "brand"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "ENG",
+          "width": 42,
+          "height": 19,
+          "className": ""
+        },
+        {
+          "tag": "BUTTON",
+          "text": "BM",
+          "width": 36,
+          "height": 19,
+          "className": ""
+        },
+        {
+          "tag": "BUTTON",
+          "text": "All Tournaments 15",
+          "width": 153,
+          "height": 32,
+          "className": "cat-tab is-active"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "🏆 National / SUKMA / SUKIPT",
+          "width": 208,
+          "height": 32,
+          "className": "cat-tab "
+        }
+      ],
+      "collisions": []
+    },
+    {
+      "route": "/disciplines",
+      "viewport": 375,
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "FIGHTERXSILAT ATHLETE PLATFORM",
+          "width": 93,
+          "height": 30,
+          "className": "brand"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "ENG",
+          "width": 42,
+          "height": 19,
+          "className": ""
+        },
+        {
+          "tag": "BUTTON",
+          "text": "BM",
+          "width": 36,
+          "height": 19,
+          "className": ""
+        }
+      ],
+      "collisions": []
+    },
+    {
+      "route": "/login",
+      "viewport": 375,
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "FIGHTERXSILAT ATHLETE PLATFORM",
+          "width": 93,
+          "height": 30,
+          "className": "brand"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "ENG",
+          "width": 42,
+          "height": 19,
+          "className": ""
+        },
+        {
+          "tag": "BUTTON",
+          "text": "BM",
+          "width": 36,
+          "height": 19,
+          "className": ""
+        },
+        {
+          "tag": "A",
+          "text": "Official Login Page",
+          "width": 107,
+          "height": 16,
+          "className": "text-xs text-zinc-400 hover:text-white underline"
+        }
+      ],
+      "collisions": []
+    },
+    {
+      "route": "/register-club",
+      "viewport": 375,
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "FIGHTERXSILAT ATHLETE PLATFORM",
+          "width": 93,
+          "height": 30,
+          "className": "brand"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "ENG",
+          "width": 42,
+          "height": 19,
+          "className": ""
+        },
+        {
+          "tag": "BUTTON",
+          "text": "BM",
+          "width": 36,
+          "height": 19,
+          "className": ""
+        }
+      ],
+      "collisions": []
+    },
+    {
+      "route": "/",
+      "viewport": 390,
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "FIGHTERXSILAT ATHLETE PLATFORM",
+          "width": 101,
+          "height": 30,
+          "className": "brand"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "ENG",
+          "width": 42,
+          "height": 19,
+          "className": ""
+        },
+        {
+          "tag": "BUTTON",
+          "text": "BM",
+          "width": 36,
+          "height": 19,
+          "className": ""
+        }
+      ],
+      "collisions": []
+    },
+    {
+      "route": "/guidelines",
+      "viewport": 390,
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "FIGHTERXSILAT ATHLETE PLATFORM",
+          "width": 101,
+          "height": 30,
+          "className": "brand"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "ENG",
+          "width": 42,
+          "height": 19,
+          "className": ""
+        },
+        {
+          "tag": "BUTTON",
+          "text": "BM",
+          "width": 36,
+          "height": 19,
+          "className": ""
+        }
+      ],
+      "collisions": []
+    },
+    {
+      "route": "/knowledge",
+      "viewport": 390,
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "FIGHTERXSILAT ATHLETE PLATFORM",
+          "width": 101,
+          "height": 30,
+          "className": "brand"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "ENG",
+          "width": 42,
+          "height": 19,
+          "className": ""
+        },
+        {
+          "tag": "BUTTON",
+          "text": "BM",
+          "width": 36,
+          "height": 19,
+          "className": ""
+        },
+        {
+          "tag": "A",
+          "text": "ISN Bukit Jalil",
+          "width": 132,
+          "height": 31,
+          "className": "accreditation-pill inline-flex items-center gap-1.5 px-3 py-"
+        },
+        {
+          "tag": "A",
+          "text": "PERSILAT Medical Code 2026",
+          "width": 218,
+          "height": 31,
+          "className": "accreditation-pill inline-flex items-center gap-1.5 px-3 py-"
+        }
+      ],
+      "collisions": []
+    },
+    {
+      "route": "/competitions",
+      "viewport": 390,
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "FIGHTERXSILAT ATHLETE PLATFORM",
+          "width": 101,
+          "height": 30,
+          "className": "brand"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "ENG",
+          "width": 42,
+          "height": 19,
+          "className": ""
+        },
+        {
+          "tag": "BUTTON",
+          "text": "BM",
+          "width": 36,
+          "height": 19,
+          "className": ""
+        },
+        {
+          "tag": "BUTTON",
+          "text": "All Tournaments 15",
+          "width": 153,
+          "height": 32,
+          "className": "cat-tab is-active"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "🏆 National / SUKMA / SUKIPT",
+          "width": 208,
+          "height": 32,
+          "className": "cat-tab "
+        }
+      ],
+      "collisions": []
+    },
+    {
+      "route": "/disciplines",
+      "viewport": 390,
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "FIGHTERXSILAT ATHLETE PLATFORM",
+          "width": 101,
+          "height": 30,
+          "className": "brand"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "ENG",
+          "width": 42,
+          "height": 19,
+          "className": ""
+        },
+        {
+          "tag": "BUTTON",
+          "text": "BM",
+          "width": 36,
+          "height": 19,
+          "className": ""
+        }
+      ],
+      "collisions": []
+    },
+    {
+      "route": "/login",
+      "viewport": 390,
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "FIGHTERXSILAT ATHLETE PLATFORM",
+          "width": 101,
+          "height": 30,
+          "className": "brand"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "ENG",
+          "width": 42,
+          "height": 19,
+          "className": ""
+        },
+        {
+          "tag": "BUTTON",
+          "text": "BM",
+          "width": 36,
+          "height": 19,
+          "className": ""
+        },
+        {
+          "tag": "A",
+          "text": "Official Login Page",
+          "width": 107,
+          "height": 16,
+          "className": "text-xs text-zinc-400 hover:text-white underline"
+        },
+        {
+          "tag": "A",
+          "text": "Official Login Page",
+          "width": 107,
+          "height": 16,
+          "className": "text-xs text-zinc-400 hover:text-white underline"
+        }
+      ],
+      "collisions": []
+    },
+    {
+      "route": "/register-club",
+      "viewport": 390,
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "FIGHTERXSILAT ATHLETE PLATFORM",
+          "width": 101,
+          "height": 30,
+          "className": "brand"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "ENG",
+          "width": 42,
+          "height": 19,
+          "className": ""
+        },
+        {
+          "tag": "BUTTON",
+          "text": "BM",
+          "width": 36,
+          "height": 19,
+          "className": ""
+        }
+      ],
+      "collisions": []
+    },
+    {
+      "route": "/",
+      "viewport": 768,
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "FIGHTERXSILAT ATHLETE PLATFORM",
+          "width": 118,
+          "height": 32,
+          "className": "brand"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "ENG",
+          "width": 42,
+          "height": 19,
+          "className": ""
+        },
+        {
+          "tag": "BUTTON",
+          "text": "BM",
+          "width": 36,
+          "height": 19,
+          "className": ""
+        }
+      ],
+      "collisions": []
+    },
+    {
+      "route": "/guidelines",
+      "viewport": 768,
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "FIGHTERXSILAT ATHLETE PLATFORM",
+          "width": 118,
+          "height": 32,
+          "className": "brand"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "ENG",
+          "width": 42,
+          "height": 19,
+          "className": ""
+        },
+        {
+          "tag": "BUTTON",
+          "text": "BM",
+          "width": 36,
+          "height": 19,
+          "className": ""
+        }
+      ],
+      "collisions": []
+    },
+    {
+      "route": "/knowledge",
+      "viewport": 768,
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "FIGHTERXSILAT ATHLETE PLATFORM",
+          "width": 118,
+          "height": 32,
+          "className": "brand"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "ENG",
+          "width": 42,
+          "height": 19,
+          "className": ""
+        },
+        {
+          "tag": "BUTTON",
+          "text": "BM",
+          "width": 36,
+          "height": 19,
+          "className": ""
+        },
+        {
+          "tag": "A",
+          "text": "ISN Bukit Jalil",
+          "width": 132,
+          "height": 31,
+          "className": "accreditation-pill inline-flex items-center gap-1.5 px-3 py-"
+        },
+        {
+          "tag": "A",
+          "text": "PERSILAT Medical Code 2026",
+          "width": 218,
+          "height": 31,
+          "className": "accreditation-pill inline-flex items-center gap-1.5 px-3 py-"
+        }
+      ],
+      "collisions": []
+    },
+    {
+      "route": "/competitions",
+      "viewport": 768,
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "FIGHTERXSILAT ATHLETE PLATFORM",
+          "width": 118,
+          "height": 32,
+          "className": "brand"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "ENG",
+          "width": 42,
+          "height": 19,
+          "className": ""
+        },
+        {
+          "tag": "BUTTON",
+          "text": "BM",
+          "width": 36,
+          "height": 19,
+          "className": ""
+        },
+        {
+          "tag": "BUTTON",
+          "text": "All Tournaments 15",
+          "width": 153,
+          "height": 32,
+          "className": "cat-tab is-active"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "🏆 National / SUKMA / SUKIPT",
+          "width": 208,
+          "height": 32,
+          "className": "cat-tab "
+        }
+      ],
+      "collisions": []
+    },
+    {
+      "route": "/disciplines",
+      "viewport": 768,
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "FIGHTERXSILAT ATHLETE PLATFORM",
+          "width": 118,
+          "height": 32,
+          "className": "brand"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "ENG",
+          "width": 42,
+          "height": 19,
+          "className": ""
+        },
+        {
+          "tag": "BUTTON",
+          "text": "BM",
+          "width": 36,
+          "height": 19,
+          "className": ""
+        }
+      ],
+      "collisions": [
+        {
+          "el1": {
+            "tag": "BUTTON",
+            "text": "Category Comparison",
+            "rect": {
+              "x": 47.25,
+              "y": 641.09375,
+              "width": 190.78125,
+              "height": 38.5,
+              "top": 641.09375,
+              "right": 238.03125,
+              "bottom": 679.59375,
+              "left": 47.25
+            }
+          },
+          "el2": {
+            "tag": "BUTTON",
+            "text": "Artistic Silat (4 Subcategorie",
+            "rect": {
+              "x": 238.03125,
+              "y": 641.09375,
+              "width": 255.921875,
+              "height": 38.5,
+              "top": 641.09375,
+              "right": 493.953125,
+              "bottom": 679.59375,
+              "left": 238.03125
+            }
+          }
+        },
+        {
+          "el1": {
+            "tag": "BUTTON",
+            "text": "Category Comparison"
+          },
+          "el2": {
+            "tag": "BUTTON",
+            "text": "Equipment & Safety",
+            "rect": {
+              "x": 199.671875,
+              "y": 679.59375,
+              "width": 173.9375,
+              "height": 38.5,
+              "top": 679.59375,
+              "right": 373.609375,
+              "bottom": 718.09375,
+              "left": 199.671875
+            }
+          }
+        },
+        {
+          "el1": {
+            "tag": "BUTTON",
+            "text": "Artistic Silat (4 Subcategorie",
+            "rect": {
+              "x": 238.03125,
+              "y": 641.09375,
+              "width": 255.921875,
+              "height": 38.5,
+              "top": 641.09375,
+              "right": 493.953125,
+              "bottom": 679.59375,
+              "left": 238.03125
+            }
+          },
+          "el2": {
+            "tag": "BUTTON",
+            "text": "Combat Sparring & Tactics",
+            "rect": {
+              "x": 493.953125,
+              "y": 641.09375,
+              "width": 226.796875,
+              "height": 38.5,
+              "top": 641.09375,
+              "right": 720.75,
+              "bottom": 679.59375,
+              "left": 493.953125
+            }
+          }
+        },
+        {
+          "el1": {
+            "tag": "BUTTON",
+            "text": "Artistic Silat (4 Subcategorie"
+          },
+          "el2": {
+            "tag": "BUTTON",
+            "text": "Equipment & Safety",
+            "rect": {
+              "x": 199.671875,
+              "y": 679.59375,
+              "width": 173.9375,
+              "height": 38.5,
+              "top": 679.59375,
+              "right": 373.609375,
+              "bottom": 718.09375,
+              "left": 199.671875
+            }
+          }
+        },
+        {
+          "el1": {
+            "tag": "BUTTON",
+            "text": "Artistic Silat (4 Subcategorie"
+          },
+          "el2": {
+            "tag": "BUTTON",
+            "text": "Senior Weight Classes",
+            "rect": {
+              "x": 373.609375,
+              "y": 679.59375,
+              "width": 194.703125,
+              "height": 38.5,
+              "top": 679.59375,
+              "right": 568.3125,
+              "bottom": 718.09375,
+              "left": 373.609375
+            }
+          }
+        }
+      ]
+    },
+    {
+      "route": "/login",
+      "viewport": 768,
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "FIGHTERXSILAT ATHLETE PLATFORM",
+          "width": 118,
+          "height": 32,
+          "className": "brand"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "ENG",
+          "width": 42,
+          "height": 19,
+          "className": ""
+        },
+        {
+          "tag": "BUTTON",
+          "text": "BM",
+          "width": 36,
+          "height": 19,
+          "className": ""
+        },
+        {
+          "tag": "A",
+          "text": "Official Login Page",
+          "width": 107,
+          "height": 16,
+          "className": "text-xs text-zinc-400 hover:text-white underline"
+        },
+        {
+          "tag": "A",
+          "text": "Official Login Page",
+          "width": 107,
+          "height": 16,
+          "className": "text-xs text-zinc-400 hover:text-white underline"
+        }
+      ],
+      "collisions": []
+    },
+    {
+      "route": "/register-club",
+      "viewport": 768,
+      "smallTargets": [
+        {
+          "tag": "A",
+          "text": "FIGHTERXSILAT ATHLETE PLATFORM",
+          "width": 118,
+          "height": 32,
+          "className": "brand"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "ENG",
+          "width": 42,
+          "height": 19,
+          "className": ""
+        },
+        {
+          "tag": "BUTTON",
+          "text": "BM",
+          "width": 36,
+          "height": 19,
+          "className": ""
+        }
+      ],
+      "collisions": []
+    }
+  ],
+  "animationAudit": {
+    "totalElementsWithMotion": 1311,
+    "samples": [
+      {
+        "tag": "HTML",
+        "className": "teko_1b15900e-module__P3pK-a__variable inter_af4a3ea-module_",
+        "willChange": "auto",
+        "transform": "none",
+        "transition": "all",
+        "animation": "none"
+      },
+      {
+        "tag": "HEAD",
+        "className": "",
+        "willChange": "auto",
+        "transform": "none",
+        "transition": "all",
+        "animation": "none"
+      },
+      {
+        "tag": "LINK",
+        "className": "",
+        "willChange": "auto",
+        "transform": "none",
+        "transition": "all",
+        "animation": "none"
+      },
+      {
+        "tag": "LINK",
+        "className": "",
+        "willChange": "auto",
+        "transform": "none",
+        "transition": "all",
+        "animation": "none"
+      },
+      {
+        "tag": "LINK",
+        "className": "",
+        "willChange": "auto",
+        "transform": "none",
+        "transition": "all",
+        "animation": "none"
+      },
+      {
+        "tag": "LINK",
+        "className": "",
+        "willChange": "auto",
+        "transform": "none",
+        "transition": "all",
+        "animation": "none"
+      },
+      {
+        "tag": "LINK",
+        "className": "",
+        "willChange": "auto",
+        "transform": "none",
+        "transition": "all",
+        "animation": "none"
+      },
+      {
+        "tag": "SCRIPT",
+        "className": "",
+        "willChange": "auto",
+        "transform": "none",
+        "transition": "all",
+        "animation": "none"
+      },
+      {
+        "tag": "SCRIPT",
+        "className": "",
+        "willChange": "auto",
+        "transform": "none",
+        "transition": "all",
+        "animation": "none"
+      },
+      {
+        "tag": "SCRIPT",
+        "className": "",
+        "willChange": "auto",
+        "transform": "none",
+        "transition": "all",
+        "animation": "none"
+      },
+      {
+        "tag": "SCRIPT",
+        "className": "",
+        "willChange": "auto",
+        "transform": "none",
+        "transition": "all",
+        "animation": "none"
+      },
+      {
+        "tag": "SCRIPT",
+        "className": "",
+        "willChange": "auto",
+        "transform": "none",
+        "transition": "all",
+        "animation": "none"
+      },
+      {
+        "tag": "SCRIPT",
+        "className": "",
+        "willChange": "auto",
+        "transform": "none",
+        "transition": "all",
+        "animation": "none"
+      },
+      {
+        "tag": "SCRIPT",
+        "className": "",
+        "willChange": "auto",
+        "transform": "none",
+        "transition": "all",
+        "animation": "none"
+      },
+      {
+        "tag": "SCRIPT",
+        "className": "",
+        "willChange": "auto",
+        "transform": "none",
+        "transition": "all",
+        "animation": "none"
+      }
+    ]
+  },
+  "routeResults": [
+    {
+      "route": "/",
+      "viewport": 375,
+      "overflow": {
+        "scrollW": 375,
+        "clientW": 375,
+        "hasOverflow": false,
+        "offendersCount": 163,
+        "offenders": [
+          {
+            "tag": "IMG",
+            "id": "",
+            "className": "hero-athlete hero-athlete-right",
+            "right": 416,
+            "width": 337,
+            "excess": 41
+          },
+          {
+            "tag": "DIV",
+            "id": "",
+            "className": "partner-scroll-track flex items-center shrink-0",
+            "right": 4828,
+            "width": 5094,
+            "excess": 4453
+          },
+          {
+            "tag": "A",
+            "id": "",
+            "className": "partner-logo-link focus:outline-none",
+            "right": 385,
+            "width": 70,
+            "excess": 10
+          },
+          {
+            "tag": "IMG",
+            "id": "",
+            "className": "partner-logo",
+            "right": 385,
+            "width": 70,
+            "excess": 10
+          },
+          {
+            "tag": "A",
+            "id": "",
+            "className": "partner-logo-link focus:outline-none",
+            "right": 526,
+            "width": 70,
+            "excess": 151
+          }
+        ]
+      },
+      "touch": {
+        "smallTargetsCount": 3,
+        "smallTargets": [
+          {
+            "tag": "A",
+            "text": "FIGHTERXSILAT ATHLETE PLATFORM",
+            "width": 93,
+            "height": 30,
+            "className": "brand"
+          },
+          {
+            "tag": "BUTTON",
+            "text": "ENG",
+            "width": 42,
+            "height": 19,
+            "className": ""
+          },
+          {
+            "tag": "BUTTON",
+            "text": "BM",
+            "width": 36,
+            "height": 19,
+            "className": ""
+          }
+        ],
+        "collisionsCount": 0,
+        "collisions": []
+      }
+    },
+    {
+      "route": "/guidelines",
+      "viewport": 375,
+      "overflow": {
+        "scrollW": 375,
+        "clientW": 375,
+        "hasOverflow": false,
+        "offendersCount": 48,
+        "offenders": [
+          {
+            "tag": "TABLE",
+            "id": "",
+            "className": "w-full text-left text-xs text-slate-200",
+            "right": 433,
+            "width": 394,
+            "excess": 58
+          },
+          {
+            "tag": "THEAD",
+            "id": "",
+            "className": "bg-white/[0.04] text-white/70 uppercase text-[10px] font-bold tracking-wider border-b border-white/[",
+            "right": 433,
+            "width": 394,
+            "excess": 58
+          },
+          {
+            "tag": "TR",
+            "id": "",
+            "className": "",
+            "right": 433,
+            "width": 394,
+            "excess": 58
+          },
+          {
+            "tag": "TH",
+            "id": "",
+            "className": "px-4 py-3",
+            "right": 433,
+            "width": 99,
+            "excess": 58
+          },
+          {
+            "tag": "TBODY",
+            "id": "",
+            "className": "divide-y divide-white/[0.05] bg-white/[0.015] backdrop-blur-md",
+            "right": 433,
+            "width": 394,
+            "excess": 58
+          }
+        ]
+      },
+      "touch": {
+        "smallTargetsCount": 3,
+        "smallTargets": [
+          {
+            "tag": "A",
+            "text": "FIGHTERXSILAT ATHLETE PLATFORM",
+            "width": 93,
+            "height": 30,
+            "className": "brand"
+          },
+          {
+            "tag": "BUTTON",
+            "text": "ENG",
+            "width": 42,
+            "height": 19,
+            "className": ""
+          },
+          {
+            "tag": "BUTTON",
+            "text": "BM",
+            "width": 36,
+            "height": 19,
+            "className": ""
+          }
+        ],
+        "collisionsCount": 0,
+        "collisions": []
+      }
+    },
+    {
+      "route": "/knowledge",
+      "viewport": 375,
+      "overflow": {
+        "scrollW": 375,
+        "clientW": 375,
+        "hasOverflow": false,
+        "offendersCount": 20,
+        "offenders": [
+          {
+            "tag": "DIV",
+            "id": "",
+            "className": "pointer-events-none absolute -top-28 left-1/2 -translate-x-1/2 w-[920px] h-[480px] bg-[radial-gradie",
+            "right": 648,
+            "width": 920,
+            "excess": 273
+          },
+          {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "px-4 py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-",
+            "right": 381,
+            "width": 205,
+            "excess": 6
+          },
+          {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "px-4 py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-",
+            "right": 600,
+            "width": 211,
+            "excess": 225
+          },
+          {
+            "tag": "SPAN",
+            "id": "",
+            "className": "px-1.5 py-0.2 rounded-full text-[10px] bg-white/10 text-[#868892]",
+            "right": 583,
+            "width": 16,
+            "excess": 208
+          },
+          {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "px-4 py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-",
+            "right": 780,
+            "width": 172,
+            "excess": 405
+          }
+        ]
+      },
+      "touch": {
+        "smallTargetsCount": 3,
+        "smallTargets": [
+          {
+            "tag": "A",
+            "text": "FIGHTERXSILAT ATHLETE PLATFORM",
+            "width": 93,
+            "height": 30,
+            "className": "brand"
+          },
+          {
+            "tag": "BUTTON",
+            "text": "ENG",
+            "width": 42,
+            "height": 19,
+            "className": ""
+          },
+          {
+            "tag": "BUTTON",
+            "text": "BM",
+            "width": 36,
+            "height": 19,
+            "className": ""
+          }
+        ],
+        "collisionsCount": 0,
+        "collisions": []
+      }
+    },
+    {
+      "route": "/competitions",
+      "viewport": 375,
+      "overflow": {
+        "scrollW": 375,
+        "clientW": 375,
+        "hasOverflow": false,
+        "offendersCount": 3,
+        "offenders": [
+          {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "cat-tab ",
+            "right": 400,
+            "width": 208,
+            "excess": 25
+          },
+          {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "cat-tab ",
+            "right": 578,
+            "width": 172,
+            "excess": 203
+          },
+          {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "cat-tab ",
+            "right": 762,
+            "width": 178,
+            "excess": 387
+          }
+        ]
+      },
+      "touch": {
+        "smallTargetsCount": 9,
+        "smallTargets": [
+          {
+            "tag": "A",
+            "text": "FIGHTERXSILAT ATHLETE PLATFORM",
+            "width": 93,
+            "height": 30,
+            "className": "brand"
+          },
+          {
+            "tag": "BUTTON",
+            "text": "ENG",
+            "width": 42,
+            "height": 19,
+            "className": ""
+          },
+          {
+            "tag": "BUTTON",
+            "text": "BM",
+            "width": 36,
+            "height": 19,
+            "className": ""
+          },
+          {
+            "tag": "BUTTON",
+            "text": "All Tournaments 15",
+            "width": 153,
+            "height": 32,
+            "className": "cat-tab is-active"
+          },
+          {
+            "tag": "BUTTON",
+            "text": "🏆 National / SUKMA / SUKIPT",
+            "width": 208,
+            "height": 32,
+            "className": "cat-tab "
+          }
+        ],
+        "collisionsCount": 0,
+        "collisions": []
+      }
+    },
+    {
+      "route": "/disciplines",
+      "viewport": 375,
+      "overflow": {
+        "scrollW": 375,
+        "clientW": 375,
+        "hasOverflow": false,
+        "offendersCount": 1,
+        "offenders": [
+          {
+            "tag": "DIV",
+            "id": "",
+            "className": "absolute -bottom-24 -right-24 w-72 h-72 rounded-full bg-red-600/10 blur-3xl pointer-events-none",
+            "right": 446,
+            "width": 279,
+            "excess": 71
+          }
+        ]
+      },
+      "touch": {
+        "smallTargetsCount": 3,
+        "smallTargets": [
+          {
+            "tag": "A",
+            "text": "FIGHTERXSILAT ATHLETE PLATFORM",
+            "width": 93,
+            "height": 30,
+            "className": "brand"
+          },
+          {
+            "tag": "BUTTON",
+            "text": "ENG",
+            "width": 42,
+            "height": 19,
+            "className": ""
+          },
+          {
+            "tag": "BUTTON",
+            "text": "BM",
+            "width": 36,
+            "height": 19,
+            "className": ""
+          }
+        ],
+        "collisionsCount": 0,
+        "collisions": []
+      }
+    },
+    {
+      "route": "/login",
+      "viewport": 375,
+      "overflow": {
+        "scrollW": 375,
+        "clientW": 375,
+        "hasOverflow": false,
+        "offendersCount": 0,
+        "offenders": []
+      },
+      "touch": {
+        "smallTargetsCount": 4,
+        "smallTargets": [
+          {
+            "tag": "A",
+            "text": "FIGHTERXSILAT ATHLETE PLATFORM",
+            "width": 93,
+            "height": 30,
+            "className": "brand"
+          },
+          {
+            "tag": "BUTTON",
+            "text": "ENG",
+            "width": 42,
+            "height": 19,
+            "className": ""
+          },
+          {
+            "tag": "BUTTON",
+            "text": "BM",
+            "width": 36,
+            "height": 19,
+            "className": ""
+          },
+          {
+            "tag": "A",
+            "text": "Official Login Page",
+            "width": 107,
+            "height": 16,
+            "className": "text-xs text-zinc-400 hover:text-white underline"
+          }
+        ],
+        "collisionsCount": 0,
+        "collisions": []
+      }
+    },
+    {
+      "route": "/register-club",
+      "viewport": 375,
+      "overflow": {
+        "scrollW": 375,
+        "clientW": 375,
+        "hasOverflow": false,
+        "offendersCount": 0,
+        "offenders": []
+      },
+      "touch": {
+        "smallTargetsCount": 3,
+        "smallTargets": [
+          {
+            "tag": "A",
+            "text": "FIGHTERXSILAT ATHLETE PLATFORM",
+            "width": 93,
+            "height": 30,
+            "className": "brand"
+          },
+          {
+            "tag": "BUTTON",
+            "text": "ENG",
+            "width": 42,
+            "height": 19,
+            "className": ""
+          },
+          {
+            "tag": "BUTTON",
+            "text": "BM",
+            "width": 36,
+            "height": 19,
+            "className": ""
+          }
+        ],
+        "collisionsCount": 0,
+        "collisions": []
+      }
+    },
+    {
+      "route": "/",
+      "viewport": 390,
+      "overflow": {
+        "scrollW": 390,
+        "clientW": 390,
+        "hasOverflow": false,
+        "offendersCount": 157,
+        "offenders": [
+          {
+            "tag": "IMG",
+            "id": "",
+            "className": "hero-athlete hero-athlete-right",
+            "right": 433,
+            "width": 337,
+            "excess": 43
+          },
+          {
+            "tag": "DIV",
+            "id": "",
+            "className": "partner-scroll-track flex items-center shrink-0",
+            "right": 4842,
+            "width": 5094,
+            "excess": 4452
+          },
+          {
+            "tag": "A",
+            "id": "",
+            "className": "partner-logo-link focus:outline-none",
+            "right": 399,
+            "width": 70,
+            "excess": 9
+          },
+          {
+            "tag": "IMG",
+            "id": "",
+            "className": "partner-logo",
+            "right": 399,
+            "width": 70,
+            "excess": 9
+          },
+          {
+            "tag": "A",
+            "id": "",
+            "className": "partner-logo-link focus:outline-none",
+            "right": 540,
+            "width": 70,
+            "excess": 150
+          }
+        ]
+      },
+      "touch": {
+        "smallTargetsCount": 3,
+        "smallTargets": [
+          {
+            "tag": "A",
+            "text": "FIGHTERXSILAT ATHLETE PLATFORM",
+            "width": 101,
+            "height": 30,
+            "className": "brand"
+          },
+          {
+            "tag": "BUTTON",
+            "text": "ENG",
+            "width": 42,
+            "height": 19,
+            "className": ""
+          },
+          {
+            "tag": "BUTTON",
+            "text": "BM",
+            "width": 36,
+            "height": 19,
+            "className": ""
+          }
+        ],
+        "collisionsCount": 0,
+        "collisions": []
+      }
+    },
+    {
+      "route": "/guidelines",
+      "viewport": 390,
+      "overflow": {
+        "scrollW": 390,
+        "clientW": 390,
+        "hasOverflow": false,
+        "offendersCount": 48,
+        "offenders": [
+          {
+            "tag": "TABLE",
+            "id": "",
+            "className": "w-full text-left text-xs text-slate-200",
+            "right": 437,
+            "width": 394,
+            "excess": 47
+          },
+          {
+            "tag": "THEAD",
+            "id": "",
+            "className": "bg-white/[0.04] text-white/70 uppercase text-[10px] font-bold tracking-wider border-b border-white/[",
+            "right": 437,
+            "width": 394,
+            "excess": 47
+          },
+          {
+            "tag": "TR",
+            "id": "",
+            "className": "",
+            "right": 437,
+            "width": 394,
+            "excess": 47
+          },
+          {
+            "tag": "TH",
+            "id": "",
+            "className": "px-4 py-3",
+            "right": 437,
+            "width": 99,
+            "excess": 47
+          },
+          {
+            "tag": "TBODY",
+            "id": "",
+            "className": "divide-y divide-white/[0.05] bg-white/[0.015] backdrop-blur-md",
+            "right": 437,
+            "width": 394,
+            "excess": 47
+          }
+        ]
+      },
+      "touch": {
+        "smallTargetsCount": 3,
+        "smallTargets": [
+          {
+            "tag": "A",
+            "text": "FIGHTERXSILAT ATHLETE PLATFORM",
+            "width": 101,
+            "height": 30,
+            "className": "brand"
+          },
+          {
+            "tag": "BUTTON",
+            "text": "ENG",
+            "width": 42,
+            "height": 19,
+            "className": ""
+          },
+          {
+            "tag": "BUTTON",
+            "text": "BM",
+            "width": 36,
+            "height": 19,
+            "className": ""
+          }
+        ],
+        "collisionsCount": 0,
+        "collisions": []
+      }
+    },
+    {
+      "route": "/knowledge",
+      "viewport": 390,
+      "overflow": {
+        "scrollW": 390,
+        "clientW": 390,
+        "hasOverflow": false,
+        "offendersCount": 19,
+        "offenders": [
+          {
+            "tag": "DIV",
+            "id": "",
+            "className": "pointer-events-none absolute -top-28 left-1/2 -translate-x-1/2 w-[920px] h-[480px] bg-[radial-gradie",
+            "right": 655,
+            "width": 920,
+            "excess": 265
+          },
+          {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "px-4 py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-",
+            "right": 600,
+            "width": 211,
+            "excess": 210
+          },
+          {
+            "tag": "SPAN",
+            "id": "",
+            "className": "px-1.5 py-0.2 rounded-full text-[10px] bg-white/10 text-[#868892]",
+            "right": 583,
+            "width": 16,
+            "excess": 193
+          },
+          {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "px-4 py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-",
+            "right": 780,
+            "width": 172,
+            "excess": 390
+          },
+          {
+            "tag": "SPAN",
+            "id": "",
+            "className": "px-1.5 py-0.2 rounded-full text-[10px] bg-white/10 text-[#868892]",
+            "right": 763,
+            "width": 16,
+            "excess": 373
+          }
+        ]
+      },
+      "touch": {
+        "smallTargetsCount": 7,
+        "smallTargets": [
+          {
+            "tag": "A",
+            "text": "FIGHTERXSILAT ATHLETE PLATFORM",
+            "width": 101,
+            "height": 30,
+            "className": "brand"
+          },
+          {
+            "tag": "BUTTON",
+            "text": "ENG",
+            "width": 42,
+            "height": 19,
+            "className": ""
+          },
+          {
+            "tag": "BUTTON",
+            "text": "BM",
+            "width": 36,
+            "height": 19,
+            "className": ""
+          },
+          {
+            "tag": "A",
+            "text": "ISN Bukit Jalil",
+            "width": 132,
+            "height": 31,
+            "className": "accreditation-pill inline-flex items-center gap-1.5 px-3 py-"
+          },
+          {
+            "tag": "A",
+            "text": "PERSILAT Medical Code 2026",
+            "width": 218,
+            "height": 31,
+            "className": "accreditation-pill inline-flex items-center gap-1.5 px-3 py-"
+          }
+        ],
+        "collisionsCount": 0,
+        "collisions": []
+      }
+    },
+    {
+      "route": "/competitions",
+      "viewport": 390,
+      "overflow": {
+        "scrollW": 390,
+        "clientW": 390,
+        "hasOverflow": false,
+        "offendersCount": 3,
+        "offenders": [
+          {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "cat-tab ",
+            "right": 400,
+            "width": 208,
+            "excess": 10
+          },
+          {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "cat-tab ",
+            "right": 578,
+            "width": 172,
+            "excess": 188
+          },
+          {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "cat-tab ",
+            "right": 762,
+            "width": 178,
+            "excess": 372
+          }
+        ]
+      },
+      "touch": {
+        "smallTargetsCount": 9,
+        "smallTargets": [
+          {
+            "tag": "A",
+            "text": "FIGHTERXSILAT ATHLETE PLATFORM",
+            "width": 101,
+            "height": 30,
+            "className": "brand"
+          },
+          {
+            "tag": "BUTTON",
+            "text": "ENG",
+            "width": 42,
+            "height": 19,
+            "className": ""
+          },
+          {
+            "tag": "BUTTON",
+            "text": "BM",
+            "width": 36,
+            "height": 19,
+            "className": ""
+          },
+          {
+            "tag": "BUTTON",
+            "text": "All Tournaments 15",
+            "width": 153,
+            "height": 32,
+            "className": "cat-tab is-active"
+          },
+          {
+            "tag": "BUTTON",
+            "text": "🏆 National / SUKMA / SUKIPT",
+            "width": 208,
+            "height": 32,
+            "className": "cat-tab "
+          }
+        ],
+        "collisionsCount": 0,
+        "collisions": []
+      }
+    },
+    {
+      "route": "/disciplines",
+      "viewport": 390,
+      "overflow": {
+        "scrollW": 390,
+        "clientW": 390,
+        "hasOverflow": false,
+        "offendersCount": 1,
+        "offenders": [
+          {
+            "tag": "DIV",
+            "id": "",
+            "className": "absolute -bottom-24 -right-24 w-72 h-72 rounded-full bg-red-600/10 blur-3xl pointer-events-none",
+            "right": 461,
+            "width": 279,
+            "excess": 71
+          }
+        ]
+      },
+      "touch": {
+        "smallTargetsCount": 3,
+        "smallTargets": [
+          {
+            "tag": "A",
+            "text": "FIGHTERXSILAT ATHLETE PLATFORM",
+            "width": 101,
+            "height": 30,
+            "className": "brand"
+          },
+          {
+            "tag": "BUTTON",
+            "text": "ENG",
+            "width": 42,
+            "height": 19,
+            "className": ""
+          },
+          {
+            "tag": "BUTTON",
+            "text": "BM",
+            "width": 36,
+            "height": 19,
+            "className": ""
+          }
+        ],
+        "collisionsCount": 0,
+        "collisions": []
+      }
+    },
+    {
+      "route": "/login",
+      "viewport": 390,
+      "overflow": {
+        "scrollW": 390,
+        "clientW": 390,
+        "hasOverflow": false,
+        "offendersCount": 0,
+        "offenders": []
+      },
+      "touch": {
+        "smallTargetsCount": 5,
+        "smallTargets": [
+          {
+            "tag": "A",
+            "text": "FIGHTERXSILAT ATHLETE PLATFORM",
+            "width": 101,
+            "height": 30,
+            "className": "brand"
+          },
+          {
+            "tag": "BUTTON",
+            "text": "ENG",
+            "width": 42,
+            "height": 19,
+            "className": ""
+          },
+          {
+            "tag": "BUTTON",
+            "text": "BM",
+            "width": 36,
+            "height": 19,
+            "className": ""
+          },
+          {
+            "tag": "A",
+            "text": "Official Login Page",
+            "width": 107,
+            "height": 16,
+            "className": "text-xs text-zinc-400 hover:text-white underline"
+          },
+          {
+            "tag": "A",
+            "text": "Official Login Page",
+            "width": 107,
+            "height": 16,
+            "className": "text-xs text-zinc-400 hover:text-white underline"
+          }
+        ],
+        "collisionsCount": 0,
+        "collisions": []
+      }
+    },
+    {
+      "route": "/register-club",
+      "viewport": 390,
+      "overflow": {
+        "scrollW": 390,
+        "clientW": 390,
+        "hasOverflow": false,
+        "offendersCount": 0,
+        "offenders": []
+      },
+      "touch": {
+        "smallTargetsCount": 3,
+        "smallTargets": [
+          {
+            "tag": "A",
+            "text": "FIGHTERXSILAT ATHLETE PLATFORM",
+            "width": 101,
+            "height": 30,
+            "className": "brand"
+          },
+          {
+            "tag": "BUTTON",
+            "text": "ENG",
+            "width": 42,
+            "height": 19,
+            "className": ""
+          },
+          {
+            "tag": "BUTTON",
+            "text": "BM",
+            "width": 36,
+            "height": 19,
+            "className": ""
+          }
+        ],
+        "collisionsCount": 0,
+        "collisions": []
+      }
+    },
+    {
+      "route": "/",
+      "viewport": 768,
+      "overflow": {
+        "scrollW": 768,
+        "clientW": 768,
+        "hasOverflow": false,
+        "offendersCount": 142,
+        "offenders": [
+          {
+            "tag": "IMG",
+            "id": "",
+            "className": "hero-athlete hero-athlete-right",
+            "right": 778,
+            "width": 622,
+            "excess": 10
+          },
+          {
+            "tag": "DIV",
+            "id": "",
+            "className": "partner-scroll-track flex items-center shrink-0",
+            "right": 4567,
+            "width": 4825,
+            "excess": 3799
+          },
+          {
+            "tag": "A",
+            "id": "",
+            "className": "partner-logo-link focus:outline-none",
+            "right": 815,
+            "width": 70,
+            "excess": 47
+          },
+          {
+            "tag": "IMG",
+            "id": "",
+            "className": "partner-logo",
+            "right": 815,
+            "width": 70,
+            "excess": 47
+          },
+          {
+            "tag": "A",
+            "id": "",
+            "className": "partner-logo-link focus:outline-none",
+            "right": 955,
+            "width": 70,
+            "excess": 187
+          }
+        ]
+      },
+      "touch": {
+        "smallTargetsCount": 3,
+        "smallTargets": [
+          {
+            "tag": "A",
+            "text": "FIGHTERXSILAT ATHLETE PLATFORM",
+            "width": 118,
+            "height": 32,
+            "className": "brand"
+          },
+          {
+            "tag": "BUTTON",
+            "text": "ENG",
+            "width": 42,
+            "height": 19,
+            "className": ""
+          },
+          {
+            "tag": "BUTTON",
+            "text": "BM",
+            "width": 36,
+            "height": 19,
+            "className": ""
+          }
+        ],
+        "collisionsCount": 0,
+        "collisions": []
+      }
+    },
+    {
+      "route": "/guidelines",
+      "viewport": 768,
+      "overflow": {
+        "scrollW": 768,
+        "clientW": 768,
+        "hasOverflow": false,
+        "offendersCount": 0,
+        "offenders": []
+      },
+      "touch": {
+        "smallTargetsCount": 3,
+        "smallTargets": [
+          {
+            "tag": "A",
+            "text": "FIGHTERXSILAT ATHLETE PLATFORM",
+            "width": 118,
+            "height": 32,
+            "className": "brand"
+          },
+          {
+            "tag": "BUTTON",
+            "text": "ENG",
+            "width": 42,
+            "height": 19,
+            "className": ""
+          },
+          {
+            "tag": "BUTTON",
+            "text": "BM",
+            "width": 36,
+            "height": 19,
+            "className": ""
+          }
+        ],
+        "collisionsCount": 0,
+        "collisions": []
+      }
+    },
+    {
+      "route": "/knowledge",
+      "viewport": 768,
+      "overflow": {
+        "scrollW": 768,
+        "clientW": 768,
+        "hasOverflow": false,
+        "offendersCount": 12,
+        "offenders": [
+          {
+            "tag": "DIV",
+            "id": "",
+            "className": "pointer-events-none absolute -top-28 left-1/2 -translate-x-1/2 w-[920px] h-[480px] bg-[radial-gradie",
+            "right": 844,
+            "width": 920,
+            "excess": 76
+          },
+          {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "px-4 py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-",
+            "right": 788,
+            "width": 172,
+            "excess": 20
+          },
+          {
+            "tag": "SPAN",
+            "id": "",
+            "className": "px-1.5 py-0.2 rounded-full text-[10px] bg-white/10 text-[#868892]",
+            "right": 771,
+            "width": 16,
+            "excess": 3
+          },
+          {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "px-4 py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-",
+            "right": 1030,
+            "width": 234,
+            "excess": 262
+          },
+          {
+            "tag": "SPAN",
+            "id": "",
+            "className": "px-1.5 py-0.2 rounded-full text-[10px] bg-white/10 text-[#868892]",
+            "right": 1013,
+            "width": 16,
+            "excess": 245
+          }
+        ]
+      },
+      "touch": {
+        "smallTargetsCount": 7,
+        "smallTargets": [
+          {
+            "tag": "A",
+            "text": "FIGHTERXSILAT ATHLETE PLATFORM",
+            "width": 118,
+            "height": 32,
+            "className": "brand"
+          },
+          {
+            "tag": "BUTTON",
+            "text": "ENG",
+            "width": 42,
+            "height": 19,
+            "className": ""
+          },
+          {
+            "tag": "BUTTON",
+            "text": "BM",
+            "width": 36,
+            "height": 19,
+            "className": ""
+          },
+          {
+            "tag": "A",
+            "text": "ISN Bukit Jalil",
+            "width": 132,
+            "height": 31,
+            "className": "accreditation-pill inline-flex items-center gap-1.5 px-3 py-"
+          },
+          {
+            "tag": "A",
+            "text": "PERSILAT Medical Code 2026",
+            "width": 218,
+            "height": 31,
+            "className": "accreditation-pill inline-flex items-center gap-1.5 px-3 py-"
+          }
+        ],
+        "collisionsCount": 0,
+        "collisions": []
+      }
+    },
+    {
+      "route": "/competitions",
+      "viewport": 768,
+      "overflow": {
+        "scrollW": 768,
+        "clientW": 768,
+        "hasOverflow": false,
+        "offendersCount": 0,
+        "offenders": []
+      },
+      "touch": {
+        "smallTargetsCount": 12,
+        "smallTargets": [
+          {
+            "tag": "A",
+            "text": "FIGHTERXSILAT ATHLETE PLATFORM",
+            "width": 118,
+            "height": 32,
+            "className": "brand"
+          },
+          {
+            "tag": "BUTTON",
+            "text": "ENG",
+            "width": 42,
+            "height": 19,
+            "className": ""
+          },
+          {
+            "tag": "BUTTON",
+            "text": "BM",
+            "width": 36,
+            "height": 19,
+            "className": ""
+          },
+          {
+            "tag": "BUTTON",
+            "text": "All Tournaments 15",
+            "width": 153,
+            "height": 32,
+            "className": "cat-tab is-active"
+          },
+          {
+            "tag": "BUTTON",
+            "text": "🏆 National / SUKMA / SUKIPT",
+            "width": 208,
+            "height": 32,
+            "className": "cat-tab "
+          }
+        ],
+        "collisionsCount": 0,
+        "collisions": []
+      }
+    },
+    {
+      "route": "/disciplines",
+      "viewport": 768,
+      "overflow": {
+        "scrollW": 768,
+        "clientW": 768,
+        "hasOverflow": false,
+        "offendersCount": 1,
+        "offenders": [
+          {
+            "tag": "DIV",
+            "id": "",
+            "className": "absolute -bottom-24 -right-24 w-72 h-72 rounded-full bg-red-600/10 blur-3xl pointer-events-none",
+            "right": 833,
+            "width": 279,
+            "excess": 65
+          }
+        ]
+      },
+      "touch": {
+        "smallTargetsCount": 3,
+        "smallTargets": [
+          {
+            "tag": "A",
+            "text": "FIGHTERXSILAT ATHLETE PLATFORM",
+            "width": 118,
+            "height": 32,
+            "className": "brand"
+          },
+          {
+            "tag": "BUTTON",
+            "text": "ENG",
+            "width": 42,
+            "height": 19,
+            "className": ""
+          },
+          {
+            "tag": "BUTTON",
+            "text": "BM",
+            "width": 36,
+            "height": 19,
+            "className": ""
+          }
+        ],
+        "collisionsCount": 7,
+        "collisions": [
+          {
+            "el1": {
+              "tag": "BUTTON",
+              "text": "Category Comparison",
+              "rect": {
+                "x": 47.25,
+                "y": 641.09375,
+                "width": 190.78125,
+                "height": 38.5,
+                "top": 641.09375,
+                "right": 238.03125,
+                "bottom": 679.59375,
+                "left": 47.25
+              }
+            },
+            "el2": {
+              "tag": "BUTTON",
+              "text": "Artistic Silat (4 Subcategorie",
+              "rect": {
+                "x": 238.03125,
+                "y": 641.09375,
+                "width": 255.921875,
+                "height": 38.5,
+                "top": 641.09375,
+                "right": 493.953125,
+                "bottom": 679.59375,
+                "left": 238.03125
+              }
+            }
+          },
+          {
+            "el1": {
+              "tag": "BUTTON",
+              "text": "Category Comparison"
+            },
+            "el2": {
+              "tag": "BUTTON",
+              "text": "Equipment & Safety",
+              "rect": {
+                "x": 199.671875,
+                "y": 679.59375,
+                "width": 173.9375,
+                "height": 38.5,
+                "top": 679.59375,
+                "right": 373.609375,
+                "bottom": 718.09375,
+                "left": 199.671875
+              }
+            }
+          },
+          {
+            "el1": {
+              "tag": "BUTTON",
+              "text": "Artistic Silat (4 Subcategorie",
+              "rect": {
+                "x": 238.03125,
+                "y": 641.09375,
+                "width": 255.921875,
+                "height": 38.5,
+                "top": 641.09375,
+                "right": 493.953125,
+                "bottom": 679.59375,
+                "left": 238.03125
+              }
+            },
+            "el2": {
+              "tag": "BUTTON",
+              "text": "Combat Sparring & Tactics",
+              "rect": {
+                "x": 493.953125,
+                "y": 641.09375,
+                "width": 226.796875,
+                "height": 38.5,
+                "top": 641.09375,
+                "right": 720.75,
+                "bottom": 679.59375,
+                "left": 493.953125
+              }
+            }
+          },
+          {
+            "el1": {
+              "tag": "BUTTON",
+              "text": "Artistic Silat (4 Subcategorie"
+            },
+            "el2": {
+              "tag": "BUTTON",
+              "text": "Equipment & Safety",
+              "rect": {
+                "x": 199.671875,
+                "y": 679.59375,
+                "width": 173.9375,
+                "height": 38.5,
+                "top": 679.59375,
+                "right": 373.609375,
+                "bottom": 718.09375,
+                "left": 199.671875
+              }
+            }
+          },
+          {
+            "el1": {
+              "tag": "BUTTON",
+              "text": "Artistic Silat (4 Subcategorie"
+            },
+            "el2": {
+              "tag": "BUTTON",
+              "text": "Senior Weight Classes",
+              "rect": {
+                "x": 373.609375,
+                "y": 679.59375,
+                "width": 194.703125,
+                "height": 38.5,
+                "top": 679.59375,
+                "right": 568.3125,
+                "bottom": 718.09375,
+                "left": 373.609375
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "route": "/login",
+      "viewport": 768,
+      "overflow": {
+        "scrollW": 768,
+        "clientW": 768,
+        "hasOverflow": false,
+        "offendersCount": 0,
+        "offenders": []
+      },
+      "touch": {
+        "smallTargetsCount": 7,
+        "smallTargets": [
+          {
+            "tag": "A",
+            "text": "FIGHTERXSILAT ATHLETE PLATFORM",
+            "width": 118,
+            "height": 32,
+            "className": "brand"
+          },
+          {
+            "tag": "BUTTON",
+            "text": "ENG",
+            "width": 42,
+            "height": 19,
+            "className": ""
+          },
+          {
+            "tag": "BUTTON",
+            "text": "BM",
+            "width": 36,
+            "height": 19,
+            "className": ""
+          },
+          {
+            "tag": "A",
+            "text": "Official Login Page",
+            "width": 107,
+            "height": 16,
+            "className": "text-xs text-zinc-400 hover:text-white underline"
+          },
+          {
+            "tag": "A",
+            "text": "Official Login Page",
+            "width": 107,
+            "height": 16,
+            "className": "text-xs text-zinc-400 hover:text-white underline"
+          }
+        ],
+        "collisionsCount": 0,
+        "collisions": []
+      }
+    },
+    {
+      "route": "/register-club",
+      "viewport": 768,
+      "overflow": {
+        "scrollW": 768,
+        "clientW": 768,
+        "hasOverflow": false,
+        "offendersCount": 0,
+        "offenders": []
+      },
+      "touch": {
+        "smallTargetsCount": 3,
+        "smallTargets": [
+          {
+            "tag": "A",
+            "text": "FIGHTERXSILAT ATHLETE PLATFORM",
+            "width": 118,
+            "height": 32,
+            "className": "brand"
+          },
+          {
+            "tag": "BUTTON",
+            "text": "ENG",
+            "width": 42,
+            "height": 19,
+            "className": ""
+          },
+          {
+            "tag": "BUTTON",
+            "text": "BM",
+            "width": 36,
+            "height": 19,
+            "className": ""
+          }
+        ],
+        "collisionsCount": 0,
+        "collisions": []
+      }
+    }
+  ]
+}

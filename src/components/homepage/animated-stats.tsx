@@ -22,12 +22,15 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 interface Milestone {
   month: string;
+  monthEn?: string;
   label: string;
+  labelEn?: string;
   sessions: number;
   olahraga: number;
   seni: number;
   athletes: number;
   note: string;
+  noteEn?: string;
   x: number;
   yTotal: number;
   yOlahraga: number;
@@ -37,12 +40,15 @@ interface Milestone {
 const milestones: Milestone[] = [
   {
     month: "Jan 2025",
+    monthEn: "Jan 2025",
     label: "Pelancaran Rintis",
+    labelEn: "Pilot Launch",
     sessions: 1200,
     olahraga: 820,
     seni: 380,
     athletes: 180,
     note: "12 Kelab perintis Selangor & KL",
+    noteEn: "12 Pilot clubs across Selangor & KL",
     x: 60,
     yTotal: 202,
     yOlahraga: 206,
@@ -50,12 +56,15 @@ const milestones: Milestone[] = [
   },
   {
     month: "Apr 2025",
+    monthEn: "Apr 2025",
     label: "Ekspansi Zon",
+    labelEn: "Regional Expansion",
     sessions: 3400,
     olahraga: 2310,
     seni: 1090,
     athletes: 390,
     note: "Penyertaan Zon Utara & Selatan",
+    noteEn: "Northern & Southern zone expansion",
     x: 173,
     yTotal: 178,
     yOlahraga: 190,
@@ -63,12 +72,15 @@ const milestones: Milestone[] = [
   },
   {
     month: "Jul 2025",
+    monthEn: "Jul 2025",
     label: "Fasa Kejohanan",
+    labelEn: "Tournament Phase",
     sessions: 6100,
     olahraga: 4150,
     seni: 1950,
     athletes: 620,
     note: "Persediaan Sirkit Remaja Kebangsaan",
+    noteEn: "National Youth Circuit preparation",
     x: 286,
     yTotal: 148,
     yOlahraga: 170,
@@ -76,12 +88,15 @@ const milestones: Milestone[] = [
   },
   {
     month: "Okt 2025",
+    monthEn: "Oct 2025",
     label: "Standard SKK",
+    labelEn: "SKK Standard",
     sessions: 9200,
     olahraga: 6250,
     seni: 2950,
     athletes: 890,
     note: "Akreditasi 85+ jurulatih bertauliah",
+    noteEn: "85+ Certified coaches accredited",
     x: 400,
     yTotal: 114,
     yOlahraga: 147,
@@ -89,12 +104,15 @@ const milestones: Milestone[] = [
   },
   {
     month: "Jan 2026",
+    monthEn: "Jan 2026",
     label: "Peraturan PERSILAT",
+    labelEn: "PERSILAT Rules",
     sessions: 11800,
     olahraga: 8020,
     seni: 3780,
     athletes: 1100,
     note: "Penguatkuasaan format digital 2026",
+    noteEn: "2026 Digital combat format enforcement",
     x: 513,
     yTotal: 86,
     yOlahraga: 127,
@@ -102,12 +120,15 @@ const milestones: Milestone[] = [
   },
   {
     month: "Mac 2026",
+    monthEn: "Mar 2026",
     label: "Ujian Timbang & Fizikal",
+    labelEn: "Weigh-in & Physical Tests",
     sessions: 13100,
     olahraga: 8900,
     seni: 4200,
     athletes: 1190,
     note: "98% pematuhan rekod pemakanan & berat",
+    noteEn: "98% Nutrition & weigh-in compliance",
     x: 626,
     yTotal: 72,
     yOlahraga: 118,
@@ -115,12 +136,15 @@ const milestones: Milestone[] = [
   },
   {
     month: "Kini (2026)",
+    monthEn: "Present (2026)",
     label: "Skala Kebangsaan",
+    labelEn: "National Scale",
     sessions: 14250,
     olahraga: 9690,
     seni: 4560,
     athletes: 1250,
     note: "Liputan penuh 14 negeri seluruh Malaysia",
+    noteEn: "Full nationwide coverage across 14 states",
     x: 740,
     yTotal: 59,
     yOlahraga: 109,
@@ -144,7 +168,7 @@ const areaSeni = `${pathSeni} L 740,225 L 60,225 Z`;
 type ViewMode = "all" | "olahraga" | "seni";
 
 export function AnimatedStats() {
-  const { d } = useLanguage();
+  const { d, locale } = useLanguage();
   const [activeIdx, setActiveIdx] = useState<number>(milestones.length - 1);
   const [viewMode, setViewMode] = useState<ViewMode>("all");
   const activePoint = milestones[activeIdx];
@@ -326,7 +350,11 @@ export function AnimatedStats() {
       ref={sectionRef}
       className="relative z-10 py-14 md:py-20 bg-black/25 backdrop-blur-[2px] border-y border-[#26272C]/40 overflow-hidden"
       id="telemetri-prestasi"
-      aria-label="Statistik dan aktiviti latihan platform FighterX"
+      aria-label={
+        locale === "bm"
+          ? "Statistik dan aktiviti latihan platform FighterX"
+          : "FighterX platform training telemetry and activity statistics"
+      }
     >
       <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
@@ -338,7 +366,9 @@ export function AnimatedStats() {
             {d.home.stats.title}
           </h2>
           <p className="text-xs sm:text-sm text-[#96989F] mt-2 max-w-xl mx-auto leading-relaxed">
-            Data latihan berprestasi tinggi yang disahkan oleh jurulatih bertauliah merentasi seluruh 14 negeri di Malaysia.
+            {locale === "bm"
+              ? "Data latihan berprestasi tinggi yang disahkan oleh jurulatih bertauliah merentasi seluruh 14 negeri di Malaysia."
+              : "High-performance training telemetry verified by certified coaches across all 14 states in Malaysia."}
           </p>
         </div>
 
@@ -447,7 +477,9 @@ export function AnimatedStats() {
                   </h3>
                 </div>
                 <p className="text-xs text-[#8C8E97] mt-0.5">
-                  Layarkan tetikus pada titik graf atau lajur fasa untuk melihat perincian data latihan
+                  {locale === "bm"
+                    ? "Layarkan tetikus pada titik graf atau lajur fasa untuk melihat perincian data latihan"
+                    : "Hover over chart nodes or phase columns to inspect training telemetry details"}
                 </p>
               </div>
 
@@ -497,23 +529,23 @@ export function AnimatedStats() {
                 <div className="px-3.5 py-1.5 rounded-xl border border-white/10 bg-white/[0.04] flex items-center gap-3">
                   <div className="text-right">
                     <div className="text-[10px] font-mono uppercase text-[#8C8E97]">
-                      {activePoint.month}
+                      {locale === "en" ? (activePoint.monthEn || activePoint.month) : activePoint.month}
                     </div>
                     <div className="text-xs font-bold text-white">
                       {viewMode === "olahraga"
-                        ? `${activePoint.olahraga.toLocaleString()} Sesi`
+                        ? `${activePoint.olahraga.toLocaleString()} ${locale === "bm" ? "Sesi" : "Sessions"}`
                         : viewMode === "seni"
-                        ? `${activePoint.seni.toLocaleString()} Sesi`
-                        : `${activePoint.sessions.toLocaleString()} Sesi`}
+                        ? `${activePoint.seni.toLocaleString()} ${locale === "bm" ? "Sesi" : "Sessions"}`
+                        : `${activePoint.sessions.toLocaleString()} ${locale === "bm" ? "Sesi" : "Sessions"}`}
                     </div>
                   </div>
                   <div className="h-6 w-px bg-white/10" />
                   <div className="text-left">
                     <div className="text-[10px] font-bold text-[#FF3845] uppercase">
-                      {activePoint.label}
+                      {locale === "en" ? (activePoint.labelEn || activePoint.label) : activePoint.label}
                     </div>
                     <div className="text-[10px] text-[#A0A2AB] max-w-[140px] truncate">
-                      {activePoint.note}
+                      {locale === "en" ? (activePoint.noteEn || activePoint.note) : activePoint.note}
                     </div>
                   </div>
                 </div>
@@ -749,7 +781,7 @@ export function AnimatedStats() {
                         fontFamily="monospace"
                         className="transition-colors duration-200"
                       >
-                        {point.month}
+                        {locale === "en" ? (point.monthEn || point.month) : point.month}
                       </text>
                     </g>
                   );
@@ -762,7 +794,7 @@ export function AnimatedStats() {
               {/* Discipline Breakdown Pill Details */}
               <div className="flex flex-wrap items-center gap-4 w-full md:w-auto">
                 <span className="text-[11px] font-mono uppercase tracking-wider text-[#8C8E97]">
-                  Pecahan Aliran:
+                  {locale === "bm" ? "Pecahan Aliran:" : "Discipline Breakdown:"}
                 </span>
 
                 {/* Total Trajectory Indicator */}
@@ -770,7 +802,9 @@ export function AnimatedStats() {
                   <>
                     <div className="flex items-center gap-1.5 px-2 py-0.5">
                       <span className="w-3.5 h-0.5 rounded-full bg-white shadow-[0_0_8px_#FFFFFF]" />
-                      <span className="font-semibold text-white">Jumlah Sesi</span>
+                      <span className="font-semibold text-white">
+                        {locale === "bm" ? "Jumlah Sesi" : "Total Sessions"}
+                      </span>
                       <span className="text-[#8C8E97] font-mono">(14,250)</span>
                     </div>
                     <span className="text-white/20">•</span>
@@ -789,7 +823,9 @@ export function AnimatedStats() {
                 >
                   <span className="w-2.5 h-2.5 rounded-full bg-[#FF3845] shadow-[0_0_8px_#FF3845]" />
                   <span className="font-semibold text-white">Silat Olahraga</span>
-                  <span className="text-[#8C8E97] font-mono">(68% • 9,690 Sesi)</span>
+                  <span className="text-[#8C8E97] font-mono">
+                    (68% • 9,690 {locale === "bm" ? "Sesi" : "Sessions"})
+                  </span>
                 </button>
 
                 <span className="text-white/20">•</span>
@@ -806,14 +842,20 @@ export function AnimatedStats() {
                 >
                   <span className="w-2.5 h-2.5 rounded-full bg-[#E5A93C] shadow-[0_0_8px_#E5A93C]" />
                   <span className="font-semibold text-white">Silat Seni</span>
-                  <span className="text-[#8C8E97] font-mono">(32% • 4,560 Sesi)</span>
+                  <span className="text-[#8C8E97] font-mono">
+                    (32% • 4,560 {locale === "bm" ? "Sesi" : "Sessions"})
+                  </span>
                 </button>
               </div>
 
               {/* Verified Platform Badge */}
               <div className="flex items-center gap-2 text-[11px] font-mono text-[#8C8E97] shrink-0">
                 <ShieldCheck size={14} className="text-[#22C55E]" />
-                <span>Piawaian Sukan Berprestasi Tinggi &bull; Standard PERSILAT 2026</span>
+                <span>
+                  {locale === "bm"
+                    ? "Piawaian Sukan Berprestasi Tinggi • Standard PERSILAT 2026"
+                    : "High-Performance Sports Standard • PERSILAT 2026 Certified"}
+                </span>
               </div>
             </div>
 

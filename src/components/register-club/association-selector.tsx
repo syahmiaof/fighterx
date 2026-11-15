@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import Image from "next/image";
 import { Check, Search, Shield, Globe, Award, Sparkles } from "lucide-react";
+import { useLanguage } from "@/lib/i18n";
 import {
   SILAT_AFFILIATIONS,
   AFFILIATION_ID_ALIASES,
@@ -18,7 +19,7 @@ interface AssociationSelectorProps {
 
 type FilterCategory = "ALL" | AssociationCategory | "INDEPENDENT";
 
-const CATEGORY_TABS: { id: FilterCategory; label: string; icon: React.ComponentType<{ size?: number; className?: string }> }[] = [
+const CATEGORY_TABS_BM: { id: FilterCategory; label: string; icon: React.ComponentType<{ size?: number; className?: string }> }[] = [
   { id: "ALL", label: "Semua (27)", icon: Sparkles },
   { id: "BADAN_INDUK", label: "Badan Induk", icon: Award },
   { id: "PENGASAS_TERAS", label: "Pengasas Teras", icon: Shield },
@@ -27,13 +28,25 @@ const CATEGORY_TABS: { id: FilterCategory; label: string; icon: React.ComponentT
   { id: "INDEPENDENT", label: "Kelab Bebas", icon: Sparkles },
 ];
 
+const CATEGORY_TABS_EN: { id: FilterCategory; label: string; icon: React.ComponentType<{ size?: number; className?: string }> }[] = [
+  { id: "ALL", label: "All (27)", icon: Sparkles },
+  { id: "BADAN_INDUK", label: "Governing Bodies", icon: Award },
+  { id: "PENGASAS_TERAS", label: "Core Founding", icon: Shield },
+  { id: "PERGURUAN_UTAMA", label: "Major Styles", icon: Shield },
+  { id: "ANTARABANGSA", label: "International", icon: Globe },
+  { id: "INDEPENDENT", label: "Independent Club", icon: Sparkles },
+];
+
 export function AssociationSelector({
   selectedId,
   onSelect,
   error,
 }: AssociationSelectorProps) {
+  const { locale } = useLanguage();
+  const isEn = locale === "en";
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState<FilterCategory>("ALL");
+  const categoryTabs = isEn ? CATEGORY_TABS_EN : CATEGORY_TABS_BM;
 
   const filteredAffiliations = useMemo(() => {
     return SILAT_AFFILIATIONS.filter((item) => {
@@ -81,10 +94,10 @@ export function AssociationSelector({
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2">
               <span className="text-xs font-bold text-red-400 uppercase tracking-wider">
-                Gabungan Dipilih
+                {isEn ? "Selected Affiliation" : "Gabungan Dipilih"}
               </span>
               <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-red-600/30 text-red-200">
-                <Check size={11} className="mr-1" /> Terpilih
+                <Check size={11} className="mr-1" /> {isEn ? "Selected" : "Terpilih"}
               </span>
             </div>
             <p className="text-sm font-semibold truncate text-white">
@@ -109,9 +122,13 @@ export function AssociationSelector({
             type="search"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Cari persatuan mengikut nama, negeri atau kata kunci..."
+            placeholder={
+              isEn
+                ? "Search associations by name, state, or keywords..."
+                : "Cari persatuan mengikut nama, negeri atau kata kunci..."
+            }
             className="w-full min-h-[44px] pl-10 pr-4 rounded-md border border-[#45464b] bg-[#0b0c0f] text-sm text-white placeholder-neutral-500 focus:border-red-500 focus:outline-none transition-colors"
-            aria-label="Cari persatuan atau perguruan silat"
+            aria-label={isEn ? "Search silat associations or styles" : "Cari persatuan atau perguruan silat"}
           />
         </div>
 
@@ -119,9 +136,9 @@ export function AssociationSelector({
         <div
           className="flex flex-wrap gap-1.5 pb-1"
           role="tablist"
-          aria-label="Tapis kategori persatuan"
+          aria-label={isEn ? "Filter association category" : "Tapis kategori persatuan"}
         >
-          {CATEGORY_TABS.map((tab) => {
+          {categoryTabs.map((tab) => {
             const isActive = activeCategory === tab.id;
             const Icon = tab.icon;
             return (
@@ -149,7 +166,7 @@ export function AssociationSelector({
       <div
         className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 max-h-[380px] overflow-y-auto pr-1 custom-scrollbar"
         role="radiogroup"
-        aria-label="Senarai persatuan silat"
+        aria-label={isEn ? "List of silat associations" : "Senarai persatuan silat"}
       >
         {filteredAffiliations.map((item: SilatAffiliationOption) => {
           const isSelected =
@@ -219,17 +236,21 @@ export function AssociationSelector({
       {filteredAffiliations.length === 0 && (
         <div className="text-center py-8 px-4 rounded-lg border border-dashed border-[#45464b] bg-[#0e0f13]">
           <p className="text-sm text-neutral-300 font-medium">
-            Tiada persatuan dijumpai untuk carian &ldquo;{searchQuery}&rdquo;.
+            {isEn
+              ? `No associations found for "${searchQuery}".`
+              : `Tiada persatuan dijumpai untuk carian "${searchQuery}".`}
           </p>
           <p className="text-xs text-neutral-400 mt-1">
-            Anda boleh memilih pilihan &ldquo;Kelab / Perguruan Bebas&rdquo; jika perguruan anda tiada dalam senarai.
+            {isEn
+              ? 'You may choose the "Independent Club" option if your style is not listed.'
+              : 'Anda boleh memilih pilihan "Kelab / Perguruan Bebas" jika perguruan anda tiada dalam senarai.'}
           </p>
           <button
             type="button"
             onClick={() => onSelect("INDEPENDENT")}
             className="mt-3 px-3 py-1.5 rounded bg-red-600 hover:bg-red-700 text-white text-xs font-semibold cursor-pointer"
           >
-            Pilih Kelab Bebas
+            {isEn ? "Select Independent Club" : "Pilih Kelab Bebas"}
           </button>
         </div>
       )}

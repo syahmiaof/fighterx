@@ -167,13 +167,15 @@ export function SilatOlahragaSection() {
               <Zap size={20} />
             </div>
             <h3 className="text-base font-bold uppercase text-white tracking-wide">
-              Pola Langkah &amp; Kawalan Jarak
+              {locale === "bm" ? "Pola Langkah & Kawalan Jarak" : "Footwork Patterns & Distance Control"}
             </h3>
             <p className="text-xs text-neutral-300 mt-2 leading-relaxed">
-              Mengaplikasikan kaedah <em>Langkah Gergaji</em> (zig-zag), <em>Ladam Kuda</em> (melengkung), dan <em>Tiga Penjuru</em> untuk mengelak garisan lurus serangan lawan dan mencipta sudut serangan terbuka.
+              {locale === "bm"
+                ? "Mengaplikasikan kaedah Langkah Gergaji, Ladam Kuda, dan Tiga Penjuru untuk mengelak garisan lurus serangan lawan dan mencipta sudut serangan terbuka."
+                : "Applies Zig-zag, Horseshoe, and Triangular footwork patterns to evade linear strikes and create open offensive angles."}
             </p>
             <div className="mt-3 text-[11px] font-semibold text-[#ff4d5a] flex items-center gap-1.5">
-              <span>Kaedah Elakan Pantas &amp; Tangkisan</span>
+              <span>{locale === "bm" ? "Kaedah Elakan Pantas & Tangkisan" : "Agile Evading & Parrying Methods"}</span>
             </div>
           </div>
 
@@ -183,16 +185,18 @@ export function SilatOlahragaSection() {
               <Timer size={20} />
             </div>
             <div className="inline-block px-2.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-[rgba(255,56,69,0.18)] border border-[rgba(255,56,69,0.5)] text-[#ff4d5a] mb-1">
-              Peraturan Wajib PERSILAT
+              {locale === "bm" ? "Peraturan Wajib PERSILAT" : "PERSILAT Mandatory Rule"}
             </div>
             <h3 className="text-base font-bold uppercase text-white tracking-wide">
-              Had Tangkapan 5 Saat (5s Grapple)
+              {locale === "bm" ? "Had Tangkapan 5 Saat" : "5-Second Grapple Rule"}
             </h3>
             <p className="text-xs text-neutral-300 mt-2 leading-relaxed">
-              Sebarang tangkapan anggota badan (kaki tendangan lawan) mestilah disusuli dengan jatuhan dalam tempoh maksimum <strong>5 saat</strong>. Jika gagal atau terhenti, wasit serta-merta menghentikan aksi (*&ldquo;TI&rdquo;*) tanpa sebarang mata diberikan.
+              {locale === "bm"
+                ? "Sebarang tangkapan anggota badan (kaki tendangan lawan) mestilah disusuli dengan jatuhan dalam tempoh maksimum 5 saat. Jika gagal atau terhenti, wasit serta-merta menghentikan aksi (\"TI\") tanpa sebarang mata diberikan."
+                : "Any catch of an opponent's limb (such as a kick) must be converted into a takedown within a maximum of 5 seconds. If unsuccessful, the referee immediately halts action (\"TI\") with 0 points awarded."}
             </p>
             <div className="mt-3 text-[11px] font-semibold text-emerald-400 flex items-center gap-1.5">
-              <span>Jatuhan Sah = 3 Mata Bersih</span>
+              <span>{locale === "bm" ? "Jatuhan Sah = 3 Mata Bersih" : "Legal Takedown = 3 Clean Points"}</span>
             </div>
           </div>
 
@@ -202,13 +206,15 @@ export function SilatOlahragaSection() {
               <Shield size={20} />
             </div>
             <h3 className="text-base font-bold uppercase text-white tracking-wide">
-              Sistem Jatuhan, Sapuan &amp; Guntingan
+              {locale === "bm" ? "Sistem Jatuhan, Sapuan & Guntingan" : "Takedowns, Sweeps & Scissor System"}
             </h3>
             <p className="text-xs text-neutral-300 mt-2 leading-relaxed">
-              Jatuhan sah meliputi <em>Sapuan Tegak</em>, <em>Sapuan Rebah Belakang</em>, <em>Guntingan Pinggang/Kaki</em>, dan <em>Kaitan</em>. Menghempas kepala lawan ke matras (*piledriver*) diharamkan sama sekali dan dikenakan diskualifikasi terus.
+              {locale === "bm"
+                ? "Jatuhan sah meliputi Sapuan Tegak, Sapuan Rebah Belakang, Guntingan Pinggang/Kaki, dan Kaitan. Menghempas kepala lawan ke matras diharamkan sama sekali dan dikenakan diskualifikasi terus."
+                : "Legal takedowns include Standing Sweeps, Back Drop Sweeps, Waist/Leg Scissor Takedowns, and Hooking. Driving an opponent's head into the mat is strictly prohibited and results in immediate disqualification."}
             </p>
             <div className="mt-3 text-[11px] font-semibold text-[#ffd24c] flex items-center gap-1.5">
-              <span>Dilarang Guntingan Leher</span>
+              <span>{locale === "bm" ? "Dilarang Guntingan Leher" : "Neck Scissors Prohibited"}</span>
             </div>
           </div>
         </div>
@@ -217,16 +223,18 @@ export function SilatOlahragaSection() {
         <div className="rounded-2xl border border-white/[0.08] bg-white/[0.025] backdrop-blur-[16px] p-6 sm:p-8 mb-10 shadow-[0_8px_32px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.06)]">
           <div className="border-b border-white/[0.08] pb-4 mb-6">
             <span className="text-xs font-bold uppercase tracking-widest text-[#ff4d5a]">
-              Peta Anatomi Sasaran Tanding
+              {locale === "bm" ? "Peta Anatomi Sasaran Tanding" : "Combat Target Anatomy Map"}
             </span>
             <h3
               className="text-2xl sm:text-3xl font-display font-bold uppercase text-white mt-0.5"
               style={{ fontFamily: "var(--font-athletic)" }}
             >
-              Zon Mata Sah vs. Zon Larangan (Foul)
+              {locale === "bm" ? "Zon Mata Sah vs. Zon Larangan (Foul)" : "Legal Scoring Zones vs. Prohibited Zones"}
             </h3>
             <p className="text-xs text-neutral-400 mt-1">
-              Pilih kawasan anatomi di bawah untuk melihat nilai mata pukulan/tendangan dan status undang-undang pertandingan.
+              {locale === "bm"
+                ? "Pilih kawasan anatomi di bawah untuk melihat nilai mata pukulan/tendangan dan status undang-undang pertandingan."
+                : "Select an anatomical zone below to view punch/kick point values and regulatory status."}
             </p>
           </div>
 
@@ -234,7 +242,7 @@ export function SilatOlahragaSection() {
             {/* Left selector pills */}
             <div className="lg:col-span-5 space-y-2">
               <p className="text-[11px] font-bold uppercase tracking-wider text-emerald-400">
-                Zon Sah Mata (Vest Torso):
+                {locale === "bm" ? "Zon Sah Mata (Vest Torso):" : "Legal Scoring Zones (Torso Vest):"}
               </p>
               <div className="grid grid-cols-2 gap-2">
                 {TARGET_ZONES.filter((z) => z.status === "LEGAL").map((zone) => (
@@ -248,16 +256,18 @@ export function SilatOlahragaSection() {
                         : "border-white/[0.08] bg-white/[0.02] text-[#d1d1d5] hover:border-white/20 hover:bg-white/[0.05] backdrop-blur-sm"
                     }`}
                   >
-                    <p className="text-xs font-bold leading-tight">{zone.name}</p>
+                    <p className="text-xs font-bold leading-tight">
+                      {locale === "en" ? (zone.nameEn || zone.name) : zone.name}
+                    </p>
                     <span className="inline-block mt-1 text-[10px] text-emerald-400 font-semibold">
-                      1 pt (Pukulan) · 2 pts (Tendangan)
+                      {locale === "bm" ? "1 pt (Pukulan) · 2 pts (Tendangan)" : "1 pt (Punch) · 2 pts (Kick)"}
                     </span>
                   </button>
                 ))}
               </div>
 
               <p className="text-[11px] font-bold uppercase tracking-wider text-[#ff4d5a] pt-3">
-                Zon Larangan Mutlak (Penalti &amp; DQ):
+                {locale === "bm" ? "Zon Larangan Mutlak (Penalti & DQ):" : "Strictly Prohibited Zones (Penalties & DQ):"}
               </p>
               <div className="grid grid-cols-2 gap-2">
                 {TARGET_ZONES.filter((z) => z.status === "PROHIBITED").map((zone) => (
@@ -271,9 +281,11 @@ export function SilatOlahragaSection() {
                         : "border-white/[0.08] bg-white/[0.02] text-[#d1d1d5] hover:border-white/20 hover:bg-white/[0.05] backdrop-blur-sm"
                     }`}
                   >
-                    <p className="text-xs font-bold leading-tight">{zone.name}</p>
+                    <p className="text-xs font-bold leading-tight">
+                      {locale === "en" ? (zone.nameEn || zone.name) : zone.name}
+                    </p>
                     <span className="inline-block mt-1 text-[10px] text-[#ff4d5a] font-semibold">
-                      Dilarang (0 pt) · Penalti
+                      {locale === "bm" ? "Dilarang (0 pt) · Penalti" : "Prohibited (0 pt) · Penalty"}
                     </span>
                   </button>
                 ))}
@@ -289,7 +301,9 @@ export function SilatOlahragaSection() {
                       activeZone.status === "LEGAL" ? "bg-emerald-500" : "bg-red-500"
                     }`}
                   />
-                  <h4 className="text-lg font-bold text-white uppercase">{activeZone.name}</h4>
+                  <h4 className="text-lg font-bold text-white uppercase">
+                    {locale === "en" ? (activeZone.nameEn || activeZone.name) : activeZone.name}
+                  </h4>
                 </div>
                 <span
                   className={`px-2.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${
@@ -298,14 +312,16 @@ export function SilatOlahragaSection() {
                       : "bg-[rgba(255,56,69,0.12)] border border-[rgba(255,56,69,0.4)] text-[#ff4d5a]"
                   }`}
                 >
-                  {activeZone.status === "LEGAL" ? "ZON MATA SAH" : "ZON LARANGAN KERAS"}
+                  {activeZone.status === "LEGAL"
+                    ? (locale === "bm" ? "ZON MATA SAH" : "LEGAL SCORING ZONE")
+                    : (locale === "bm" ? "ZON LARANGAN KERAS" : "STRICTLY PROHIBITED ZONE")}
                 </span>
               </div>
 
               <div className="grid grid-cols-2 gap-3 mb-4">
                 <div className="rounded-lg bg-white/[0.02] border border-white/[0.06] p-3 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
                   <span className="text-[10px] uppercase font-bold text-neutral-400">
-                    Mata Pukulan Tangan
+                    {locale === "bm" ? "Mata Pukulan Tangan" : "Hand Strike Points"}
                   </span>
                   <p className="text-2xl font-mono font-bold text-white mt-0.5">
                     {activeZone.pointsPunch > 0 ? `+${activeZone.pointsPunch} pt` : "0 pt"}
@@ -313,7 +329,7 @@ export function SilatOlahragaSection() {
                 </div>
                 <div className="rounded-lg bg-white/[0.02] border border-white/[0.06] p-3 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
                   <span className="text-[10px] uppercase font-bold text-neutral-400">
-                    Mata Tendangan Kaki
+                    {locale === "bm" ? "Mata Tendangan Kaki" : "Foot Kick Points"}
                   </span>
                   <p className="text-2xl font-mono font-bold text-[#ff4d5a] mt-0.5">
                     {activeZone.pointsKick > 0 ? `+${activeZone.pointsKick} pts` : "0 pt"}
@@ -323,7 +339,8 @@ export function SilatOlahragaSection() {
 
               <div className="space-y-2.5 text-xs text-neutral-300">
                 <p>
-                  <strong>Kawasan Anatomi:</strong> {activeZone.description}
+                  <strong>{locale === "bm" ? "Kawasan Anatomi:" : "Anatomical Region:"}</strong>{" "}
+                  {locale === "en" ? (activeZone.descriptionEn || activeZone.description) : activeZone.description}
                 </p>
                 <div
                   className={`p-3 rounded border text-xs leading-relaxed ${
@@ -332,7 +349,8 @@ export function SilatOlahragaSection() {
                       : "bg-[rgba(255,56,69,0.1)] border-[rgba(255,56,69,0.3)] text-[#ff99a0]"
                   }`}
                 >
-                  <strong>Ketetapan PERSILAT 2026:</strong> {activeZone.ruleNote}
+                  <strong>{locale === "bm" ? "Ketetapan PERSILAT 2026:" : "PERSILAT 2026 Regulation:"}</strong>{" "}
+                  {locale === "en" ? (activeZone.ruleNoteEn || activeZone.ruleNote) : activeZone.ruleNote}
                 </div>
               </div>
             </div>
@@ -344,16 +362,18 @@ export function SilatOlahragaSection() {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/[0.08] pb-4 mb-6">
             <div>
               <span className="text-xs font-bold uppercase tracking-widest text-[#ff4d5a]">
-                Kategori Tanding Dewasa (Senior)
+                {locale === "bm" ? "Kategori Tanding Dewasa (Senior)" : "Senior Combat Category"}
               </span>
               <h3
                 className="text-2xl sm:text-3xl font-display font-bold uppercase text-white mt-0.5"
                 style={{ fontFamily: "var(--font-athletic)" }}
               >
-                Divisyen Berat Badan (Kelas A hingga Terbuka)
+                {locale === "bm" ? "Divisyen Berat Badan (Kelas A hingga Terbuka)" : "Weight Divisions (Class A to Open)"}
               </h3>
               <p className="text-xs text-neutral-400 mt-1">
-                Kategori umur Dewasa (17 hingga 45 tahun) dipertandingkan mengikut braket berat badan piawai.
+                {locale === "bm"
+                  ? "Kategori umur Dewasa (17 hingga 45 tahun) dipertandingkan mengikut braket berat badan piawai."
+                  : "Senior age category (17 to 45 years) contested across standardized weight brackets."}
               </p>
             </div>
 
@@ -361,7 +381,10 @@ export function SilatOlahragaSection() {
             <div className="flex items-center gap-2 rounded-lg border border-[rgba(255,56,69,0.35)] bg-[rgba(255,56,69,0.1)] px-3.5 py-2 text-xs text-[#f0f0f2] backdrop-blur-sm max-w-xs">
               <ShieldAlert size={18} className="text-[#ff4d5a] flex-none" />
               <span>
-                <strong>Zero Weight Tolerance:</strong> Tiada toleransi berat pada timbangan rasmi pagi perlawanan. Lebihan 50g membawa kepada pembatalan serta-merta.
+                <strong>Zero Weight Tolerance:</strong>{" "}
+                {locale === "bm"
+                  ? "Tiada toleransi berat pada timbangan rasmi pagi perlawanan. Lebihan 50g membawa kepada pembatalan serta-merta."
+                  : "Zero weight tolerance on matchday morning weigh-in. Excess of 50g results in immediate disqualification."}
               </span>
             </div>
           </div>
@@ -376,7 +399,7 @@ export function SilatOlahragaSection() {
               type="search"
               value={weightSearch}
               onChange={(e) => setWeightSearch(e.target.value)}
-              placeholder="Cari kelas berat (cth: Kelas C, 55kg)..."
+              placeholder={locale === "bm" ? "Cari kelas berat (cth: Kelas C, 55kg)..." : "Search weight class (e.g. Class C, 55kg)..."}
               className="w-full min-h-[42px] pl-9 pr-3 rounded-xl border border-white/[0.1] bg-white/[0.03] backdrop-blur-[12px] text-xs text-white placeholder-[#7b7d85] focus:border-[#ff3845] focus:bg-white/[0.05] focus:shadow-[0_0_0_2px_rgba(225,6,0,0.2),0_8px_24px_rgba(0,0,0,0.5)] focus:outline-none transition-all"
             />
           </div>
@@ -389,20 +412,23 @@ export function SilatOlahragaSection() {
                 className="weight-class-card rounded-xl border border-white/[0.08] bg-white/[0.025] backdrop-blur-[12px] p-3.5 shadow-[0_4px_16px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.05)] hover:border-[rgba(255,56,69,0.45)] hover:bg-white/[0.045]"
               >
                 <div className="flex items-center justify-between mb-2">
-                  <span className="font-bold text-sm text-white">{wc.classCode}</span>
+                  <span className="font-bold text-sm text-white">
+                    {locale === "en" ? (wc.classCodeEn || wc.classCode) : wc.classCode}
+                  </span>
                   <span className="text-[10px] font-bold uppercase px-1.5 py-0.5 rounded bg-[rgba(255,56,69,0.12)] text-[#ff4d5a] border border-[rgba(255,56,69,0.35)]">
                     Senior
                   </span>
                 </div>
                 <div className="space-y-1 text-xs">
                   <p className="text-neutral-300">
-                    <strong className="text-white">Lelaki:</strong> {wc.maleRange}
+                    <strong className="text-white">{locale === "bm" ? "Lelaki:" : "Male:"}</strong> {wc.maleRange}
                   </p>
                   <p className="text-neutral-300">
-                    <strong className="text-white">Wanita:</strong> {wc.femaleRange || "—"}
+                    <strong className="text-white">{locale === "bm" ? "Wanita:" : "Female:"}</strong>{" "}
+                    {wc.femaleRange ? (locale === "en" && wc.femaleRange.includes("Tidak") ? "Not contested" : wc.femaleRange) : "—"}
                   </p>
                   <p className="text-[11px] text-neutral-400 pt-1 line-clamp-2">
-                    {wc.description}
+                    {locale === "en" ? (wc.descriptionEn || wc.description) : wc.description}
                   </p>
                 </div>
               </div>

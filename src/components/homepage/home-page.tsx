@@ -46,13 +46,14 @@ const workflow = [
 ];
 
 function BrandWordmark() {
+  const { locale } = useLanguage();
   return (
     <Link className="brand" href="/" aria-label="FighterX home">
       <span className="brand-copy">
         <strong>
           FIGHTER<span>X</span>
         </strong>
-        <small>SILAT ATHLETE PLATFORM</small>
+        <small>{locale === "bm" ? "PLATFORM ATLET SILAT" : "SILAT ATHLETE PLATFORM"}</small>
       </span>
     </Link>
   );
@@ -72,9 +73,19 @@ function RevealWords({ text }: { text: string }) {
 }
 
 function PhonePreview() {
+  const { locale } = useLanguage();
   return (
-    <div className="phone-stage" aria-label="Illustrative preview of the FighterX athlete app">
-      <span className="preview-disclaimer">ILLUSTRATIVE PREVIEW</span>
+    <div
+      className="phone-stage"
+      aria-label={
+        locale === "bm"
+          ? "Pratonton ilustrasi aplikasi atlet FighterX"
+          : "Illustrative preview of the FighterX athlete app"
+      }
+    >
+      <span className="preview-disclaimer">
+        {locale === "bm" ? "PRATONTON ILUSTRASI" : "ILLUSTRATIVE PREVIEW"}
+      </span>
       <div className="phone phone-main">
         <div className="phone-notch" />
         <div className="phone-status">
@@ -85,22 +96,22 @@ function PhonePreview() {
           FIGHTER<span>X</span>
         </div>
         <p className="phone-greeting">
-          Good morning,
+          {locale === "bm" ? "Selamat pagi," : "Good morning,"}
           <br />
-          <b>Athlete</b>
+          <b>{locale === "bm" ? "Atlet" : "Athlete"}</b>
         </p>
         <div className="phone-program">
           <span className="phone-icon">
             <CalendarDays size={14} />
           </span>
           <div>
-            <small>YOUR PROGRAMME</small>
-            <b>Silat Olahraga · Block 1</b>
+            <small>{locale === "bm" ? "PROGRAM ANDA" : "YOUR PROGRAMME"}</small>
+            <b>Silat Olahraga · {locale === "bm" ? "Blok 1" : "Block 1"}</b>
           </div>
         </div>
         <div className="phone-progress">
           <div>
-            <span>Weekly progress</span>
+            <span>{locale === "bm" ? "Kemajuan mingguan" : "Weekly progress"}</span>
             <b>72%</b>
           </div>
           <i>
@@ -108,13 +119,13 @@ function PhonePreview() {
           </i>
         </div>
         <div className="phone-row">
-          <Dumbbell size={14} /> Training plan <ArrowRight size={13} />
+          <Dumbbell size={14} /> {locale === "bm" ? "Pelan latihan" : "Training plan"} <ArrowRight size={13} />
         </div>
         <div className="phone-row">
-          <BarChart3 size={14} /> Performance <ArrowRight size={13} />
+          <BarChart3 size={14} /> {locale === "bm" ? "Prestasi" : "Performance"} <ArrowRight size={13} />
         </div>
         <div className="phone-row">
-          <ShieldCheck size={14} /> Evaluation <ArrowRight size={13} />
+          <ShieldCheck size={14} /> {locale === "bm" ? "Penilaian" : "Evaluation"} <ArrowRight size={13} />
         </div>
         <div className="phone-nav">
           <Home size={10} />
@@ -130,23 +141,23 @@ function PhonePreview() {
           <span>● ● ▰</span>
         </div>
         <div className="phone-back-head">
-          <span>‹</span> Performance
+          <span>‹</span> {locale === "bm" ? "Prestasi" : "Performance"}
         </div>
         <div className="discipline-switch">
           <span>Seni</span>
           <b>Olahraga</b>
         </div>
         <div className="radar-wrap">
-          <svg viewBox="0 0 190 190" role="img" aria-label="Illustrative athlete performance radar chart">
+          <svg viewBox="0 0 190 190" role="img" aria-label={locale === "bm" ? "Carta radar prestasi atlet ilustrasi" : "Illustrative athlete performance radar chart"}>
             <polygon points="95,18 158,63 134,141 56,141 32,63" className="radar-grid" />
             <polygon points="95,39 142,71 124,124 63,133 49,68" className="radar-grid" />
             <polygon points="95,52 132,76 117,116 70,124 58,72" className="radar-data" />
             <path d="M95 18v34m63 11-26 13M134 141l-17-25M56 141l14-17M32 63l26 9" className="radar-lines" />
           </svg>
-          <span className="radar-label radar-top">Technique</span>
-          <span className="radar-label radar-right">Speed</span>
-          <span className="radar-label radar-bottom">Endurance</span>
-          <span className="radar-label radar-left">Control</span>
+          <span className="radar-label radar-top">{locale === "bm" ? "Teknik" : "Technique"}</span>
+          <span className="radar-label radar-right">{locale === "bm" ? "Kepantasan" : "Speed"}</span>
+          <span className="radar-label radar-bottom">{locale === "bm" ? "Daya Tahan" : "Endurance"}</span>
+          <span className="radar-label radar-left">{locale === "bm" ? "Kawalan" : "Control"}</span>
         </div>
       </div>
       <span className="phone-light" aria-hidden="true" />
@@ -268,7 +279,7 @@ function FeatureRail() {
 }
 
 function HowItWorks() {
-  const { d } = useLanguage();
+  const { d, locale } = useLanguage();
   const localizedWorkflow = [
     { title: d.home.workflow.step1Title, body: d.home.workflow.step1Body, icon: Users },
     { title: d.home.workflow.step2Title, body: d.home.workflow.step2Body, icon: Dumbbell },
@@ -283,7 +294,11 @@ function HowItWorks() {
           </span>
         </h2>
         <span className="heading-rule" />
-        <p className="workflow-intro motion-copy">From the first plan to verified progress, everyone sees the next step.</p>
+        <p className="workflow-intro motion-copy">
+          {locale === "bm"
+            ? "Daripada perancangan awal hingga kemajuan yang disahkan, semua pihak melihat langkah seterusnya."
+            : "From the first plan to verified progress, everyone sees the next step."}
+        </p>
       </div>
       <div className="workflow-steps motion-grid">
         {localizedWorkflow.map(({ title, body, icon: Icon }, index) => (
@@ -424,6 +439,7 @@ function FooterCTA() {
 }
 
 export function HomePage() {
+  const { locale } = useLanguage();
   const pageRef = useRef<HTMLElement>(null);
 
   useGSAP(
@@ -721,9 +737,9 @@ export function HomePage() {
           </a>
         </p>
         <div className="sr-only" aria-hidden="true">
-          <Link href="/associations">Direktori Persatuan</Link>
-          <Link href="/guidelines">PERSILAT Rules</Link>
-          <Link href="/disciplines">Kategori Silat</Link>
+          <Link href="/associations">{locale === "bm" ? "Direktori Persatuan" : "Association Directory"}</Link>
+          <Link href="/guidelines">{locale === "bm" ? "Peraturan PERSILAT" : "PERSILAT Rules"}</Link>
+          <Link href="/disciplines">{locale === "bm" ? "Kategori Silat" : "Silat Disciplines"}</Link>
         </div>
       </footer>
     </div>

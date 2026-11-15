@@ -44,12 +44,15 @@ const topAthletes: TopAthletePreview[] = [
 interface TournamentPreview {
   id: string;
   title: string;
+  titleEn?: string;
   dayRange: string;
   month: string;
+  monthEn?: string;
   year: string;
   venue: string;
   state: string;
   status: string;
+  statusEn?: string;
   statusColor: "emerald" | "amber" | "rose";
 }
 
@@ -57,34 +60,43 @@ const upcomingTournaments: TournamentPreview[] = [
   {
     id: "sukma-2026",
     title: "Sukan Malaysia (SUKMA) 2026 — Silat",
+    titleEn: "Malaysia Games (SUKMA) 2026 — Silat",
     dayRange: "14–22",
     month: "OGOS",
+    monthEn: "AUG",
     year: "2026",
     venue: "Stadium Tertutup MSN",
     state: "Selangor",
     status: "Pendaftaran Buka",
+    statusEn: "Registration Open",
     statusColor: "emerald",
   },
   {
     id: "sirkit-remaja-keb",
     title: "Sirkit Remaja Kebangsaan Siri 1/2026",
+    titleEn: "National Youth Circuit Series 1/2026",
     dayRange: "24–27",
     month: "JUN",
+    monthEn: "JUN",
     year: "2026",
     venue: "Komp. Belia & Sukan Panji",
     state: "Kelantan",
     status: "Sedang Berjalan",
+    statusEn: "In Progress",
     statusColor: "amber",
   },
   {
     id: "terbuka-johor-2026",
     title: "Kejohanan Silat Antarabangsa Johor",
+    titleEn: "Johor International Silat Championship",
     dayRange: "10–13",
     month: "JUL",
+    monthEn: "JUL",
     year: "2026",
     venue: "Arena Larkin",
     state: "Johor",
     status: "Slot Terhad",
+    statusEn: "Limited Slots",
     statusColor: "rose",
   },
 ];
@@ -92,12 +104,12 @@ const upcomingTournaments: TournamentPreview[] = [
 const SHOW_LEADERBOARD_PREVIEW = false;
 
 export function LeaderboardCalendarPreview() {
-  const { d } = useLanguage();
+  const { d, locale } = useLanguage();
   return (
     <section
       className="relative z-10 pt-12 pb-8 sm:pt-14 sm:pb-10 md:pt-16 md:pb-12 bg-black/25 backdrop-blur-[2px] border-b border-white/[0.08]"
       id="arena-preview"
-      aria-label="Papan Kedudukan dan Takwim Kejohanan"
+      aria-label={locale === "bm" ? "Papan Kedudukan dan Takwim Kejohanan" : "Leaderboard and Competition Calendar"}
     >
       <div className={SHOW_LEADERBOARD_PREVIEW ? "max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8" : "max-w-[760px] mx-auto px-4 sm:px-6 lg:px-8"}>
         <div className={SHOW_LEADERBOARD_PREVIEW ? "grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 motion-grid" : "motion-grid"}>
@@ -243,14 +255,14 @@ export function LeaderboardCalendarPreview() {
                           {tourney.dayRange}
                         </span>
                         <span className="font-mono text-[9px] uppercase tracking-wider text-[#FF555C] font-semibold mt-0.5 leading-none">
-                          {tourney.month}
+                          {locale === "en" ? (tourney.monthEn || tourney.month) : tourney.month}
                         </span>
                       </div>
 
                       {/* Event Info */}
                       <div className="min-w-0">
                         <h4 className="text-sm font-semibold text-white truncate group-hover:text-[#FF3845] transition-colors">
-                          {tourney.title}
+                          {locale === "en" ? (tourney.titleEn || tourney.title) : tourney.title}
                         </h4>
                         <p className="text-xs text-[#96989F] truncate">
                           {tourney.venue}, <span className="text-white/70 font-medium">{tourney.state}</span>
@@ -278,7 +290,7 @@ export function LeaderboardCalendarPreview() {
                               : "bg-rose-400"
                           }`}
                         />
-                        <span>{tourney.status}</span>
+                        <span>{locale === "en" ? (tourney.statusEn || tourney.status) : tourney.status}</span>
                       </span>
                     </div>
                   </div>
@@ -288,7 +300,7 @@ export function LeaderboardCalendarPreview() {
 
             {/* Footer */}
             <div className="mt-5 pt-3.5 border-t border-white/10 flex items-center justify-between text-xs text-[#96989F]">
-              <span>Disahkan oleh PESAKA &amp; MSN</span>
+              <span>{locale === "bm" ? "Disahkan oleh PESAKA & MSN" : "Certified by PESAKA & MSN"}</span>
               <Link href="/competitions" className="text-white/80 hover:text-white font-medium inline-flex items-center gap-1 transition-colors">
                 <span>{d.home.preview.fullCalendar}</span>
                 <ArrowRight size={12} className="text-[#FF3845]" />

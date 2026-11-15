@@ -6,6 +6,7 @@ import { SiteHeader } from "@/components/site-header";
 import { RegisterClubForm } from "@/components/register-club/register-club-form";
 import { ShieldCheck, Sparkles, Trophy } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
+import "./register-club-glass.css";
 
 export function RegisterClubFormPage() {
   const { dict, locale } = useLanguage();
@@ -23,11 +24,12 @@ export function RegisterClubFormPage() {
 
             <h1
               id="register-title"
-              className="text-4xl sm:text-5xl md:text-6xl font-bold uppercase text-white tracking-tight"
-              style={{ fontFamily: "var(--font-athletic)" }}
+              className="hero-display-title mb-3"
             >
-              {locale === "bm" ? "DAFTAR KELAB" : "REGISTER CLUB"}{" "}
-              <span className="text-red-600">FIGHTERX</span>
+              <span className="title-white">
+                {locale === "bm" ? "DAFTAR KELAB " : "REGISTER CLUB "}
+              </span>
+              <span className="title-crimson">FIGHTERX</span>
             </h1>
 
             <p className="mt-3 text-sm sm:text-base text-neutral-300 max-w-2xl mx-auto leading-relaxed">
@@ -37,7 +39,11 @@ export function RegisterClubFormPage() {
             {/* Trial & Pricing Banner */}
             <div
               className="mt-6 mx-auto max-w-xl rounded-lg border border-[#45464b] bg-gradient-to-r from-[#16171d]/90 via-[#101115]/90 to-[#16171d]/90 p-3 sm:p-4 shadow-xl backdrop-blur-sm"
-              aria-label="Pakej percubaan dan harga langganan kelab"
+              aria-label={
+                locale === "bm"
+                  ? "Pakej percubaan dan harga langganan kelab"
+                  : "Trial package and club subscription pricing"
+              }
             >
               <div className="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-[#2d2e35] gap-3 sm:gap-4 text-left">
                 <div className="flex items-center gap-3">

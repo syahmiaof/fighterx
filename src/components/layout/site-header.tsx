@@ -158,7 +158,36 @@ export function SiteHeader({ currentPage = "home" }: SiteHeaderProps) {
     };
   }, [menuOpen]);
 
+  // Body scroll lock when mobile drawer is open
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
+
+  // Close mobile drawer on route change
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [pathname]);
+
+  // Close mobile drawer if viewport resized to desktop (>1080px)
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 1080 && menuOpen) {
+        setMenuOpen(false);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [menuOpen]);
+
   // GSAP: Animate Mobile Drawer
+  const isFirstRender = useRef(true);
   useEffect(() => {
     if (!mobileMenuRef.current) return;
 
@@ -184,6 +213,10 @@ export function SiteHeader({ currentPage = "home" }: SiteHeaderProps) {
         );
       }
     } else {
+      if (isFirstRender.current) {
+        isFirstRender.current = false;
+        return;
+      }
       if (prefersReduced) {
         gsap.set(mobileMenuRef.current, { opacity: 0, display: "none" });
       } else {
@@ -210,7 +243,7 @@ export function SiteHeader({ currentPage = "home" }: SiteHeaderProps) {
         top: 0,
         zIndex: 50,
         height: "64px",
-        backgroundColor: "rgba(9, 10, 12, 0.92)",
+        backgroundColor: menuOpen ? "#08090b" : "rgba(9, 10, 12, 0.92)",
         backdropFilter: "blur(20px)",
         WebkitBackdropFilter: "blur(20px)",
         borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
@@ -345,15 +378,18 @@ export function SiteHeader({ currentPage = "home" }: SiteHeaderProps) {
           </div>
         </div>
 
-        {/* Mobile Top Bar Language Switcher */}
-        <div className="mobile-header-actions">
+        {/* Mobile Top Bar Language Switcher (Visible only when drawer is closed) */}
+        <div
+          className={`mobile-header-actions ${menuOpen ? "is-hidden" : ""}`}
+          style={{ display: menuOpen ? "none" : undefined }}
+        >
           <LanguageSwitcher showIcon={false} />
         </div>
 
-        {/* Mobile Hamburger Toggle Button */}
+        {/* Mobile Hamburger / Close Toggle Button */}
         <button
           ref={toggleBtnRef}
-          className="mobile-menu-toggle"
+          className={`mobile-menu-toggle ${menuOpen ? "is-active" : ""}`}
           type="button"
           aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
           aria-expanded={menuOpen}
@@ -366,82 +402,100 @@ export function SiteHeader({ currentPage = "home" }: SiteHeaderProps) {
             <Menu size={20} aria-hidden="true" />
           )}
         </button>
-
-        {/* Mobile Drawer Menu */}
-        <nav
-          ref={mobileMenuRef}
-          id="mobile-nav"
-          className={`mobile-menu ${menuOpen ? "is-open" : ""}`}
-          aria-label="Mobile navigation"
-          aria-hidden={!menuOpen}
-          style={{ display: "none" }}
-        >
-          <div className="mobile-section-label">{d.nav.allModules}</div>
-          {navItems.map((item) => {
-            const Icon = item.icon || Home;
-            const active = isPageActive(item);
-            return (
-              <Link
-                key={item.id}
-                href={item.href}
-                prefetch={true}
-                aria-current={active ? "page" : undefined}
-                onClick={() => setMenuOpen(false)}
-                className={`mobile-nav-link ${active ? "is-active" : ""}`}
-              >
-                <Icon size={16} className="mobile-nav-icon" aria-hidden="true" />
-                <span className="mobile-nav-text">{item.label}</span>
-                {active && (
-                  <span className="mobile-active-dot" aria-hidden="true">
-                    <Sparkles size={12} />
-                  </span>
-                )}
-              </Link>
-            );
-          })}
-
-          <div className="mobile-actions-divider" />
-          <div className="mobile-actions-row">
-            <Link
-              href="/login"
-              prefetch={true}
-              aria-current={currentPage === "login" ? "page" : undefined}
-              onClick={() => setMenuOpen(false)}
-              className="mobile-btn-login"
-            >
-              <UserCheck size={16} aria-hidden="true" />
-              <span>{d.nav.login}</span>
-            </Link>
-            <Link
-              href="/register-club"
-              prefetch={true}
-              aria-current={
-                currentPage === "register" || currentPage === "register-club"
-                  ? "page"
-                  : undefined
-              }
-              onClick={() => setMenuOpen(false)}
-              className="mobile-btn-register"
-            >
-              <Users size={16} aria-hidden="true" />
-              <span>{d.nav.registerClub}</span>
-              <ArrowRight size={14} aria-hidden="true" />
-            </Link>
-          </div>
-
-          <div
-            className="mobile-drawer-lang-row"
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              paddingTop: "12px",
-              paddingBottom: "4px",
-            }}
-          >
-            <LanguageSwitcher />
-          </div>
-        </nav>
       </div>
+
+      {/* Dimmed Backdrop Overlay */}
+      {menuOpen && (
+        <div
+          className="mobile-drawer-backdrop"
+          onClick={() => setMenuOpen(false)}
+          aria-hidden="true"
+          style={{
+            backdropFilter: "blur(8px)",
+            WebkitBackdropFilter: "blur(8px)",
+          }}
+        />
+      )}
+
+      {/* Mobile Drawer Menu */}
+      <nav
+        ref={mobileMenuRef}
+        id="mobile-nav"
+        className={`mobile-menu ${menuOpen ? "is-open" : ""}`}
+        aria-label="Mobile navigation"
+        aria-hidden={!menuOpen}
+        style={{
+          display: "none",
+          backgroundColor: "#08090b",
+          backdropFilter: "blur(40px)",
+          WebkitBackdropFilter: "blur(40px)",
+        }}
+      >
+        <div className="mobile-section-label">{d.nav.allModules}</div>
+        {navItems.map((item) => {
+          const Icon = item.icon || Home;
+          const active = isPageActive(item);
+          return (
+            <Link
+              key={item.id}
+              href={item.href}
+              prefetch={true}
+              aria-current={active ? "page" : undefined}
+              onClick={() => setMenuOpen(false)}
+              className={`mobile-nav-link ${active ? "is-active" : ""}`}
+            >
+              <Icon size={16} className="mobile-nav-icon" aria-hidden="true" />
+              <span className="mobile-nav-text">{item.label}</span>
+              {active && (
+                <span className="mobile-active-dot" aria-hidden="true">
+                  <Sparkles size={12} />
+                </span>
+              )}
+            </Link>
+          );
+        })}
+
+        <div className="mobile-actions-divider" />
+        <div className="mobile-actions-row">
+          <Link
+            href="/login"
+            prefetch={true}
+            aria-current={currentPage === "login" ? "page" : undefined}
+            onClick={() => setMenuOpen(false)}
+            className="mobile-btn-login"
+          >
+            <UserCheck size={16} aria-hidden="true" />
+            <span>{d.nav.login}</span>
+          </Link>
+          <Link
+            href="/register-club"
+            prefetch={true}
+            aria-current={
+              currentPage === "register" || currentPage === "register-club"
+                ? "page"
+                : undefined
+            }
+            onClick={() => setMenuOpen(false)}
+            className="mobile-btn-register"
+          >
+            <Users size={16} aria-hidden="true" />
+            <span>{d.nav.registerClub}</span>
+            <ArrowRight size={14} aria-hidden="true" />
+          </Link>
+        </div>
+
+        <div
+          className="mobile-drawer-lang-row"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            paddingTop: "12px",
+            paddingBottom: "4px",
+          }}
+        >
+          <LanguageSwitcher />
+        </div>
+      </nav>
     </header>
   );
 }

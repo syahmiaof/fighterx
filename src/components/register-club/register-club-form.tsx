@@ -19,6 +19,7 @@ import {
   Printer,
   Sparkles,
 } from "lucide-react";
+import { useLanguage } from "@/lib/i18n";
 import {
   ORGANIZATION_TYPES,
   TRAINING_VENUE_TYPES,
@@ -29,9 +30,11 @@ import {
   type RegistrationDiscipline,
 } from "@/lib/club-registration/contract";
 import { uiOnlyClubRegistrationService } from "@/lib/club-registration/ui-only-adapter";
+import { platformStore } from "@/lib/platform/platform-state";
 import {
   getRegistrationStepErrors,
-  PASSWORD_REQUIREMENTS,
+  PASSWORD_REQUIREMENTS_BM,
+  PASSWORD_REQUIREMENTS_EN,
   phoneFormatHint,
   validateRegistrationStep,
   type ClubRegistrationValues,
@@ -60,26 +63,40 @@ const MALAYSIAN_STATES = [
   "Wilayah Persekutuan Labuan",
 ];
 
-const VENUE_TYPE_LABELS: Record<TrainingVenueType, string> = {
-  DOJO: "Gelanggang Sendiri (Dojo Tetap)",
+const VENUE_TYPE_LABELS_BM: Record<TrainingVenueType, string> = {
+  DOJO: "Gelanggang Khusus / Tetap",
   OUTDOOR: "Gelanggang Terbuka / Padang Awam",
   SCHOOL: "Sekolah / Institusi Pendidikan",
   COMMUNITY_HALL: "Dewan Komuniti / Serbaguna",
 };
 
-const ORGANIZATION_TYPE_LABELS: Record<OrganizationType, string> = {
-  CLUB: "Kelab Silat (Club)",
-  ACADEMY: "Akademi Persilatan (Academy)",
-  ASSOCIATION: "Persatuan / Cawangan (Association)",
-  OTHER: "Lain-lain Pertubuhan (Other)",
+const VENUE_TYPE_LABELS_EN: Record<TrainingVenueType, string> = {
+  DOJO: "Dedicated Permanent Dojo / Facility",
+  OUTDOOR: "Open Air Arena / Public Field",
+  SCHOOL: "School / Educational Institution",
+  COMMUNITY_HALL: "Community Hall / Multi-Purpose Center",
+};
+
+const ORGANIZATION_TYPE_LABELS_BM: Record<OrganizationType, string> = {
+  CLUB: "Kelab Silat",
+  ACADEMY: "Akademi Persilatan",
+  ASSOCIATION: "Persatuan / Cawangan",
+  OTHER: "Lain-lain Pertubuhan",
+};
+
+const ORGANIZATION_TYPE_LABELS_EN: Record<OrganizationType, string> = {
+  CLUB: "Silat Club",
+  ACADEMY: "Martial Academy",
+  ASSOCIATION: "Association / State Branch",
+  OTHER: "Other Organization",
 };
 
 const FACILITY_OPTIONS = [
-  "Matras Pertandingan (EVA Mat)",
-  "Pelindung Badan (Body Protector)",
-  "Peralatan Senjata Seni (Golok / Toya)",
-  "Sistem Punching Bag / Pad Latihan",
-  "Cermin Latihan Teknikal",
+  { id: "eva_mats", bm: "Matras Pertandingan EVA", en: "EVA Competition Mats" },
+  { id: "body_protector", bm: "Pelindung Badan Standard", en: "Standard Body Protectors" },
+  { id: "weapons", bm: "Peralatan Senjata Seni", en: "Artistic Weapons Collection" },
+  { id: "punching_bags", bm: "Beg Tinju & Pad Latihan", en: "Punching Bags & Strike Pads" },
+  { id: "mirrors", bm: "Cermin Latihan Teknikal", en: "Technical Training Mirrors" },
 ];
 
 const INITIAL_VALUES: ClubRegistrationValues = {
@@ -107,8 +124,8 @@ const INITIAL_VALUES: ClubRegistrationValues = {
   weeklySessions: 3,
   trainingSchedule: "Selasa, Khamis & Sabtu (8.00 - 10.30 malam)",
   trainingFacilities: [
-    "Matras Pertandingan (EVA Mat)",
-    "Pelindung Badan (Body Protector)",
+    "eva_mats",
+    "body_protector",
   ],
 
   associationId: "pesaka-malaysia",
@@ -126,7 +143,7 @@ function FieldError({ id, message }: { id: string; message?: string }) {
   ) : null;
 }
 
-const STEP_METADATA: {
+const STEP_METADATA_BM: {
   step: RegisterStep;
   label: string;
   shortLabel: string;
@@ -139,9 +156,27 @@ const STEP_METADATA: {
   { step: 5, label: "Semakan & Hantar", shortLabel: "Semakan", icon: FileCheck2 },
 ];
 
-function RegisterProgress({ step }: { step: RegisterStep }) {
+const STEP_METADATA_EN: {
+  step: RegisterStep;
+  label: string;
+  shortLabel: string;
+  icon: React.ComponentType<{ size?: number; className?: string }>;
+}[] = [
+  { step: 1, label: "Club Details", shortLabel: "Club", icon: Building2 },
+  { step: 2, label: "Representative & PIC", shortLabel: "PIC", icon: User },
+  { step: 3, label: "Disciplines & Facility", shortLabel: "Setup", icon: Swords },
+  { step: 4, label: "Affiliation Choice", shortLabel: "Affiliation", icon: Award },
+  { step: 5, label: "Review & Submit", shortLabel: "Review", icon: FileCheck2 },
+];
+
+function RegisterProgress({ step, locale }: { step: RegisterStep; locale: "en" | "bm" }) {
+  const isEn = locale === "en";
+  const metadata = isEn ? STEP_METADATA_EN : STEP_METADATA_BM;
   return (
-    <div className="register-progress border-b border-[#37383d] bg-[#0c0d11] px-4 py-5 sm:px-8" aria-label={`Langkah ${step} daripada 5`}>
+    <div
+      className="register-progress border-b border-[#37383d] bg-[#0c0d11] px-4 py-5 sm:px-8"
+      aria-label={isEn ? `Step ${step} of 5` : `Langkah ${step} daripada 5`}
+    >
       <div className="relative mb-4 hidden sm:block">
         <div className="absolute top-1/2 left-0 right-0 h-0.5 -translate-y-1/2 bg-[#2d2e35]" aria-hidden="true">
           <span
@@ -150,7 +185,7 @@ function RegisterProgress({ step }: { step: RegisterStep }) {
           />
         </div>
         <ol className="relative z-10 flex justify-between list-none p-0 m-0">
-          {STEP_METADATA.map((item) => {
+          {metadata.map((item) => {
             const isCurrent = item.step === step;
             const isComplete = item.step < step;
             const Icon = item.icon;
@@ -192,9 +227,11 @@ function RegisterProgress({ step }: { step: RegisterStep }) {
           </span>
           <div>
             <p className="text-xs font-bold text-white uppercase tracking-wider">
-              {STEP_METADATA[step - 1].label}
+              {metadata[step - 1].label}
             </p>
-            <p className="text-[10px] text-neutral-400">Langkah {step} daripada 5</p>
+            <p className="text-[10px] text-neutral-400">
+              {isEn ? `Step ${step} of 5` : `Langkah ${step} daripada 5`}
+            </p>
           </div>
         </div>
         <div className="w-24 h-1.5 rounded-full bg-[#2d2e35] overflow-hidden">
@@ -212,11 +249,13 @@ function SummaryGroup({
   title,
   stepNumber,
   onEdit,
+  isEn,
   children,
 }: {
   title: string;
   stepNumber: RegisterStep;
   onEdit: (step: RegisterStep) => void;
+  isEn?: boolean;
   children: React.ReactNode;
 }) {
   return (
@@ -233,7 +272,7 @@ function SummaryGroup({
           onClick={() => onEdit(stepNumber)}
           className="text-xs font-semibold text-red-400 hover:text-red-300 underline underline-offset-4 cursor-pointer"
         >
-          Kemaskini
+          {isEn ? "Edit" : "Kemaskini"}
         </button>
       </div>
       {children}
@@ -253,13 +292,16 @@ function SummaryRow({ label, children }: { label: string; children: React.ReactN
 function SubmittedStatus({
   receipt,
   onReset,
+  locale,
 }: {
   receipt?: ClubRegistrationReceipt;
   onReset: () => void;
+  locale: "en" | "bm";
 }) {
+  const isEn = locale === "en";
   const appId = receipt?.applicationId || "FX-APP-2026-98124";
-  const clubName = receipt?.clubName || "Kelab Silat";
-  const repName = receipt?.representativeName || "Wakil Kelab";
+  const clubName = receipt?.clubName || (isEn ? "Silat Club" : "Kelab Silat");
+  const repName = receipt?.representativeName || (isEn ? "Club Representative" : "Wakil Kelab");
   const association = receipt?.associationName || "PESAKA Malaysia";
 
   return (
@@ -281,11 +323,13 @@ function SubmittedStatus({
         className="font-display text-3xl sm:text-4xl uppercase tracking-wide text-white"
         style={{ fontFamily: "var(--font-athletic)" }}
       >
-        Pendaftaran Kelab Diterima
+        {isEn ? "Club Registration Received" : "Pendaftaran Kelab Diterima"}
       </h2>
 
       <p className="mt-2 text-sm text-neutral-300">
-        Permohonan pendaftaran kelab anda telah berjaya dimuat naik ke dalam sistem FighterX.
+        {isEn
+          ? "Your club registration application has been successfully submitted to the FighterX platform."
+          : "Permohonan pendaftaran kelab anda telah berjaya dimuat naik ke dalam sistem FighterX."}
       </p>
 
       {/* Official Receipt Card */}
@@ -293,7 +337,7 @@ function SubmittedStatus({
         <div className="flex items-center justify-between border-b border-[#2d2e35] pb-3 mb-4">
           <div>
             <p className="text-[10px] font-bold uppercase tracking-wider text-neutral-400">
-              No. Rujukan Permohonan
+              {isEn ? "Application Reference No." : "No. Rujukan Permohonan"}
             </p>
             <p className="text-lg font-mono font-bold text-red-400">{appId}</p>
           </div>
@@ -304,27 +348,31 @@ function SubmittedStatus({
 
         <dl className="space-y-2.5 text-xs">
           <div className="flex justify-between">
-            <dt className="text-neutral-400">Nama Kelab:</dt>
+            <dt className="text-neutral-400">{isEn ? "Club Name:" : "Nama Kelab:"}</dt>
             <dd className="font-semibold text-white text-right">{clubName}</dd>
           </div>
           <div className="flex justify-between">
-            <dt className="text-neutral-400">Wakil Berdaftar:</dt>
+            <dt className="text-neutral-400">{isEn ? "Registered Representative:" : "Wakil Berdaftar:"}</dt>
             <dd className="font-semibold text-white text-right">{repName}</dd>
           </div>
           <div className="flex justify-between">
-            <dt className="text-neutral-400">Gabungan Silat:</dt>
+            <dt className="text-neutral-400">{isEn ? "Silat Affiliation:" : "Gabungan Silat:"}</dt>
             <dd className="font-semibold text-white text-right">{association}</dd>
           </div>
           <div className="flex justify-between border-t border-[#2d2e35] pt-2">
-            <dt className="text-neutral-400">Tempoh Percubaan:</dt>
+            <dt className="text-neutral-400">{isEn ? "Trial Period:" : "Tempoh Percubaan:"}</dt>
             <dd className="font-semibold text-emerald-400 text-right">
-              30 Hari Percuma (Bermula selepas pengaktifan)
+              {isEn
+                ? "30 Days Free (Begins upon verification)"
+                : "30 Hari Percuma (Bermula selepas pengaktifan)"}
             </dd>
           </div>
           <div className="flex justify-between">
-            <dt className="text-neutral-400">Yuran Langganan:</dt>
+            <dt className="text-neutral-400">{isEn ? "Subscription Fee:" : "Yuran Langganan:"}</dt>
             <dd className="font-semibold text-white text-right">
-              RM20 / bulan (selepas tamat percubaan percuma)
+              {isEn
+                ? "RM20 / month (after 30-day free trial)"
+                : "RM20 / bulan (selepas tamat percubaan percuma)"}
             </dd>
           </div>
         </dl>
@@ -335,19 +383,28 @@ function SubmittedStatus({
         <p className="flex items-start gap-2">
           <ShieldCheck size={16} className="text-red-400 flex-none mt-0.5" />
           <span>
-            <strong>Pengesahan Pentadbir Pusat:</strong> Pihak FighterX akan menyemak maklumat pendaftaran ROS/SSM/PJS dalam tempoh 1-2 hari bekerja.
+            <strong>{isEn ? "Central Administration Verification:" : "Pengesahan Pentadbir Pusat:"}</strong>{" "}
+            {isEn
+              ? "FighterX administration will verify your ROS/SSM/PJS registration details within 1-2 business days."
+              : "Pihak FighterX akan menyemak maklumat pendaftaran ROS/SSM/PJS dalam tempoh 1-2 hari bekerja."}
           </span>
         </p>
         <p className="flex items-start gap-2">
           <Check size={16} className="text-emerald-400 flex-none mt-0.5" />
           <span>
-            <strong>Tiada Pembayaran Awal:</strong> Anda tidak dikenakan sebarang caj semasa pendaftaran. Pembayaran langganan bermula selepas tamat 30 hari percubaan.
+            <strong>{isEn ? "No Upfront Payment:" : "Tiada Pembayaran Awal:"}</strong>{" "}
+            {isEn
+              ? "You will not be charged anything today. Subscription billing begins only after your 30-day trial concludes."
+              : "Anda tidak dikenakan sebarang caj semasa pendaftaran. Pembayaran langganan bermula selepas tamat 30 hari percubaan."}
           </span>
         </p>
         <p className="flex items-start gap-2">
           <Sparkles size={16} className="text-amber-400 flex-none mt-0.5" />
           <span>
-            <strong>Akses Ruang Kerja:</strong> Pautan pengaktifan akaun jurulatih dan pentadbir kelab akan dihantar ke e-mel rasmi wakil.
+            <strong>{isEn ? "Workspace Access:" : "Akses Ruang Kerja:"}</strong>{" "}
+            {isEn
+              ? "Coach and club administrator onboarding credentials will be emailed to your official representative address."
+              : "Pautan pengaktifan akaun jurulatih dan pentadbir kelab akan dihantar ke e-mel rasmi wakil."}
           </span>
         </p>
       </div>
@@ -359,14 +416,14 @@ function SubmittedStatus({
           onClick={() => window.print()}
           className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-md border border-[#45464b] bg-[#1c1d23] px-5 py-2.5 text-xs font-bold text-white hover:bg-[#252730] transition-colors cursor-pointer"
         >
-          <Printer size={15} /> Cetak Resit Permohonan
+          <Printer size={15} /> {isEn ? "Print Registration Receipt" : "Cetak Resit Permohonan"}
         </button>
         <button
           type="button"
           onClick={onReset}
           className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-md bg-red-600 px-6 py-2.5 text-xs font-bold text-white hover:bg-red-700 shadow-md shadow-red-900/40 transition-colors cursor-pointer"
         >
-          <ArrowLeft size={15} /> Daftar Kelab Baharu
+          <ArrowLeft size={15} /> {isEn ? "Register Another Club" : "Daftar Kelab Baharu"}
         </button>
       </div>
     </section>
@@ -374,6 +431,8 @@ function SubmittedStatus({
 }
 
 export function RegisterClubForm() {
+  const { locale } = useLanguage();
+  const isEn = locale === "en";
   const searchParams = useSearchParams();
   const urlAssociation = searchParams ? searchParams.get("association") : null;
   const [step, setStep] = useState<RegisterStep>(1);
@@ -391,6 +450,10 @@ export function RegisterClubForm() {
   const [submitError, setSubmitError] = useState("");
   const [receiptResult, setReceiptResult] = useState<ClubRegistrationReceipt | null>(null);
   const submittingRef = useRef(false);
+
+  const selectedAffiliationObj = SILAT_AFFILIATIONS.find(
+    (a) => a.id === values.associationId
+  );
 
   function updateField<K extends keyof ClubRegistrationValues>(
     field: K,
@@ -434,16 +497,16 @@ export function RegisterClubForm() {
     updateField("disciplines", updated);
   }
 
-  function toggleFacility(facility: string) {
+  function toggleFacility(facilityId: string) {
     const current = values.trainingFacilities || [];
-    const updated = current.includes(facility)
-      ? current.filter((f) => f !== facility)
-      : [...current, facility];
+    const updated = current.includes(facilityId)
+      ? current.filter((f) => f !== facilityId)
+      : [...current, facilityId];
     updateField("trainingFacilities", updated);
   }
 
   function validateCurrentStep() {
-    const stepErrors = validateRegistrationStep(step, values);
+    const stepErrors = validateRegistrationStep(step, values, locale);
     setErrors((prev) => ({ ...prev, ...stepErrors }));
     return Object.keys(stepErrors).length === 0;
   }
@@ -475,12 +538,12 @@ export function RegisterClubForm() {
 
     if (!validateCurrentStep()) return;
 
-    const allErrors = getRegistrationStepErrors(values);
+    const allErrors = getRegistrationStepErrors(values, locale);
     if (Object.keys(allErrors).length > 0) {
       setErrors(allErrors);
       // Find first failing step
       const firstInvalidStep = ([1, 2, 3, 4, 5] as const).find(
-        (s) => Object.keys(validateRegistrationStep(s, values)).length > 0
+        (s) => Object.keys(validateRegistrationStep(s, values, locale)).length > 0
       );
       if (firstInvalidStep) {
         setStep(firstInvalidStep);
@@ -535,20 +598,38 @@ export function RegisterClubForm() {
       };
 
       const result = await uiOnlyClubRegistrationService.register(request);
-      if (result.status === "accepted" && result.receipt) {
+      if ((result.status === "accepted" || result.status === "preview-only") && result.receipt) {
         setReceiptResult(result.receipt);
         setValues((prev) => ({ ...prev, password: "", confirmPassword: "" }));
-      } else if (result.status === "preview-only" && result.receipt) {
-        setReceiptResult(result.receipt);
+
+        // Dispatch into unified platform state so Admin immediately sees the incoming application
+        try {
+          platformStore.registerClub({
+            name: values.clubName.trim() || (isEn ? "Silat Club" : "Kelab Silat"),
+            affiliation: selectedAffiliationObj?.shortName || (isEn ? "Independent Club" : "Kelab Bebas"),
+            state: values.state || "Malaysia",
+            representativeName: (values.fullName || values.representativeName || "").trim() || (isEn ? "Club Representative" : "Wakil Kelab"),
+            phone: values.phoneNumber.trim() || "012-3456789",
+            email: values.email.trim() || "kelab@fighterx.com",
+          });
+        } catch {
+          // ignore
+        }
       } else {
         setSubmitError(
           result.status === "error" || result.status === "unavailable"
             ? result.message
+            : isEn
+            ? "Application could not be processed. Please try again shortly."
             : "Permohonan tidak dapat diproses. Sila cuba sebentar lagi."
         );
       }
     } catch {
-      setSubmitError("Ralat sambungan. Sila pastikan sambungan internet aktif dan cuba lagi.");
+      setSubmitError(
+        isEn
+          ? "Connection error. Please ensure your internet connection is active and try again."
+          : "Ralat sambungan. Sila pastikan sambungan internet aktif dan cuba lagi."
+      );
     } finally {
       submittingRef.current = false;
       setSubmitting(false);
@@ -563,19 +644,15 @@ export function RegisterClubForm() {
   }
 
   if (receiptResult) {
-    return <SubmittedStatus receipt={receiptResult} onReset={handleReset} />;
+    return <SubmittedStatus receipt={receiptResult} onReset={handleReset} locale={locale} />;
   }
-
-  const selectedAffiliationObj = SILAT_AFFILIATIONS.find(
-    (a) => a.id === values.associationId
-  );
 
   return (
     <section
       className="register-form-shell rounded-xl border border-[#3e3f44] bg-gradient-to-b from-[#14161b] to-[#0c0d10] shadow-2xl shadow-black/70 overflow-hidden"
-      aria-label="Borang Pendaftaran Kelab FighterX"
+      aria-label={isEn ? "FighterX Club Registration Form" : "Borang Pendaftaran Kelab FighterX"}
     >
-      <RegisterProgress step={step} />
+      <RegisterProgress step={step} locale={locale} />
 
       <form
         className="register-form p-5 sm:p-8"
@@ -588,30 +665,37 @@ export function RegisterClubForm() {
             <div className="space-y-5 animate-in fade-in duration-300">
               <div className="border-b border-[#2d2e35] pb-3">
                 <span className="text-xs font-bold text-red-500 uppercase tracking-widest">
-                  Langkah 1 daripada 5
+                  {isEn ? "Step 1 of 5" : "Langkah 1 daripada 5"}
                 </span>
                 <h2
                   className="text-2xl sm:text-3xl font-display font-bold text-white uppercase mt-0.5"
                   style={{ fontFamily: "var(--font-athletic)" }}
                 >
-                  Maklumat Asas Kelab
+                  {isEn ? "Basic Club Information" : "Maklumat Asas Kelab"}
                 </h2>
                 <p className="text-xs text-neutral-400 mt-1">
-                  Masukkan butiran rasmi kelab, akademi, atau persatuan silat anda.
+                  {isEn
+                    ? "Enter official details of your silat club, academy, or association."
+                    : "Masukkan butiran rasmi kelab, akademi, atau persatuan silat anda."}
                 </p>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="sm:col-span-2 space-y-1.5">
                   <label htmlFor="reg-club-name" className="text-xs font-semibold text-neutral-300">
-                    Nama Rasmi Kelab / Akademi <span className="text-red-500">*</span>
+                    {isEn ? "Official Club / Academy Name" : "Nama Rasmi Kelab / Akademi"}{" "}
+                    <span className="text-red-500">*</span>
                   </label>
                   <input
                     id="reg-club-name"
                     type="text"
                     value={values.clubName}
                     onChange={(e) => updateField("clubName", e.target.value)}
-                    placeholder="Contoh: Akademi Silat Gayong Warisan Perkasa"
+                    placeholder={
+                      isEn
+                        ? "Example: Warisan Perkasa Silat Academy"
+                        : "Contoh: Akademi Silat Gayong Warisan Perkasa"
+                    }
                     className="w-full min-h-[44px] px-3.5 rounded-md border border-[#45464b] bg-[#0b0c0f] text-sm text-white placeholder-neutral-500 focus:border-red-500 focus:outline-none"
                     aria-invalid={Boolean(errors.clubName)}
                     aria-describedby={errors.clubName ? "reg-club-name-err" : undefined}
@@ -621,14 +705,19 @@ export function RegisterClubForm() {
 
                 <div className="space-y-1.5">
                   <label htmlFor="reg-org-number" className="text-xs font-semibold text-neutral-300">
-                    No. Pendaftaran (ROS / SSM / PJS) <span className="text-red-500">*</span>
+                    {isEn ? "Registration No. (ROS / SSM / PJS)" : "No. Pendaftaran (ROS / SSM / PJS)"}{" "}
+                    <span className="text-red-500">*</span>
                   </label>
                   <input
                     id="reg-org-number"
                     type="text"
                     value={values.registrationNumber}
                     onChange={(e) => updateField("registrationNumber", e.target.value)}
-                    placeholder="Contoh: PPM-012-10-14022018 / PJS/01/2020"
+                    placeholder={
+                      isEn
+                        ? "Example: PPM-012-10-14022018 / PJS/01/2020"
+                        : "Contoh: PPM-012-10-14022018 / PJS/01/2020"
+                    }
                     className="w-full min-h-[44px] px-3.5 rounded-md border border-[#45464b] bg-[#0b0c0f] text-sm text-white placeholder-neutral-500 focus:border-red-500 focus:outline-none"
                     aria-invalid={Boolean(errors.registrationNumber)}
                     aria-describedby={errors.registrationNumber ? "reg-org-number-err" : undefined}
@@ -638,7 +727,7 @@ export function RegisterClubForm() {
 
                 <div className="space-y-1.5">
                   <label htmlFor="reg-org-type" className="text-xs font-semibold text-neutral-300">
-                    Jenis Organisasi <span className="text-red-500">*</span>
+                    {isEn ? "Organization Type" : "Jenis Organisasi"} <span className="text-red-500">*</span>
                   </label>
                   <select
                     id="reg-org-type"
@@ -648,10 +737,10 @@ export function RegisterClubForm() {
                     aria-invalid={Boolean(errors.organizationType)}
                     aria-describedby={errors.organizationType ? "reg-org-type-err" : undefined}
                   >
-                    <option value="">Pilih Jenis Organisasi</option>
+                    <option value="">{isEn ? "Select Organization Type" : "Pilih Jenis Organisasi"}</option>
                     {ORGANIZATION_TYPES.map((type) => (
                       <option key={type} value={type}>
-                        {ORGANIZATION_TYPE_LABELS[type]}
+                        {isEn ? ORGANIZATION_TYPE_LABELS_EN[type] : ORGANIZATION_TYPE_LABELS_BM[type]}
                       </option>
                     ))}
                   </select>
@@ -660,7 +749,7 @@ export function RegisterClubForm() {
 
                 <div className="space-y-1.5">
                   <label htmlFor="reg-state" className="text-xs font-semibold text-neutral-300">
-                    Negeri Operasi <span className="text-red-500">*</span>
+                    {isEn ? "Operating State" : "Negeri Operasi"} <span className="text-red-500">*</span>
                   </label>
                   <select
                     id="reg-state"
@@ -670,7 +759,7 @@ export function RegisterClubForm() {
                     aria-invalid={Boolean(errors.state)}
                     aria-describedby={errors.state ? "reg-state-err" : undefined}
                   >
-                    <option value="">Pilih Negeri</option>
+                    <option value="">{isEn ? "Select State" : "Pilih Negeri"}</option>
                     {MALAYSIAN_STATES.map((st) => (
                       <option key={st} value={st}>
                         {st}
@@ -682,14 +771,18 @@ export function RegisterClubForm() {
 
                 <div className="space-y-1.5">
                   <label htmlFor="reg-city" className="text-xs font-semibold text-neutral-300">
-                    Bandar / Daerah <span className="text-red-500">*</span>
+                    {isEn ? "City / District" : "Bandar / Daerah"} <span className="text-red-500">*</span>
                   </label>
                   <input
                     id="reg-city"
                     type="text"
                     value={values.city}
                     onChange={(e) => updateField("city", e.target.value)}
-                    placeholder="Contoh: Shah Alam / Petaling Jaya"
+                    placeholder={
+                      isEn
+                        ? "Example: Shah Alam / Petaling Jaya"
+                        : "Contoh: Shah Alam / Petaling Jaya"
+                    }
                     className="w-full min-h-[44px] px-3.5 rounded-md border border-[#45464b] bg-[#0b0c0f] text-sm text-white placeholder-neutral-500 focus:border-red-500 focus:outline-none"
                     aria-invalid={Boolean(errors.city)}
                     aria-describedby={errors.city ? "reg-city-err" : undefined}
@@ -699,14 +792,21 @@ export function RegisterClubForm() {
 
                 <div className="sm:col-span-2 space-y-1.5">
                   <label htmlFor="reg-address" className="text-xs font-semibold text-neutral-300">
-                    Alamat Lengkap Gelanggang / Pusat Latihan <span className="text-red-500">*</span>
+                    {isEn
+                      ? "Full Facility / Training Hall Address"
+                      : "Alamat Lengkap Gelanggang / Pusat Latihan"}{" "}
+                    <span className="text-red-500">*</span>
                   </label>
                   <textarea
                     id="reg-address"
                     rows={3}
                     value={values.address}
                     onChange={(e) => updateField("address", e.target.value)}
-                    placeholder="No. lot, jalan, kawasan perumahan / komersial"
+                    placeholder={
+                      isEn
+                        ? "Lot number, street name, commercial / residential area"
+                        : "No. lot, jalan, kawasan perumahan / komersial"
+                    }
                     className="w-full px-3.5 py-2.5 rounded-md border border-[#45464b] bg-[#0b0c0f] text-sm text-white placeholder-neutral-500 focus:border-red-500 focus:outline-none resize-y"
                     aria-invalid={Boolean(errors.address)}
                     aria-describedby={errors.address ? "reg-address-err" : undefined}
@@ -716,7 +816,8 @@ export function RegisterClubForm() {
 
                 <div className="space-y-1.5">
                   <label htmlFor="reg-poskod" className="text-xs font-semibold text-neutral-300">
-                    Poskod (5 digit angka) <span className="text-red-500">*</span>
+                    {isEn ? "Postal Code (5 digits)" : "Poskod (5 digit angka)"}{" "}
+                    <span className="text-red-500">*</span>
                   </label>
                   <input
                     id="reg-poskod"
@@ -725,7 +826,7 @@ export function RegisterClubForm() {
                     inputMode="numeric"
                     value={values.postalCode}
                     onChange={(e) => updateField("postalCode", e.target.value.replace(/\D/g, ""))}
-                    placeholder="Contoh: 40000"
+                    placeholder={isEn ? "Example: 40000" : "Contoh: 40000"}
                     className="w-full min-h-[44px] px-3.5 rounded-md border border-[#45464b] bg-[#0b0c0f] text-sm text-white placeholder-neutral-500 focus:border-red-500 focus:outline-none font-mono"
                     aria-invalid={Boolean(errors.postalCode)}
                     aria-describedby={errors.postalCode ? "reg-poskod-err" : undefined}
@@ -741,30 +842,35 @@ export function RegisterClubForm() {
             <div className="space-y-5 animate-in fade-in duration-300">
               <div className="border-b border-[#2d2e35] pb-3">
                 <span className="text-xs font-bold text-red-500 uppercase tracking-widest">
-                  Langkah 2 daripada 5
+                  {isEn ? "Step 2 of 5" : "Langkah 2 daripada 5"}
                 </span>
                 <h2
                   className="text-2xl sm:text-3xl font-display font-bold text-white uppercase mt-0.5"
                   style={{ fontFamily: "var(--font-athletic)" }}
                 >
-                  Wakil Sah Kelab (PIC)
+                  {isEn ? "Authorized Club Representative (PIC)" : "Wakil Sah Kelab (PIC)"}
                 </h2>
                 <p className="text-xs text-neutral-400 mt-1">
-                  Maklumat Guru Utama, Jurulatih Utama atau Setiausaha yang bertanggungjawab menguruskan akaun kelab.
+                  {isEn
+                    ? "Details of the Grandmaster, Head Coach, or Secretary managing the club account."
+                    : "Maklumat Guru Utama, Jurulatih Utama atau Setiausaha yang bertanggungjawab menguruskan akaun kelab."}
                 </p>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
                   <label htmlFor="reg-rep-name" className="text-xs font-semibold text-neutral-300">
-                    Nama Penuh Wakil (Mengikut MyKad) <span className="text-red-500">*</span>
+                    {isEn
+                      ? "Representative Full Name (as in NRIC/Passport)"
+                      : "Nama Penuh Wakil (Mengikut MyKad)"}{" "}
+                    <span className="text-red-500">*</span>
                   </label>
                   <input
                     id="reg-rep-name"
                     type="text"
                     value={values.representativeName}
                     onChange={(e) => updateField("representativeName", e.target.value)}
-                    placeholder="Contoh: Farid bin Ahmad"
+                    placeholder={isEn ? "Example: Farid bin Ahmad" : "Contoh: Farid bin Ahmad"}
                     className="w-full min-h-[44px] px-3.5 rounded-md border border-[#45464b] bg-[#0b0c0f] text-sm text-white placeholder-neutral-500 focus:border-red-500 focus:outline-none"
                     aria-invalid={Boolean(errors.representativeName)}
                     aria-describedby={errors.representativeName ? "reg-rep-name-err" : undefined}
@@ -774,14 +880,15 @@ export function RegisterClubForm() {
 
                 <div className="space-y-1.5">
                   <label htmlFor="reg-mykad" className="text-xs font-semibold text-neutral-300">
-                    No. MyKad / Pasport <span className="text-red-500">*</span>
+                    {isEn ? "NRIC / Passport Number" : "No. MyKad / Pasport"}{" "}
+                    <span className="text-red-500">*</span>
                   </label>
                   <input
                     id="reg-mykad"
                     type="text"
                     value={values.identificationNumber}
                     onChange={(e) => updateField("identificationNumber", e.target.value)}
-                    placeholder="Contoh: 880512-10-5431"
+                    placeholder={isEn ? "Example: 880512-10-5431" : "Contoh: 880512-10-5431"}
                     className="w-full min-h-[44px] px-3.5 rounded-md border border-[#45464b] bg-[#0b0c0f] text-sm text-white placeholder-neutral-500 focus:border-red-500 focus:outline-none font-mono"
                     aria-invalid={Boolean(errors.identificationNumber)}
                     aria-describedby={errors.identificationNumber ? "reg-mykad-err" : undefined}
@@ -791,7 +898,8 @@ export function RegisterClubForm() {
 
                 <div className="space-y-1.5">
                   <label htmlFor="reg-phone" className="text-xs font-semibold text-neutral-300">
-                    Nombor Telefon Bimbit (Malaysia) <span className="text-red-500">*</span>
+                    {isEn ? "Mobile Phone Number (Malaysia)" : "Nombor Telefon Bimbit (Malaysia)"}{" "}
+                    <span className="text-red-500">*</span>
                   </label>
                   <input
                     id="reg-phone"
@@ -805,14 +913,15 @@ export function RegisterClubForm() {
                     aria-describedby={errors.phoneNumber ? "reg-phone-err reg-phone-hint" : "reg-phone-hint"}
                   />
                   <p className="text-[11px] text-neutral-400" id="reg-phone-hint">
-                    {phoneFormatHint(values.phoneNumber)}
+                    {phoneFormatHint(values.phoneNumber, locale)}
                   </p>
                   <FieldError id="reg-phone-err" message={errors.phoneNumber} />
                 </div>
 
                 <div className="space-y-1.5">
                   <label htmlFor="reg-email" className="text-xs font-semibold text-neutral-300">
-                    Alamat E-mel Rasmi <span className="text-red-500">*</span>
+                    {isEn ? "Official Email Address" : "Alamat E-mel Rasmi"}{" "}
+                    <span className="text-red-500">*</span>
                   </label>
                   <input
                     id="reg-email"
@@ -830,14 +939,19 @@ export function RegisterClubForm() {
 
                 <div className="space-y-1.5">
                   <label htmlFor="reg-designation" className="text-xs font-semibold text-neutral-300">
-                    Jawatan Dalam Kelab <span className="text-red-500">*</span>
+                    {isEn ? "Position in Club" : "Jawatan Dalam Kelab"}{" "}
+                    <span className="text-red-500">*</span>
                   </label>
                   <input
                     id="reg-designation"
                     type="text"
                     value={values.designation}
                     onChange={(e) => updateField("designation", e.target.value)}
-                    placeholder="Contoh: Guru Utama / Ketua Jurulatih"
+                    placeholder={
+                      isEn
+                        ? "Example: Head Coach / Secretary General"
+                        : "Contoh: Guru Utama / Ketua Jurulatih"
+                    }
                     className="w-full min-h-[44px] px-3.5 rounded-md border border-[#45464b] bg-[#0b0c0f] text-sm text-white placeholder-neutral-500 focus:border-red-500 focus:outline-none"
                     aria-invalid={Boolean(errors.designation)}
                     aria-describedby={errors.designation ? "reg-designation-err" : undefined}
@@ -847,7 +961,8 @@ export function RegisterClubForm() {
 
                 <div className="space-y-1.5">
                   <label htmlFor="reg-password" className="text-xs font-semibold text-neutral-300">
-                    Kata Laluan Portal <span className="text-red-500">*</span>
+                    {isEn ? "Portal Password" : "Kata Laluan Portal"}{" "}
+                    <span className="text-red-500">*</span>
                   </label>
                   <div className="relative">
                     <input
@@ -855,7 +970,7 @@ export function RegisterClubForm() {
                       type={showPassword ? "text" : "password"}
                       value={values.password}
                       onChange={(e) => updateField("password", e.target.value)}
-                      placeholder="Cipta kata laluan keselamatan"
+                      placeholder={isEn ? "Create security password" : "Cipta kata laluan keselamatan"}
                       className="w-full min-h-[44px] pl-3.5 pr-10 rounded-md border border-[#45464b] bg-[#0b0c0f] text-sm text-white placeholder-neutral-500 focus:border-red-500 focus:outline-none"
                       aria-invalid={Boolean(errors.password)}
                       aria-describedby={errors.password ? "reg-password-err reg-pass-hint" : "reg-pass-hint"}
@@ -864,20 +979,25 @@ export function RegisterClubForm() {
                       type="button"
                       onClick={() => setShowPassword((prev) => !prev)}
                       className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-white cursor-pointer"
-                      aria-label={showPassword ? "Sembunyikan kata laluan" : "Tunjukkan kata laluan"}
+                      aria-label={
+                        isEn
+                          ? showPassword ? "Hide password" : "Show password"
+                          : showPassword ? "Sembunyikan kata laluan" : "Tunjukkan kata laluan"
+                      }
                     >
                       {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                     </button>
                   </div>
                   <p className="text-[10px] text-neutral-400" id="reg-pass-hint">
-                    {PASSWORD_REQUIREMENTS}
+                    {isEn ? PASSWORD_REQUIREMENTS_EN : PASSWORD_REQUIREMENTS_BM}
                   </p>
                   <FieldError id="reg-password-err" message={errors.password} />
                 </div>
 
                 <div className="space-y-1.5 sm:col-span-2">
                   <label htmlFor="reg-confirm-password" className="text-xs font-semibold text-neutral-300">
-                    Sahkan Kata Laluan <span className="text-red-500">*</span>
+                    {isEn ? "Confirm Password" : "Sahkan Kata Laluan"}{" "}
+                    <span className="text-red-500">*</span>
                   </label>
                   <div className="relative max-w-sm">
                     <input
@@ -885,7 +1005,7 @@ export function RegisterClubForm() {
                       type={showConfirmPassword ? "text" : "password"}
                       value={values.confirmPassword}
                       onChange={(e) => updateField("confirmPassword", e.target.value)}
-                      placeholder="Ulang kata laluan"
+                      placeholder={isEn ? "Repeat password" : "Ulang kata laluan"}
                       className="w-full min-h-[44px] pl-3.5 pr-10 rounded-md border border-[#45464b] bg-[#0b0c0f] text-sm text-white placeholder-neutral-500 focus:border-red-500 focus:outline-none"
                       aria-invalid={Boolean(errors.confirmPassword)}
                       aria-describedby={errors.confirmPassword ? "reg-confirm-password-err" : undefined}
@@ -894,7 +1014,11 @@ export function RegisterClubForm() {
                       type="button"
                       onClick={() => setShowConfirmPassword((prev) => !prev)}
                       className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-white cursor-pointer"
-                      aria-label={showConfirmPassword ? "Sembunyikan kata laluan" : "Tunjukkan kata laluan"}
+                      aria-label={
+                        isEn
+                          ? showConfirmPassword ? "Hide password" : "Show password"
+                          : showConfirmPassword ? "Sembunyikan kata laluan" : "Tunjukkan kata laluan"
+                      }
                     >
                       {showConfirmPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                     </button>
@@ -910,23 +1034,28 @@ export function RegisterClubForm() {
             <div className="space-y-5 animate-in fade-in duration-300">
               <div className="border-b border-[#2d2e35] pb-3">
                 <span className="text-xs font-bold text-red-500 uppercase tracking-widest">
-                  Langkah 3 daripada 5
+                  {isEn ? "Step 3 of 5" : "Langkah 3 daripada 5"}
                 </span>
                 <h2
                   className="text-2xl sm:text-3xl font-display font-bold text-white uppercase mt-0.5"
                   style={{ fontFamily: "var(--font-athletic)" }}
                 >
-                  Disiplin Silat & Tempat Latihan
+                  {isEn ? "Silat Disciplines & Training Setup" : "Disiplin Silat & Tempat Latihan"}
                 </h2>
                 <p className="text-xs text-neutral-400 mt-1">
-                  Pilih cabang silat yang ditawarkan dan spesifikasi gelanggang latihan mingguan.
+                  {isEn
+                    ? "Select offered silat disciplines and weekly training venue specifications."
+                    : "Pilih cabang silat yang ditawarkan dan spesifikasi gelanggang latihan mingguan."}
                 </p>
               </div>
 
               {/* Disciplines Selection */}
               <div className="space-y-2">
                 <label className="text-xs font-semibold text-neutral-300 block">
-                  Disiplin Silat Ditawarkan (Pilih Sekurang-kurangnya Satu) <span className="text-red-500">*</span>
+                  {isEn
+                    ? "Offered Silat Disciplines (Select at least one)"
+                    : "Disiplin Silat Ditawarkan (Pilih Sekurang-kurangnya Satu)"}{" "}
+                  <span className="text-red-500">*</span>
                 </label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div
@@ -942,13 +1071,15 @@ export function RegisterClubForm() {
                     </div>
                     <div className="flex-1">
                       <div className="flex items-center justify-between">
-                        <span className="text-sm font-bold text-white">Silat Seni (Artistic)</span>
+                        <span className="text-sm font-bold text-white">Silat Seni</span>
                         {values.disciplines.includes("SENI") && (
                           <span className="text-red-400"><Check size={16} strokeWidth={3} /></span>
                         )}
                       </div>
                       <p className="text-xs text-neutral-400 mt-0.5">
-                        Tunggal (100 jurus baku), Ganda (tempur koreografi), Regu (sinkronisasi 3 pesilat) & Solo Bebas.
+                        {isEn
+                          ? "Tunggal (solo standard routine), Ganda (choreographed combat), Regu (trio synchronisation) & Creative Solo."
+                          : "Tunggal (100 jurus baku), Ganda (tempur koreografi), Regu (sinkronisasi 3 pesilat) & Solo Bebas."}
                       </p>
                     </div>
                   </div>
@@ -966,13 +1097,15 @@ export function RegisterClubForm() {
                     </div>
                     <div className="flex-1">
                       <div className="flex items-center justify-between">
-                        <span className="text-sm font-bold text-white">Silat Olahraga (Tanding Combat)</span>
+                        <span className="text-sm font-bold text-white">Silat Olahraga</span>
                         {values.disciplines.includes("OLAHRAGA") && (
                           <span className="text-red-400"><Check size={16} strokeWidth={3} /></span>
                         )}
                       </div>
                       <p className="text-xs text-neutral-400 mt-0.5">
-                        Pertarungan tanding sentuhan penuh mengikut zon mata, tangkapan 5 saat, sapuan & jatuhan.
+                        {isEn
+                          ? "Full-contact match sparring across scoring target zones, 5-second grappling, sweeps, and takedowns."
+                          : "Pertarungan tanding sentuhan penuh mengikut zon mata, tangkapan 5 saat, sapuan & jatuhan."}
                       </p>
                     </div>
                   </div>
@@ -984,7 +1117,8 @@ export function RegisterClubForm() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
                 <div className="space-y-1.5">
                   <label htmlFor="reg-venue-type" className="text-xs font-semibold text-neutral-300">
-                    Jenis Tempat Latihan (Venue) <span className="text-red-500">*</span>
+                    {isEn ? "Training Venue Type" : "Jenis Tempat Latihan (Venue)"}{" "}
+                    <span className="text-red-500">*</span>
                   </label>
                   <select
                     id="reg-venue-type"
@@ -994,10 +1128,10 @@ export function RegisterClubForm() {
                     aria-invalid={Boolean(errors.trainingVenueType)}
                     aria-describedby={errors.trainingVenueType ? "reg-venue-err" : undefined}
                   >
-                    <option value="">Pilih Jenis Tempat Latihan</option>
+                    <option value="">{isEn ? "Select Training Venue Type" : "Pilih Jenis Tempat Latihan"}</option>
                     {TRAINING_VENUE_TYPES.map((v) => (
                       <option key={v} value={v}>
-                        {VENUE_TYPE_LABELS[v]}
+                        {isEn ? VENUE_TYPE_LABELS_EN[v] : VENUE_TYPE_LABELS_BM[v]}
                       </option>
                     ))}
                   </select>
@@ -1006,7 +1140,8 @@ export function RegisterClubForm() {
 
                 <div className="space-y-1.5">
                   <label htmlFor="reg-sessions" className="text-xs font-semibold text-neutral-300">
-                    Kekerapan Sesi Seminggu <span className="text-red-500">*</span>
+                    {isEn ? "Weekly Training Frequency (Sessions)" : "Kekerapan Sesi Seminggu"}{" "}
+                    <span className="text-red-500">*</span>
                   </label>
                   <input
                     id="reg-sessions"
@@ -1024,14 +1159,18 @@ export function RegisterClubForm() {
 
                 <div className="sm:col-span-2 space-y-1.5">
                   <label htmlFor="reg-schedule" className="text-xs font-semibold text-neutral-300">
-                    Jadual Latihan Mingguan (Ringkasan)
+                    {isEn ? "Weekly Training Schedule (Summary)" : "Jadual Latihan Mingguan (Ringkasan)"}
                   </label>
                   <input
                     id="reg-schedule"
                     type="text"
                     value={values.trainingSchedule}
                     onChange={(e) => updateField("trainingSchedule", e.target.value)}
-                    placeholder="Contoh: Isnin, Rabu, Jumaat (8.00 - 10.00 malam)"
+                    placeholder={
+                      isEn
+                        ? "Example: Tuesday, Thursday & Saturday (8.00 - 10.30 PM)"
+                        : "Contoh: Selasa, Khamis & Sabtu (8.00 - 10.30 malam)"
+                    }
                     className="w-full min-h-[44px] px-3.5 rounded-md border border-[#45464b] bg-[#0b0c0f] text-sm text-white placeholder-neutral-500 focus:border-red-500 focus:outline-none"
                   />
                 </div>
@@ -1039,14 +1178,16 @@ export function RegisterClubForm() {
                 {/* Facilities Checklist */}
                 <div className="sm:col-span-2 space-y-2 pt-2">
                   <label className="text-xs font-semibold text-neutral-300 block">
-                    Kemudahan & Peralatan Tersedia di Gelanggang
+                    {isEn
+                      ? "Available Facilities & Equipment at Venue"
+                      : "Kemudahan & Peralatan Tersedia di Gelanggang"}
                   </label>
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
                     {FACILITY_OPTIONS.map((facility) => {
-                      const checked = values.trainingFacilities.includes(facility);
+                      const checked = values.trainingFacilities.includes(facility.id);
                       return (
                         <label
-                          key={facility}
+                          key={facility.id}
                           className={`flex items-center gap-2 p-2.5 rounded border text-xs cursor-pointer transition-colors ${
                             checked
                               ? "border-red-500/70 bg-red-950/20 text-white"
@@ -1056,10 +1197,10 @@ export function RegisterClubForm() {
                           <input
                             type="checkbox"
                             checked={checked}
-                            onChange={() => toggleFacility(facility)}
+                            onChange={() => toggleFacility(facility.id)}
                             className="rounded accent-red-600"
                           />
-                          <span>{facility}</span>
+                          <span>{isEn ? facility.en : facility.bm}</span>
                         </label>
                       );
                     })}
@@ -1074,16 +1215,18 @@ export function RegisterClubForm() {
             <div className="space-y-4 animate-in fade-in duration-300">
               <div className="border-b border-[#2d2e35] pb-3">
                 <span className="text-xs font-bold text-red-500 uppercase tracking-widest">
-                  Langkah 4 daripada 5
+                  {isEn ? "Step 4 of 5" : "Langkah 4 daripada 5"}
                 </span>
                 <h2
                   className="text-2xl sm:text-3xl font-display font-bold text-white uppercase mt-0.5"
                   style={{ fontFamily: "var(--font-athletic)" }}
                 >
-                  Pilihan Gabungan Persatuan
+                  {isEn ? "Association Affiliation Selection" : "Pilihan Gabungan Persatuan"}
                 </h2>
                 <p className="text-xs text-neutral-400 mt-1">
-                  Pilih badan induk negeri atau perguruan silat naungan kelab daripada direktori 26 persatuan Silat Malaysia & Antarabangsa, atau pilih Kelab Bebas.
+                  {isEn
+                    ? "Select your state governing body or founding silat style from our directory of 26 Malaysian & International bodies, or choose Independent Club."
+                    : "Pilih badan induk negeri atau perguruan silat naungan kelab daripada direktori 26 persatuan Silat Malaysia & Antarabangsa, atau pilih Kelab Bebas."}
                 </p>
               </div>
 
@@ -1100,48 +1243,85 @@ export function RegisterClubForm() {
             <div className="space-y-5 animate-in fade-in duration-300">
               <div className="border-b border-[#2d2e35] pb-3">
                 <span className="text-xs font-bold text-red-500 uppercase tracking-widest">
-                  Langkah 5 daripada 5
+                  {isEn ? "Step 5 of 5" : "Langkah 5 daripada 5"}
                 </span>
                 <h2
                   className="text-2xl sm:text-3xl font-display font-bold text-white uppercase mt-0.5"
                   style={{ fontFamily: "var(--font-athletic)" }}
                 >
-                  Semakan Maklumat & Pengesahan
+                  {isEn ? "Review & Confirmation" : "Semakan Maklumat & Pengesahan"}
                 </h2>
                 <p className="text-xs text-neutral-400 mt-1">
-                  Sila semak ketepatan semua maklumat sebelum menghantar permohonan pendaftaran kelab anda.
+                  {isEn
+                    ? "Please review all details for accuracy before submitting your club registration."
+                    : "Sila semak ketepatan semua maklumat sebelum menghantar permohonan pendaftaran kelab anda."}
                 </p>
               </div>
 
               {/* Review summary cards */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
-                <SummaryGroup title="Maklumat Kelab" stepNumber={1} onEdit={jumpToStep}>
+                <SummaryGroup
+                  title={isEn ? "Club Details" : "Maklumat Kelab"}
+                  stepNumber={1}
+                  onEdit={jumpToStep}
+                  isEn={isEn}
+                >
                   <dl className="divide-y divide-[#23242a]">
-                    <SummaryRow label="Nama Kelab">{values.clubName || "—"}</SummaryRow>
-                    <SummaryRow label="No. Pendaftaran">{values.registrationNumber || "—"}</SummaryRow>
-                    <SummaryRow label="Jenis Organisasi">
-                      {values.organizationType ? ORGANIZATION_TYPE_LABELS[values.organizationType] : "—"}
+                    <SummaryRow label={isEn ? "Club Name" : "Nama Kelab"}>
+                      {values.clubName || "—"}
                     </SummaryRow>
-                    <SummaryRow label="Lokasi">
+                    <SummaryRow label={isEn ? "Registration No." : "No. Pendaftaran"}>
+                      {values.registrationNumber || "—"}
+                    </SummaryRow>
+                    <SummaryRow label={isEn ? "Organization Type" : "Jenis Organisasi"}>
+                      {values.organizationType
+                        ? isEn
+                          ? ORGANIZATION_TYPE_LABELS_EN[values.organizationType]
+                          : ORGANIZATION_TYPE_LABELS_BM[values.organizationType]
+                        : "—"}
+                    </SummaryRow>
+                    <SummaryRow label={isEn ? "Location" : "Lokasi"}>
                       {[values.city, values.state, values.postalCode].filter(Boolean).join(", ")}
                     </SummaryRow>
-                    <SummaryRow label="Alamat">{values.address || "—"}</SummaryRow>
+                    <SummaryRow label={isEn ? "Address" : "Alamat"}>
+                      {values.address || "—"}
+                    </SummaryRow>
                   </dl>
                 </SummaryGroup>
 
-                <SummaryGroup title="Wakil Sah (PIC)" stepNumber={2} onEdit={jumpToStep}>
+                <SummaryGroup
+                  title={isEn ? "Authorized Representative (PIC)" : "Wakil Sah (PIC)"}
+                  stepNumber={2}
+                  onEdit={jumpToStep}
+                  isEn={isEn}
+                >
                   <dl className="divide-y divide-[#23242a]">
-                    <SummaryRow label="Nama Wakil">{values.representativeName || "—"}</SummaryRow>
-                    <SummaryRow label="No. MyKad">{values.identificationNumber || "—"}</SummaryRow>
-                    <SummaryRow label="Jawatan">{values.designation || "—"}</SummaryRow>
-                    <SummaryRow label="Telefon">{values.phoneNumber || "—"}</SummaryRow>
-                    <SummaryRow label="E-mel">{values.email || "—"}</SummaryRow>
+                    <SummaryRow label={isEn ? "Representative" : "Nama Wakil"}>
+                      {values.representativeName || "—"}
+                    </SummaryRow>
+                    <SummaryRow label={isEn ? "NRIC / Passport" : "No. MyKad"}>
+                      {values.identificationNumber || "—"}
+                    </SummaryRow>
+                    <SummaryRow label={isEn ? "Designation" : "Jawatan"}>
+                      {values.designation || "—"}
+                    </SummaryRow>
+                    <SummaryRow label={isEn ? "Phone" : "Telefon"}>
+                      {values.phoneNumber || "—"}
+                    </SummaryRow>
+                    <SummaryRow label={isEn ? "Email" : "E-mel"}>
+                      {values.email || "—"}
+                    </SummaryRow>
                   </dl>
                 </SummaryGroup>
 
-                <SummaryGroup title="Disiplin & Gelanggang" stepNumber={3} onEdit={jumpToStep}>
+                <SummaryGroup
+                  title={isEn ? "Disciplines & Setup" : "Disiplin & Gelanggang"}
+                  stepNumber={3}
+                  onEdit={jumpToStep}
+                  isEn={isEn}
+                >
                   <dl className="divide-y divide-[#23242a]">
-                    <SummaryRow label="Disiplin">
+                    <SummaryRow label={isEn ? "Disciplines" : "Disiplin"}>
                       <div className="flex flex-wrap gap-1">
                         {values.disciplines.map((d) => (
                           <span
@@ -1153,15 +1333,28 @@ export function RegisterClubForm() {
                         ))}
                       </div>
                     </SummaryRow>
-                    <SummaryRow label="Jenis Tempat">
-                      {values.trainingVenueType ? VENUE_TYPE_LABELS[values.trainingVenueType] : "—"}
+                    <SummaryRow label={isEn ? "Venue Type" : "Jenis Tempat"}>
+                      {values.trainingVenueType
+                        ? isEn
+                          ? VENUE_TYPE_LABELS_EN[values.trainingVenueType]
+                          : VENUE_TYPE_LABELS_BM[values.trainingVenueType]
+                        : "—"}
                     </SummaryRow>
-                    <SummaryRow label="Kekerapan">{values.weeklySessions} sesi seminggu</SummaryRow>
-                    <SummaryRow label="Jadual">{values.trainingSchedule || "—"}</SummaryRow>
+                    <SummaryRow label={isEn ? "Frequency" : "Kekerapan"}>
+                      {values.weeklySessions} {isEn ? "sessions / week" : "sesi seminggu"}
+                    </SummaryRow>
+                    <SummaryRow label={isEn ? "Schedule" : "Jadual"}>
+                      {values.trainingSchedule || "—"}
+                    </SummaryRow>
                   </dl>
                 </SummaryGroup>
 
-                <SummaryGroup title="Gabungan Persatuan" stepNumber={4} onEdit={jumpToStep}>
+                <SummaryGroup
+                  title={isEn ? "Affiliation Choice" : "Gabungan Persatuan"}
+                  stepNumber={4}
+                  onEdit={jumpToStep}
+                  isEn={isEn}
+                >
                   <div className="flex items-center gap-3 py-1">
                     {selectedAffiliationObj && (
                       <div className="w-10 h-10 rounded bg-[#0b0c0f] border border-[#3e3f44] flex items-center justify-center p-1 flex-none overflow-hidden">
@@ -1176,10 +1369,18 @@ export function RegisterClubForm() {
                     )}
                     <div className="min-w-0 flex-1">
                       <p className="text-xs font-bold text-white truncate">
-                        {selectedAffiliationObj ? selectedAffiliationObj.shortName : "Kelab Bebas"}
+                        {selectedAffiliationObj
+                          ? selectedAffiliationObj.shortName
+                          : isEn
+                          ? "Independent Club"
+                          : "Kelab Bebas"}
                       </p>
                       <p className="text-[11px] text-neutral-400 line-clamp-1">
-                        {selectedAffiliationObj ? selectedAffiliationObj.name : "Tiada gabungan rasmi"}
+                        {selectedAffiliationObj
+                          ? selectedAffiliationObj.name
+                          : isEn
+                          ? "No formal affiliation"
+                          : "Tiada gabungan rasmi"}
                       </p>
                     </div>
                   </div>
@@ -1192,20 +1393,32 @@ export function RegisterClubForm() {
                   <ShieldCheck size={20} className="text-red-400 flex-none mt-0.5" />
                   <div className="space-y-1">
                     <p className="font-bold text-white uppercase tracking-wider text-[11px]">
-                      Pakej Langganan Kelab FighterX
+                      {isEn ? "FighterX Club Subscription Package" : "Pakej Langganan Kelab FighterX"}
                     </p>
                     <ul className="list-disc pl-4 space-y-1 text-neutral-300 text-[11px]">
                       <li>
-                        <strong>Percubaan 30 Hari Percuma:</strong> Tempoh percubaan hanya bermula secara rasmi setelah akaun diluluskan dan diaktifkan oleh Pentadbir Pusat FighterX.
+                        <strong>{isEn ? "30-Day Free Trial:" : "Percubaan 30 Hari Percuma:"}</strong>{" "}
+                        {isEn
+                          ? "Trial period begins officially once approved and activated by Central Administration."
+                          : "Tempoh percubaan hanya bermula secara rasmi setelah akaun diluluskan dan diaktifkan oleh Pentadbir Pusat FighterX."}
                       </li>
                       <li>
-                        <strong>Yuran Selepas Percubaan:</strong> RM20 / bulan bagi setiap kelab selepas tamat 30 hari percubaan percuma.
+                        <strong>{isEn ? "Post-Trial Pricing:" : "Yuran Selepas Percubaan:"}</strong>{" "}
+                        {isEn
+                          ? "RM20 / month per club following completion of the 30-day free trial."
+                          : "RM20 / bulan bagi setiap kelab selepas tamat 30 hari percubaan percuma."}
                       </li>
                       <li>
-                        <strong>Tanpa Pembayaran Awal:</strong> Tiada butiran kad kredit atau pembayaran diminta pada peringkat pendaftaran ini.
+                        <strong>{isEn ? "Zero Upfront Payment:" : "Tanpa Pembayaran Awal:"}</strong>{" "}
+                        {isEn
+                          ? "No credit card or payment information required during registration."
+                          : "Tiada butiran kad kredit atau pembayaran diminta pada peringkat pendaftaran ini."}
                       </li>
                       <li>
-                        <strong>Pengasingan Data & Privasi:</strong> Data pendaftaran pesilat, program latihan dan profil jurulatih diasingkan mengikut standard keselamatan organisasi FighterX.
+                        <strong>{isEn ? "Data Isolation & Privacy:" : "Pengasingan Data & Privasi:"}</strong>{" "}
+                        {isEn
+                          ? "Athlete registrations, training programs, and coach profiles are secured under FighterX organization privacy standards."
+                          : "Data pendaftaran pesilat, program latihan dan profil jurulatih diasingkan mengikut standard keselamatan organisasi FighterX."}
                       </li>
                     </ul>
                   </div>
@@ -1224,9 +1437,19 @@ export function RegisterClubForm() {
                     aria-describedby={errors.agreedToTerms ? "reg-terms-err" : undefined}
                   />
                   <span className="text-xs text-neutral-300 leading-relaxed">
-                    Saya mengesahkan bahawa saya merupakan wakil yang diberi kuasa bagi pihak kelab ini dan bersetuju dengan{" "}
-                    <strong className="text-white">Terma Perkhidmatan</strong> serta{" "}
-                    <strong className="text-white">Notis Privasi FighterX</strong>.
+                    {isEn ? (
+                      <>
+                        I confirm that I am an authorized representative of this club and agree to the{" "}
+                        <strong className="text-white">Terms of Service</strong> and{" "}
+                        <strong className="text-white">FighterX Privacy Notice</strong>.
+                      </>
+                    ) : (
+                      <>
+                        Saya mengesahkan bahawa saya merupakan wakil yang diberi kuasa bagi pihak kelab ini dan bersetuju dengan{" "}
+                        <strong className="text-white">Terma Perkhidmatan</strong> serta{" "}
+                        <strong className="text-white">Notis Privasi FighterX</strong>.
+                      </>
+                    )}
                   </span>
                 </label>
                 <FieldError id="reg-terms-err" message={errors.agreedToTerms} />
@@ -1250,12 +1473,12 @@ export function RegisterClubForm() {
               disabled={submitting}
               className="inline-flex items-center gap-2 rounded-md border border-[#45464b] bg-[#1a1b20] px-4 py-2.5 text-xs font-bold text-neutral-200 hover:bg-[#23242c] hover:text-white transition-colors cursor-pointer"
             >
-              <ArrowLeft size={14} /> Kembali
+              <ArrowLeft size={14} /> {isEn ? "Back" : "Kembali"}
             </button>
           ) : (
             <span className="inline-flex items-center gap-1.5 text-[11px] text-neutral-400">
               <LockKeyhole size={13} className="text-red-400" />
-              Pendaftaran selamat tanpa bayaran awal
+              {isEn ? "Secure registration with no upfront fee" : "Pendaftaran selamat tanpa bayaran awal"}
             </span>
           )}
 
@@ -1265,7 +1488,7 @@ export function RegisterClubForm() {
               onClick={handleNext}
               className="inline-flex items-center gap-2 rounded-md bg-red-600 px-6 py-2.5 text-xs font-bold text-white hover:bg-red-700 shadow-md shadow-red-950/50 transition-all cursor-pointer ml-auto"
             >
-              Langkah Seterusnya <ArrowRight size={14} />
+              {isEn ? "Next Step" : "Langkah Seterusnya"} <ArrowRight size={14} />
             </button>
           ) : (
             <button
@@ -1276,11 +1499,11 @@ export function RegisterClubForm() {
               {submitting ? (
                 <>
                   <span className="w-3.5 h-3.5 border-2 border-white/40 border-t-white rounded-full animate-spin" />
-                  Memproses Pendaftaran…
+                  {isEn ? "Processing Registration…" : "Memproses Pendaftaran…"}
                 </>
               ) : (
                 <>
-                  Hantar Pendaftaran Kelab <ArrowRight size={14} />
+                  {isEn ? "Submit Club Registration" : "Hantar Pendaftaran Kelab"} <ArrowRight size={14} />
                 </>
               )}
             </button>

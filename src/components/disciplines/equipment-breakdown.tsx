@@ -199,31 +199,39 @@ export function EquipmentBreakdown() {
                       }`}
                     >
                       {isSeni ? <Award size={11} /> : <Swords size={11} />}
-                      {isSeni ? "Silat Seni" : "Silat Olahraga"}
+                      {isSeni
+                        ? (locale === "bm" ? "Silat Seni" : "Artistic Silat")
+                        : (locale === "bm" ? "Silat Olahraga" : "Combat Sparring")}
                     </span>
                     <span className="text-[10px] uppercase font-semibold text-neutral-500">
-                      {item.type}
+                      {item.type === "WEAPON"
+                        ? (locale === "bm" ? "SENJATA" : "WEAPON")
+                        : item.type === "PROTECTION"
+                        ? (locale === "bm" ? "PERLINDUNGAN" : "PROTECTION")
+                        : (locale === "bm" ? "PAKAIAN" : "ATTIRE")}
                     </span>
                   </div>
 
-                  <h3 className="text-base font-bold text-white mb-2">{item.name}</h3>
+                  <h3 className="text-base font-bold text-white mb-2">
+                    {locale === "en" ? (item.nameEn || item.name) : item.name}
+                  </h3>
                   <p className="text-xs text-neutral-300 leading-relaxed mb-3">
-                    {item.purpose}
+                    {locale === "en" ? (item.purposeEn || item.purpose) : item.purpose}
                   </p>
                 </div>
 
                 <div className="border-t border-white/[0.06] pt-3 space-y-2 text-xs">
                   <div>
                     <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-400 block">
-                      Spesifikasi Teknikal:
+                      {locale === "bm" ? "Spesifikasi Teknikal:" : "Technical Specifications:"}
                     </span>
                     <p className="text-[11px] text-neutral-300 leading-snug mt-0.5">
-                      {item.specs}
+                      {locale === "en" ? (item.specsEn || item.specs) : item.specs}
                     </p>
                   </div>
                   <div className="flex items-start gap-1.5 text-[10px] text-neutral-400 pt-1">
                     <BookOpen size={12} className="flex-none mt-0.5 text-neutral-400" />
-                    <span>{item.ruleCitation}</span>
+                    <span>{locale === "en" ? (item.ruleCitationEn || item.ruleCitation) : item.ruleCitation}</span>
                   </div>
                 </div>
               </div>

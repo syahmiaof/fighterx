@@ -40,6 +40,7 @@ import {
   AgeCategory,
   DisciplineType,
   SanctionStatus,
+  RegistrationStatus,
   getWhatsAppUrl,
   formatEventDates,
   formatDisplayDateRange,
@@ -53,7 +54,27 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 export function CompetitionsClient() {
   const { dict, locale } = useLanguage();
+  const isEn = locale === "en";
   const cd = dict.competitions;
+
+  const getStatusLabel = (status: RegistrationStatus) => {
+    if (isEn) {
+      switch (status) {
+        case "open": return "Registration Open";
+        case "closing_soon": return "Closing Soon";
+        case "upcoming": return "Upcoming";
+        case "closed": return "Closed";
+        case "completed": return "Completed";
+      }
+    }
+    switch (status) {
+      case "open": return "Pendaftaran Dibuka";
+      case "closing_soon": return "Hampir Tutup";
+      case "upcoming": return "Akan Datang";
+      case "closed": return "Ditutup";
+      case "completed": return "Selesai";
+    }
+  };
 
   // Main Data State
   const [competitions, setCompetitions] = useState<CompetitionItem[]>(INITIAL_COMPETITIONS);
@@ -548,10 +569,9 @@ export function CompetitionsClient() {
   // Group by Month for Timeline View
   const groupedByMonth = useMemo(() => {
     const map = new Map<string, { label: string; items: CompetitionItem[] }>();
-    const monthsName = [
-      "Januari", "Februari", "Mac", "April", "Mei", "Jun",
-      "Julai", "Ogos", "September", "Oktober", "November", "Disember"
-    ];
+    const monthsName = isEn
+      ? ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+      : ["Januari", "Februari", "Mac", "April", "Mei", "Jun", "Julai", "Ogos", "September", "Oktober", "November", "Disember"];
 
     filteredCompetitions.forEach((comp) => {
       const parts = comp.startDate ? comp.startDate.split("-") : [];
@@ -701,8 +721,17 @@ export function CompetitionsClient() {
         </div>
 
         <h1 className="competitions-title">
-          <span className="title-white">MALAYSIAN SILAT </span>
-          <span className="title-crimson">COMPETITION CALENDAR</span>
+          {locale === "bm" ? (
+            <>
+              <span className="title-white">KALENDAR PERTANDINGAN </span>
+              <span className="title-crimson">SILAT MALAYSIA</span>
+            </>
+          ) : (
+            <>
+              <span className="title-white">MALAYSIAN SILAT </span>
+              <span className="title-crimson">COMPETITION CALENDAR</span>
+            </>
+          )}
         </h1>
 
         <p className="competitions-narrative">
@@ -879,13 +908,16 @@ export function CompetitionsClient() {
       {filteredCompetitions.length === 0 ? (
         <div className="competitions-empty-state">
           <Calendar className="empty-state-icon" />
-          <h2 className="empty-state-title">Tiada Kejohanan Dijumpai</h2>
+          <h2 className="empty-state-title">
+            {isEn ? "No Tournaments Found" : "Tiada Kejohanan Dijumpai"}
+          </h2>
           <p className="empty-state-text">
-            Tiada kejohanan yang sepadan dengan carian atau penapis semasa anda. Sila cuba tukar negeri,
-            kategori, atau set semula penapis carian.
+            {isEn
+              ? "No championships match your current search or filters. Please try changing state, category, or reset the filters."
+              : "Tiada kejohanan yang sepadan dengan carian atau penapis semasa anda. Sila cuba tukar negeri, kategori, atau set semula penapis carian."}
           </p>
           <button type="button" onClick={handleResetFilters} className="btn-empty-reset">
-            Set Semula Penapis
+            {isEn ? "Reset Filters" : "Set Semula Penapis"}
           </button>
         </div>
       ) : viewMode === "cards" ? (
@@ -895,17 +927,7 @@ export function CompetitionsClient() {
             const tierInfo = TIER_CONFIG[comp.tier];
             const dateRange = formatDisplayDateRange(comp.startDate, comp.endDate);
             const posterOrBulletin = getPosterOrBulletin(comp);
-
-            const statusText =
-              comp.status === "open"
-                ? "Pendaftaran Dibuka"
-                : comp.status === "closing_soon"
-                ? "Hampir Tutup"
-                : comp.status === "upcoming"
-                ? "Akan Datang"
-                : comp.status === "closed"
-                ? "Ditutup"
-                : "Selesai";
+            const statusText = getStatusLabel(comp.status);
 
             return (
               <article
@@ -917,7 +939,7 @@ export function CompetitionsClient() {
                 <div className="comp-card-main">
                   <div className="comp-card-header">
                     <span className={`comp-tier-badge ${tierInfo.badgeClass}`}>
-                      {tierInfo.label}
+                      {isEn ? tierInfo.labelEn : tierInfo.label}
                     </span>
 
                     <span className={`comp-status-badge status-${comp.status}`}>
@@ -934,7 +956,7 @@ export function CompetitionsClient() {
                         handleOpenDetailModal(comp);
                       }}
                       className="comp-title-btn"
-                      title={`Lihat butiran ${comp.title}`}
+                      title={isEn ? `View details for ${comp.title}` : `Lihat butiran ${comp.title}`}
                     >
                       {comp.title}
                     </button>
@@ -965,7 +987,7 @@ export function CompetitionsClient() {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="comp-card-poster-btn"
-                      title={`Buka ${posterOrBulletin.label} rasmi`}
+                      title={isEn ? `Open official ${posterOrBulletin.label}` : `Buka ${posterOrBulletin.label} rasmi`}
                       onClick={(e) => e.stopPropagation()}
                     >
                       <FileText size={13} aria-hidden="true" />
@@ -981,7 +1003,7 @@ export function CompetitionsClient() {
                       handleOpenDetailModal(comp);
                     }}
                     className="comp-card-details-btn"
-                    aria-label={`Lihat butiran ${comp.title}`}
+                    aria-label={isEn ? `View details for ${comp.title}` : `Lihat butiran ${comp.title}`}
                   >
                     <span>{cd.btnDetails}</span>
                     <ChevronRight size={13} aria-hidden="true" />
@@ -1001,7 +1023,9 @@ export function CompetitionsClient() {
                   <Calendar size={18} className="text-[#FF3845]" />
                   <h2 className="timeline-month-title">{monthLabel}</h2>
                 </div>
-                <span className="month-event-count">{items.length} Kejohanan Terjadual</span>
+                <span className="month-event-count">
+                  {items.length} {isEn ? "Scheduled Tournaments" : "Kejohanan Terjadual"}
+                </span>
               </div>
 
               <div className="timeline-events-list">
@@ -1009,15 +1033,7 @@ export function CompetitionsClient() {
                   const dateInfo = formatEventDates(comp.startDate, comp.endDate);
                   const tierInfo = TIER_CONFIG[comp.tier];
                   const posterOrBulletin = getPosterOrBulletin(comp);
-
-                  const statusText =
-                    comp.status === "open"
-                      ? "Dibuka"
-                      : comp.status === "closing_soon"
-                      ? "Hampir Tutup"
-                      : comp.status === "upcoming"
-                      ? "Akan Datang"
-                      : "Ditutup";
+                  const statusText = getStatusLabel(comp.status);
 
                   return (
                     <div key={comp.id} className="timeline-event-row">
@@ -1029,7 +1045,7 @@ export function CompetitionsClient() {
                       <div className="timeline-info-cell">
                         <div className="timeline-tier-row">
                           <span className={`comp-tier-badge ${tierInfo.badgeClass}`}>
-                            {tierInfo.label}
+                            {isEn ? tierInfo.labelEn : tierInfo.label}
                           </span>
                           <span className={`comp-status-badge status-${comp.status}`}>
                             <span className="comp-status-dot" aria-hidden="true" />
@@ -1058,7 +1074,7 @@ export function CompetitionsClient() {
                             target="_blank"
                             rel="noopener noreferrer"
                             className="comp-card-poster-btn"
-                            title={`Buka ${posterOrBulletin.label} rasmi`}
+                            title={isEn ? `Open official ${posterOrBulletin.label}` : `Buka ${posterOrBulletin.label} rasmi`}
                             onClick={(e) => e.stopPropagation()}
                           >
                             <FileText size={12} aria-hidden="true" />
@@ -1070,9 +1086,9 @@ export function CompetitionsClient() {
                           type="button"
                           onClick={() => handleOpenDetailModal(comp)}
                           className="comp-card-details-btn"
-                          aria-label={`Lihat butiran ${comp.title}`}
+                          aria-label={isEn ? `View details for ${comp.title}` : `Lihat butiran ${comp.title}`}
                         >
-                          <span>Butiran</span>
+                          <span>{cd.btnDetails}</span>
                           <ChevronRight size={13} aria-hidden="true" />
                         </button>
                       </div>
@@ -1102,12 +1118,12 @@ export function CompetitionsClient() {
                 <span
                   className={`event-tier-badge ${TIER_CONFIG[selectedComp.tier].badgeClass}`}
                 >
-                  {TIER_CONFIG[selectedComp.tier].label}
+                  {isEn ? TIER_CONFIG[selectedComp.tier].labelEn : TIER_CONFIG[selectedComp.tier].label}
                 </span>
 
                 {selectedComp.sanctionRef && (
                   <span className="modal-ref-pill">
-                    No. Rujukan: {selectedComp.sanctionRef}
+                    {isEn ? `Ref No: ${selectedComp.sanctionRef}` : `No. Rujukan: ${selectedComp.sanctionRef}`}
                   </span>
                 )}
 
@@ -1115,7 +1131,7 @@ export function CompetitionsClient() {
                   type="button"
                   onClick={() => setSelectedComp(null)}
                   className="pro-modal-close"
-                  aria-label="Tutup butiran kejohanan"
+                  aria-label={isEn ? "Close tournament details" : "Tutup butiran kejohanan"}
                 >
                   <X size={16} />
                 </button>
@@ -1129,15 +1145,17 @@ export function CompetitionsClient() {
                 <div className="quick-meta-item">
                   <CalendarDays size={14} className="text-[#FF3845]" />
                   <div>
-                    <small>Tarikh Acara</small>
-                    <strong>{selectedComp.startDate} hingga {selectedComp.endDate}</strong>
+                    <small>{isEn ? "Event Dates" : "Tarikh Acara"}</small>
+                    <strong>
+                      {selectedComp.startDate} {isEn ? "to" : "hingga"} {selectedComp.endDate}
+                    </strong>
                   </div>
                 </div>
 
                 <div className="quick-meta-item">
                   <MapPin size={14} className="text-[#FF3845]" />
                   <div>
-                    <small>Gelanggang &amp; Negeri</small>
+                    <small>{isEn ? "Venue & State" : "Gelanggang & Negeri"}</small>
                     <strong>{selectedComp.venue}, {selectedComp.state}</strong>
                   </div>
                 </div>
@@ -1145,7 +1163,7 @@ export function CompetitionsClient() {
                 <div className="quick-meta-item">
                   <Building2 size={14} className="text-[#FF3845]" />
                   <div>
-                    <small>Penganjur Utama</small>
+                    <small>{isEn ? "Primary Organizer" : "Penganjur Utama"}</small>
                     <strong>{selectedComp.organizer}</strong>
                   </div>
                 </div>
@@ -1153,10 +1171,10 @@ export function CompetitionsClient() {
                 <div className="quick-meta-item">
                   <Clock size={14} className="text-[#FF3845]" />
                   <div>
-                    <small>Yuran &amp; Status</small>
+                    <small>{isEn ? "Fee & Status" : "Yuran & Status"}</small>
                     <strong>
-                      {selectedComp.feeAmount === 0 ? "Percuma" : `RM ${selectedComp.feeAmount}`} &bull;{" "}
-                      {selectedComp.status === "open" ? "Pendaftaran Dibuka" : "Akan Datang"}
+                      {selectedComp.feeAmount === 0 ? (isEn ? "Free" : "Percuma") : `RM ${selectedComp.feeAmount}`} &bull;{" "}
+                      {getStatusLabel(selectedComp.status)}
                     </strong>
                   </div>
                 </div>
@@ -1171,7 +1189,7 @@ export function CompetitionsClient() {
                   onClick={() => setModalTab("tentatif")}
                   className={`modal-tab ${modalTab === "tentatif" ? "is-active" : ""}`}
                 >
-                  Tentatif &amp; Atur Cara Harian
+                  {isEn ? "Schedule & Daily Program" : "Tentatif & Atur Cara Harian"}
                 </button>
                 <button
                   type="button"
@@ -1180,7 +1198,7 @@ export function CompetitionsClient() {
                   onClick={() => setModalTab("berat")}
                   className={`modal-tab ${modalTab === "berat" ? "is-active" : ""}`}
                 >
-                  Kategori Berat &amp; Disiplin
+                  {isEn ? "Weight Classes & Disciplines" : "Kategori Berat & Disiplin"}
                 </button>
                 <button
                   type="button"
@@ -1189,7 +1207,7 @@ export function CompetitionsClient() {
                   onClick={() => setModalTab("pegawai")}
                   className={`modal-tab ${modalTab === "pegawai" ? "is-active" : ""}`}
                 >
-                  Pegawai &amp; Standard PERSILAT
+                  {isEn ? "Officials & PERSILAT Standard" : "Pegawai & Standard PERSILAT"}
                 </button>
               </div>
             </div>
@@ -1203,17 +1221,19 @@ export function CompetitionsClient() {
                     <div className="prizes-callout-card">
                       <Award size={18} className="text-[#FACC15] flex-shrink-0" />
                       <div>
-                        <strong>Ganjaran &amp; Hadiah Kejohanan:</strong>
+                        <strong>{isEn ? "Tournament Prizes & Rewards:" : "Ganjaran & Hadiah Kejohanan:"}</strong>
                         <p>{selectedComp.highlightPrizes}</p>
                       </div>
                     </div>
                   )}
 
-                  <h3 className="section-heading">Tentatif Rasmi Setiap Hari</h3>
+                  <h3 className="section-heading">
+                    {isEn ? "Official Daily Schedule" : "Tentatif Rasmi Setiap Hari"}
+                  </h3>
                   <div className="itinerary-timeline">
                     {selectedComp.scheduleDays.map((sch) => (
                       <div key={sch.day} className="itinerary-step">
-                        <div className="itinerary-badge">Hari {sch.day}</div>
+                        <div className="itinerary-badge">{isEn ? `Day ${sch.day}` : `Hari ${sch.day}`}</div>
                         <div className="itinerary-content">
                           <h4>
                             {sch.title} <small>({sch.dateLabel})</small>
@@ -1232,35 +1252,49 @@ export function CompetitionsClient() {
 
               {modalTab === "berat" && (
                 <div className="modal-tab-pane">
-                  <h3 className="section-heading">Kategori Umur Dipertandingkan</h3>
+                  <h3 className="section-heading">
+                    {isEn ? "Contested Age Categories" : "Kategori Umur Dipertandingkan"}
+                  </h3>
                   <div className="age-tags-grid">
                     {selectedComp.ageCategories.map((cat) => (
                       <div key={cat} className="age-info-card">
-                        <strong>{AGE_CATEGORY_CONFIG[cat].label}</strong>
-                        <span>{AGE_CATEGORY_CONFIG[cat].ageRange}</span>
+                        <strong>{isEn ? AGE_CATEGORY_CONFIG[cat].labelEn : AGE_CATEGORY_CONFIG[cat].label}</strong>
+                        <span>{isEn ? AGE_CATEGORY_CONFIG[cat].ageRangeEn : AGE_CATEGORY_CONFIG[cat].ageRange}</span>
                       </div>
                     ))}
                   </div>
 
-                  <h3 className="section-heading mt-6">Disiplin Silat &amp; Format Perlawanan</h3>
+                  <h3 className="section-heading mt-6">
+                    {isEn ? "Silat Disciplines & Match Format" : "Disiplin Silat & Format Perlawanan"}
+                  </h3>
                   <div className="disciplines-grid">
                     {selectedComp.disciplines.map((d) => (
                       <div key={d} className="discipline-info-card">
                         <span className="disc-icon">🥋</span>
                         <div>
-                          <strong>{DISCIPLINE_CONFIG[d].label}</strong>
-                          <small>{DISCIPLINE_CONFIG[d].isSeni ? "Silat Seni (Standard PERSILAT)" : "Silat Tanding (Combat Contact)"}</small>
+                          <strong>{isEn ? DISCIPLINE_CONFIG[d].labelEn : DISCIPLINE_CONFIG[d].label}</strong>
+                          <small>
+                            {isEn
+                              ? DISCIPLINE_CONFIG[d].isSeni
+                                ? "Artistic Silat (PERSILAT Standard)"
+                                : "Combat Silat (Full Contact)"
+                              : DISCIPLINE_CONFIG[d].isSeni
+                              ? "Silat Seni (Standard PERSILAT)"
+                              : "Silat Tanding (Combat Contact)"}
+                          </small>
                         </div>
                       </div>
                     ))}
                   </div>
 
-                  <h3 className="section-heading mt-6">Kelas Berat Tanding</h3>
+                  <h3 className="section-heading mt-6">
+                    {isEn ? "Combat Weight Classes" : "Kelas Berat Tanding"}
+                  </h3>
                   <div className="weight-classes-container">
                     {selectedComp.weightClasses.map((item, idx) => (
                       <div key={idx} className="weight-group">
                         <span className="weight-group-title">
-                          {item.category} ({item.gender})
+                          {item.category} ({isEn ? (item.gender === "Putera" ? "Male" : item.gender === "Puteri" ? "Female" : "Open") : item.gender})
                         </span>
                         <div className="weight-chips-row">
                           {item.classes.map((c, ci) => (
@@ -1279,20 +1313,29 @@ export function CompetitionsClient() {
                     <ShieldCheck size={28} className="text-[#4ADE80]" />
                     <div>
                       <strong>
-                        {selectedComp.sanctionStatus === "pesaka_verified"
+                        {isEn
+                          ? selectedComp.sanctionStatus === "pesaka_verified"
+                            ? "Fully Sanctioned under PESAKA Malaysia"
+                            : selectedComp.sanctionStatus === "msn_verified"
+                            ? "Official Championship of National Sports Council (MSN)"
+                            : "Under Technical Verification by FighterX"
+                          : selectedComp.sanctionStatus === "pesaka_verified"
                           ? "Disahkan Penuh di Bawah Naungan PESAKA Malaysia"
                           : selectedComp.sanctionStatus === "msn_verified"
                           ? "Kejohanan Rasmi Majlis Sukan Negara (MSN)"
                           : "Dalam Proses Semakan Teknikal FighterX"}
                       </strong>
                       <p>
-                        Kejohanan ini mematuhi ketetapan rasmi Buku Peraturan Pertandingan Pencak Silat Antarabangsa
-                        (PERSILAT 2026 edisi 69 halaman) dengan sistem semakan bantahan video (VAR) dan panel wasit juri bertauliah.
+                        {isEn
+                          ? "This championship complies with the official International Pencak Silat Competition Rulebook (PERSILAT 2026 edition 69 pages) featuring video assistant referee (VAR) and certified referee panels."
+                          : "Kejohanan ini mematuhi ketetapan rasmi Buku Peraturan Pertandingan Pencak Silat Antarabangsa (PERSILAT 2026 edisi 69 halaman) dengan sistem semakan bantahan video (VAR) dan panel wasit juri bertauliah."}
                       </p>
                     </div>
                   </div>
 
-                  <h3 className="section-heading mt-6">Urus Setia Perhubungan Kejohanan</h3>
+                  <h3 className="section-heading mt-6">
+                    {isEn ? "Tournament Secretariat Liaison" : "Urus Setia Perhubungan Kejohanan"}
+                  </h3>
                   <div className="contact-person-card">
                     <div className="contact-avatar">
                       <Building2 size={24} />
@@ -1313,7 +1356,7 @@ export function CompetitionsClient() {
 
                   {selectedComp.organizerWebsite && (
                     <div className="website-link-box">
-                      <span>Laman Web Rasmi Penganjur:</span>
+                      <span>{isEn ? "Official Organizer Website:" : "Laman Web Rasmi Penganjur:"}</span>
                       <a href={selectedComp.organizerWebsite} target="_blank" rel="noopener noreferrer">
                         {selectedComp.organizerWebsite} <ExternalLink size={12} />
                       </a>
@@ -1333,7 +1376,7 @@ export function CompetitionsClient() {
                   className="btn-modal-whatsapp"
                 >
                   <MessageSquare size={14} />
-                  <span>WhatsApp Urus Setia</span>
+                  <span>{isEn ? "WhatsApp Secretariat" : "WhatsApp Urus Setia"}</span>
                 </a>
 
                 {(() => {
@@ -1345,7 +1388,7 @@ export function CompetitionsClient() {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="btn-modal-bulletin"
-                      title={`Buka ${modalDoc.label} rasmi`}
+                      title={isEn ? `Open official ${modalDoc.label}` : `Buka ${modalDoc.label} rasmi`}
                     >
                       <FileText size={14} aria-hidden="true" />
                       <span>{modalDoc.label}</span>
@@ -1364,7 +1407,7 @@ export function CompetitionsClient() {
                 disabled={selectedComp.status === "closed"}
                 className="btn-modal-register"
               >
-                <span>Daftar Kontinjen Sekarang</span>
+                <span>{isEn ? "Register Contingent Now" : "Daftar Kontinjen Sekarang"}</span>
                 <ArrowRight size={14} />
               </button>
             </div>

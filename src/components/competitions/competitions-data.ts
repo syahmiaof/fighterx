@@ -110,77 +110,91 @@ export const MALAYSIAN_STATES = [
 
 export const AGE_CATEGORY_CONFIG: Record<
   AgeCategory,
-  { label: string; ageRange: string; color: string }
+  { label: string; labelEn: string; ageRange: string; ageRangeEn: string; color: string }
 > = {
   dini: {
     label: "Dini",
+    labelEn: "Early Junior",
     ageRange: "7 - 9 Tahun",
+    ageRangeEn: "7 - 9 Years",
     color: "#64b7ff",
   },
   pra_remaja: {
     label: "Pra-Remaja",
+    labelEn: "Pre-Junior",
     ageRange: "10 - 13 Tahun",
+    ageRangeEn: "10 - 13 Years",
     color: "#e5e5e7",
   },
   remaja: {
     label: "Remaja",
+    labelEn: "Junior",
     ageRange: "14 - 17 Tahun",
+    ageRangeEn: "14 - 17 Years",
     color: "#ffd24c",
   },
   dewasa: {
     label: "Dewasa",
+    labelEn: "Senior",
     ageRange: "17 - 45 Tahun",
+    ageRangeEn: "17 - 45 Years",
     color: "#ff4d5a",
   },
 };
 
 export const DISCIPLINE_CONFIG: Record<
   DisciplineType,
-  { label: string; short: string; isSeni: boolean }
+  { label: string; labelEn: string; short: string; shortEn: string; isSeni: boolean }
 > = {
-  tanding: { label: "Silat Tanding (Combat)", short: "Tanding", isSeni: false },
-  tunggal: { label: "Seni Tunggal Baku", short: "Tunggal", isSeni: true },
-  ganda: { label: "Seni Ganda Tempur", short: "Ganda", isSeni: true },
-  regu: { label: "Seni Regu Jurus Wajib", short: "Regu", isSeni: true },
-  solo_kreatif: { label: "Seni Solo Kreatif / Bebas", short: "Solo Kreatif", isSeni: true },
+  tanding: { label: "Silat Tanding", labelEn: "Silat Combat Match", short: "Tanding", shortEn: "Combat", isSeni: false },
+  tunggal: { label: "Seni Tunggal Baku", labelEn: "Artistic Solo Standard", short: "Tunggal", shortEn: "Solo", isSeni: true },
+  ganda: { label: "Seni Ganda Tempur", labelEn: "Artistic Choreographed Pairs", short: "Ganda", shortEn: "Pairs", isSeni: true },
+  regu: { label: "Seni Regu Jurus Wajib", labelEn: "Artistic Trio Standard", short: "Regu", shortEn: "Trio", isSeni: true },
+  solo_kreatif: { label: "Seni Solo Kreatif", labelEn: "Artistic Creative Solo", short: "Solo Kreatif", shortEn: "Creative", isSeni: true },
 };
 
 export const TIER_CONFIG: Record<
   CompetitionTier,
-  { label: string; badgeClass: string; bg: string; color: string }
+  { label: string; labelEn: string; badgeClass: string; bg: string; color: string }
 > = {
   sukma: {
     label: "Sukan Malaysia (SUKMA)",
+    labelEn: "Malaysia Games (SUKMA)",
     badgeClass: "badge-gold tier-gold",
     bg: "rgba(240, 180, 40, 0.12)",
     color: "#ffd24c",
   },
   sukipt: {
     label: "Kejohanan IPT (SUKIPT)",
+    labelEn: "Higher Education Games (SUKIPT)",
     badgeClass: "badge-blue tier-blue",
     bg: "rgba(60, 160, 255, 0.12)",
     color: "#64b7ff",
   },
   kebangsaan: {
     label: "Kejohanan Kebangsaan",
+    labelEn: "National Championship",
     badgeClass: "badge-crimson tier-crimson",
     bg: "rgba(255, 56, 69, 0.12)",
     color: "#ff4d5a",
   },
   terbuka: {
-    label: "Kejohanan Terbuka (Open)",
+    label: "Kejohanan Terbuka",
+    labelEn: "Open Championship",
     badgeClass: "badge-silver tier-silver",
     bg: "rgba(255, 255, 255, 0.08)",
     color: "#e5e5e7",
   },
   sirkit_negeri: {
     label: "Sirkit Remaja Negeri",
+    labelEn: "State Junior Circuit",
     badgeClass: "badge-blue tier-blue",
     bg: "rgba(60, 160, 255, 0.12)",
     color: "#64b7ff",
   },
   jemputan_kelab: {
     label: "Jemputan Kelab Silat",
+    labelEn: "Silat Club Invitational",
     badgeClass: "badge-silver tier-silver",
     bg: "rgba(255, 255, 255, 0.08)",
     color: "#e5e5e7",

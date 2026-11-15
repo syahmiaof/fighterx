@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useAdminState } from "@/lib/admin/store";
+import { usePlatformState } from "@/lib/platform/platform-state";
 import {
   LayoutDashboard,
   Calendar,
@@ -44,7 +45,7 @@ export interface NavGroup {
 export const ADMIN_NAV_GROUPS: NavGroup[] = [
   {
     id: "overview",
-    title: "1. OVERVIEW",
+    title: "1. UTAMA",
     items: [
       {
         href: "/admin",
@@ -55,117 +56,33 @@ export const ADMIN_NAV_GROUPS: NavGroup[] = [
   },
   {
     id: "training",
-    title: "2. PROGRAM LATIHAN",
+    title: "2. KURIKULUM LATIHAN",
     items: [
       {
         href: "/admin/programmes",
-        label: "Master Programme 2027",
+        label: "Master Framework 2027",
         icon: Calendar,
       },
       {
         href: "/admin/exercises",
-        label: "Pustaka Senaman",
+        label: "Pustaka Senaman Standard",
         icon: Dumbbell,
-      },
-      {
-        href: "/admin/assignments",
-        label: "Tugasan Jurulatih",
-        icon: ClipboardList,
-      },
-      {
-        href: "/admin/schedules",
-        label: "Jadual Mingguan",
-        icon: Clock,
-      },
-    ],
-  },
-  {
-    id: "people",
-    title: "3. ATLET & JURULATIH",
-    items: [
-      {
-        href: "/admin/athletes",
-        label: "Direktori Atlet",
-        icon: Users,
-      },
-      {
-        href: "/admin/coaches",
-        label: "Direktori Jurulatih",
-        icon: UserCheck,
-      },
-    ],
-  },
-  {
-    id: "analytics",
-    title: "4. PENILAIAN & ANALITIK",
-    items: [
-      {
-        href: "/admin/assessments",
-        label: "Rubrik Penilaian",
-        icon: Award,
-      },
-      {
-        href: "/admin/analytics",
-        label: "Analitik Prestasi",
-        icon: TrendingUp,
-      },
-      {
-        href: "/admin/reports",
-        label: "Laporan Sistem",
-        icon: FileText,
-      },
-      {
-        href: "/admin/competitions",
-        label: "Kalendar Pertandingan",
-        icon: Trophy,
       },
     ],
   },
   {
     id: "management",
-    title: "5. PENGURUSAN & SISTEM",
+    title: "3. PENGURUSAN KELAB",
     items: [
-      {
-        href: "/admin/clubs",
-        label: "Direktori Kelab",
-        icon: Shield,
-      },
       {
         href: "/admin/clubs/applications",
         label: "Permohonan Kelab",
         icon: FileCheck,
-        badge: 12,
-        badgeVariant: "warning",
       },
       {
-        href: "/admin/subscriptions",
-        label: "Langganan SaaS",
-        icon: CreditCard,
-      },
-      {
-        href: "/admin/knowledge",
-        label: "Knowledge Hub CMS",
-        icon: BookOpen,
-      },
-      {
-        href: "/admin/gamification",
-        label: "Gamifikasi & Lencana",
-        icon: Sparkles,
-      },
-      {
-        href: "/admin/lekir-bot",
-        label: "Lekir Bot AI",
-        icon: Bot,
-      },
-      {
-        href: "/admin/announcements",
-        label: "Pengumuman",
-        icon: Megaphone,
-      },
-      {
-        href: "/admin/settings",
-        label: "Tetapan Sistem",
-        icon: Settings,
+        href: "/admin/clubs",
+        label: "Direktori Kelab",
+        icon: Shield,
       },
     ],
   },
@@ -182,11 +99,13 @@ export function AdminSidebar({
 }: AdminSidebarProps) {
   const pathname = usePathname();
   const state = useAdminState();
+  const [platform] = usePlatformState();
+  const pendingClubsCount = platform.clubs.filter((c) => c.status === "PENDING_APPROVAL").length;
 
   const applicationsBadgeCount =
     propBadgeCount !== undefined
       ? propBadgeCount
-      : state.stats.pendingApplicationsCount;
+      : pendingClubsCount;
 
   return (
     <aside

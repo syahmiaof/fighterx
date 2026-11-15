@@ -162,7 +162,7 @@ export function SilatSeniSection() {
                       : "bg-white/[0.035] backdrop-blur-[8px] border border-white/[0.08] text-[#b5b6bc] hover:bg-white/[0.08] hover:border-white/20 hover:text-white"
                   }`}
                 >
-                  {cat.name}
+                  {locale === "en" ? (cat.nameEn || cat.name) : cat.name}
                 </button>
               );
             })}
@@ -181,30 +181,32 @@ export function SilatSeniSection() {
                 className="text-2xl sm:text-3xl font-display font-bold uppercase text-white mt-0.5"
                 style={{ fontFamily: "var(--font-athletic)" }}
               >
-                {category.name}
+                {locale === "en" ? (category.nameEn || category.name) : category.name}
               </h3>
-              <p className="text-xs text-neutral-400 mt-1">{category.tagline}</p>
+              <p className="text-xs text-neutral-400 mt-1">
+                {locale === "en" ? (category.taglineEn || category.tagline) : category.tagline}
+              </p>
             </div>
 
             <div className="flex flex-wrap items-center gap-3">
               <div className="flex items-center gap-2 rounded-lg bg-white/[0.03] border border-white/[0.06] px-3 py-1.5 text-xs text-[#a5a6ad] backdrop-blur-sm">
                 <Users size={14} className="text-[#ffd24c]" />
-                <span>{category.participants}</span>
+                <span>{locale === "en" ? (category.participantsEn || category.participants) : category.participants}</span>
               </div>
               <div className="flex items-center gap-2 rounded-lg bg-white/[0.03] border border-white/[0.06] px-3 py-1.5 text-xs text-[#a5a6ad] backdrop-blur-sm">
                 <Clock size={14} className="text-[#ff4d5a]" />
-                <span>{locale === "bm" ? "Masa:" : "Duration:"} {category.duration}</span>
+                <span>{locale === "bm" ? "Masa:" : "Duration:"} {locale === "en" ? (category.durationEn || category.duration) : category.duration}</span>
               </div>
             </div>
           </div>
 
           <p className="text-sm text-neutral-300 leading-relaxed max-w-4xl mb-6">
-            {category.overview}
+            {locale === "en" ? (category.overviewEn || category.overview) : category.overview}
           </p>
 
           {/* Highlights */}
           <div className="mb-6 grid grid-cols-1 sm:grid-cols-3 gap-3">
-            {category.highlights.map((h, i) => (
+            {(locale === "en" && category.highlightsEn ? category.highlightsEn : category.highlights).map((h, i) => (
               <div
                 key={i}
                 className="flex items-start gap-2.5 rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 text-xs text-[#d1d1d5] backdrop-blur-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
@@ -236,19 +238,21 @@ export function SilatSeniSection() {
                     <div>
                       <div className="flex items-center justify-between mb-2">
                         <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-[rgba(240,180,40,0.12)] text-[#ffd24c] border border-[rgba(240,180,40,0.35)]">
-                          {phase.range}
+                          {locale === "en" ? (phase.rangeEn || phase.range) : phase.range}
                         </span>
                         <span className="text-xs font-mono font-bold text-neutral-400">
                           {phase.count} {locale === "bm" ? "Gerakan" : "Movements"}
                         </span>
                       </div>
 
-                      <h5 className="text-sm font-bold text-white mb-1">{phase.title}</h5>
+                      <h5 className="text-sm font-bold text-white mb-1">
+                        {locale === "en" ? (phase.titleEn || phase.title) : phase.title}
+                      </h5>
                       <p className="text-[11px] font-semibold text-[#ffd24c]/90 mb-2">
-                        {locale === "bm" ? "Senjata:" : "Weapon:"} {phase.weapon}
+                        {locale === "bm" ? "Senjata:" : "Weapon:"} {locale === "en" ? (phase.weaponEn || phase.weapon) : phase.weapon}
                       </p>
                       <p className="text-xs text-neutral-300 leading-relaxed mb-3">
-                        {phase.description}
+                        {locale === "en" ? (phase.descriptionEn || phase.description) : phase.description}
                       </p>
                     </div>
 
@@ -257,7 +261,7 @@ export function SilatSeniSection() {
                         {locale === "bm" ? "Teknik Kunci:" : "Key Techniques:"}
                       </p>
                       <ul className="text-[11px] text-neutral-300 list-disc pl-4 space-y-0.5">
-                        {phase.keyTechniques.map((tech, tIdx) => (
+                        {(locale === "en" && phase.keyTechniquesEn ? phase.keyTechniquesEn : phase.keyTechniques).map((tech, tIdx) => (
                           <li key={tIdx}>{tech}</li>
                         ))}
                       </ul>
@@ -276,22 +280,26 @@ export function SilatSeniSection() {
               </h4>
               <div className="space-y-3 text-xs text-neutral-300 leading-relaxed">
                 <div className="rounded-lg bg-white/[0.02] p-3 border border-white/[0.06] text-xs text-[#d1d1d5] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
-                  <p className="font-bold text-white mb-1">1. Nilai Kebenaran (Accuracy)</p>
-                  <p>{category.rubrics.kebenaran}</p>
+                  <p className="font-bold text-white mb-1">
+                    {locale === "en" ? "1. Accuracy Standard" : "1. Nilai Kebenaran"}
+                  </p>
+                  <p>{locale === "en" ? (category.rubrics.kebenaranEn || category.rubrics.kebenaran) : category.rubrics.kebenaran}</p>
                 </div>
                 <div className="rounded-lg bg-white/[0.02] p-3 border border-white/[0.06] text-xs text-[#d1d1d5] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
-                  <p className="font-bold text-white mb-1">2. Nilai Kemantapan (Expression &amp; Power)</p>
-                  <p>{category.rubrics.kemantapan}</p>
+                  <p className="font-bold text-white mb-1">
+                    {locale === "en" ? "2. Firmness & Expression" : "2. Nilai Kemantapan & Penghayatan"}
+                  </p>
+                  <p>{locale === "en" ? (category.rubrics.kemantapanEn || category.rubrics.kemantapan) : category.rubrics.kemantapan}</p>
                 </div>
               </div>
             </div>
 
             <div className="rounded-xl border border-red-500/20 bg-[rgba(255,56,69,0.04)] backdrop-blur-[12px] p-5 shadow-[0_4px_20px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,56,69,0.08)]">
               <h4 className="text-xs font-bold uppercase tracking-wider text-[#ff4d5a] flex items-center gap-2 mb-3">
-                <AlertTriangle size={15} /> Peraturan Pemotongan Mata &amp; Penalti
+                <AlertTriangle size={15} /> {locale === "en" ? "Deduction Rules & Penalties" : "Peraturan Pemotongan Mata & Penalti"}
               </h4>
               <ul className="space-y-2 text-xs text-neutral-300">
-                {category.rubrics.deductions.map((deduct, dIdx) => (
+                {(locale === "en" && category.rubrics.deductionsEn ? category.rubrics.deductionsEn : category.rubrics.deductions).map((deduct, dIdx) => (
                   <li key={dIdx} className="flex items-start gap-2">
                     <span className="text-[#ff4d5a] font-bold flex-none">•</span>
                     <span>{deduct}</span>

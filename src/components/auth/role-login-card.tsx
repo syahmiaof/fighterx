@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { ROLE_DESTINATIONS } from "@/lib/auth/auth-contract";
 import type { AppRole } from "@/types/platform";
+import { useLanguage } from "@/lib/i18n";
 
 interface RoleLoginCardProps {
   role: AppRole;
@@ -18,39 +19,50 @@ interface RoleLoginCardProps {
 
 interface RoleConfig {
   role: AppRole;
-  title: string;
+  titleBm: string;
+  titleEn: string;
   icon: typeof User;
   destination: string;
-  targetDashboard: string;
+  targetDashboardBm: string;
+  targetDashboardEn: string;
 }
 
 const ROLE_CONFIGS: Record<AppRole, RoleConfig> = {
   ATHLETE: {
     role: "ATHLETE",
-    title: "Log Masuk Atlet",
+    titleBm: "Log Masuk Atlet",
+    titleEn: "Athlete Sign In",
     icon: User,
     destination: ROLE_DESTINATIONS.ATHLETE,
-    targetDashboard: "Dashboard Atlet",
+    targetDashboardBm: "Dashboard Atlet",
+    targetDashboardEn: "Athlete Dashboard",
   },
   COACH: {
     role: "COACH",
-    title: "Log Masuk Coach",
+    titleBm: "Log Masuk Coach",
+    titleEn: "Coach Sign In",
     icon: ClipboardCheck,
     destination: ROLE_DESTINATIONS.COACH,
-    targetDashboard: "Dashboard Coach",
+    targetDashboardBm: "Dashboard Coach",
+    targetDashboardEn: "Coach Dashboard",
   },
   ADMIN: {
     role: "ADMIN",
-    title: "Log Masuk Admin",
+    titleBm: "Log Masuk Admin",
+    titleEn: "Admin Sign In",
     icon: ShieldCheck,
     destination: ROLE_DESTINATIONS.ADMIN,
-    targetDashboard: "Dashboard Admin",
+    targetDashboardBm: "Dashboard Admin",
+    targetDashboardEn: "Admin Dashboard",
   },
 };
 
 export function RoleLoginCard({ role }: RoleLoginCardProps) {
+  const { locale } = useLanguage();
   const config = ROLE_CONFIGS[role];
   const Icon = config.icon;
+  const title = locale === "en" ? config.titleEn : config.titleBm;
+  const targetDashboard = locale === "en" ? config.targetDashboardEn : config.targetDashboardBm;
 
   function syncSession() {
     try {
@@ -68,7 +80,7 @@ export function RoleLoginCard({ role }: RoleLoginCardProps) {
       <div className="glass-role-back-wrap">
         <Link href="/login" className="glass-role-back">
           <ArrowLeft size={15} aria-hidden="true" />
-          <span>Kembali ke Pemilihan</span>
+          <span>{locale === "bm" ? "Kembali ke Pemilihan" : "Back to Selection"}</span>
         </Link>
       </div>
 
@@ -80,9 +92,9 @@ export function RoleLoginCard({ role }: RoleLoginCardProps) {
             <Icon size={24} strokeWidth={1.9} />
           </div>
           <h1 id="role-login-heading" className="glass-role-title">
-            {config.title}
+            {title}
           </h1>
-          <p className="glass-role-tagline">{config.targetDashboard}</p>
+          <p className="glass-role-tagline">{targetDashboard}</p>
         </div>
 
         {/* Development Bypass Box */}
@@ -93,11 +105,13 @@ export function RoleLoginCard({ role }: RoleLoginCardProps) {
             onClick={syncSession}
           >
             <Zap size={16} aria-hidden="true" className="bypass-zap-icon" />
-            <span>Bypass Masuk</span>
+            <span>{locale === "bm" ? "Pintas Masuk" : "Bypass Login"}</span>
             <ArrowRight size={16} aria-hidden="true" />
           </Link>
           <span className="glass-bypass-hint">
-            Akses terus ke {config.targetDashboard.toLowerCase()}
+            {locale === "bm"
+              ? `Akses terus ke ${targetDashboard.toLowerCase()}`
+              : `Direct access to ${targetDashboard.toLowerCase()}`}
           </span>
         </div>
       </section>

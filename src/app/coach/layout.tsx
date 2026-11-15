@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { CoachProvider } from "@/lib/coach/store";
-import { CoachHeader } from "@/components/coach/layout/coach-header";
+import { PortalHeader } from "@/components/layout/portal-header";
 import { CoachSidebar } from "@/components/coach/layout/coach-sidebar";
 import { CoachMobileBottomNav } from "@/components/coach/layout/coach-mobile-bottom-nav";
 import "./coach.css";
@@ -23,8 +23,8 @@ export default function CoachLayout({
         <div className="coach-backdrop" aria-hidden="true" />
         <div className="coach-smoke-overlay" aria-hidden="true" />
 
-        {/* Global Coach Header */}
-        <CoachHeader />
+        {/* Global Coach Header with Home & Role Switcher */}
+        <PortalHeader role="COACH" userName="Cikgu Farid" clubName="Kelab Silat Harimau Berantai" />
 
         {/* Main Viewport Container */}
         <div className="coach-main-wrapper">

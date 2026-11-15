@@ -1,0 +1,236 @@
+/* ==========================================================================
+   FIGHTERX REGISTER CLUB — CRYSTAL GLASSMORPHISM & MINIMALIST SYSTEM
+   ========================================================================== */
+
+.club-gateway-page {
+  position: relative;
+  isolation: isolate;
+  min-height: calc(100svh - 64px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #08090b;
+  padding-block: 48px;
+}
+
+.club-gateway-page::before {
+  content: "";
+  position: fixed;
+  z-index: -1;
+  inset: 64px 0 0;
+  background: linear-gradient(100deg, rgba(8, 9, 11, 0.88), rgba(8, 9, 11, 0.72) 48%, rgba(8, 9, 11, 0.88)),
+              url('/assets/fighterx/homepage-bg-desktop.webp') center/cover no-repeat;
+  pointer-events: none;
+}
+
+.club-gateway-wrap {
+  width: min(100% - 48px, 980px);
+  margin-inline: auto;
+}
+
+.club-gateway-intro {
+  max-width: 720px;
+  margin: 0 auto 36px;
+  text-align: center;
+}
+
+.club-gateway-eyebrow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 12px;
+  color: #ff3845;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.club-gateway-eyebrow span {
+  width: 28px;
+  height: 1px;
+  background: #f5232b;
+}
+
+.club-gateway-intro .hero-display-title {
+  margin: 0;
+  font-family: var(--font-athletic), sans-serif;
+  font-weight: 700;
+  font-style: italic;
+  font-size: clamp(48px, 6.2vw, 72px);
+  line-height: 0.88;
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
+}
+
+.club-gateway-intro .hero-display-title .title-white {
+  color: #ffffff;
+  text-shadow: 0 2px 0 #aaaab0, 0 4px 0 #66676d, 0 8px 16px rgba(0, 0, 0, 0.7);
+}
+
+.club-gateway-intro .hero-display-title .title-crimson {
+  color: #f51c25;
+  text-shadow: 0 2px 0 #a10a11, 0 4px 0 #65050a, 0 8px 16px rgba(0, 0, 0, 0.7);
+  filter: drop-shadow(0 0 14px rgba(225, 6, 0, 0.45));
+}
+
+.club-gateway-lede {
+  max-width: 580px;
+  margin: 14px auto 0;
+  color: #c5c6ca;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.club-gateway-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+/* Crystal Glass Card */
+.club-gateway-card {
+  position: relative;
+  min-height: 270px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 32px 28px 28px !important;
+  overflow: hidden;
+  border-radius: 14px !important;
+  background: rgba(255, 255, 255, 0.025) !important;
+  backdrop-filter: blur(16px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(160%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.14) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.28s ease,
+              background 0.28s ease !important;
+}
+
+.club-gateway-card:hover {
+  transform: translateY(-4px) !important;
+  background: rgba(255, 255, 255, 0.045) !important;
+  border-color: rgba(255, 56, 69, 0.45) !important;
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.5), 0 0 20px rgba(225, 6, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+}
+
+.club-gateway-card-top {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.club-gateway-icon {
+  width: 50px !important;
+  height: 50px !important;
+  border-radius: 50% !important;
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  display: grid;
+  place-items: center;
+  color: #ff474f !important;
+  transition: border-color 0.22s ease, background 0.22s ease, color 0.22s ease, box-shadow 0.22s ease;
+}
+
+.club-gateway-card:hover .club-gateway-icon {
+  border-color: rgba(255, 56, 69, 0.55) !important;
+  background: rgba(225, 6, 0, 0.16) !important;
+  box-shadow: 0 0 16px rgba(225, 6, 0, 0.3);
+}
+
+.club-gateway-kicker {
+  color: #a1a1aa !important;
+  font-size: 10px !important;
+  font-weight: 750 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase;
+}
+
+.club-gateway-card h2 {
+  margin: 20px 0 8px !important;
+  font-family: var(--font-athletic), sans-serif !important;
+  font-weight: 700 !important;
+  font-style: italic !important;
+  font-size: 32px !important;
+  line-height: 1 !important;
+  letter-spacing: 0.02em !important;
+  color: #ffffff !important;
+  text-transform: uppercase;
+}
+
+.club-gateway-card > p {
+  max-width: 380px !important;
+  margin: 0 !important;
+  color: #a1a1aa !important;
+  font-size: 13px !important;
+  line-height: 1.6 !important;
+}
+
+.club-gateway-action {
+  min-height: 46px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  margin-top: auto !important;
+  padding: 0 20px !important;
+  border-radius: 8px !important;
+  font-family: var(--font-ui), Arial, sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 13px !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase;
+  text-decoration: none !important;
+  cursor: pointer;
+  transition: all 0.2s ease !important;
+}
+
+.club-gateway-action-primary {
+  background: #e10600 !important;
+  border: 1px solid #ff3845 !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 18px rgba(225, 6, 0, 0.35) !important;
+}
+
+.club-gateway-action-primary:hover {
+  background: #ff1f27 !important;
+  box-shadow: 0 6px 24px rgba(225, 6, 0, 0.5) !important;
+  transform: translateY(-2px) !important;
+}
+
+.club-gateway-action-secondary {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  color: #ffffff !important;
+}
+
+.club-gateway-action-secondary:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.25) !important;
+  transform: translateY(-2px) !important;
+}
+
+.club-gateway-boundary {
+  max-width: 680px;
+  margin: 24px auto 0;
+  color: #71717a;
+  font-size: 11px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+@media (max-width: 760px) {
+  .club-gateway-options {
+    grid-template-columns: 1fr;
+    max-width: 420px;
+    margin-inline: auto;
+  }
+}

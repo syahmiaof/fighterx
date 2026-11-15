@@ -116,32 +116,43 @@ export interface KnowledgeArticle {
   id: string;
   slug: string;
   title: string;
+  titleEn?: string;
   subtitle: string;
+  subtitleEn?: string;
   category: KnowledgeCategory;
   categoryLabel: string;
+  categoryLabelEn?: string;
   readTime: string;
+  readTimeEn?: string;
   publishedDate: string;
   reviewedBy: string;
+  reviewedByEn?: string;
   summary: string;
+  summaryEn?: string;
   fieldProblem?: string;
+  fieldProblemEn?: string;
   scientificSolution?: string;
+  scientificSolutionEn?: string;
   actionStepToday?: string;
+  actionStepTodayEn?: string;
   officialLinks?: OfficialCitationLink[];
   keyTakeaways: string[];
+  keyTakeawaysEn?: string[];
   sections: ArticleSection[];
+  sectionsEn?: ArticleSection[];
   citations: ScientificCitation[];
   interactiveTool?: "periodization" | "weight-cut" | "sweat-rate" | "stakeholder";
   featured?: boolean;
 }
 
-export const CATEGORIES: { id: KnowledgeCategory; label: string; count: number; icon: string }[] = [
-  { id: "all", label: "Semua Topik", count: 8, icon: "Layers" },
-  { id: "periodization", label: "Periodisasi & Latihan", count: 1, icon: "CalendarDays" },
-  { id: "conditioning", label: "Kecergasan & Mobiliti", count: 1, icon: "Zap" },
-  { id: "nutrition", label: "Nutrisi & Hidrasi", count: 1, icon: "Apple" },
-  { id: "weight-management", label: "Pengurusan Berat Badan", count: 1, icon: "Scale" },
-  { id: "recovery", label: "Pemulihan & Tidur", count: 1, icon: "Moon" },
-  { id: "stakeholders", label: "Panduan Stakeholder", count: 3, icon: "Users" },
+export const CATEGORIES: { id: KnowledgeCategory; label: string; labelEn: string; count: number; icon: string }[] = [
+  { id: "all", label: "Semua Topik", labelEn: "All Topics", count: 8, icon: "Layers" },
+  { id: "periodization", label: "Periodisasi & Latihan", labelEn: "Periodisation & Training", count: 1, icon: "CalendarDays" },
+  { id: "conditioning", label: "Kecergasan & Mobiliti", labelEn: "Conditioning & Mobility", count: 1, icon: "Zap" },
+  { id: "nutrition", label: "Nutrisi & Hidrasi", labelEn: "Nutrition & Hydration", count: 1, icon: "Apple" },
+  { id: "weight-management", label: "Pengurusan Berat Badan", labelEn: "Weight Management", count: 1, icon: "Scale" },
+  { id: "recovery", label: "Pemulihan & Tidur", labelEn: "Recovery & Sleep", count: 1, icon: "Moon" },
+  { id: "stakeholders", label: "Panduan Stakeholder", labelEn: "Stakeholder Guides", count: 3, icon: "Users" },
 ];
 
 export const SCIENTIFIC_CITATIONS: ScientificCitation[] = [

@@ -37,7 +37,7 @@ const foundingBodies = [
 ];
 
 export function PesakaRecognition() {
-  const { d } = useLanguage();
+  const { d, locale } = useLanguage();
   return (
     <section
       className="relative z-10 py-14 md:py-20 bg-black/25 backdrop-blur-[2px] border-b border-[#26272C]/40 overflow-hidden"
@@ -57,7 +57,9 @@ export function PesakaRecognition() {
             {d.home.pesaka.title}
           </h2>
           <p className="text-xs sm:text-sm text-[#96989F] mt-2 max-w-xl mx-auto leading-relaxed">
-            Platform pengurusan latihan silat yang berlandaskan tatakelola kebangsaan PESAKA Malaysia dan piawaian antarabangsa PERSILAT.
+            {locale === "bm"
+              ? "Platform pengurusan latihan silat yang berlandaskan tatakelola kebangsaan PESAKA Malaysia dan piawaian antarabangsa PERSILAT."
+              : "Silat training management platform grounded in PESAKA Malaysia national governance and PERSILAT international standards."}
           </p>
         </div>
 
@@ -77,13 +79,13 @@ export function PesakaRecognition() {
                 />
               </div>
               <span className="px-3 py-1 rounded-full border border-[#FF3845]/40 bg-[#FF3845]/10 text-[#FF3845] text-[10px] font-bold tracking-wider uppercase">
-                Badan Induk Rasmi
+                {locale === "bm" ? "Badan Induk Rasmi" : "Official Governing Body"}
               </span>
               <h3 className="text-base sm:text-lg font-bold text-white mt-2">
                 PESAKA MALAYSIA
               </h3>
               <p className="text-[11px] font-mono text-[#8C8E97] mt-0.5">
-                Dinaungi KBS, MSN &amp; MOM
+                {locale === "bm" ? "Dinaungi KBS, MSN & MOM" : "Under KBS, MSN & MOM Governance"}
               </p>
             </div>
 
@@ -92,13 +94,21 @@ export function PesakaRecognition() {
               <div>
                 <div className="flex items-center gap-2 text-xs font-semibold text-[#FF3845] uppercase tracking-wider mb-2">
                   <ShieldCheck size={16} />
-                  <span>Jaminan Piawaian &amp; Keselarasan Kurikulum</span>
+                  <span>
+                    {locale === "bm"
+                      ? "Jaminan Piawaian & Keselarasan Kurikulum"
+                      : "Guaranteed Standards & Curriculum Alignment"}
+                  </span>
                 </div>
                 <h3 className="text-2xl sm:text-3xl font-bold font-athletic text-white tracking-wide uppercase mb-3">
-                  Sokongan Penuh Terhadap Ekosistem Digital Pesilat
+                  {locale === "bm"
+                    ? "Sokongan Penuh Terhadap Ekosistem Digital Pesilat"
+                    : "Full Support for the Digital Silat Ecosystem"}
                 </h3>
                 <p className="text-xs sm:text-sm text-[#C5C6CA] leading-relaxed mb-5 italic border-l-2 border-[#FF3845] pl-3.5">
-                  &ldquo;Pembangunan pesilat berdaya saing di peringkat dunia menuntut sinergi padu antara disiplin warisan pendekar dan aplikasi teknologi sains sukan semasa. FighterX membuka lembaran baharu pengesahan bakat dan ketelusan prestasi silat negara.&rdquo;
+                  {locale === "bm"
+                    ? "“Pembangunan pesilat berdaya saing di peringkat dunia menuntut sinergi padu antara disiplin warisan pendekar dan aplikasi teknologi sains sukan semasa. FighterX membuka lembaran baharu pengesahan bakat dan ketelusan prestasi silat negara.”"
+                    : "“Developing globally competitive exponents demands synergistic harmony between warrior heritage discipline and modern sports science technologies. FighterX marks a transformative chapter in authentic talent accreditation and national silat performance transparency.”"}
                 </p>
 
                 {/* 3 Status Pills */}
@@ -145,7 +155,7 @@ export function PesakaRecognition() {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6">
             <div>
               <p className="text-[10px] font-mono font-bold tracking-widest text-[#FF3845] uppercase">
-                TONGGAK SEJARAH PERSILATAN NEGARA
+                {locale === "bm" ? "TONGGAK SEJARAH PERSILATAN NEGARA" : "HISTORICAL PILLARS OF NATIONAL SILAT"}
               </p>
               <h3 className="text-xl sm:text-2xl font-bold font-athletic text-white tracking-wide uppercase">
                 {d.home.pesaka.fourFoundersTitle}
@@ -155,7 +165,7 @@ export function PesakaRecognition() {
               href="/associations"
               className="text-xs font-semibold text-[#8C8E97] hover:text-white inline-flex items-center gap-1 transition-colors"
             >
-              <span>Lihat Semua 26 Persatuan</span>
+              <span>{locale === "bm" ? "Lihat Semua 26 Persatuan" : "View All 26 Associations"}</span>
               <ArrowRight size={13} />
             </Link>
           </div>
@@ -193,7 +203,7 @@ export function PesakaRecognition() {
 
                 {/* Metadata Line */}
                 <div className="mt-4 pt-3 border-t border-white/10 w-full text-[10px] font-mono text-[#71737B] flex justify-between">
-                  <span>Asal Penubuhan</span>
+                  <span>{locale === "bm" ? "Asal Penubuhan" : "Established"}</span>
                   <span className="text-[#C5C6CA] font-bold">{body.est}</span>
                 </div>
               </div>

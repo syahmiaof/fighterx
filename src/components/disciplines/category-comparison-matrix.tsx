@@ -180,7 +180,7 @@ export function CategoryComparisonMatrix() {
                   {idx + 1}
                 </span>
                 <h3 className="text-sm font-bold uppercase tracking-wider text-white">
-                  {item.feature}
+                  {locale === "en" ? (item.featureEn || item.feature) : item.feature}
                 </h3>
               </div>
 
@@ -194,7 +194,7 @@ export function CategoryComparisonMatrix() {
                       </span>
                     </div>
                     <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed">
-                      {item.seni}
+                      {locale === "en" ? (item.seniEn || item.seni) : item.seni}
                     </p>
                   </div>
                 )}
@@ -208,7 +208,7 @@ export function CategoryComparisonMatrix() {
                       </span>
                     </div>
                     <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed">
-                      {item.olahraga}
+                      {locale === "en" ? (item.olahragaEn || item.olahraga) : item.olahraga}
                     </p>
                   </div>
                 )}

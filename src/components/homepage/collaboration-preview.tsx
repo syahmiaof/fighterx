@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useLanguage } from "@/lib/i18n";
 
 export function CollaborationPreview() {
-  const { d } = useLanguage();
+  const { d, locale } = useLanguage();
   return (
     <section
       className="relative z-10 py-8 sm:py-10 md:py-12 bg-black/35 backdrop-blur-[2px] border-b border-[#26272C]/40 overflow-hidden"
@@ -51,7 +51,9 @@ export function CollaborationPreview() {
                 <span className="text-xs font-semibold tracking-wide text-white">Fifty7K</span>
               </div>
               <p className="text-[11px] text-[#96989F] max-w-xs mt-0.5">
-                Inovasi fabrik aerodinamik dan jersi latihan silat moden berprestasi tinggi.
+                {locale === "bm"
+                  ? "Inovasi fabrik aerodinamik dan jersi latihan silat moden berprestasi tinggi."
+                  : "Aerodynamic performance fabrics and modern high-performance silat training wear."}
               </p>
             </div>
           </div>
@@ -76,7 +78,9 @@ export function CollaborationPreview() {
                 <span className="text-xs font-semibold tracking-wide text-white">Jiwa Fighter</span>
               </div>
               <p className="text-[11px] text-[#96989F] max-w-xs mt-0.5">
-                Kelengkapan perlindungan tempur silat standard PERSILAT 2026.
+                {locale === "bm"
+                  ? "Kelengkapan perlindungan tempur silat standard PERSILAT 2026."
+                  : "Combat protective gear certified to PERSILAT 2026 international standards."}
               </p>
             </div>
           </div>

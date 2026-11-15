@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./admin.css";
 import { AdminProvider } from "@/lib/admin/store";
 import { AdminRouteGuard } from "@/lib/admin/guard";
-import { AdminHeader } from "@/components/admin/layout/admin-header";
+import { PortalHeader } from "@/components/layout/portal-header";
 import { AdminSidebar } from "@/components/admin/layout/admin-sidebar";
 import { AdminMobileNav } from "@/components/admin/layout/admin-mobile-nav";
 
@@ -29,7 +29,7 @@ export default function AdminLayout({
 
           {/* Universal Desktop Top Header (>= 1024px) */}
           <div className="hidden lg:block relative z-30">
-            <AdminHeader />
+            <PortalHeader role="ADMIN" userName="Pentadbir Utama" clubName="Ibu Pejabat Kebangsaan FighterX" />
           </div>
 
           {/* Mobile Top Header & Drawer Navigation (< 1024px) */}

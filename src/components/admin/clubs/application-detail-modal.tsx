@@ -5,6 +5,7 @@ import type { ClubApplication, ApplicationStatus } from "@/lib/admin/types";
 import { AdminModal } from "@/components/admin/ui/admin-modal";
 import { AdminButton } from "@/components/admin/ui/admin-button";
 import { AdminBadge, type AdminBadgeVariant } from "@/components/admin/ui/admin-badge";
+import { platformStore } from "@/lib/platform/platform-state";
 import {
   Building2,
   User,
@@ -87,6 +88,11 @@ function ApplicationDetailInner({
         ];
 
     const res = onReview(application.id, "APPROVED", notes);
+    try {
+      platformStore.approveClub(application.id);
+    } catch {
+      // ignore
+    }
     setSubmitting(false);
     if (res.success) {
       setActionFeedback({

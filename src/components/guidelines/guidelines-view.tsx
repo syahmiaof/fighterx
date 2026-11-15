@@ -56,6 +56,7 @@ function SectionTitle({
 
 export function GuidelinesView() {
   const { d, locale } = useLanguage();
+  const isEn = locale === "en";
 
   const quickRules = [
     {
@@ -213,10 +214,10 @@ export function GuidelinesView() {
                   aria-hidden="true"
                 />
                 <Image
-                  src="/assets/fighterx/referee-waist-large.png"
+                  src="/assets/fighterx/guidelines-referee-waist-up.png"
                   alt="Wasit Silat Antarabangsa PERSILAT"
-                  width={500}
-                  height={445}
+                  width={600}
+                  height={492}
                   priority
                   className="relative z-10 object-contain h-full w-auto max-h-[470px] drop-shadow-[0_20px_35px_rgba(0,0,0,0.85)] filter contrast-[1.05]"
                 />
@@ -235,9 +236,13 @@ export function GuidelinesView() {
           {/* SECTION 1: 4 QUICK RULES CARDS */}
           <section id="teras-peraturan" className="mb-16 scroll-mt-24">
             <SectionTitle
-              badge="RINGKASAN TEKNIKAL"
-              title="4 Tunjang Utama Peraturan Tanding"
-              subtitle="Piawaian rasmi yang wajib difahami setiap pesilat, jurulatih dan wasit sebelum melangkah masuk ke gelanggang."
+              badge={isEn ? "TECHNICAL SUMMARY" : "RINGKASAN TEKNIKAL"}
+              title={isEn ? "4 Core Pillars of Tanding Rules" : "4 Tunjang Utama Peraturan Tanding"}
+              subtitle={
+                isEn
+                  ? "Official standards every athlete, coach, and referee must master before stepping onto the arena mat."
+                  : "Piawaian rasmi yang wajib difahami setiap pesilat, jurulatih dan wasit sebelum melangkah masuk ke gelanggang."
+              }
             />
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 guidelines-card-grid">
@@ -276,16 +281,20 @@ export function GuidelinesView() {
           {/* SECTION 2: 2 COMPETITION FORMATS */}
           <section id="format-pertandingan" className="mb-16 scroll-mt-24">
             <SectionTitle
-              badge="DUA DISIPLIN"
-              title="Format Pertandingan: Tanding vs. Seni"
-              subtitle="Perbezaan objektif teknikal, masa bersih, dan kriteria penilaian antara sukan kombat dan seni jurus."
+              badge={isEn ? "TWO DISCIPLINES" : "DUA DISIPLIN"}
+              title={isEn ? "Competition Formats: Tanding vs. Seni" : "Format Pertandingan: Tanding vs. Seni"}
+              subtitle={
+                isEn
+                  ? "Technical differences, clean time, and judging rubrics between combat sparring and artistic forms."
+                  : "Perbezaan objektif teknikal, masa bersih, dan kriteria penilaian antara sukan kombat dan seni jurus."
+              }
             />
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 guidelines-card-grid">
               {/* Tanding Card */}
               <div className="guidelines-card rounded-[14px] sm:rounded-2xl border border-white/[0.08] bg-white/[0.025] p-6 sm:p-7 backdrop-blur-[16px] shadow-[0_8px_32px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.06)]">
                 <span className="text-[10px] font-mono text-[#ff4d5a] font-bold uppercase tracking-widest block mb-2">
-                  DISIPLIN KOMBAT
+                  {isEn ? "COMBAT DISCIPLINE" : "DISIPLIN KOMBAT"}
                 </span>
                 <h3 className="text-2xl font-bold font-athletic text-white uppercase mb-4">
                   {d.guidelines.formats.tandingTitle}
@@ -309,7 +318,7 @@ export function GuidelinesView() {
               {/* Seni Card */}
               <div className="guidelines-card rounded-[14px] sm:rounded-2xl border border-white/[0.08] bg-white/[0.025] p-6 sm:p-7 backdrop-blur-[16px] shadow-[0_8px_32px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.06)]">
                 <span className="text-[10px] font-mono text-[#ffd24c] font-bold uppercase tracking-widest block mb-2">
-                  DISIPLIN ARTISTIK
+                  {isEn ? "ARTISTIC DISCIPLINE" : "DISIPLIN ARTISTIK"}
                 </span>
                 <h3 className="text-2xl font-bold font-athletic text-white uppercase mb-4">
                   {d.guidelines.formats.seniTitle}
@@ -335,7 +344,7 @@ export function GuidelinesView() {
           {/* SECTION 2B: MATCH FLOW STEPS */}
           <section id="aliran-perlawanan" className="mb-16 scroll-mt-24">
             <SectionTitle
-              badge="ALIRAN PERLAWANAN"
+              badge={isEn ? "MATCH FLOW" : "ALIRAN PERLAWANAN"}
               title={d.guidelines.flow.title}
               subtitle={d.guidelines.flow.subtitle}
             />
@@ -368,7 +377,7 @@ export function GuidelinesView() {
           {/* SECTION 3: INTERACTIVE SIMULATORS */}
           <section id="simulators" className="mb-16 scroll-mt-24">
             <SectionTitle
-              badge="ALAT INTERAKTIF"
+              badge={isEn ? "INTERACTIVE TOOLS" : "ALAT INTERAKTIF"}
               title={d.guidelines.calculators.title}
               subtitle={d.guidelines.calculators.subtitle}
             />
@@ -386,7 +395,7 @@ export function GuidelinesView() {
           {/* SECTION 4: DOS & DON'TS */}
           <section id="zon-sasaran" className="mb-16 scroll-mt-24">
             <SectionTitle
-              badge="TATATERTIB GELANGGANG"
+              badge={isEn ? "ARENA CONDUCT" : "TATATERTIB GELANGGANG"}
               title={d.guidelines.dosAndDonts.title}
               subtitle={d.guidelines.dosAndDonts.subtitle}
             />
@@ -400,7 +409,7 @@ export function GuidelinesView() {
                   </div>
                   <div>
                     <span className="text-[10px] font-mono font-bold tracking-wider text-emerald-400 uppercase block">
-                      TINDAKAN SAH
+                      {isEn ? "LEGAL ACTIONS" : "TINDAKAN SAH"}
                     </span>
                     <h3 className="text-xl font-bold text-white font-athletic uppercase">
                       {d.guidelines.dosAndDonts.legalTitle}
@@ -426,7 +435,7 @@ export function GuidelinesView() {
                   </div>
                   <div>
                     <span className="text-[10px] font-mono font-bold tracking-wider text-[#ff4d5a] uppercase block">
-                      PELANGGARAN KERAS
+                      {isEn ? "SEVERE FOULS" : "PELANGGARAN KERAS"}
                     </span>
                     <h3 className="text-xl font-bold text-white font-athletic uppercase">
                       {d.guidelines.dosAndDonts.illegalTitle}
@@ -449,46 +458,70 @@ export function GuidelinesView() {
           {/* SECTION 5: PENALTY LADDER */}
           <section id="tatatertib-wasit" className="mb-16 scroll-mt-24">
             <SectionTitle
-              badge="TINDAKAN WASIT"
+              badge={isEn ? "REFEREE ACTIONS" : "TINDAKAN WASIT"}
               title={d.guidelines.penalties.title}
               subtitle={d.guidelines.penalties.subtitle}
             />
 
             <div className="guidelines-motion-item rounded-[14px] sm:rounded-2xl border border-white/[0.08] bg-white/[0.025] p-5 sm:p-7 backdrop-blur-[16px] shadow-[0_8px_32px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.06)]">
               <h3 className="text-lg font-bold text-white font-athletic uppercase mb-4">
-                Tangga Potongan Mata Tanding PERSILAT 2026
+                {isEn ? "PERSILAT 2026 Tanding Penalty Points Ladder" : "Tangga Potongan Mata Tanding PERSILAT 2026"}
               </h3>
 
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-6 guidelines-motion-chips">
                 <div className="guidelines-card p-3.5 rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.05] backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] text-center transition-all">
-                  <span className="text-[9px] font-bold tracking-wider text-[#A6A7AD] uppercase block">BIMBINGAN</span>
+                  <span className="text-[9px] font-bold tracking-wider text-[#A6A7AD] uppercase block">
+                    {isEn ? "CAUTION" : "BIMBINGAN"}
+                  </span>
                   <div className="font-athletic text-2xl font-bold text-white my-1">0 pts</div>
-                  <small className="text-[10px] text-[#A6A7AD] block">Verbal caution</small>
+                  <small className="text-[10px] text-[#A6A7AD] block">
+                    {isEn ? "Verbal caution" : "Bimbingan lisan"}
+                  </small>
                 </div>
                 <div className="guidelines-card p-3.5 rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.05] backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] text-center transition-all">
-                  <span className="text-[9px] font-bold tracking-wider text-[#ffd24c] uppercase block">TEGURAN I</span>
+                  <span className="text-[9px] font-bold tracking-wider text-[#ffd24c] uppercase block">
+                    {isEn ? "REPRIMAND I" : "TEGURAN I"}
+                  </span>
                   <div className="font-athletic text-2xl font-bold text-[#ffd24c] my-1">−1 pt</div>
-                  <small className="text-[10px] text-[#A6A7AD] block">Minor foul</small>
+                  <small className="text-[10px] text-[#A6A7AD] block">
+                    {isEn ? "Minor foul" : "Kesalahan ringan"}
+                  </small>
                 </div>
                 <div className="guidelines-card p-3.5 rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.05] backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] text-center transition-all">
-                  <span className="text-[9px] font-bold tracking-wider text-[#ffd24c] uppercase block">TEGURAN II</span>
+                  <span className="text-[9px] font-bold tracking-wider text-[#ffd24c] uppercase block">
+                    {isEn ? "REPRIMAND II" : "TEGURAN II"}
+                  </span>
                   <div className="font-athletic text-2xl font-bold text-[#ffd24c] my-1">−2 pts</div>
-                  <small className="text-[10px] text-[#A6A7AD] block">Second foul</small>
+                  <small className="text-[10px] text-[#A6A7AD] block">
+                    {isEn ? "Second foul" : "Kesalahan kedua"}
+                  </small>
                 </div>
                 <div className="guidelines-card p-3.5 rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.05] backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] text-center transition-all">
-                  <span className="text-[9px] font-bold tracking-wider text-[#ff9e42] uppercase block">PERINGATAN I</span>
+                  <span className="text-[9px] font-bold tracking-wider text-[#ff9e42] uppercase block">
+                    {isEn ? "WARNING I" : "PERINGATAN I"}
+                  </span>
                   <div className="font-athletic text-2xl font-bold text-[#ff9e42] my-1">−5 pts</div>
-                  <small className="text-[10px] text-[#A6A7AD] block">Tactical foul</small>
+                  <small className="text-[10px] text-[#A6A7AD] block">
+                    {isEn ? "Tactical foul" : "Kesalahan taktikal"}
+                  </small>
                 </div>
                 <div className="guidelines-card p-3.5 rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.05] backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] text-center transition-all">
-                  <span className="text-[9px] font-bold tracking-wider text-[#ff6b76] uppercase block">PERINGATAN II</span>
+                  <span className="text-[9px] font-bold tracking-wider text-[#ff6b76] uppercase block">
+                    {isEn ? "WARNING II" : "PERINGATAN II"}
+                  </span>
                   <div className="font-athletic text-2xl font-bold text-[#ff6b76] my-1">−10 pts</div>
-                  <small className="text-[10px] text-[#A6A7AD] block">Final warning</small>
+                  <small className="text-[10px] text-[#A6A7AD] block">
+                    {isEn ? "Final warning" : "Amaran keras"}
+                  </small>
                 </div>
                 <div className="guidelines-card p-3.5 rounded-xl border border-[rgba(255,56,69,0.4)] bg-[rgba(255,56,69,0.08)] hover:bg-[rgba(255,56,69,0.12)] backdrop-blur-md text-center shadow-[0_0_20px_rgba(225,6,0,0.15),inset_0_1px_0_rgba(255,255,255,0.08)] transition-all">
-                  <span className="text-[9px] font-bold tracking-wider text-[#ff8088] uppercase block">PERINGATAN III</span>
+                  <span className="text-[9px] font-bold tracking-wider text-[#ff8088] uppercase block">
+                    {isEn ? "WARNING III" : "PERINGATAN III"}
+                  </span>
                   <div className="font-athletic text-2xl font-extrabold text-[#ff4d5a] my-1">DQ</div>
-                  <small className="text-[10px] text-[#ff8088] block font-semibold">Disqualified</small>
+                  <small className="text-[10px] text-[#ff8088] block font-semibold">
+                    {isEn ? "Disqualified" : "Dibatalkan (DQ)"}
+                  </small>
                 </div>
               </div>
 
@@ -510,9 +543,13 @@ export function GuidelinesView() {
           {/* SECTION 6: RULEBOOK EXPLORER */}
           <section id="carian-peraturan" className="mb-16 scroll-mt-24">
             <SectionTitle
-              badge="PANGKALAN DATA PERSILAT"
-              title="Carian Peraturan Kejohanan &amp; Kelas Berat"
-              subtitle="Cari secara pantas mana-mana ketetapan undang-undang, protokol kad protes VAR, dan jadual had berat rasmi."
+              badge={isEn ? "PERSILAT DATABASE" : "PANGKALAN DATA PERSILAT"}
+              title={isEn ? "Tournament Rules & Weight Class Search" : "Carian Peraturan Kejohanan &amp; Kelas Berat"}
+              subtitle={
+                isEn
+                  ? "Search official regulations, VAR protest card protocols, and official weight division tables."
+                  : "Cari secara pantas mana-mana ketetapan undang-undang, protokol kad protes VAR, dan jadual had berat rasmi."
+              }
             />
             <div className="guidelines-motion-item">
               <RulebookExplorer />
@@ -522,7 +559,7 @@ export function GuidelinesView() {
           {/* SECTION 7: CHECKLIST */}
           <section id="senarai-semak" className="mb-16 scroll-mt-24">
             <SectionTitle
-              badge="SENARAI SEMAK GELANGGANG"
+              badge={isEn ? "ARENA CHECKLIST" : "SENARAI SEMAK GELANGGANG"}
               title={d.guidelines.checklist.title}
               subtitle={d.guidelines.checklist.subtitle}
             />
@@ -532,7 +569,7 @@ export function GuidelinesView() {
               <div className="guidelines-card rounded-[14px] sm:rounded-2xl border border-white/[0.08] bg-white/[0.025] hover:bg-white/[0.035] hover:border-white/[0.15] p-5 sm:p-7 backdrop-blur-[16px] shadow-[0_8px_32px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.06)] transition-all">
                 <div className="flex items-center gap-2 mb-4 pb-3 border-b border-white/[0.08]">
                   <span className="text-xs font-mono text-[#ff4d5a] font-bold uppercase">
-                    UNTUK ATLET
+                    {isEn ? "FOR ATHLETES" : "UNTUK ATLET"}
                   </span>
                   <h3 className="text-lg font-bold text-white font-athletic uppercase">
                     {d.guidelines.checklist.athleteTab}
@@ -542,23 +579,43 @@ export function GuidelinesView() {
                 <ul className="space-y-2.5 text-xs text-slate-300">
                   <li className="flex items-start gap-2">
                     <Check size={14} className="text-emerald-400 shrink-0 mt-0.5" />
-                    <span>Bawa kad pengenalan (MyKad) atau pasport asal untuk pengesahan identiti dan umur.</span>
+                    <span>
+                      {isEn
+                        ? "Bring original identity card (MyKad) or passport for identity and age verification."
+                        : "Bawa kad pengenalan (MyKad) atau pasport asal untuk pengesahan identiti dan umur."}
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <Check size={14} className="text-emerald-400 shrink-0 mt-0.5" />
-                    <span>Sediakan sijil perubatan sah. Atlet wanita Senior &amp; Junior wajib deklarasi tidak hamil.</span>
+                    <span>
+                      {isEn
+                        ? "Prepare valid medical certificate. Senior & Junior female athletes must declare non-pregnancy."
+                        : "Sediakan sijil perubatan sah. Atlet wanita Senior & Junior wajib deklarasi tidak hamil."}
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <Check size={14} className="text-emerald-400 shrink-0 mt-0.5" />
-                    <span>Wajib timbang berat setiap pagi perlawanan; tiada sebarang toleransi berat (0.00 kg).</span>
+                    <span>
+                      {isEn
+                        ? "Mandatory weigh-in every morning of the match; zero weight tolerance (0.00 kg)."
+                        : "Wajib timbang berat setiap pagi perlawanan; tiada sebarang toleransi berat (0.00 kg)."}
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <Check size={14} className="text-emerald-400 shrink-0 mt-0.5" />
-                    <span>Gunakan pelindung kemaluan (groin guard), pelindung tulang kering (shin guards), dan mouthguard jika berpendakap gigi.</span>
+                    <span>
+                      {isEn
+                        ? "Use mandatory groin guard, shin guards, and mouthguard (especially if wearing dental braces)."
+                        : "Gunakan pelindung kemaluan (groin guard), pelindung tulang kering (shin guards), dan mouthguard jika berpendakap gigi."}
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <Check size={14} className="text-emerald-400 shrink-0 mt-0.5" />
-                    <span>Kuku mesti pendek; sebarang taping jari mesti mendapat kebenaran doktor kejohanan.</span>
+                    <span>
+                      {isEn
+                        ? "Nails must be cut short; any finger taping requires tournament doctor authorization."
+                        : "Kuku mesti pendek; sebarang taping jari mesti mendapat kebenaran doktor kejohanan."}
+                    </span>
                   </li>
                 </ul>
               </div>
@@ -567,7 +624,7 @@ export function GuidelinesView() {
               <div className="guidelines-card rounded-[14px] sm:rounded-2xl border border-white/[0.08] bg-white/[0.025] hover:bg-white/[0.035] hover:border-white/[0.15] p-5 sm:p-7 backdrop-blur-[16px] shadow-[0_8px_32px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.06)] transition-all">
                 <div className="flex items-center gap-2 mb-4 pb-3 border-b border-white/[0.08]">
                   <span className="text-xs font-mono text-[#ffd24c] font-bold uppercase">
-                    UNTUK JURULATIH
+                    {isEn ? "FOR COACHES" : "UNTUK JURULATIH"}
                   </span>
                   <h3 className="text-lg font-bold text-white font-athletic uppercase">
                     {d.guidelines.checklist.coachTab}
@@ -577,23 +634,47 @@ export function GuidelinesView() {
                 <ul className="space-y-2.5 text-xs text-slate-300">
                   <li className="flex items-start gap-2">
                     <Check size={14} className="text-emerald-400 shrink-0 mt-0.5" />
-                    <span>Maksimum 2 jurulatih bertauliah di sudut Tanding berpakaian seragam hitam rasmi silat.</span>
+                    <span>
+                      {isEn
+                        ? "Maximum 2 certified coaches in Tanding corner wearing official black silat uniform."
+                        : "Maksimum 2 jurulatih bertauliah di sudut Tanding berpakaian seragam hitam rasmi silat."}
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <Check size={14} className="text-emerald-400 shrink-0 mt-0.5" />
-                    <span>Arahan teknikal hanya boleh disampaikan ketika rehat 1 minit antara pusingan.</span>
+                    <span>
+                      {isEn
+                        ? "Technical instructions may only be communicated during the 1-minute rest interval between rounds."
+                        : "Arahan teknikal hanya boleh disampaikan ketika rehat 1 minit antara pusingan."}
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <Check size={14} className="text-emerald-400 shrink-0 mt-0.5" />
-                    <span><strong>Tanding VAR:</strong> 2 kad protes setiap perlawanan (3 pusingan); kad dipulangkan jika semakan video berjaya.</span>
+                    <span>
+                      {isEn ? (
+                        <><strong>Tanding VAR:</strong> 2 protest cards per match (3 rounds); card returned if video review is successful.</>
+                      ) : (
+                        <><strong>Tanding VAR:</strong> 2 kad protes setiap perlawanan (3 pusingan); kad dipulangkan jika semakan video berjaya.</>
+                      )}
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <Check size={14} className="text-emerald-400 shrink-0 mt-0.5" />
-                    <span><strong>Jurus VAR:</strong> 1 kad protes bagi setiap persembahan sebelum pemenang diumumkan; hanya untuk semakan fakta hukuman.</span>
+                    <span>
+                      {isEn ? (
+                        <><strong>Jurus VAR:</strong> 1 protest card per performance before winner is declared; fact-checking penalties only.</>
+                      ) : (
+                        <><strong>Jurus VAR:</strong> 1 kad protes bagi setiap persembahan sebelum pemenang diumumkan; hanya untuk semakan fakta hukuman.</>
+                      )}
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <Check size={14} className="text-emerald-400 shrink-0 mt-0.5" />
-                    <span>Kad mesti diangkat serta-merta selepas kejadian sebelum perlawanan dimulakan semula dengan arahan MULAI.</span>
+                    <span>
+                      {isEn
+                        ? "Cards must be raised immediately following incident before bout restarts with MULAI command."
+                        : "Kad mesti diangkat serta-merta selepas kejadian sebelum perlawanan dimulakan semula dengan arahan MULAI."}
+                    </span>
                   </li>
                 </ul>
               </div>
@@ -613,13 +694,15 @@ export function GuidelinesView() {
               </div>
               <div>
                 <span className="text-[10px] font-mono text-[#ff4d5a] font-bold tracking-wider uppercase block">
-                  SUMBER &amp; SKOP RASMI
+                  {isEn ? "OFFICIAL SOURCE & SCOPE" : "SUMBER & SKOP RASMI"}
                 </span>
                 <h4 className="text-sm font-bold text-white font-athletic uppercase">
                   International Pencak Silat Competition Regulations Year 2026
                 </h4>
                 <p className="text-[11px] text-[#A6A7AD]">
-                  worldpencaksilat.org · Persekutuan Pencak Silat Antarabangsa (PERSILAT) &amp; PESAKA Malaysia.
+                  {isEn
+                    ? "worldpencaksilat.org · International Pencak Silat Federation (PERSILAT) & PESAKA Malaysia."
+                    : "worldpencaksilat.org · Persekutuan Pencak Silat Antarabangsa (PERSILAT) & PESAKA Malaysia."}
                 </p>
               </div>
             </div>

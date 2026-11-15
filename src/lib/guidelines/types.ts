@@ -60,8 +60,11 @@ export interface RuleEntry {
   title: string;
   titleEn?: string;
   summary: string;
+  summaryEn?: string;
   details: string[];
+  detailsEn?: string[];
   citation: string;
+  citationEn?: string;
   severity?: "info" | "warning" | "danger" | "critical";
   tags: string[];
 }
@@ -69,14 +72,19 @@ export interface RuleEntry {
 export interface WeightDivision {
   classLetter: string;
   name: string;
+  nameEn?: string;
   maleRange: string;
   femaleRange?: string;
   notes?: string;
+  notesEn?: string;
 }
 
 export interface AgeDivision {
   division: string;
+  divisionEn?: string;
   ageSpan: string;
   roundFormat: string;
+  roundFormatEn?: string;
   notes: string;
+  notesEn?: string;
 }

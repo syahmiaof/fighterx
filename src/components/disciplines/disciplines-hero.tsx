@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import gsap from "gsap";
@@ -17,7 +17,7 @@ export function DisciplinesHero({
   activeSection,
   onNavigateSection,
 }: DisciplinesHeroProps) {
-  const { dict } = useLanguage();
+  const { dict, locale } = useLanguage();
   const dd = dict.disciplines;
   const rootRef = useRef<HTMLElement>(null);
   const navRef = useRef<HTMLDivElement>(null);
@@ -25,28 +25,58 @@ export function DisciplinesHero({
   const prevTabIdx = useRef(0);
   const [internalActive, setInternalActive] = useState(activeSection);
 
+  const alignPill = (animate = false) => {
+    if (!navRef.current || !pillRef.current) return;
+    const activeBtn =
+      navRef.current.querySelector<HTMLButtonElement>(
+        ".disc-tab-btn[aria-selected='true']"
+      ) ||
+      navRef.current.querySelector<HTMLButtonElement>(".disc-tab-btn");
+    if (!activeBtn) return;
+
+    const targetLeft = activeBtn.offsetLeft;
+    const targetWidth = activeBtn.getBoundingClientRect().width;
+
+    if (animate) {
+      gsap.killTweensOf(pillRef.current);
+      gsap.to(pillRef.current, {
+        left: targetLeft,
+        width: targetWidth,
+        duration: 0.28,
+        ease: "power2.out",
+      });
+    } else {
+      gsap.set(pillRef.current, {
+        left: targetLeft,
+        width: targetWidth,
+        autoAlpha: 1,
+      });
+    }
+  };
+
+  useEffect(() => {
+    setInternalActive(activeSection);
+  }, [activeSection]);
+
+  useEffect(() => {
+    alignPill(false);
+
+    const handleResize = () => {
+      alignPill(false);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [internalActive, dict]);
+
   useGSAP(
     () => {
       const el = rootRef.current;
       if (!el) return;
 
       // Align elastic pill to active tab on mount
-      if (navRef.current && pillRef.current) {
-        const activeBtn =
-          navRef.current.querySelector<HTMLButtonElement>(
-            ".disc-tab-btn[aria-selected='true']"
-          ) ||
-          navRef.current.querySelector<HTMLButtonElement>(".disc-tab-btn");
-        if (activeBtn) {
-          const cRect = navRef.current.getBoundingClientRect();
-          const tRect = activeBtn.getBoundingClientRect();
-          gsap.set(pillRef.current, {
-            left: tRect.left - cRect.left,
-            width: tRect.width,
-            autoAlpha: 1,
-          });
-        }
-      }
+      alignPill(false);
 
       const media = gsap.matchMedia();
 
@@ -279,7 +309,7 @@ export function DisciplinesHero({
               textShadow: "0 2px 0 #aaaab0, 0 5px 0 #66676d, 0 9px 14px rgba(0,0,0,0.7)",
             }}
           >
-            DUA CABANG.
+            {locale === "en" ? "TWO DISCIPLINES." : "DUA CABANG."}
           </span>
           <em
             className="block"
@@ -291,7 +321,7 @@ export function DisciplinesHero({
               filter: "drop-shadow(0 4px 8px rgba(225,6,0,0.35))",
             }}
           >
-            SATU JIWA PERSILATAN.
+            {locale === "en" ? "ONE SILAT SOUL." : "SATU JIWA PERSILATAN."}
           </em>
         </h1>
 
@@ -408,19 +438,21 @@ export function DisciplinesHero({
             const target = btns[index];
             if (!target) { onNavigateSection(id); setInternalActive(id); return; }
 
-            const containerRect = navRef.current.getBoundingClientRect();
-            const targetRect = target.getBoundingClientRect();
-            const targetLeft = targetRect.left - containerRect.left;
-            const targetWidth = targetRect.width;
+            const targetLeft = target.offsetLeft;
+            const targetWidth = target.getBoundingClientRect().width;
             const isMovingRight = index > prevTabIdx.current;
+
+            gsap.killTweensOf(pillRef.current);
 
             if (isReduced) {
               gsap.set(pillRef.current, { left: targetLeft, width: targetWidth });
             } else {
+              const currentLeft = pillRef.current.offsetLeft;
+              const currentWidth = pillRef.current.offsetWidth;
               const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
               if (isMovingRight) {
                 tl.to(pillRef.current, {
-                  width: targetLeft + targetWidth - (pillRef.current.offsetLeft),
+                  width: targetLeft + targetWidth - currentLeft,
                   duration: 0.2,
                 }).to(pillRef.current, {
                   left: targetLeft,
@@ -431,7 +463,7 @@ export function DisciplinesHero({
               } else {
                 tl.to(pillRef.current, {
                   left: targetLeft,
-                  width: (pillRef.current.offsetLeft + pillRef.current.offsetWidth) - targetLeft,
+                  width: (currentLeft + currentWidth) - targetLeft,
                   duration: 0.2,
                 }).to(pillRef.current, {
                   width: targetWidth,
@@ -441,41 +473,51 @@ export function DisciplinesHero({
               }
             }
 
+            // Smoothly scroll active tab into view on mobile without vertical page jitter
+            const scrollTarget = target.offsetLeft - (navRef.current.clientWidth - targetWidth) / 2;
+            navRef.current.scrollTo({
+              left: Math.max(0, scrollTarget),
+              behavior: isReduced ? "auto" : "smooth",
+            });
+
             prevTabIdx.current = index;
             setInternalActive(id);
             onNavigateSection(id);
           };
 
           return (
-            <div
-              ref={navRef}
-              className="disciplines-nav-tabs mt-8 relative flex flex-wrap items-center justify-center gap-0 p-1 rounded-full bg-white/[0.035] border border-white/[0.08] backdrop-blur-[8px] max-w-fit mx-auto"
-              role="tablist"
-            >
-              {/* Elastic active pill */}
+            <div className="disciplines-nav-outer mt-8 w-full flex justify-center">
               <div
-                ref={pillRef}
-                className="absolute top-1 bottom-1 bg-[#e10600] rounded-full pointer-events-none shadow-[0_0_16px_rgba(225,6,0,0.4)]"
-                style={{ left: 4, width: 120 }}
-                aria-hidden="true"
-              />
-              {tabs.map((item, idx) => {
-                const isActive = internalActive === item.id;
-                return (
-                  <button
-                    key={item.id}
-                    type="button"
-                    role="tab"
-                    aria-selected={isActive}
-                    onClick={() => handleTabClick(item.id, idx)}
-                    className={`disc-tab-btn relative z-10 px-3.5 py-2 rounded-full text-xs font-bold tracking-wide cursor-pointer transition-colors duration-200 ${
-                      isActive ? "text-white" : "text-[#b5b6bc] hover:text-white"
-                    }`}
-                  >
-                    {item.label}
-                  </button>
-                );
-              })}
+                ref={navRef}
+                className="disciplines-nav-tabs relative flex flex-nowrap items-center gap-1 p-1 rounded-full bg-white/[0.035] border border-white/[0.08] backdrop-blur-[8px] max-w-full overflow-x-auto scroll-smooth touch-pan-x overscroll-x-contain scrollbar-none [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden no-scrollbar"
+                role="tablist"
+                aria-label="Disciplines sections"
+              >
+                {/* Elastic active pill */}
+                <div
+                  ref={pillRef}
+                  className="absolute top-1 bottom-1 bg-[#e10600] rounded-full pointer-events-none shadow-[0_0_16px_rgba(225,6,0,0.4)]"
+                  style={{ left: 4, width: 120 }}
+                  aria-hidden="true"
+                />
+                {tabs.map((item, idx) => {
+                  const isActive = internalActive === item.id;
+                  return (
+                    <button
+                      key={item.id}
+                      type="button"
+                      role="tab"
+                      aria-selected={isActive}
+                      onClick={() => handleTabClick(item.id, idx)}
+                      className={`disc-tab-btn relative z-10 min-h-[44px] flex items-center justify-center px-4 sm:px-5 py-2.5 rounded-full text-xs font-bold tracking-wide whitespace-nowrap shrink-0 cursor-pointer select-none transition-colors duration-200 ${
+                        isActive ? "text-white" : "text-[#b5b6bc] hover:text-white"
+                      }`}
+                    >
+                      {item.label}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           );
         })()}

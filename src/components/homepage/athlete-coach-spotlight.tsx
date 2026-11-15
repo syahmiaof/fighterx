@@ -10,11 +10,14 @@ interface SpotlightFigure {
   role: string;
   name: string;
   discipline: string;
+  disciplineEn?: string;
   achievement: string;
+  achievementEn?: string;
   image: string;
   alt: string;
   href: string;
   linkLabel: string;
+  linkLabelEn?: string;
   accentColor: string;
   badgeClass: string;
   icon: typeof Trophy;
@@ -26,11 +29,14 @@ const SPOTLIGHT_FIGURES: SpotlightFigure[] = [
     role: "ATLET",
     name: "Megat Zulkarnain",
     discipline: "Silat Olahraga · Kelas Putra D",
+    disciplineEn: "Silat Olahraga · Male Class D",
     achievement: "Pingat Emas Sirkit Remaja Kebangsaan 2025",
+    achievementEn: "Gold Medal, National Youth Circuit 2025",
     image: "/assets/fighterx/spotlight-athlete-standard.png",
     alt: "Megat Zulkarnain - MVP Atlet Bulan Ini",
     href: "/competitions",
     linkLabel: "Kalendar",
+    linkLabelEn: "Calendar",
     accentColor: "#FFB800",
     badgeClass: "text-[#FFB800] bg-[#FFB800]/15 border-[#FFB800]/40 shadow-[0_0_15px_rgba(255,184,0,0.2)]",
     icon: Trophy,
@@ -40,11 +46,14 @@ const SPOTLIGHT_FIGURES: SpotlightFigure[] = [
     role: "COACH",
     name: "Cikgu Ahmad Farhan",
     discipline: "Ketua Jurulatih · SKK Tahap 3 (MSN)",
+    disciplineEn: "Head Coach · SKK Level 3 (MSN)",
     achievement: "14 Finalis Kebangsaan (Tier 1 Emas PESAKA)",
+    achievementEn: "14 National Finalists (PESAKA Gold Tier 1)",
     image: "/assets/fighterx/spotlight-coach-standard.png",
     alt: "Cikgu Ahmad Farhan - MVP Jurulatih Bulan Ini",
     href: "/coach",
     linkLabel: "Portal Coach",
+    linkLabelEn: "Coach Portal",
     accentColor: "#FF3845",
     badgeClass: "text-[#FF3845] bg-[#FF3845]/15 border-[#FF3845]/40 shadow-[0_0_15px_rgba(225,6,0,0.25)]",
     icon: Award,
@@ -54,11 +63,14 @@ const SPOTLIGHT_FIGURES: SpotlightFigure[] = [
     role: "WASIT",
     name: "Wasit Faridah Mansor",
     discipline: "Adjudikasi Rasmi · PERSILAT Kelas 1",
+    disciplineEn: "Official Adjudication · PERSILAT Class 1",
     achievement: "48 Perlawanan Bersih & Tauliah Antarabangsa",
+    achievementEn: "48 Clean Matches & International License",
     image: "/assets/fighterx/spotlight-referee-standard.png",
     alt: "Wasit Faridah Mansor - MVP Wasit Bulan Ini",
     href: "/guidelines",
     linkLabel: "Garis Panduan",
+    linkLabelEn: "Guidelines",
     accentColor: "#00E599",
     badgeClass: "text-[#00E599] bg-[#00E599]/15 border-[#00E599]/40 shadow-[0_0_15px_rgba(0,229,153,0.2)]",
     icon: Scale,
@@ -157,16 +169,16 @@ export function AthleteCoachSpotlight() {
 
                     {/* Discipline / Category */}
                     <p className="text-xs text-[#96989F] font-medium mt-1 leading-snug">
-                      {figure.discipline}
+                      {locale === "en" ? (figure.disciplineEn || figure.discipline) : figure.discipline}
                     </p>
 
                     {/* Key Achievement */}
                     <div className="mt-4 pt-3 border-t border-white/10">
                       <span className="text-[10px] font-mono uppercase tracking-wider text-[#8C8E96] block mb-1">
-                        Pencapaian
+                        {locale === "bm" ? "Pencapaian" : "Achievement"}
                       </span>
                       <p className="text-xs sm:text-sm font-semibold text-white/90 leading-snug">
-                        {figure.achievement}
+                        {locale === "en" ? (figure.achievementEn || figure.achievement) : figure.achievement}
                       </p>
                     </div>
                   </div>
@@ -174,13 +186,13 @@ export function AthleteCoachSpotlight() {
                   {/* Minimalist Link */}
                   <div className="pt-4 mt-4 border-t border-white/[0.08] flex items-center justify-between">
                     <span className="text-[10px] font-mono text-[#8C8E96]">
-                      Edisi Bulanan
+                      {locale === "bm" ? "Edisi Bulanan" : "Monthly Edition"}
                     </span>
                     <Link
                       href={figure.href}
                       className="tactile-btn inline-flex items-center gap-1 text-xs font-semibold text-white/80 hover:text-white transition-colors group-hover:underline"
                     >
-                      <span>{figure.linkLabel}</span>
+                      <span>{locale === "en" ? (figure.linkLabelEn || figure.linkLabel) : figure.linkLabel}</span>
                       <ArrowUpRight size={13} aria-hidden="true" className="text-[#FF3845]" />
                     </Link>
                   </div>

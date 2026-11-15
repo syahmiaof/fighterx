@@ -22,20 +22,24 @@ import {
   AGE_DIVISIONS,
 } from "@/lib/guidelines/rules-data";
 import type { RuleCategory, RuleEntry } from "@/lib/guidelines/types";
-
-const CATEGORY_TABS: { id: RuleCategory; label: string; icon: typeof Swords }[] = [
-  { id: "ALL", label: "Semua Peraturan", icon: BookOpen },
-  { id: "TANDING_SCORING", label: "Mata Tanding", icon: Swords },
-  { id: "JURUS_RUBRICS", label: "Rubrik Seni", icon: Sparkles },
-  { id: "TARGET_ZONES_FOULS", label: "Sasaran & Kesalahan", icon: Target },
-  { id: "VAR_PROTOCOL", label: "Protokol VAR", icon: Video },
-  { id: "WEIGHT_AGE_CLASSES", label: "Kelas Berat & Umur", icon: Scale },
-];
+import { useLanguage } from "@/lib/i18n";
 
 export function RulebookExplorer() {
+  const { locale } = useLanguage();
+  const isEn = locale === "en";
+
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [activeCategory, setActiveCategory] = useState<RuleCategory>("ALL");
   const [expandedRuleId, setExpandedRuleId] = useState<string | null>(null);
+
+  const categoryTabs: { id: RuleCategory; label: string; icon: typeof Swords }[] = [
+    { id: "ALL", label: isEn ? "All Rules" : "Semua Peraturan", icon: BookOpen },
+    { id: "TANDING_SCORING", label: isEn ? "Tanding Scoring" : "Mata Tanding", icon: Swords },
+    { id: "JURUS_RUBRICS", label: isEn ? "Seni Rubrics" : "Rubrik Seni", icon: Sparkles },
+    { id: "TARGET_ZONES_FOULS", label: isEn ? "Targets & Fouls" : "Sasaran & Kesalahan", icon: Target },
+    { id: "VAR_PROTOCOL", label: isEn ? "VAR Protocol" : "Protokol VAR", icon: Video },
+    { id: "WEIGHT_AGE_CLASSES", label: isEn ? "Weight & Age Classes" : "Kelas Berat & Umur", icon: Scale },
+  ];
 
   // Filtered rules
   const filteredRules = useMemo(() => {
@@ -53,16 +57,22 @@ export function RulebookExplorer() {
       const titleMatch = rule.title.toLowerCase().includes(q);
       const titleEnMatch = rule.titleEn?.toLowerCase().includes(q);
       const summaryMatch = rule.summary.toLowerCase().includes(q);
+      const summaryEnMatch = rule.summaryEn?.toLowerCase().includes(q);
       const citationMatch = rule.citation.toLowerCase().includes(q);
+      const citationEnMatch = rule.citationEn?.toLowerCase().includes(q);
       const detailsMatch = rule.details.some((d) => d.toLowerCase().includes(q));
+      const detailsEnMatch = rule.detailsEn?.some((d) => d.toLowerCase().includes(q));
       const tagsMatch = rule.tags.some((t) => t.toLowerCase().includes(q));
 
       return (
         titleMatch ||
         titleEnMatch ||
         summaryMatch ||
+        summaryEnMatch ||
         citationMatch ||
+        citationEnMatch ||
         detailsMatch ||
+        detailsEnMatch ||
         tagsMatch
       );
     });
@@ -82,18 +92,18 @@ export function RulebookExplorer() {
       case "danger":
         return {
           bg: "bg-[rgba(255,56,69,0.10)] text-[#ff8088] border-[rgba(255,56,69,0.25)]",
-          label: "PELANGGARAN BERAT",
+          label: isEn ? "SEVERE FOUL" : "PELANGGARAN BERAT",
         };
       case "warning":
         return {
           bg: "bg-[rgba(240,180,40,0.12)] text-[#ffd24c] border-[rgba(240,180,40,0.35)]",
-          label: "AMARAN / POTONGAN",
+          label: isEn ? "WARNING / DEDUCTION" : "AMARAN / POTONGAN",
         };
       case "info":
       default:
         return {
           bg: "bg-[rgba(60,160,255,0.12)] text-[#64b7ff] border-[rgba(60,160,255,0.35)]",
-          label: "PERATURAN RASMI",
+          label: isEn ? "OFFICIAL RULE" : "PERATURAN RASMI",
         };
     }
   };
@@ -105,20 +115,24 @@ export function RulebookExplorer() {
         <div>
           <div className="inline-flex items-center gap-2 rounded-full bg-[rgba(255,56,69,0.12)] border border-[rgba(255,56,69,0.35)] px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-[#ff4d5a] backdrop-blur-sm">
             <BookOpen size={13} aria-hidden="true" />
-            Pangkalan Data PERSILAT 2026
+            {isEn ? "PERSILAT 2026 Database" : "Pangkalan Data PERSILAT 2026"}
           </div>
           <h3 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-white font-[var(--font-athletic)] uppercase">
-            Rujukan Peraturan Kejohanan Interaktif
+            {isEn ? "Interactive Tournament Rules Reference" : "Rujukan Peraturan Kejohanan Interaktif"}
           </h3>
           <p className="text-xs text-[#a3a4ab] max-w-xl">
-            Cari peraturan mengikut kata kunci, klausa rasmi, sasaran serangan, kesalahan disiplin, dan protokol cabaran VAR.
+            {isEn
+              ? "Search rules by keyword, official clause, scoring target, disciplinary infractions, and VAR challenge protocols."
+              : "Cari peraturan mengikut kata kunci, klausa rasmi, sasaran serangan, kesalahan disiplin, dan protokol cabaran VAR."}
           </p>
         </div>
 
         <div className="text-right self-start sm:self-auto">
-          <span className="text-xs text-[#A6A7AD]">Ketetapan Padanan</span>
+          <span className="text-xs text-[#A6A7AD]">
+            {isEn ? "Matching Rules" : "Ketetapan Padanan"}
+          </span>
           <div className="text-xl sm:text-2xl font-bold text-white font-[var(--font-athletic)]">
-            {filteredRules.length} / {RULE_ENTRIES.length} Peraturan
+            {filteredRules.length} / {RULE_ENTRIES.length} {isEn ? "Rules" : "Peraturan"}
           </div>
         </div>
       </div>
@@ -135,16 +149,20 @@ export function RulebookExplorer() {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Cari peraturan (contoh: bantingan, var, teguran, 5 saat, kepala, golok, toya, timbang)..."
+            placeholder={
+              isEn
+                ? "Search rules (e.g. takedown, var, reprimand, 5 seconds, head, golok, toya, weigh-in)..."
+                : "Cari peraturan (contoh: bantingan, var, teguran, 5 saat, kepala, golok, toya, timbang)..."
+            }
             className="w-full rounded-xl border border-white/[0.08] bg-white/[0.035] pl-10 pr-10 py-3 text-sm text-white placeholder-white/30 focus:border-[rgba(255,56,69,0.5)] focus:bg-white/[0.05] focus:outline-none focus:ring-1 focus:ring-[#ff3845] backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition-colors"
-            aria-label="Cari buku peraturan"
+            aria-label={isEn ? "Search rulebook" : "Cari buku peraturan"}
           />
           {searchQuery && (
             <button
               type="button"
               onClick={() => setSearchQuery("")}
               className="absolute right-3 text-white/50 hover:text-white p-1 rounded-lg transition-colors cursor-pointer"
-              aria-label="Kosongkan carian"
+              aria-label={isEn ? "Clear search" : "Kosongkan carian"}
             >
               <X size={16} aria-hidden="true" />
             </button>
@@ -154,7 +172,7 @@ export function RulebookExplorer() {
 
       {/* Category Filter Pills (Glass) */}
       <div className="mt-4 flex flex-wrap gap-2">
-        {CATEGORY_TABS.map((tab) => {
+        {categoryTabs.map((tab) => {
           const Icon = tab.icon;
           const isSelected = activeCategory === tab.id;
           return (
@@ -181,6 +199,10 @@ export function RulebookExplorer() {
           filteredRules.map((rule) => {
             const isExpanded = expandedRuleId === rule.id;
             const badge = getSeverityBadge(rule.severity);
+            const title = isEn ? (rule.titleEn || rule.title) : rule.title;
+            const summary = isEn ? (rule.summaryEn || rule.summary) : rule.summary;
+            const citation = isEn ? (rule.citationEn || rule.citation) : rule.citation;
+            const details = isEn && rule.detailsEn ? rule.detailsEn : rule.details;
 
             return (
               <article
@@ -197,18 +219,15 @@ export function RulebookExplorer() {
                       </span>
                       <span className="inline-flex items-center gap-1 text-[11px] text-[#A6A7AD]">
                         <Tag size={11} aria-hidden="true" />
-                        {rule.citation}
+                        {citation}
                       </span>
                     </div>
 
                     <h4 className="text-lg sm:text-xl font-bold text-white font-[var(--font-athletic)] tracking-wide">
-                      {rule.title}
+                      {title}
                     </h4>
-                    {rule.titleEn && (
-                      <div className="text-xs text-white/40 italic -mt-0.5">{rule.titleEn}</div>
-                    )}
 
-                    <p className="mt-2 text-xs text-[#C5C6CA] leading-relaxed">{rule.summary}</p>
+                    <p className="mt-2 text-xs text-[#C5C6CA] leading-relaxed">{summary}</p>
                   </div>
 
                   <button
@@ -219,11 +238,11 @@ export function RulebookExplorer() {
                   >
                     {isExpanded ? (
                       <>
-                        Ringkaskan <ChevronUp size={14} aria-hidden="true" />
+                        {isEn ? "Collapse" : "Ringkaskan"} <ChevronUp size={14} aria-hidden="true" />
                       </>
                     ) : (
                       <>
-                        Perincian Sah <ChevronDown size={14} aria-hidden="true" />
+                        {isEn ? "Official Details" : "Perincian Sah"} <ChevronDown size={14} aria-hidden="true" />
                       </>
                     )}
                   </button>
@@ -233,10 +252,10 @@ export function RulebookExplorer() {
                 {isExpanded && (
                   <div className="mt-4 pt-3.5 border-t border-white/[0.08] text-xs space-y-2">
                     <strong className="block text-[11px] font-bold text-[#ffd24c] uppercase tracking-wider">
-                      Klausa &amp; Syarat Pelaksanaan Rasmi:
+                      {isEn ? "Official Clauses & Execution Stipulations:" : "Klausa & Syarat Pelaksanaan Rasmi:"}
                     </strong>
                     <ul className="space-y-1.5 pl-4 list-disc text-slate-200">
-                      {rule.details.map((point, index) => (
+                      {details.map((point, index) => (
                         <li key={index} className="leading-relaxed">
                           {point}
                         </li>
@@ -262,10 +281,12 @@ export function RulebookExplorer() {
           <div className="rounded-xl border border-dashed border-white/[0.15] p-8 text-center bg-white/[0.015] backdrop-blur-md">
             <BookOpen size={32} className="mx-auto text-white/30" aria-hidden="true" />
             <h5 className="mt-2 text-base font-bold text-white font-[var(--font-athletic)] uppercase">
-              Tiada Peraturan Dijumpai
+              {isEn ? "No Rules Found" : "Tiada Peraturan Dijumpai"}
             </h5>
             <p className="mt-1 text-xs text-[#A6A7AD] max-w-sm mx-auto">
-              Carian bagi &quot;{searchQuery}&quot; tidak menemui sebarang padanan. Cuba kata kunci seperti &quot;bantingan&quot;, &quot;var&quot;, &quot;teguran&quot;, &quot;toya&quot;, atau &quot;timbang&quot;.
+              {isEn
+                ? `Search for "${searchQuery}" yielded no results. Try keywords such as "takedown", "var", "reprimand", "toya", or "weigh-in".`
+                : `Carian bagi "${searchQuery}" tidak menemui sebarang padanan. Cuba kata kunci seperti "bantingan", "var", "teguran", "toya", atau "timbang".`}
             </p>
             <button
               type="button"
@@ -275,7 +296,7 @@ export function RulebookExplorer() {
               }}
               className="mt-4 inline-flex items-center gap-1.5 rounded-xl bg-[#e10600] border border-[#ff3845] px-4 py-2 text-xs font-semibold text-white shadow-[0_0_16px_rgba(225,6,0,0.4)] transition-colors cursor-pointer"
             >
-              Papar Semua Peraturan
+              {isEn ? "Show All Rules" : "Papar Semua Peraturan"}
             </button>
           </div>
         )}
@@ -290,12 +311,12 @@ export function RulebookExplorer() {
               <div className="flex items-center gap-2">
                 <Scale size={18} className="text-[#ff4d5a]" aria-hidden="true" />
                 <h4 className="text-lg font-bold text-white font-[var(--font-athletic)] uppercase tracking-wide">
-                  Jadual Kategori Berat Dewasa (Senior Weight Divisions)
+                  {isEn ? "Senior Weight Divisions Table" : "Jadual Kategori Berat Dewasa (Senior)"}
                 </h4>
               </div>
               <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-[#ff4d5a] bg-[rgba(255,56,69,0.12)] border border-[rgba(255,56,69,0.35)] px-3 py-1 rounded-full backdrop-blur-sm">
                 <ShieldAlert size={12} aria-hidden="true" />
-                Sifar Toleransi Berat (Zero Weigh-in Tolerance)
+                {isEn ? "Zero Weigh-In Tolerance (0.00 kg)" : "Sifar Toleransi Berat (0.00 kg)"}
               </span>
             </div>
 
@@ -303,21 +324,21 @@ export function RulebookExplorer() {
               <table className="w-full text-left text-xs text-slate-200">
                 <thead className="bg-white/[0.04] text-white/70 uppercase text-[10px] font-bold tracking-wider border-b border-white/[0.08] backdrop-blur-md">
                   <tr>
-                    <th scope="col" className="px-4 py-3">Kelas</th>
-                    <th scope="col" className="px-4 py-3">Nama Kategori</th>
-                    <th scope="col" className="px-4 py-3">Had Berat Lelaki</th>
-                    <th scope="col" className="px-4 py-3">Had Berat Wanita</th>
-                    <th scope="col" className="px-4 py-3">Catatan Kejohanan</th>
+                    <th scope="col" className="px-4 py-3">{isEn ? "Class" : "Kelas"}</th>
+                    <th scope="col" className="px-4 py-3">{isEn ? "Category Name" : "Nama Kategori"}</th>
+                    <th scope="col" className="px-4 py-3">{isEn ? "Male Weight Limit" : "Had Berat Lelaki"}</th>
+                    <th scope="col" className="px-4 py-3">{isEn ? "Female Weight Limit" : "Had Berat Wanita"}</th>
+                    <th scope="col" className="px-4 py-3">{isEn ? "Tournament Notes" : "Catatan Kejohanan"}</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-white/[0.05] bg-white/[0.015] backdrop-blur-md">
                   {SENIOR_WEIGHT_DIVISIONS.map((row) => (
                     <tr key={row.classLetter} className="hover:bg-white/[0.04] transition-colors">
                       <td className="px-4 py-2.5 font-bold text-white">{row.classLetter}</td>
-                      <td className="px-4 py-2.5 text-white/90">{row.name}</td>
+                      <td className="px-4 py-2.5 text-white/90">{isEn && row.nameEn ? row.nameEn : row.name}</td>
                       <td className="px-4 py-2.5 font-mono text-[#ffd24c] font-semibold">{row.maleRange}</td>
                       <td className="px-4 py-2.5 font-mono text-[#64b7ff] font-semibold">{row.femaleRange || "—"}</td>
-                      <td className="px-4 py-2.5 text-[11px] text-[#A6A7AD]">{row.notes}</td>
+                      <td className="px-4 py-2.5 text-[11px] text-[#A6A7AD]">{isEn && row.notesEn ? row.notesEn : row.notes}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -330,7 +351,7 @@ export function RulebookExplorer() {
             <div className="flex items-center gap-2 mb-3">
               <Users size={18} className="text-[#64b7ff]" aria-hidden="true" />
               <h4 className="text-lg font-bold text-white font-[var(--font-athletic)] uppercase tracking-wide">
-                Kategori Umur &amp; Format Pusingan (Age Divisions &amp; Round Standards)
+                {isEn ? "Age Divisions & Round Standards" : "Kategori Umur & Format Pusingan"}
               </h4>
             </div>
 
@@ -338,19 +359,21 @@ export function RulebookExplorer() {
               <table className="w-full text-left text-xs text-slate-200">
                 <thead className="bg-white/[0.04] text-white/70 uppercase text-[10px] font-bold tracking-wider border-b border-white/[0.08] backdrop-blur-md">
                   <tr>
-                    <th scope="col" className="px-4 py-3">Kategori Umur</th>
-                    <th scope="col" className="px-4 py-3">Had Umur</th>
-                    <th scope="col" className="px-4 py-3">Format Pusingan</th>
-                    <th scope="col" className="px-4 py-3">Syarat Pelaksanaan</th>
+                    <th scope="col" className="px-4 py-3">{isEn ? "Age Division" : "Kategori Umur"}</th>
+                    <th scope="col" className="px-4 py-3">{isEn ? "Age Span" : "Had Umur"}</th>
+                    <th scope="col" className="px-4 py-3">{isEn ? "Round Format" : "Format Pusingan"}</th>
+                    <th scope="col" className="px-4 py-3">{isEn ? "Execution Notes" : "Syarat Pelaksanaan"}</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-white/[0.05] bg-white/[0.015] backdrop-blur-md">
                   {AGE_DIVISIONS.map((row) => (
                     <tr key={row.division} className="hover:bg-white/[0.04] transition-colors">
-                      <td className="px-4 py-2.5 font-bold text-white">{row.division}</td>
-                      <td className="px-4 py-2.5 text-[#ffd24c] font-semibold">{row.ageSpan}</td>
-                      <td className="px-4 py-2.5 text-white/90">{row.roundFormat}</td>
-                      <td className="px-4 py-2.5 text-[11px] text-[#A6A7AD]">{row.notes}</td>
+                      <td className="px-4 py-2.5 font-bold text-white">{isEn && row.divisionEn ? row.divisionEn : row.division}</td>
+                      <td className="px-4 py-2.5 text-[#ffd24c] font-semibold">
+                        {isEn ? row.ageSpan.replace("Bawah", "Under").replace("tahun ke atas", "years & above").replace("tahun", "years") : row.ageSpan}
+                      </td>
+                      <td className="px-4 py-2.5 text-white/90">{isEn && row.roundFormatEn ? row.roundFormatEn : row.roundFormat}</td>
+                      <td className="px-4 py-2.5 text-[11px] text-[#A6A7AD]">{isEn && row.notesEn ? row.notesEn : row.notes}</td>
                     </tr>
                   ))}
                 </tbody>

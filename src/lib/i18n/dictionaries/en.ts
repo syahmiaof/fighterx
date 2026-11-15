@@ -224,8 +224,8 @@ export const enDictionary: Dictionary = {
       tanding: {
         title: "Tanding Bout Electronic Scorer",
         desc: "Simulate strikes, 5-second grapple takedowns, and penalty point deductions.",
-        redCorner: "Sudut Merah (Red Corner)",
-        blueCorner: "Sudut Biru (Blue Corner)",
+        redCorner: "Red Corner",
+        blueCorner: "Blue Corner",
         punch: "+1 Punch",
         kick: "+2 Kick",
         takedown: "+3 Takedown",
@@ -248,7 +248,7 @@ export const enDictionary: Dictionary = {
       },
       jurus: {
         title: "Artistic (Seni) Forms Scoring Calculator",
-        desc: "Evaluate accuracy (Nilai Kebenaran) and expression (Nilai Kemantapan) across categories.",
+        desc: "Evaluate accuracy standard and firmness & expression across categories.",
         tunggal: "Tunggal (Solo 100 Forms)",
         ganda: "Ganda (Choreographed Pair)",
         regu: "Regu (Synchronised Trio)",

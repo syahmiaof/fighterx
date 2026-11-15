@@ -84,7 +84,7 @@ const StakeholderGuideSwitcher = dynamic(
   {
     loading: () => (
       <div className="p-8 text-center text-sm text-[#A2A3AA] animate-pulse">
-        Memuatkan Panduan Stakeholder...
+        Loading...
       </div>
     ),
   }
@@ -92,6 +92,7 @@ const StakeholderGuideSwitcher = dynamic(
 
 export function KnowledgeHubClient() {
   const { dict, locale } = useLanguage();
+  const isEn = locale === "en";
   const kd = dict.knowledge;
   const [selectedCategory, setSelectedCategory] = useState<KnowledgeCategory>("all");
   const [searchQuery, setSearchQuery] = useState("");
@@ -100,6 +101,13 @@ export function KnowledgeHubClient() {
   const [activeArticle, setActiveArticle] = useState<KnowledgeArticle | null>(null);
   const [citationsDrawerOpen, setCitationsDrawerOpen] = useState(false);
   const [activeToolTab, setActiveToolTab] = useState<"periodization" | "weight" | "sweat" | "stakeholder">("periodization");
+
+  const EN_MONTH_NAMES = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+  const getMonthName = (mIdx: number, defaultName: string) =>
+    isEn ? EN_MONTH_NAMES[mIdx - 1] : defaultName;
 
   const articleModalRef = useRef<HTMLDivElement>(null);
   const articleCloseBtnRef = useRef<HTMLButtonElement>(null);
@@ -179,13 +187,21 @@ export function KnowledgeHubClient() {
       const matchesSearch =
         !q ||
         article.title.toLowerCase().includes(q) ||
+        (article.titleEn?.toLowerCase().includes(q) ?? false) ||
         article.subtitle.toLowerCase().includes(q) ||
+        (article.subtitleEn?.toLowerCase().includes(q) ?? false) ||
         article.summary.toLowerCase().includes(q) ||
+        (article.summaryEn?.toLowerCase().includes(q) ?? false) ||
         article.categoryLabel.toLowerCase().includes(q) ||
+        (article.categoryLabelEn?.toLowerCase().includes(q) ?? false) ||
         (article.fieldProblem?.toLowerCase().includes(q) ?? false) ||
+        (article.fieldProblemEn?.toLowerCase().includes(q) ?? false) ||
         (article.scientificSolution?.toLowerCase().includes(q) ?? false) ||
+        (article.scientificSolutionEn?.toLowerCase().includes(q) ?? false) ||
         (article.actionStepToday?.toLowerCase().includes(q) ?? false) ||
-        article.keyTakeaways.some((t) => t.toLowerCase().includes(q));
+        (article.actionStepTodayEn?.toLowerCase().includes(q) ?? false) ||
+        article.keyTakeaways.some((t) => t.toLowerCase().includes(q)) ||
+        (article.keyTakeawaysEn?.some((t) => t.toLowerCase().includes(q)) ?? false);
       return matchesCat && matchesSearch;
     });
   }, [selectedCategory, searchQuery]);
@@ -857,7 +873,7 @@ export function KnowledgeHubClient() {
               {/* Official Scientific Accreditation Badges */}
               <div className="mt-7 pt-5 border-t border-white/[0.08]">
                 <span className="text-[10px] font-bold uppercase tracking-widest text-[#8A8C95] block mb-2.5">
-                  Diperakui Berdasarkan Standard Rasmi:
+                  {isEn ? "Certified to Official Benchmarks:" : "Diperakui Berdasarkan Standard Rasmi:"}
                 </span>
                 <div className="flex flex-wrap items-center gap-2">
                   <a
@@ -915,17 +931,19 @@ export function KnowledgeHubClient() {
                   <div className="flex items-center justify-between text-[#ff4d5a] mb-2.5">
                     <CalendarDays size={20} />
                     <span className="category-tag badge-crimson font-mono font-bold">
-                      6 + 6 Bulan
+                      {isEn ? "6 + 6 Months" : "6 + 6 Bulan"}
                     </span>
                   </div>
                   <div className="text-2xl sm:text-3xl font-bold font-athletic text-white tracking-wide">
-                    52 MINGGU
+                    {isEn ? "52 WEEKS" : "52 MINGGU"}
                   </div>
                   <div className="text-xs font-bold text-[#E5E6EB] mt-0.5">
-                    Periodisasi Tahunan
+                    {isEn ? "Annual Periodisation" : "Periodisasi Tahunan"}
                   </div>
                   <p className="text-[11px] text-[#9EA0A8] mt-1 leading-snug">
-                    Blok 1 (Asas Fizikal) &amp; Blok 2 (Kemuncak Prestasi).
+                    {isEn
+                      ? "Block 1 (Physical Foundation) & Block 2 (Peak Performance)."
+                      : "Blok 1 (Asas Fizikal) & Blok 2 (Kemuncak Prestasi)."}
                   </p>
                 </div>
 
@@ -934,17 +952,19 @@ export function KnowledgeHubClient() {
                   <div className="flex items-center justify-between text-[#e5e5e7] mb-2.5">
                     <Activity size={20} />
                     <span className="category-tag badge-silver font-mono font-bold">
-                      2 Sesi
+                      {isEn ? "2 Sessions" : "2 Sesi"}
                     </span>
                   </div>
                   <div className="text-2xl sm:text-3xl font-bold font-athletic text-white tracking-wide">
-                    6 BASELINE
+                    {isEn ? "6 BASELINE TESTS" : "6 BASELINE"}
                   </div>
                   <div className="text-xs font-bold text-[#E5E6EB] mt-0.5">
-                    Ujian Penilaian Fizikal
+                    {isEn ? "Physical Assessments" : "Ujian Penilaian Fizikal"}
                   </div>
                   <p className="text-[11px] text-[#9EA0A8] mt-1 leading-snug">
-                    Stamina, Teras, Mobiliti, Letupan, Teknik, Readiness.
+                    {isEn
+                      ? "Stamina, Core, Mobility, Power, Technique, Readiness."
+                      : "Stamina, Teras, Mobiliti, Letupan, Teknik, Readiness."}
                   </p>
                 </div>
 
@@ -953,14 +973,14 @@ export function KnowledgeHubClient() {
                   <div className="flex items-center justify-between text-[#64b7ff] mb-2.5">
                     <Users size={20} />
                     <span className="category-tag badge-blue font-mono font-bold">
-                      Bukan Rawak
+                      {isEn ? "Targeted" : "Bukan Rawak"}
                     </span>
                   </div>
                   <div className="text-2xl sm:text-3xl font-bold font-athletic text-white tracking-wide">
-                    5 PRIORITI
+                    {isEn ? "5 PRIORITIES" : "5 PRIORITI"}
                   </div>
                   <div className="text-xs font-bold text-[#E5E6EB] mt-0.5">
-                    Pengelompokan Atlet
+                    {isEn ? "Athlete Grouping" : "Pengelompokan Atlet"}
                   </div>
                   <p className="text-[11px] text-[#9EA0A8] mt-1 leading-snug">
                     Endurance, Strength, Movement, Tech, Recovery.
@@ -979,10 +999,12 @@ export function KnowledgeHubClient() {
                     100% LEGIT
                   </div>
                   <div className="text-xs font-bold text-[#E5E6EB] mt-0.5">
-                    Bukti Saintifik
+                    {isEn ? "Scientific Evidence" : "Bukti Saintifik"}
                   </div>
                   <p className="text-[11px] text-[#9EA0A8] mt-1 leading-snug">
-                    Garis panduan rasmi ISN, PERSILAT 2026 &amp; BJSM/IOC.
+                    {isEn
+                      ? "Official ISN, PERSILAT 2026 & BJSM/IOC standards."
+                      : "Garis panduan rasmi ISN, PERSILAT 2026 & BJSM/IOC."}
                   </p>
                 </div>
               </div>
@@ -1006,12 +1028,12 @@ export function KnowledgeHubClient() {
                   onClick={() => setSearchQuery("")}
                   className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs text-[#858790] hover:text-white"
                 >
-                  {locale === "en" ? "Clear" : "Padam"}
+                  {isEn ? "Clear" : "Padam"}
                 </button>
               )}
             </div>
             <div className="px-4 py-3 rounded-xl border border-white/10 bg-white/[0.04] backdrop-blur-md text-xs text-[#A2A3AA] flex items-center justify-center gap-1.5 whitespace-nowrap">
-              <span className="font-bold text-white">{filteredArticles.length}</span> {locale === "en" ? "articles found" : "artikel dijumpai"}
+              <span className="font-bold text-white">{filteredArticles.length}</span> {isEn ? "articles found" : "artikel dijumpai"}
             </div>
           </div>
 
@@ -1030,7 +1052,7 @@ export function KnowledgeHubClient() {
                       : "bg-white/[0.04] border-white/10 text-[#B0B1B7] hover:text-white hover:bg-white/[0.08] backdrop-blur-sm"
                   }`}
                 >
-                  {cat.label}
+                  {isEn ? cat.labelEn : cat.label}
                   <span
                     className={`px-1.5 py-0.2 rounded-full text-[10px] ${
                       active ? "bg-black/40 text-white" : "bg-white/10 text-[#868892]"
@@ -1047,7 +1069,7 @@ export function KnowledgeHubClient() {
               className="px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all flex items-center gap-1.5 border border-[#FF3845]/40 bg-[#FF3845]/15 text-[#FF555C] hover:bg-[#FF3845]/25 backdrop-blur-sm"
             >
               <CalendarDays size={13} />
-              <span>Kerangka 2027</span>
+              <span>{isEn ? "2027 Framework" : "Kerangka 2027"}</span>
             </a>
           </div>
         </div>
@@ -1060,13 +1082,15 @@ export function KnowledgeHubClient() {
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#FF3845]/40 bg-[#FF3845]/10 text-[#FF3845] text-xs font-bold tracking-wider uppercase mb-2">
                 <Target size={13} />
-                <span>KERANGKA PROGRAM LATIHAN TAHUNAN 2027</span>
+                <span>{isEn ? "ANNUAL TRAINING PROGRAM FRAMEWORK 2027" : "KERANGKA PROGRAM LATIHAN TAHUNAN 2027"}</span>
               </div>
               <h2 className="text-3xl sm:text-4xl font-bold font-athletic text-white uppercase tracking-wide">
-                MASTER ANNUAL TRAINING FRAMEWORK 2027
+                {isEn ? "MASTER ANNUAL TRAINING FRAMEWORK 2027" : "KERANGKA INDUK LATIHAN TAHUNAN 2027"}
               </h2>
               <p className="text-xs sm:text-sm text-[#A2A3AA] mt-1">
-                Kitaran 52 Minggu (6 + 6 Bulan) diselaraskan bersama Piawaian ISN, Kod Perubatan PERSILAT 2026, dan Majlis Sukan Negara (MSN).
+                {isEn
+                  ? "52-Week Cycle (6 + 6 Months) aligned with ISN Standards, PERSILAT 2026 Medical Code, and National Sports Council (MSN)."
+                  : "Kitaran 52 Minggu (6 + 6 Bulan) diselaraskan bersama Piawaian ISN, Kod Perubatan PERSILAT 2026, dan Majlis Sukan Negara (MSN)."}
               </p>
             </div>
 
@@ -1138,17 +1162,19 @@ export function KnowledgeHubClient() {
                 >
                   <div className="flex items-center justify-between mb-1">
                     <span className="text-xs font-bold uppercase tracking-wider text-[#FF555C]">
-                      Fasa 1 (Januari – Jun 2027)
+                      {isEn ? "Phase 1 (January – June 2027)" : "Fasa 1 (Januari – Jun 2027)"}
                     </span>
                     <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-[#FF3845]/15 text-[#FF555C] font-bold">
-                      Blok 1
+                      {isEn ? "Block 1" : "Blok 1"}
                     </span>
                   </div>
                   <div className="text-lg font-bold font-athletic text-white uppercase tracking-wide">
-                    FOUNDATION &amp; PHYSICAL DEVELOPMENT
+                    {isEn ? "FOUNDATION & PHYSICAL DEVELOPMENT" : "ASAS & PEMBANGUNAN FIZIKAL"}
                   </div>
                   <p className="text-xs text-[#9698A0] mt-1">
-                    Pembinaan asas aerobik, kekuatan teras, mobiliti buku lali, dan penilaian semula Jun.
+                    {isEn
+                      ? "Aerobic base building, core strength, ankle mobility, and June reassessment."
+                      : "Pembinaan asas aerobik, kekuatan teras, mobiliti buku lali, dan penilaian semula Jun."}
                   </p>
                 </button>
 
@@ -1166,17 +1192,19 @@ export function KnowledgeHubClient() {
                 >
                   <div className="flex items-center justify-between mb-1">
                     <span className="text-xs font-bold uppercase tracking-wider text-[#FF555C]">
-                      Fasa 2 (Julai – Disember 2027)
+                      {isEn ? "Phase 2 (July – December 2027)" : "Fasa 2 (Julai – Disember 2027)"}
                     </span>
                     <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-[#FF3845]/15 text-[#FF555C] font-bold">
-                      Blok 2
+                      {isEn ? "Block 2" : "Blok 2"}
                     </span>
                   </div>
                   <div className="text-lg font-bold font-athletic text-white uppercase tracking-wide">
-                    SPECIFIC PERFORMANCE &amp; TECHNICAL PEAK
+                    {isEn ? "SPECIFIC PERFORMANCE & TECHNICAL PEAK" : "PRESTASI KHUSUS & KEMUNCAK TEKNIKAL"}
                   </div>
                   <p className="text-xs text-[#9698A0] mt-1">
-                    Kondisi khusus disiplin, simulasi kejohanan, fasa taper kemuncak, dan laporan tahunan.
+                    {isEn
+                      ? "Discipline-specific conditioning, tournament simulation, peak taper phase, and annual report."
+                      : "Kondisi khusus disiplin, simulasi kejohanan, fasa taper kemuncak, dan laporan tahunan."}
                   </p>
                 </button>
               </div>
@@ -1210,7 +1238,7 @@ export function KnowledgeHubClient() {
                           )}
                         </div>
                         <div className={`text-sm font-bold font-athletic uppercase tracking-wide ${isActive ? "text-white" : "text-[#E1E2E6]"}`}>
-                          {month.monthName}
+                          {getMonthName(month.monthIndex, month.monthName)}
                         </div>
                         <div className={`text-[11px] font-medium truncate mt-0.5 ${isActive ? "text-white/90" : "text-[#9E9FA7]"}`}>
                           {month.theme}
@@ -1232,10 +1260,14 @@ export function KnowledgeHubClient() {
                   <div>
                     <div className="flex items-center gap-2 mb-1.5 flex-wrap">
                       <span className="px-2.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-[#E10600]/20 text-[#FF555C] border border-[#FF3845]/40">
-                        {activeMonthData.blockTitle}
+                        {isEn
+                          ? activeMonthData.block === 1
+                            ? "Block 1: Foundation & Physical Development"
+                            : "Block 2: Specific Performance & Technical Peak"
+                          : activeMonthData.blockTitle}
                       </span>
                       <span className="text-xs text-[#8E9099] font-mono">
-                        Bulan #{activeMonthData.monthIndex} · 2027
+                        {isEn ? `Month #${activeMonthData.monthIndex} · 2027` : `Bulan #${activeMonthData.monthIndex} · 2027`}
                       </span>
                       {activeMonthData.reviewGate && (
                         <span className="px-2.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-amber-500/20 text-amber-300 border border-amber-500/40 flex items-center gap-1">
@@ -1245,7 +1277,7 @@ export function KnowledgeHubClient() {
                     </div>
 
                     <h3 className="text-2xl sm:text-3xl font-bold font-athletic text-white uppercase tracking-wide">
-                      {activeMonthData.monthName}: {activeMonthData.theme}
+                      {getMonthName(activeMonthData.monthIndex, activeMonthData.monthName)}: {activeMonthData.theme}
                     </h3>
                     <p className="text-xs sm:text-sm text-[#A2A3AA] mt-0.5">
                       {activeMonthData.subtitle}
@@ -1256,7 +1288,7 @@ export function KnowledgeHubClient() {
                   <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 bg-white/[0.03] p-3.5 rounded-xl border border-white/[0.07] backdrop-blur-sm min-w-[280px]">
                     <div className="flex-1">
                       <div className="flex items-center justify-between text-[11px] mb-1 font-bold">
-                        <span className="text-[#3B82F6]">Volum Latihan</span>
+                        <span className="text-[#3B82F6]">{isEn ? "Training Volume" : "Volum Latihan"}</span>
                         <span className="text-white font-mono">{activeMonthData.volumePercentage}%</span>
                       </div>
                       <div className="w-full bg-white/[0.08] h-2 rounded-full overflow-hidden">
@@ -1269,7 +1301,7 @@ export function KnowledgeHubClient() {
 
                     <div className="flex-1">
                       <div className="flex items-center justify-between text-[11px] mb-1 font-bold">
-                        <span className="text-[#FF3845]">Intensiti Sesi</span>
+                        <span className="text-[#FF3845]">{isEn ? "Session Intensity" : "Intensiti Sesi"}</span>
                         <span className="text-white font-mono">{activeMonthData.intensityPercentage}%</span>
                       </div>
                       <div className="w-full bg-white/[0.08] h-2 rounded-full overflow-hidden">
@@ -1286,7 +1318,9 @@ export function KnowledgeHubClient() {
                 <div className="py-6 border-b border-white/[0.08]">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
                     <span className="text-xs font-bold text-[#E5E6EB] uppercase tracking-wider block">
-                      Fokus Latihan Utama ({activeMonthData.monthName}):
+                      {isEn
+                        ? `Primary Training Focus (${getMonthName(activeMonthData.monthIndex, activeMonthData.monthName)}):`
+                        : `Fokus Latihan Utama (${activeMonthData.monthName}):`}
                     </span>
                     <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#FF3845]/15 border border-[#FF3845]/30 text-xs font-bold text-[#FF858B]">
                       <Award size={13} />
@@ -1311,7 +1345,7 @@ export function KnowledgeHubClient() {
                     <div className="flex items-center gap-2 mb-3 text-white">
                       <Users size={16} className="text-[#3B82F6]" />
                       <h4 className="text-sm font-bold uppercase tracking-wider">
-                        Tugasan Atlet (Kendiri &amp; Aplikasi)
+                        {isEn ? "Athlete Tasks (Self & App)" : "Tugasan Atlet (Kendiri & Aplikasi)"}
                       </h4>
                     </div>
                     <ul className="space-y-2">
@@ -1331,7 +1365,7 @@ export function KnowledgeHubClient() {
                     <div className="flex items-center gap-2 mb-3 text-white">
                       <ShieldCheck size={16} className="text-[#FF3845]" />
                       <h4 className="text-sm font-bold uppercase tracking-wider">
-                        Tanggungjawab Coach (Semakan &amp; Pengesahan)
+                        {isEn ? "Coach Responsibilities (Review & Verification)" : "Tanggungjawab Coach (Semakan & Pengesahan)"}
                       </h4>
                     </div>
                     <ul className="space-y-2">
@@ -1370,19 +1404,33 @@ export function KnowledgeHubClient() {
                       <div>
                         <div className="flex items-center justify-between gap-2 mb-3">
                           <span className={`category-tag ${badgeClass} font-mono font-bold text-xs`}>
-                            KEUTAMAAN {policy.priority}
+                            {isEn ? `PRIORITY ${policy.priority}` : `KEUTAMAAN ${policy.priority}`}
                           </span>
-                          <span className="text-[11px] text-[#8E9099] font-medium">{policy.type}</span>
+                          <span className="text-[11px] text-[#8E9099] font-medium">
+                            {isEn
+                              ? policy.priority === "A"
+                                ? "Primary Target Tournament"
+                                : policy.priority === "B"
+                                ? "Development & Assessment Tournament"
+                                : "Club Level Match Simulation"
+                              : policy.type}
+                          </span>
                         </div>
 
                         <h3 className="text-xl font-bold font-athletic text-white uppercase tracking-wide mb-2">
-                          {policy.label}
+                          {isEn
+                            ? policy.priority === "A"
+                              ? "Priority A (Major / Key Competition)"
+                              : policy.priority === "B"
+                              ? "Priority B (Secondary / Development)"
+                              : "Priority C (Internal / Sparring)"
+                            : policy.label}
                         </h3>
 
                         {/* Target Events */}
                         <div className="mb-4">
                           <span className="text-[10px] font-bold text-[#8A8C95] uppercase tracking-wider block mb-1">
-                            Sasaran Kejohanan:
+                            {isEn ? "Target Tournaments:" : "Sasaran Kejohanan:"}
                           </span>
                           <div className="flex flex-wrap gap-1.5">
                             {policy.targetEvents.map((evt, idx) => (
@@ -1396,7 +1444,7 @@ export function KnowledgeHubClient() {
                         {/* Taper Protocol */}
                         <div className="p-3.5 rounded-xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm mb-3">
                           <span className="text-[10px] font-bold text-[#ff4d5a] uppercase tracking-wider block mb-1">
-                            Protokol Tapering:
+                            {isEn ? "Tapering Protocol:" : "Protokol Tapering:"}
                           </span>
                           <p className="text-xs text-[#D1D2D7] leading-relaxed">
                             {policy.taperProtocol}
@@ -1406,7 +1454,7 @@ export function KnowledgeHubClient() {
                         {/* Load Adjustment */}
                         <div className="p-3.5 rounded-xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm mb-4">
                           <span className="text-[10px] font-bold text-[#64b7ff] uppercase tracking-wider block mb-1">
-                            Pelarasan Beban Latihan:
+                            {isEn ? "Training Load Adjustment:" : "Pelarasan Beban Latihan:"}
                           </span>
                           <p className="text-xs text-[#D1D2D7] leading-relaxed">
                             {policy.loadAdjustment}
@@ -1417,7 +1465,7 @@ export function KnowledgeHubClient() {
                       {/* Fight Week Rules */}
                       <div className="pt-4 border-t border-white/[0.08]">
                         <span className="text-[10px] font-bold text-[#E5E6EB] uppercase tracking-wider block mb-2">
-                          Peraturan Minggu Pertandingan:
+                          {isEn ? "Fight Week Rules:" : "Peraturan Minggu Pertandingan:"}
                         </span>
                         <ul className="space-y-1.5">
                           {policy.fightWeekRules.map((rule, idx) => (
@@ -1439,10 +1487,14 @@ export function KnowledgeHubClient() {
                   <ShieldCheck size={24} className="text-[#ffd24c] shrink-0 mt-0.5" />
                   <div>
                     <h4 className="text-sm font-bold text-white uppercase tracking-wide">
-                      Dasar Imuniti Pematuhan Minggu Pertandingan (Fight Week Immunity)
+                      {isEn
+                        ? "Fight Week Compliance Immunity Policy (Fight Week Immunity)"
+                        : "Dasar Imuniti Pematuhan Minggu Pertandingan (Fight Week Immunity)"}
                     </h4>
                     <p className="text-xs text-[#C5C6CA] mt-0.5 leading-relaxed">
-                      Sistem FighterX secara automatik mengecualikan atlet bertanding daripada tugasan fizikal kendiri berat sepanjang minggu pertandingan. Atlet tidak akan dikenakan sebarang penalti pematuhan untuk rehat terancang demi keselamatan dan pemulihan maksimum.
+                      {isEn
+                        ? "The FighterX system automatically exempts competing athletes from heavy self-directed physical tasks during fight week. Athletes receive zero compliance penalties for scheduled rest to maximize safety and recovery."
+                        : "Sistem FighterX secara automatik mengecualikan atlet bertanding daripada tugasan fizikal kendiri berat sepanjang minggu pertandingan. Atlet tidak akan dikenakan sebarang penalti pematuhan untuk rehat terancang demi keselamatan dan pemulihan maksimum."}
                     </p>
                   </div>
                 </div>
@@ -1452,7 +1504,7 @@ export function KnowledgeHubClient() {
                   onClick={() => setActiveToolTab("weight")}
                   className="px-4 py-2 rounded-xl text-xs font-bold bg-[#10B981] text-black hover:bg-[#34D399] transition-colors shrink-0"
                 >
-                  Kira Berat Selamat
+                  {isEn ? "Calculate Safe Weight" : "Kira Berat Selamat"}
                 </a>
               </div>
             </div>
@@ -1472,7 +1524,7 @@ export function KnowledgeHubClient() {
                       : "bg-white/[0.04] text-[#8E9099] border border-white/[0.08] hover:text-white hover:bg-white/[0.08] backdrop-blur-sm"
                   }`}
                 >
-                  Semua Sesi ({BASELINE_ASSESSMENTS.length})
+                  {isEn ? `All Sessions (${BASELINE_ASSESSMENTS.length})` : `Semua Sesi (${BASELINE_ASSESSMENTS.length})`}
                 </button>
                 <button
                   type="button"
@@ -1483,7 +1535,7 @@ export function KnowledgeHubClient() {
                       : "bg-white/[0.04] text-[#8E9099] border border-white/[0.08] hover:text-white hover:bg-white/[0.08] backdrop-blur-sm"
                   }`}
                 >
-                  Sesi A: Fizikal &amp; Mobiliti
+                  {isEn ? "Session A: Physical & Mobility" : "Sesi A: Fizikal & Mobiliti"}
                 </button>
                 <button
                   type="button"
@@ -1494,7 +1546,7 @@ export function KnowledgeHubClient() {
                       : "bg-white/[0.04] text-[#8E9099] border border-white/[0.08] hover:text-white hover:bg-white/[0.08] backdrop-blur-sm"
                   }`}
                 >
-                  Sesi B: Teknik &amp; Stamina
+                  {isEn ? "Session B: Technique & Stamina" : "Sesi B: Teknik & Stamina"}
                 </button>
               </div>
 
@@ -1508,9 +1560,15 @@ export function KnowledgeHubClient() {
                     <div>
                       <div className="flex items-center justify-between gap-2 mb-3">
                         <span className="px-2.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-[#FF3845]/15 text-[#FF555C] border border-[#FF3845]/30">
-                          {test.session}
+                          {isEn
+                            ? test.session.replace("Sesi A (Fizikal & Mobiliti)", "Session A (Physical & Mobility)").replace("Sesi B (Teknik & Stamina)", "Session B (Technique & Stamina)")
+                            : test.session}
                         </span>
-                        <span className="text-[11px] text-[#8E9099] font-mono">Disiplin: {test.discipline}</span>
+                        <span className="text-[11px] text-[#8E9099] font-mono">
+                          {isEn
+                            ? `Discipline: ${test.discipline === "Semua" ? "All Disciplines" : test.discipline === "Silat Seni" ? "Silat Seni" : "Silat Olahraga"}`
+                            : `Disiplin: ${test.discipline}`}
+                        </span>
                       </div>
 
                       <h3 className="text-xl sm:text-2xl font-bold font-athletic text-white uppercase tracking-wide mb-1">
@@ -1518,7 +1576,7 @@ export function KnowledgeHubClient() {
                       </h3>
 
                       <div className="text-xs font-bold text-[#FF555C] font-mono mb-3">
-                        Metrik Utama: {test.primaryMetric}
+                        {isEn ? `Primary Metric: ${test.primaryMetric}` : `Metrik Utama: ${test.primaryMetric}`}
                       </div>
 
                       <p className="text-xs text-[#C5C6CA] leading-relaxed mb-4">
@@ -1528,7 +1586,7 @@ export function KnowledgeHubClient() {
                       {/* Detailed Steps */}
                       <div className="p-3.5 rounded-xl border border-white/[0.06] bg-white/[0.02] mb-4">
                         <span className="text-[10px] font-bold text-[#E5E6EB] uppercase tracking-wider block mb-2">
-                          Langkah Pelaksanaan Protokol:
+                          {isEn ? "Protocol Implementation Steps:" : "Langkah Pelaksanaan Protokol:"}
                         </span>
                         <ol className="space-y-1.5 list-decimal pl-4 text-[11px] text-[#A2A3AA]">
                           {test.detailedSteps.map((step, idx) => (
@@ -1540,7 +1598,7 @@ export function KnowledgeHubClient() {
                       {/* Scoring Rubric Table */}
                       <div className="rounded-xl border border-white/[0.08] overflow-hidden mb-4 bg-white/[0.02]">
                         <div className="bg-white/[0.05] px-3 py-2 text-[11px] font-bold text-white uppercase tracking-wider">
-                          Rubrik Skor Prestasi
+                          {isEn ? "Performance Scoring Rubric" : "Rubrik Skor Prestasi"}
                         </div>
                         <div className="divide-y divide-white/[0.05] text-[11px]">
                           {test.scoringRubric.map((r, rIdx) => (
@@ -1557,13 +1615,13 @@ export function KnowledgeHubClient() {
                       {test.safetyClearance && (
                         <div className="p-2.5 rounded-lg border border-amber-500/30 bg-amber-500/10 text-[11px] text-amber-200 flex items-start gap-2 mb-3">
                           <AlertTriangle size={13} className="shrink-0 text-amber-400 mt-0.5" />
-                          <span><strong>Saringan Keselamatan:</strong> {test.safetyClearance}</span>
+                          <span><strong>{isEn ? "Safety Clearance:" : "Saringan Keselamatan:"}</strong> {test.safetyClearance}</span>
                         </div>
                       )}
                     </div>
 
                     <div className="pt-3 border-t border-white/[0.08] text-[10px] text-[#7A7C85] font-mono flex items-center justify-between">
-                      <span>Rujukan: {test.officialReference}</span>
+                      <span>{isEn ? `Reference: ${test.officialReference}` : `Rujukan: ${test.officialReference}`}</span>
                     </div>
                   </div>
                 ))}
@@ -1576,10 +1634,12 @@ export function KnowledgeHubClient() {
             <div className="space-y-6">
               <div className="text-center max-w-2xl mx-auto mb-4">
                 <span className="text-xs font-bold text-[#FF555C] uppercase tracking-wider block mb-1">
-                  Sistem Pengelompokan Saintifik Atlet
+                  {isEn ? "Scientific Athlete Stratification System" : "Sistem Pengelompokan Saintifik Atlet"}
                 </span>
                 <p className="text-xs sm:text-sm text-[#A2A3AA]">
-                  FighterX menolak agregat markah rawak. Setiap atlet dikelompokkan ke dalam trek pembangunan mengikut jurang kelemahan sebenar yang dikesan melalui 6 Ujian Baseline.
+                  {isEn
+                    ? "FighterX rejects random aggregate marks. Each athlete is grouped into a development track based on verified deficit gaps detected via the 6 Baseline Tests."
+                    : "FighterX menolak agregat markah rawak. Setiap atlet dikelompokkan ke dalam trek pembangunan mengikut jurang kelemahan sebenar yang dikesan melalui 6 Ujian Baseline."}
                 </p>
               </div>
 
@@ -1606,7 +1666,7 @@ export function KnowledgeHubClient() {
                           <span className={`category-tag ${badgeClass} font-mono font-bold text-[10px]`}>
                             {priority.code}
                           </span>
-                          <span className="text-[10px] text-[#8E9099] font-mono">Trek #2027</span>
+                          <span className="text-[10px] text-[#8E9099] font-mono">{isEn ? "Track #2027" : "Trek #2027"}</span>
                         </div>
 
                         <h3 className="text-xl font-bold font-athletic text-white uppercase tracking-wide mb-1">
@@ -1620,7 +1680,7 @@ export function KnowledgeHubClient() {
                         {/* Target Criteria */}
                         <div className="p-3 rounded-xl border border-white/[0.06] bg-white/[0.02] mb-3">
                           <span className="text-[10px] font-bold text-[#E5E6EB] uppercase tracking-wider block mb-1">
-                            Kriteria Kelayakan:
+                            {isEn ? "Eligibility Criteria:" : "Kriteria Kelayakan:"}
                           </span>
                           <p className="text-xs text-[#C5C6CA] leading-snug">
                             {priority.targetCriteria}
@@ -1630,7 +1690,7 @@ export function KnowledgeHubClient() {
                         {/* Primary Focus */}
                         <div className="mb-3">
                           <span className="text-[10px] font-bold text-[#8A8C95] uppercase tracking-wider block mb-1.5">
-                            Tumpuan Utama:
+                            {isEn ? "Primary Focus:" : "Tumpuan Utama:"}
                           </span>
                           <ul className="space-y-1">
                             {priority.primaryFocus.map((foc, idx) => (
@@ -1645,7 +1705,7 @@ export function KnowledgeHubClient() {
                         {/* Sample Prescription */}
                         <div className="p-3 rounded-xl border border-white/[0.06] bg-white/[0.02] mb-4">
                           <span className="text-[10px] font-bold text-[#64b7ff] uppercase tracking-wider block mb-1.5">
-                            Contoh Preskripsi Latihan Mingguan:
+                            {isEn ? "Sample Weekly Prescription:" : "Contoh Preskripsi Latihan Mingguan:"}
                           </span>
                           <ul className="space-y-1">
                             {priority.samplePrescription.map((rx, idx) => (
@@ -1660,7 +1720,7 @@ export function KnowledgeHubClient() {
                       {/* Graduation Indicator */}
                       <div className="pt-3 border-t border-white/[0.08]">
                         <span className="text-[10px] font-bold text-[#ffd24c] uppercase tracking-wider block mb-1">
-                          Syarat Tamat / Naik Taraf:
+                          {isEn ? "Graduation / Promotion Criteria:" : "Syarat Tamat / Naik Taraf:"}
                         </span>
                         <p className="text-xs text-[#A2A3AA] leading-snug">
                           {priority.graduationIndicator}
@@ -1681,26 +1741,34 @@ export function KnowledgeHubClient() {
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
             <div>
               <span className="text-xs font-bold text-[#FF555C] uppercase tracking-wider block mb-1">
-                Koleksi Rujukan Praktikal Sains Sukan
+                {isEn ? "Sports Science Practical Reference Collection" : "Koleksi Rujukan Praktikal Sains Sukan"}
               </span>
               <h2 className="text-2xl sm:text-3xl font-bold font-athletic text-white uppercase tracking-wide">
-                ARTIKEL &amp; PANDUAN PRAKTIKAL SAINS SUKAN
+                {isEn ? "SPORTS SCIENCE ARTICLES & PRACTICAL GUIDES" : "ARTIKEL & PANDUAN PRAKTIKAL SAINS SUKAN"}
               </h2>
               <p className="text-xs text-[#8E9099] mt-0.5">
-                Struktur 3-tahap ringkas: Masalah Lapangan, Solusi Saintifik, dan Tindakan Praktikal Hari Ini.
+                {isEn
+                  ? "Concise 3-tier structure: Field Problem, Scientific Solution, and Immediate Action Step."
+                  : "Struktur 3-tahap ringkas: Masalah Lapangan, Solusi Saintifik, dan Tindakan Praktikal Hari Ini."}
               </p>
             </div>
             <span className="text-xs text-[#7A7C85] hidden sm:block">
-              Semua artikel disahkan oleh panel pakar sukan bertauliah
+              {isEn
+                ? "All articles verified by certified sports science panels"
+                : "Semua artikel disahkan oleh panel pakar sukan bertauliah"}
             </span>
           </div>
 
           {filteredArticles.length === 0 ? (
             <div className="text-center py-20 border border-dashed border-white/[0.12] rounded-2xl bg-white/[0.025] backdrop-blur-[16px] shadow-[0_8px_32px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.06)]">
               <Search size={36} className="mx-auto text-[#686A72] mb-3" />
-              <h3 className="text-lg font-bold text-white">Tiada artikel sepadan</h3>
+              <h3 className="text-lg font-bold text-white">
+                {isEn ? "No matching articles" : "Tiada artikel sepadan"}
+              </h3>
               <p className="text-xs text-[#8E9099] mt-1 max-w-sm mx-auto">
-                Cuba kata kunci carian lain atau pilih kategori &quot;Semua Topik&quot;.
+                {isEn
+                  ? "Try another search keyword or select \"All Topics\"."
+                  : "Cuba kata kunci carian lain atau pilih kategori \"Semua Topik\"."}
               </p>
               <button
                 type="button"
@@ -1710,7 +1778,7 @@ export function KnowledgeHubClient() {
                 }}
                 className="mt-4 px-4 py-2 rounded-lg text-xs font-bold text-[#FF555C] border border-[#FF3845]/40 bg-[#FF3845]/10 hover:bg-[#FF3845]/20 backdrop-blur-sm transition-all"
               >
-                Reset Penapis
+                {isEn ? "Reset Filter" : "Reset Penapis"}
               </button>
             </div>
           ) : (
@@ -1724,18 +1792,18 @@ export function KnowledgeHubClient() {
                     {/* Top Meta Bar */}
                     <div className="flex items-center justify-between gap-2 mb-3">
                       <span className="category-tag badge-crimson">
-                        {article.categoryLabel}
+                        {isEn ? article.categoryLabelEn || article.categoryLabel : article.categoryLabel}
                       </span>
                       <span className="flex items-center gap-1 text-[11px] text-[#8C8E98]">
-                        <Clock size={12} /> {article.readTime}
+                        <Clock size={12} /> {isEn ? article.readTimeEn || article.readTime : article.readTime}
                       </span>
                     </div>
 
                     <h3 className="text-xl sm:text-2xl font-bold font-athletic text-white tracking-wide group-hover:text-[#FF555C] transition-colors leading-snug">
-                      {article.title}
+                      {isEn ? article.titleEn || article.title : article.title}
                     </h3>
                     <p className="text-xs font-semibold text-[#B0B1B8] mt-1 mb-3 line-clamp-1">
-                      {article.subtitle}
+                      {isEn ? article.subtitleEn || article.subtitle : article.subtitle}
                     </p>
 
                     {/* 3-Tier Practical Content Boxes */}
@@ -1744,10 +1812,10 @@ export function KnowledgeHubClient() {
                       <div className="p-3 rounded-xl tier-problem-box">
                         <div className="flex items-center gap-1.5 text-xs font-bold text-[#ff4d5a] mb-1">
                           <AlertTriangle size={13} className="shrink-0" />
-                          <span>Masalah Lapangan:</span>
+                          <span>{isEn ? "Field Problem:" : "Masalah Lapangan:"}</span>
                         </div>
                         <p className="text-xs text-[#E5E6EB] leading-relaxed line-clamp-2">
-                          {article.fieldProblem}
+                          {isEn ? article.fieldProblemEn || article.fieldProblem : article.fieldProblem}
                         </p>
                       </div>
 
@@ -1755,10 +1823,10 @@ export function KnowledgeHubClient() {
                       <div className="p-3 rounded-xl tier-solution-box">
                         <div className="flex items-center gap-1.5 text-xs font-bold text-[#64b7ff] mb-1">
                           <Zap size={13} className="shrink-0" />
-                          <span>Solusi Saintifik:</span>
+                          <span>{isEn ? "Scientific Solution:" : "Solusi Saintifik:"}</span>
                         </div>
                         <p className="text-xs text-[#E5E6EB] leading-relaxed line-clamp-2">
-                          {article.scientificSolution}
+                          {isEn ? article.scientificSolutionEn || article.scientificSolution : article.scientificSolution}
                         </p>
                       </div>
 
@@ -1766,10 +1834,10 @@ export function KnowledgeHubClient() {
                       <div className="p-3 rounded-xl tier-action-box">
                         <div className="flex items-center gap-1.5 text-xs font-bold text-[#ffd24c] mb-1">
                           <CheckCircle2 size={13} className="shrink-0" />
-                          <span>Tindakan Hari Ini:</span>
+                          <span>{isEn ? "Action Step Today:" : "Tindakan Hari Ini:"}</span>
                         </div>
                         <p className="text-xs text-[#E5E6EB] leading-relaxed line-clamp-2">
-                          {article.actionStepToday}
+                          {isEn ? article.actionStepTodayEn || article.actionStepToday : article.actionStepToday}
                         </p>
                       </div>
                     </div>
@@ -1778,7 +1846,7 @@ export function KnowledgeHubClient() {
                     {article.officialLinks && article.officialLinks.length > 0 && (
                       <div className="mb-4 pt-3 border-t border-white/[0.08]">
                         <span className="text-[10px] font-bold text-[#8A8C95] uppercase tracking-wider block mb-1.5">
-                          Rujukan Rasmi:
+                          {isEn ? "Official Citations:" : "Rujukan Rasmi:"}
                         </span>
                         <div className="flex flex-wrap gap-1.5">
                           {article.officialLinks.map((link, idx) => (
@@ -1804,7 +1872,7 @@ export function KnowledgeHubClient() {
                       href={`/knowledge/${article.slug}`}
                       className="text-[11px] text-[#A2A3AA] hover:text-white transition-colors"
                     >
-                      Laman Penuh
+                      {isEn ? "Full Page" : "Laman Penuh"}
                     </Link>
 
                     <button
@@ -1812,7 +1880,7 @@ export function KnowledgeHubClient() {
                       onClick={() => handleOpenArticle(article)}
                       className="inline-flex items-center gap-1.5 text-xs font-bold text-[#FF555C] group-hover:translate-x-1 transition-all"
                     >
-                      Baca Penuh <ArrowRight size={14} />
+                      {isEn ? "Read Full" : "Baca Penuh"} <ArrowRight size={14} />
                     </button>
                   </div>
                 </article>
@@ -1906,13 +1974,15 @@ export function KnowledgeHubClient() {
           <div className="weight-header-anim flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
             <div>
               <span className="text-xs font-bold text-[#FF555C] uppercase tracking-wider block mb-0.5">
-                Piawaian Rasmi Pertandingan
+                {isEn ? "Official Tournament Standards" : "Piawaian Rasmi Pertandingan"}
               </span>
               <h3 className="text-xl sm:text-2xl font-bold font-athletic text-white uppercase tracking-wide">
-                STANDARD KELAS BERAT TANDING PERSILAT 2026
+                {isEn ? "PERSILAT 2026 TANDING WEIGHT CLASS STANDARDS" : "STANDARD KELAS BERAT TANDING PERSILAT 2026"}
               </h3>
             </div>
-            <span className="text-xs text-[#8E9099]">Kategori Dewasa (Putera &amp; Puteri)</span>
+            <span className="text-xs text-[#8E9099]">
+              {isEn ? "Senior Category (Men & Women)" : "Kategori Dewasa (Putera & Puteri)"}
+            </span>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
@@ -1922,12 +1992,14 @@ export function KnowledgeHubClient() {
                 className="weight-category-card p-3.5 rounded-xl text-center"
               >
                 <span className="text-xs font-bold font-athletic text-[#FF3845] block">
-                  KELAS {wc.code}
+                  {isEn ? `CLASS ${wc.code}` : `KELAS ${wc.code}`}
                 </span>
                 <span className="text-xs text-white font-mono block mt-1 font-bold">
                   {wc.minKg} - {wc.maxKg} kg
                 </span>
-                <span className="text-[10px] text-[#7A7C85] block mt-0.5">{wc.gender}</span>
+                <span className="text-[10px] text-[#7A7C85] block mt-0.5">
+                  {isEn ? (wc.gender === "Putera" ? "Male" : wc.gender === "Puteri" ? "Female" : "Open") : wc.gender}
+                </span>
               </div>
             ))}
           </div>
@@ -1935,7 +2007,9 @@ export function KnowledgeHubClient() {
           <div className="weight-notice-anim mt-4 p-3.5 rounded-xl border border-[rgba(255,56,69,0.3)] bg-[rgba(255,56,69,0.05)] backdrop-blur-md flex items-center gap-2.5 text-xs text-[#FF858B]">
             <ShieldCheck size={16} className="shrink-0 text-[#FF3845]" />
             <span>
-              PERSILAT 2026: Timbang berat rasmi dilakukan 1 hari sebelum kejohanan bermula dengan toleransi 0.00 kg. Pematuhan had berat badan selamat adalah mandatori.
+              {isEn
+                ? "PERSILAT 2026: Official weigh-in is conducted 1 day before tournament begins with 0.00 kg tolerance. Safe weight category compliance is mandatory."
+                : "PERSILAT 2026: Timbang berat rasmi dilakukan 1 hari sebelum kejohanan bermula dengan toleransi 0.00 kg. Pematuhan had berat badan selamat adalah mandatori."}
             </span>
           </div>
         </div>
@@ -1962,24 +2036,26 @@ export function KnowledgeHubClient() {
               <div className="min-w-0">
                 <div className="flex items-center gap-2 mb-2 flex-wrap">
                   <span className="category-tag badge-crimson">
-                    {activeArticle.categoryLabel}
+                    {isEn ? activeArticle.categoryLabelEn || activeArticle.categoryLabel : activeArticle.categoryLabel}
                   </span>
                   <span className="text-[11px] text-[#8E9099] flex items-center gap-1">
-                    <Clock size={12} /> {activeArticle.readTime}
+                    <Clock size={12} /> {isEn ? activeArticle.readTimeEn || activeArticle.readTime : activeArticle.readTime}
                   </span>
-                  <span className="text-[11px] text-[#8E9099]">· Semakan: {activeArticle.reviewedBy}</span>
+                  <span className="text-[11px] text-[#8E9099]">
+                    {isEn ? `· Reviewed by: ${activeArticle.reviewedByEn || activeArticle.reviewedBy}` : `· Semakan: ${activeArticle.reviewedBy}`}
+                  </span>
                 </div>
                 <h2 id="article-reader-title" className="text-2xl sm:text-3xl font-bold font-athletic text-white uppercase tracking-wide">
-                  {activeArticle.title}
+                  {isEn ? activeArticle.titleEn || activeArticle.title : activeArticle.title}
                 </h2>
-                <p className="text-xs text-[#A8A9B2] mt-1">{activeArticle.subtitle}</p>
+                <p className="text-xs text-[#A8A9B2] mt-1">{isEn ? activeArticle.subtitleEn || activeArticle.subtitle : activeArticle.subtitle}</p>
               </div>
               <button
                 ref={articleCloseBtnRef}
                 type="button"
                 onClick={() => setActiveArticle(null)}
                 className="p-2 rounded-lg bg-white/10 text-[#A2A3AA] hover:text-white hover:bg-white/15 transition-colors shrink-0 cursor-pointer"
-                aria-label="Tutup artikel"
+                aria-label={isEn ? "Close article" : "Tutup artikel"}
               >
                 ✕
               </button>
@@ -1990,42 +2066,48 @@ export function KnowledgeHubClient() {
               {/* Summary Callout */}
               <div className="p-4 rounded-xl border border-white/10 bg-white/[0.03] text-[#E0E0E4]">
                 <strong className="block text-xs font-bold text-[#FF555C] uppercase tracking-wider mb-1">
-                  Ringkasan Eksekutif
+                  {isEn ? "Executive Summary" : "Ringkasan Eksekutif"}
                 </strong>
-                <p>{activeArticle.summary}</p>
+                <p>{isEn ? activeArticle.summaryEn || activeArticle.summary : activeArticle.summary}</p>
               </div>
 
               {/* 3-Tier Practical Content Highlights */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                 <div className="p-3.5 rounded-xl tier-problem-box">
                   <strong className="text-xs font-bold text-[#ff4d5a] block mb-1">
-                    ⚠️ Masalah Lapangan
+                    {isEn ? "⚠️ Field Problem" : "⚠️ Masalah Lapangan"}
                   </strong>
-                  <p className="text-xs text-[#D1D2D7]">{activeArticle.fieldProblem}</p>
+                  <p className="text-xs text-[#D1D2D7]">
+                    {isEn ? activeArticle.fieldProblemEn || activeArticle.fieldProblem : activeArticle.fieldProblem}
+                  </p>
                 </div>
 
                 <div className="p-3.5 rounded-xl tier-solution-box">
                   <strong className="text-xs font-bold text-[#64b7ff] block mb-1">
-                    🔬 Solusi Saintifik
+                    {isEn ? "🔬 Scientific Solution" : "🔬 Solusi Saintifik"}
                   </strong>
-                  <p className="text-xs text-[#D1D2D7]">{activeArticle.scientificSolution}</p>
+                  <p className="text-xs text-[#D1D2D7]">
+                    {isEn ? activeArticle.scientificSolutionEn || activeArticle.scientificSolution : activeArticle.scientificSolution}
+                  </p>
                 </div>
 
                 <div className="p-3.5 rounded-xl tier-action-box">
                   <strong className="text-xs font-bold text-[#ffd24c] block mb-1">
-                    ⚡ Tindakan Hari Ini
+                    {isEn ? "⚡ Action Step Today" : "⚡ Tindakan Hari Ini"}
                   </strong>
-                  <p className="text-xs text-[#D1D2D7]">{activeArticle.actionStepToday}</p>
+                  <p className="text-xs text-[#D1D2D7]">
+                    {isEn ? activeArticle.actionStepTodayEn || activeArticle.actionStepToday : activeArticle.actionStepToday}
+                  </p>
                 </div>
               </div>
 
               {/* Key Takeaways */}
               <div>
                 <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-3">
-                  Poin Kunci &amp; Prinsip Utama
+                  {isEn ? "Key Takeaways & Core Principles" : "Poin Kunci & Prinsip Utama"}
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                  {activeArticle.keyTakeaways.map((point, idx) => (
+                  {(isEn && activeArticle.keyTakeawaysEn ? activeArticle.keyTakeawaysEn : activeArticle.keyTakeaways).map((point, idx) => (
                     <div key={idx} className="p-3 rounded-lg border border-white/[0.06] bg-white/[0.02] flex items-start gap-2">
                       <CheckCircle2 size={14} className="text-[#FF3845] shrink-0 mt-0.5" />
                       <span className="text-xs text-[#C5C6CA]">{point}</span>
@@ -2035,7 +2117,7 @@ export function KnowledgeHubClient() {
               </div>
 
               {/* Sections */}
-              {activeArticle.sections.map((section, sIdx) => (
+              {(isEn && activeArticle.sectionsEn ? activeArticle.sectionsEn : activeArticle.sections).map((section, sIdx) => (
                 <div key={sIdx} className="space-y-3 pt-4 border-t border-white/[0.08]">
                   <h4 className="text-lg font-bold font-athletic text-white uppercase tracking-wide">
                     {section.heading}
@@ -2114,7 +2196,7 @@ export function KnowledgeHubClient() {
               {activeArticle.citations.length > 0 && (
                 <div className="pt-6 border-t border-white/[0.08]">
                   <h4 className="text-xs font-bold text-[#8E9099] uppercase tracking-wider mb-3">
-                    Sumber Rujukan Saintifik &amp; Teknikal
+                    {isEn ? "Scientific & Technical References" : "Sumber Rujukan Saintifik & Teknikal"}
                   </h4>
                   <div className="space-y-2">
                     {activeArticle.citations.map((cit) => (
@@ -2137,7 +2219,7 @@ export function KnowledgeHubClient() {
                 href={`/knowledge/${activeArticle.slug}`}
                 className="text-xs text-[#A2A3AA] hover:text-white flex items-center gap-1.5"
               >
-                <span>Buka dalam halaman berasingan</span>
+                <span>{isEn ? "Open in separate page" : "Buka dalam halaman berasingan"}</span>
                 <ExternalLink size={12} />
               </Link>
               <button
@@ -2145,7 +2227,7 @@ export function KnowledgeHubClient() {
                 onClick={() => setActiveArticle(null)}
                 className="px-5 py-2 rounded-lg text-xs font-bold bg-[#E10600] text-white hover:bg-[#FF3845] transition-colors"
               >
-                Selesai Membaca
+                {isEn ? "Finish Reading" : "Selesai Membaca"}
               </button>
             </div>
           </div>
