@@ -6,7 +6,6 @@ import { CategoryComparisonMatrix } from "@/components/disciplines/category-comp
 import { SilatSeniSection } from "@/components/disciplines/silat-seni-section";
 import { SilatOlahragaSection } from "@/components/disciplines/silat-olahraga-section";
 import { EquipmentBreakdown } from "@/components/disciplines/equipment-breakdown";
-import { DisciplinesCTA } from "@/components/disciplines/disciplines-cta";
 
 export function DisciplinesPageView() {
   const [activeSection, setActiveSection] = useState("overview");
@@ -29,7 +28,6 @@ export function DisciplinesPageView() {
       <SilatSeniSection />
       <SilatOlahragaSection />
       <EquipmentBreakdown />
-      <DisciplinesCTA />
     </div>
   );
 }

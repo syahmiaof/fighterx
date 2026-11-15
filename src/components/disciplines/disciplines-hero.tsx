@@ -106,18 +106,6 @@ export function DisciplinesHero({
               "-=0.3"
             )
             .fromTo(
-              el.querySelector(".disciplines-hero-desc"),
-              { y: 16, autoAlpha: 0 },
-              { y: 0, autoAlpha: 1, duration: 0.6, clearProps: "transform" },
-              "-=0.4"
-            )
-            .fromTo(
-              el.querySelector(".disciplines-quote"),
-              { y: 10, autoAlpha: 0 },
-              { y: 0, autoAlpha: 1, duration: 0.5, clearProps: "transform" },
-              "-=0.35"
-            )
-            .fromTo(
               [
                 el.querySelector(".discipline-card-seni"),
                 el.querySelector(".discipline-card-olahraga"),
@@ -185,18 +173,6 @@ export function DisciplinesHero({
               "-=0.15"
             )
             .fromTo(
-              el.querySelector(".disciplines-hero-desc"),
-              { y: 10, autoAlpha: 0 },
-              { y: 0, autoAlpha: 1, duration: 0.3, clearProps: "transform" },
-              "-=0.15"
-            )
-            .fromTo(
-              el.querySelector(".disciplines-quote"),
-              { y: 8, autoAlpha: 0 },
-              { y: 0, autoAlpha: 1, duration: 0.25, clearProps: "transform" },
-              "-=0.1"
-            )
-            .fromTo(
               el.querySelector(".discipline-card-seni"),
               { y: 16, autoAlpha: 0 },
               {
@@ -233,7 +209,7 @@ export function DisciplinesHero({
       media.add("(prefers-reduced-motion: reduce)", () => {
         gsap.set(
           el.querySelectorAll(
-            ".disciplines-overline, .disciplines-hero-title, .disciplines-hero-desc, .disciplines-quote, .discipline-card-seni, .discipline-card-olahraga, .disciplines-nav-tabs"
+            ".disciplines-overline, .disciplines-hero-title, .discipline-card-seni, .discipline-card-olahraga, .disciplines-nav-tabs"
           ),
           { autoAlpha: 1, y: 0, yPercent: 0, scale: 1, clearProps: "all" }
         );
@@ -324,32 +300,6 @@ export function DisciplinesHero({
             {locale === "en" ? "ONE SILAT SOUL." : "SATU JIWA PERSILATAN."}
           </em>
         </h1>
-
-        {/* Narrative */}
-        <p className="disciplines-hero-desc mt-3 text-sm sm:text-base text-[#A8ABB5] max-w-2xl mx-auto leading-relaxed">
-          {dd.subtitle}
-        </p>
-
-        {/* Quote callout — Persatuan style */}
-        <div
-          className="disciplines-quote flex items-center justify-center gap-3 mt-5"
-          role="note"
-          aria-label={dd.quote}
-        >
-          <span
-            className="flex-1 max-w-[60px] h-px bg-gradient-to-r from-transparent to-white/15"
-            aria-hidden="true"
-          />
-          <blockquote
-            className="text-xs sm:text-sm italic text-[#96989F]"
-          >
-            &mdash; <span className="text-[#f51c25]">&ldquo;</span>{dd.quote}<span className="text-[#f51c25]">&rdquo;</span> &mdash;
-          </blockquote>
-          <span
-            className="flex-1 max-w-[60px] h-px bg-gradient-to-l from-transparent to-white/15"
-            aria-hidden="true"
-          />
-        </div>
 
         {/* Category Cards */}
         <div className="relative mt-8 sm:mt-10 max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4">

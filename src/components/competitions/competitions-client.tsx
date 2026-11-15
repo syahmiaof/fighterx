@@ -184,16 +184,6 @@ export function CompetitionsClient() {
               delay: 0.05,
             }
           );
-          gsap.fromTo(
-            el.querySelector(".competitions-narrative"),
-            { y: 16, autoAlpha: 0 },
-            { y: 0, autoAlpha: 1, duration: 0.65, ease: "power2.out", delay: 0.15 }
-          );
-          gsap.fromTo(
-            el.querySelector(".competitions-quote"),
-            { y: 10, autoAlpha: 0 },
-            { y: 0, autoAlpha: 1, duration: 0.5, ease: "power2.out", delay: 0.25 }
-          );
         }
 
         // 2. Pro Command & Filter Bar - Nemo Iris Reveal
@@ -733,18 +723,6 @@ export function CompetitionsClient() {
             </>
           )}
         </h1>
-
-        <p className="competitions-narrative">
-          {cd.subtitle}
-        </p>
-
-        <div className="competitions-quote">
-          <span className="quote-rule" />
-          <span className="quote-text">
-            — &ldquo;{cd.quote}&rdquo; —
-          </span>
-          <span className="quote-rule" />
-        </div>
       </header>
 
       {/* ========================================================
