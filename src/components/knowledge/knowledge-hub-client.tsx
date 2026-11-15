@@ -1,119 +1,59 @@
 "use client";
 
-import { useState, useMemo, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { useCollectionMotion } from "@/hooks/useCollectionMotion";
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 import Link from "next/link";
-import dynamic from "next/dynamic";
 import { useLanguage } from "@/lib/i18n";
 import {
-  Search,
   CalendarDays,
-  Clock,
   ShieldCheck,
   ExternalLink,
-  Scale,
   Users,
-  CheckCircle2,
-  ArrowRight,
-  Info,
-  AlertTriangle,
-  BookMarked,
-  Droplets,
-  Zap,
   Award,
   Activity,
   Sparkles,
   Target,
-  Check,
+  BookMarked,
+  Scale,
+  Dumbbell,
+  Droplets,
+  Layers,
+  ChevronDown,
+  ChevronUp,
+  X,
+  Clock,
+  CheckCircle2,
+  AlertTriangle,
+  Info,
+  ArrowRight,
+  User,
+  HeartHandshake,
 } from "lucide-react";
 import {
-  CATEGORIES,
-  KNOWLEDGE_ARTICLES,
   SCIENTIFIC_CITATIONS,
   WEIGHT_CATEGORIES_PERSILAT,
-  MASTER_FRAMEWORK_MONTHS,
-  COMPETITION_POLICIES,
-  BASELINE_ASSESSMENTS,
-  TRAINING_PRIORITIES,
   KnowledgeArticle,
-  KnowledgeCategory,
-  FrameworkMonth,
 } from "./knowledge-data";
 import { CitationsDrawer } from "./citations-drawer";
-import { HomeTrainingCurriculum } from "./home-training-curriculum";
-
-// Code-splitting: lazily load interactive calculation tools on demand
-const PeriodizationMatrix = dynamic(
-  () => import("./periodization-matrix").then((mod) => mod.PeriodizationMatrix),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="p-8 text-center text-sm text-[#A2A3AA] animate-pulse">
-        Memuatkan Matriks Periodisasi...
-      </div>
-    ),
-  }
-);
-
-const WeightCutPlanner = dynamic(
-  () => import("./weight-cut-planner").then((mod) => mod.WeightCutPlanner),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="p-8 text-center text-sm text-[#A2A3AA] animate-pulse">
-        Memuatkan Kalkulator Weight Cut...
-      </div>
-    ),
-  }
-);
-
-const SweatRateCalculator = dynamic(
-  () => import("./sweat-rate-calculator").then((mod) => mod.SweatRateCalculator),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="p-8 text-center text-sm text-[#A2A3AA] animate-pulse">
-        Memuatkan Kalkulator Kadar Peluh...
-      </div>
-    ),
-  }
-);
-
-const StakeholderGuideSwitcher = dynamic(
-  () => import("./stakeholder-guide-switcher").then((mod) => mod.StakeholderGuideSwitcher),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="p-8 text-center text-sm text-[#A2A3AA] animate-pulse">
-        Loading...
-      </div>
-    ),
-  }
-);
+import { KnowledgePillarsGrid } from "./knowledge-pillars-grid";
+import { UnifiedPeriodizationRoadmap } from "./unified-periodization-roadmap";
+import { PracticalToolsPanel } from "./practical-tools-panel";
+import { RoleKnowledgeVault } from "./role-knowledge-vault";
 
 export function KnowledgeHubClient() {
   const { dict, locale } = useLanguage();
   const isEn = locale === "en";
   const kd = dict.knowledge;
-  const [selectedCategory, setSelectedCategory] = useState<KnowledgeCategory>("all");
-  const [searchQuery, setSearchQuery] = useState("");
-  const articleFilterKey = `${selectedCategory}|${searchQuery}`;
-  const articlesMotionRef = useCollectionMotion<HTMLDivElement>(articleFilterKey);
+
+  // Modals & Drawers state
   const [activeArticle, setActiveArticle] = useState<KnowledgeArticle | null>(null);
   const [citationsDrawerOpen, setCitationsDrawerOpen] = useState(false);
-  const [activeToolTab, setActiveToolTab] = useState<"periodization" | "weight" | "sweat" | "stakeholder">("periodization");
+  const [weightTableExpanded, setWeightTableExpanded] = useState(false);
 
-  const EN_MONTH_NAMES = [
-    "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
-  ];
-  const getMonthName = (mIdx: number, defaultName: string) =>
-    isEn ? EN_MONTH_NAMES[mIdx - 1] : defaultName;
-
+  const heroRef = useRef<HTMLDivElement>(null);
   const articleModalRef = useRef<HTMLDivElement>(null);
   const articleCloseBtnRef = useRef<HTMLButtonElement>(null);
   const articleTriggerRef = useRef<HTMLElement | null>(null);
@@ -179,57 +119,6 @@ export function KnowledgeHubClient() {
     setActiveArticle(article);
   };
 
-  // Master Annual Training Framework state
-  const [selectedBlock, setSelectedBlock] = useState<1 | 2>(1);
-  const [selectedMonthIndex, setSelectedMonthIndex] = useState<number>(1);
-  const [frameworkViewTab, setFrameworkViewTab] = useState<"calendar" | "competition" | "baseline" | "priorities">("calendar");
-  const [baselineSessionFilter, setBaselineSessionFilter] = useState<"all" | "Sesi A (Fizikal & Mobiliti)" | "Sesi B (Teknik & Stamina)">("all");
-
-  const filteredArticles = useMemo(() => {
-    return KNOWLEDGE_ARTICLES.filter((article) => {
-      const matchesCat = selectedCategory === "all" || article.category === selectedCategory;
-      const q = searchQuery.toLowerCase().trim();
-      const matchesSearch =
-        !q ||
-        article.title.toLowerCase().includes(q) ||
-        (article.titleEn?.toLowerCase().includes(q) ?? false) ||
-        article.subtitle.toLowerCase().includes(q) ||
-        (article.subtitleEn?.toLowerCase().includes(q) ?? false) ||
-        article.summary.toLowerCase().includes(q) ||
-        (article.summaryEn?.toLowerCase().includes(q) ?? false) ||
-        article.categoryLabel.toLowerCase().includes(q) ||
-        (article.categoryLabelEn?.toLowerCase().includes(q) ?? false) ||
-        (article.fieldProblem?.toLowerCase().includes(q) ?? false) ||
-        (article.fieldProblemEn?.toLowerCase().includes(q) ?? false) ||
-        (article.scientificSolution?.toLowerCase().includes(q) ?? false) ||
-        (article.scientificSolutionEn?.toLowerCase().includes(q) ?? false) ||
-        (article.actionStepToday?.toLowerCase().includes(q) ?? false) ||
-        (article.actionStepTodayEn?.toLowerCase().includes(q) ?? false) ||
-        article.keyTakeaways.some((t) => t.toLowerCase().includes(q)) ||
-        (article.keyTakeawaysEn?.some((t) => t.toLowerCase().includes(q)) ?? false);
-      return matchesCat && matchesSearch;
-    });
-  }, [selectedCategory, searchQuery]);
-
-  const blockMonths = useMemo(() => {
-    return MASTER_FRAMEWORK_MONTHS.filter((m) => m.block === selectedBlock);
-  }, [selectedBlock]);
-
-  const activeMonthData = useMemo<FrameworkMonth>(() => {
-    const found = MASTER_FRAMEWORK_MONTHS.find((m) => m.monthIndex === selectedMonthIndex);
-    return found || MASTER_FRAMEWORK_MONTHS[0];
-  }, [selectedMonthIndex]);
-
-  const filteredBaselineTests = useMemo(() => {
-    if (baselineSessionFilter === "all") return BASELINE_ASSESSMENTS;
-    return BASELINE_ASSESSMENTS.filter((t) => t.session === baselineSessionFilter);
-  }, [baselineSessionFilter]);
-
-  const heroRef = useRef<HTMLDivElement>(null);
-  const isFirstFrameworkTabMount = useRef(true);
-  const isFirstToolMount = useRef(true);
-  const isFirstMonthMount = useRef(true);
-
   // Helper to remove all temporary animation inline properties so hover micro-interactions work cleanly
   const cleanInline = (el: HTMLElement) => {
     el.style.removeProperty("clip-path");
@@ -247,43 +136,43 @@ export function KnowledgeHubClient() {
         // 1. Hero title cinematic sweep & text reveals
         gsap.fromTo(
           ".knowledge-hero-title",
-          { y: 50, autoAlpha: 0, filter: "blur(6px)" },
-          { y: 0, autoAlpha: 1, filter: "blur(0px)", duration: 1.0, ease: "power4.out", clearProps: "transform,filter", delay: 0.05 }
+          { y: 40, autoAlpha: 0, filter: "blur(6px)" },
+          { y: 0, autoAlpha: 1, filter: "blur(0px)", duration: 0.9, ease: "power4.out", clearProps: "transform,filter", delay: 0.05 }
         );
         gsap.fromTo(
           ".knowledge-hero-overline",
           { y: -16, autoAlpha: 0 },
-          { y: 0, autoAlpha: 1, duration: 0.7, ease: "power2.out", clearProps: "transform", delay: 0.15 }
+          { y: 0, autoAlpha: 1, duration: 0.6, ease: "power2.out", clearProps: "transform", delay: 0.15 }
         );
         gsap.fromTo(
           ".knowledge-hero-desc",
-          { y: 20, autoAlpha: 0 },
-          { y: 0, autoAlpha: 1, duration: 0.75, ease: "power2.out", clearProps: "transform", delay: 0.25 }
+          { y: 18, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, duration: 0.7, ease: "power2.out", clearProps: "transform", delay: 0.25 }
         );
         gsap.fromTo(
           ".hero-quote-callout",
-          { y: 20, autoAlpha: 0 },
-          { y: 0, autoAlpha: 1, duration: 0.75, ease: "power2.out", clearProps: "transform", delay: 0.35 }
+          { y: 18, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, duration: 0.7, ease: "power2.out", clearProps: "transform", delay: 0.35 }
         );
         gsap.fromTo(
           ".knowledge-hero-actions",
-          { y: 18, autoAlpha: 0 },
-          { y: 0, autoAlpha: 1, duration: 0.7, ease: "power2.out", clearProps: "transform", delay: 0.45 }
+          { y: 16, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, duration: 0.65, ease: "power2.out", clearProps: "transform", delay: 0.45 }
         );
         gsap.fromTo(
           ".accreditation-pill",
-          { y: 14, autoAlpha: 0 },
-          { y: 0, autoAlpha: 1, duration: 0.6, stagger: 0.06, ease: "power2.out", clearProps: "transform", delay: 0.55 }
+          { y: 12, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, duration: 0.55, stagger: 0.05, ease: "power2.out", clearProps: "transform", delay: 0.55 }
         );
 
-        // 2. Hero 4 KPI Stat Cards - Nemo Iris Reveal Physics
+        // 2. Hero 4 KPI Stat Cards
         const statCards = gsap.utils.toArray<HTMLElement>(".knowledge-stat-card");
         if (statCards.length > 0) {
           gsap.fromTo(
             statCards,
             {
               opacity: 0,
-              y: 22,
+              y: 20,
               scale: 0.96,
               clipPath: "inset(0 50% 0 50% round 14px)",
               willChange: "transform, opacity, clip-path",
@@ -293,10 +182,10 @@ export function KnowledgeHubClient() {
               y: 0,
               scale: 1,
               clipPath: "inset(0 0% 0 0% round 14px)",
-              duration: 0.95,
-              stagger: 0.085,
+              duration: 0.9,
+              stagger: 0.08,
               ease: "expo.out",
-              delay: 0.35,
+              delay: 0.3,
               clearProps: "transform,scale,opacity,clipPath,clip-path,willChange",
               onComplete: () => {
                 statCards.forEach(cleanInline);
@@ -305,297 +194,19 @@ export function KnowledgeHubClient() {
           );
         }
 
-        // 3. Master Annual Training Framework 2027 Section Scroll Reveal
-        const frameworkSection = document.getElementById("master-framework");
-        if (frameworkSection) {
-          gsap.fromTo(
-            "#master-framework .framework-header-content",
-            { opacity: 0, y: 20 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.7,
-              ease: "power2.out",
-              clearProps: "transform,opacity",
-              scrollTrigger: { trigger: "#master-framework", start: "top 78%", once: true },
-            }
-          );
-
-          const blockCards = gsap.utils.toArray<HTMLElement>(".framework-block-card");
-          if (blockCards.length > 0) {
-            gsap.fromTo(
-              blockCards,
-              {
-                opacity: 0,
-                y: 20,
-                scale: 0.96,
-                clipPath: "inset(0 50% 0 50% round 14px)",
-                willChange: "transform, opacity, clip-path",
-              },
-              {
-                opacity: 1,
-                y: 0,
-                scale: 1,
-                clipPath: "inset(0 0% 0 0% round 14px)",
-                duration: 0.9,
-                stagger: 0.085,
-                ease: "expo.out",
-                clearProps: "transform,scale,opacity,clipPath,clip-path,willChange",
-                scrollTrigger: { trigger: "#master-framework", start: "top 78%", once: true },
-                onComplete: () => {
-                  blockCards.forEach(cleanInline);
-                },
-              }
-            );
+        // 3. Quick Jump Bar entrance
+        gsap.fromTo(
+          ".quick-nav-pill",
+          { opacity: 0, y: 14 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.5,
+            stagger: 0.06,
+            ease: "power2.out",
+            clearProps: "transform,opacity",
+            delay: 0.5,
           }
-
-          const monthButtons = gsap.utils.toArray<HTMLElement>(".timeline-month-btn");
-          if (monthButtons.length > 0) {
-            gsap.fromTo(
-              monthButtons,
-              {
-                opacity: 0,
-                scale: 0.92,
-                y: 12,
-                willChange: "transform, opacity",
-              },
-              {
-                opacity: 1,
-                scale: 1,
-                y: 0,
-                duration: 0.6,
-                stagger: 0.045,
-                ease: "back.out(1.6)",
-                clearProps: "transform,scale,opacity,willChange",
-                scrollTrigger: { trigger: ".timeline-month-btn", start: "top 80%", once: true },
-                onComplete: () => {
-                  monthButtons.forEach(cleanInline);
-                },
-              }
-            );
-          }
-
-          const detailCard = document.querySelector<HTMLElement>(".framework-detail-card");
-          if (detailCard) {
-            gsap.fromTo(
-              detailCard,
-              {
-                opacity: 0,
-                y: 22,
-                scale: 0.97,
-                clipPath: "inset(0 50% 0 50% round 16px)",
-                willChange: "transform, opacity, clip-path",
-              },
-              {
-                opacity: 1,
-                y: 0,
-                scale: 1,
-                clipPath: "inset(0 0% 0 0% round 16px)",
-                duration: 0.95,
-                ease: "expo.out",
-                clearProps: "transform,scale,opacity,clipPath,clip-path,willChange",
-                scrollTrigger: { trigger: detailCard, start: "top 80%", once: true },
-                onComplete: () => {
-                  cleanInline(detailCard);
-                },
-              }
-            );
-          }
-        }
-
-        // 4. Main Practical Articles Grid - Nemo Iris Reveal Physics
-        const articleCards = gsap.utils.toArray<HTMLElement>(".knowledge-article-card");
-        if (articleCards.length > 0) {
-          gsap.fromTo(
-            articleCards,
-            {
-              opacity: 0,
-              y: 22,
-              scale: 0.96,
-              clipPath: "inset(0 50% 0 50% round 16px)",
-              willChange: "transform, opacity, clip-path",
-            },
-            {
-              opacity: 1,
-              y: 0,
-              scale: 1,
-              clipPath: "inset(0 0% 0 0% round 16px)",
-              duration: 0.95,
-              stagger: 0.085,
-              ease: "expo.out",
-              clearProps: "transform,scale,opacity,clipPath,clip-path,willChange",
-              scrollTrigger: {
-                trigger: "#articles-section",
-                start: "top 82%",
-                once: true,
-              },
-              onComplete: () => {
-                articleCards.forEach(cleanInline);
-              },
-            }
-          );
-        }
-
-        // 5. Interactive Sports-Science Tools Suite Entrance
-        const toolsSection = document.getElementById("interactive-tools");
-        if (toolsSection) {
-          gsap.fromTo(
-            "#interactive-tools .tools-header-anim",
-            { opacity: 0, y: 20 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.7,
-              ease: "power2.out",
-              clearProps: "transform,opacity",
-              scrollTrigger: { trigger: "#interactive-tools", start: "top 78%", once: true },
-            }
-          );
-
-          const toolTabs = gsap.utils.toArray<HTMLElement>("#interactive-tools .tool-tab-btn");
-          if (toolTabs.length > 0) {
-            gsap.fromTo(
-              toolTabs,
-              { opacity: 0, scale: 0.92, y: 12 },
-              {
-                opacity: 1,
-                scale: 1,
-                y: 0,
-                duration: 0.6,
-                stagger: 0.06,
-                ease: "back.out(1.6)",
-                clearProps: "transform,scale,opacity",
-                scrollTrigger: { trigger: "#interactive-tools", start: "top 78%", once: true },
-                onComplete: () => {
-                  toolTabs.forEach(cleanInline);
-                },
-              }
-            );
-          }
-
-          const toolContainer = document.querySelector<HTMLElement>(".knowledge-tool-container");
-          if (toolContainer) {
-            gsap.fromTo(
-              toolContainer,
-              {
-                opacity: 0,
-                y: 22,
-                scale: 0.97,
-                clipPath: "inset(0 50% 0 50% round 16px)",
-                willChange: "transform, opacity, clip-path",
-              },
-              {
-                opacity: 1,
-                y: 0,
-                scale: 1,
-                clipPath: "inset(0 0% 0 0% round 16px)",
-                duration: 0.95,
-                ease: "expo.out",
-                clearProps: "transform,scale,opacity,clipPath,clip-path,willChange",
-                scrollTrigger: { trigger: "#interactive-tools", start: "top 78%", once: true },
-                onComplete: () => {
-                  cleanInline(toolContainer);
-                },
-              }
-            );
-          }
-        }
-
-        // 6. PERSILAT 2026 Weight Categories Reference Strip Entrance
-        const weightSection = document.getElementById("weight-categories");
-        if (weightSection) {
-          gsap.fromTo(
-            "#weight-categories .weight-header-anim",
-            { opacity: 0, y: 16 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.65,
-              ease: "power2.out",
-              clearProps: "transform,opacity",
-              scrollTrigger: { trigger: "#weight-categories", start: "top 80%", once: true },
-            }
-          );
-
-          const weightCards = gsap.utils.toArray<HTMLElement>(".weight-category-card");
-          if (weightCards.length > 0) {
-            gsap.fromTo(
-              weightCards,
-              {
-                opacity: 0,
-                scale: 0.92,
-                y: 16,
-                willChange: "transform, opacity",
-              },
-              {
-                opacity: 1,
-                scale: 1,
-                y: 0,
-                duration: 0.65,
-                stagger: 0.045,
-                ease: "back.out(1.5)",
-                clearProps: "transform,scale,opacity,willChange",
-                scrollTrigger: { trigger: "#weight-categories", start: "top 80%", once: true },
-                onComplete: () => {
-                  weightCards.forEach(cleanInline);
-                },
-              }
-            );
-          }
-
-          const weightNotice = document.querySelector<HTMLElement>("#weight-categories .weight-notice-anim");
-          if (weightNotice) {
-            gsap.fromTo(
-              weightNotice,
-              { opacity: 0, y: 14 },
-              {
-                opacity: 1,
-                y: 0,
-                duration: 0.65,
-                ease: "power2.out",
-                delay: 0.35,
-                clearProps: "transform,opacity",
-                scrollTrigger: { trigger: "#weight-categories", start: "top 80%", once: true },
-              }
-            );
-          }
-        }
-
-        // 7. Tactile 3D Button & Chip Spring Interactions
-        const interactiveBtns = Array.from(
-          document.querySelectorAll<HTMLElement>(
-            ".btn-crimson, .timeline-month-btn, .framework-block-card, .accreditation-pill, .tool-tab-btn, .knowledge-pill-switcher button"
-          )
-        );
-        const handleDown = (e: Event) => {
-          const target = e.currentTarget as HTMLElement;
-          gsap.to(target, { scale: 0.96, duration: 0.08, ease: "power2.out" });
-        };
-        const handleUp = (e: Event) => {
-          const target = e.currentTarget as HTMLElement;
-          gsap.to(target, {
-            scale: 1,
-            duration: 0.34,
-            ease: "back.out(2)",
-            clearProps: "transform,scale",
-            onComplete: () => {
-              target.style.removeProperty("transform");
-              target.style.removeProperty("scale");
-            },
-          });
-        };
-        interactiveBtns.forEach((btn) => {
-          btn.addEventListener("pointerdown", handleDown);
-          btn.addEventListener("pointerup", handleUp);
-          btn.addEventListener("pointercancel", handleUp);
-          btn.addEventListener("pointerleave", handleUp);
-        });
-      });
-
-      media.add("(prefers-reduced-motion: reduce)", () => {
-        gsap.set(
-          ".knowledge-hero-title, .knowledge-hero-overline, .knowledge-hero-desc, .hero-quote-callout, .knowledge-hero-actions, .accreditation-pill, .knowledge-stat-card, .framework-block-card, .timeline-month-btn, .framework-detail-card, .framework-policy-card, .framework-baseline-card, .framework-priority-card, .knowledge-article-card, .knowledge-tool-container, .weight-category-card, .fight-week-banner",
-          { autoAlpha: 1, opacity: 1, y: 0, scale: 1, clearProps: "all" }
         );
       });
 
@@ -604,214 +215,9 @@ export function KnowledgeHubClient() {
     { scope: heroRef }
   );
 
-  // Framework Sub-View Tab Switches Transition
-  useGSAP(
-    () => {
-      if (isFirstFrameworkTabMount.current) {
-        isFirstFrameworkTabMount.current = false;
-        return;
-      }
-
-      const isReduced =
-        typeof window !== "undefined" &&
-        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      if (isReduced) return;
-
-      if (frameworkViewTab === "competition") {
-        const policyCards = gsap.utils.toArray<HTMLElement>(".framework-policy-card");
-        if (policyCards.length > 0) {
-          gsap.fromTo(
-            policyCards,
-            {
-              opacity: 0,
-              y: 22,
-              scale: 0.96,
-              clipPath: "inset(0 50% 0 50% round 16px)",
-              willChange: "transform, opacity, clip-path",
-            },
-            {
-              opacity: 1,
-              y: 0,
-              scale: 1,
-              clipPath: "inset(0 0% 0 0% round 16px)",
-              duration: 0.85,
-              stagger: 0.085,
-              ease: "expo.out",
-              clearProps: "transform,scale,opacity,clipPath,clip-path,willChange",
-              onComplete: () => {
-                policyCards.forEach(cleanInline);
-              },
-            }
-          );
-        }
-      } else if (frameworkViewTab === "baseline") {
-        const baselineCards = gsap.utils.toArray<HTMLElement>(".framework-baseline-card");
-        if (baselineCards.length > 0) {
-          gsap.fromTo(
-            baselineCards,
-            {
-              opacity: 0,
-              y: 22,
-              scale: 0.96,
-              clipPath: "inset(0 50% 0 50% round 16px)",
-              willChange: "transform, opacity, clip-path",
-            },
-            {
-              opacity: 1,
-              y: 0,
-              scale: 1,
-              clipPath: "inset(0 0% 0 0% round 16px)",
-              duration: 0.85,
-              stagger: 0.07,
-              ease: "expo.out",
-              clearProps: "transform,scale,opacity,clipPath,clip-path,willChange",
-              onComplete: () => {
-                baselineCards.forEach(cleanInline);
-              },
-            }
-          );
-        }
-      } else if (frameworkViewTab === "priorities") {
-        const priorityCards = gsap.utils.toArray<HTMLElement>(".framework-priority-card");
-        if (priorityCards.length > 0) {
-          gsap.fromTo(
-            priorityCards,
-            {
-              opacity: 0,
-              y: 22,
-              scale: 0.96,
-              clipPath: "inset(0 50% 0 50% round 16px)",
-              willChange: "transform, opacity, clip-path",
-            },
-            {
-              opacity: 1,
-              y: 0,
-              scale: 1,
-              clipPath: "inset(0 0% 0 0% round 16px)",
-              duration: 0.85,
-              stagger: 0.07,
-              ease: "expo.out",
-              clearProps: "transform,scale,opacity,clipPath,clip-path,willChange",
-              onComplete: () => {
-                priorityCards.forEach(cleanInline);
-              },
-            }
-          );
-        }
-      } else if (frameworkViewTab === "calendar") {
-        const blockCards = gsap.utils.toArray<HTMLElement>(".framework-block-card");
-        if (blockCards.length > 0) {
-          gsap.fromTo(
-            blockCards,
-            {
-              opacity: 0,
-              y: 18,
-              scale: 0.97,
-              clipPath: "inset(0 50% 0 50% round 14px)",
-            },
-            {
-              opacity: 1,
-              y: 0,
-              scale: 1,
-              clipPath: "inset(0 0% 0 0% round 14px)",
-              duration: 0.8,
-              stagger: 0.08,
-              ease: "expo.out",
-              clearProps: "transform,scale,opacity,clipPath,clip-path,willChange",
-              onComplete: () => {
-                blockCards.forEach(cleanInline);
-              },
-            }
-          );
-        }
-      }
-
-      // Recalculate ScrollTrigger markers after sub-tab height changes
-      setTimeout(() => {
-        ScrollTrigger.refresh();
-      }, 120);
-    },
-    { dependencies: [frameworkViewTab], scope: heroRef }
-  );
-
-  // Active Tool Tab Switch Transition
-  useGSAP(
-    () => {
-      if (isFirstToolMount.current) {
-        isFirstToolMount.current = false;
-        return;
-      }
-      const isReduced =
-        typeof window !== "undefined" &&
-        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      if (isReduced) return;
-
-      const toolContainer = document.querySelector<HTMLElement>(".knowledge-tool-container");
-      if (toolContainer) {
-        gsap.fromTo(
-          toolContainer,
-          {
-            opacity: 0,
-            scale: 0.97,
-            y: 16,
-            clipPath: "inset(0 50% 0 50% round 16px)",
-            willChange: "transform, opacity, clip-path",
-          },
-          {
-            opacity: 1,
-            scale: 1,
-            y: 0,
-            clipPath: "inset(0 0% 0 0% round 16px)",
-            duration: 0.85,
-            ease: "expo.out",
-            clearProps: "transform,scale,opacity,clipPath,clip-path,willChange",
-            onComplete: () => {
-              cleanInline(toolContainer);
-            },
-          }
-        );
-      }
-    },
-    { dependencies: [activeToolTab], scope: heroRef }
-  );
-
-  // Selected Month Switch Transition
-  useGSAP(
-    () => {
-      if (isFirstMonthMount.current) {
-        isFirstMonthMount.current = false;
-        return;
-      }
-      const isReduced =
-        typeof window !== "undefined" &&
-        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      if (isReduced) return;
-
-      const detailCard = document.querySelector<HTMLElement>(".framework-detail-card");
-      if (detailCard) {
-        gsap.fromTo(
-          detailCard,
-          { opacity: 0.85, y: 10, scale: 0.985 },
-          {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: 0.45,
-            ease: "power2.out",
-            clearProps: "transform,scale,opacity",
-            onComplete: () => {
-              cleanInline(detailCard);
-            },
-          }
-        );
-      }
-    },
-    { dependencies: [selectedMonthIndex], scope: heroRef }
-  );
-
   return (
     <div ref={heroRef} className="min-h-screen text-white pb-24">
-      {/* Executive Hero Header */}
+      {/* 1. EXECUTIVE HERO HEADER */}
       <section className="relative pt-12 pb-16 md:pt-16 md:pb-20 lg:pt-20 lg:pb-24 border-b border-white/[0.08] overflow-hidden">
         {/* Atmospheric ambient glow */}
         <div
@@ -852,20 +258,20 @@ export function KnowledgeHubClient() {
                 <span className="hero-quote-rule" aria-hidden="true" />
               </div>
 
-              {/* Action Buttons */}
+              {/* Primary Action Buttons */}
               <div className="knowledge-hero-actions mt-6 flex flex-wrap items-center gap-3">
                 <a
-                  href="#master-framework"
-                  className="btn-crimson px-5 py-2.5 text-xs font-bold uppercase tracking-wider"
+                  href="#tunjang-sains-sukan"
+                  className="btn-crimson px-5 py-2.5 text-xs font-bold uppercase tracking-wider flex items-center gap-2"
                 >
-                  <CalendarDays size={14} />
-                  <span>{kd.ctaFramework}</span>
+                  <Dumbbell size={14} />
+                  <span>{isEn ? "Explore 4 Pillars" : "Terokai 4 Tunjang"}</span>
                 </a>
 
                 <button
                   type="button"
                   onClick={() => setCitationsDrawerOpen(true)}
-                  className="px-4 py-2.5 rounded-xl border border-white/10 bg-white/[0.04] hover:bg-white/[0.08] hover:border-[#FF3845]/60 text-xs font-bold text-white flex items-center gap-2 transition-all backdrop-blur-sm"
+                  className="px-4 py-2.5 rounded-xl border border-white/10 bg-white/[0.04] hover:bg-white/[0.08] hover:border-[#FF3845]/60 text-xs font-bold text-white flex items-center gap-2 transition-all backdrop-blur-sm cursor-pointer"
                 >
                   <BookMarked size={14} className="text-[#FF3845]" />
                   <span>{kd.ctaCitations}</span>
@@ -1016,1022 +422,165 @@ export function KnowledgeHubClient() {
             </div>
           </div>
 
-          {/* Search Bar & Instant Counter */}
-          <div className="mt-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 max-w-2xl">
-            <div className="relative flex-1">
-              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#858790]" size={18} />
-              <input
-                type="text"
-                placeholder={kd.articles.searchPlaceholder}
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="search-input-glow w-full pl-11 pr-4 py-3 rounded-xl border border-white/10 bg-white/[0.04] backdrop-blur-md text-sm text-white placeholder-[#787A82] focus:outline-none focus:border-[#FF3845] transition-all"
-              />
-              {searchQuery && (
-                <button
-                  type="button"
-                  onClick={() => setSearchQuery("")}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs text-[#858790] hover:text-white"
-                >
-                  {isEn ? "Clear" : "Padam"}
-                </button>
-              )}
-            </div>
-            <div className="px-4 py-3 rounded-xl border border-white/10 bg-white/[0.04] backdrop-blur-md text-xs text-[#A2A3AA] flex items-center justify-center gap-1.5 whitespace-nowrap">
-              <span className="font-bold text-white">{filteredArticles.length}</span> {isEn ? "articles found" : "artikel dijumpai"}
-            </div>
-          </div>
-
-          {/* Glowing Category Filter Tabs */}
-          <div className="mt-6 flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
-            {CATEGORIES.map((cat) => {
-              const active = selectedCategory === cat.id;
-              return (
-                <button
-                  key={cat.id}
-                  type="button"
-                  onClick={() => setSelectedCategory(cat.id)}
-                  className={`px-4 py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-2 border ${
-                    active
-                      ? "pill-active-glow"
-                      : "bg-white/[0.04] border-white/10 text-[#B0B1B7] hover:text-white hover:bg-white/[0.08] backdrop-blur-sm"
-                  }`}
-                >
-                  {isEn ? cat.labelEn : cat.label}
-                  <span
-                    className={`px-1.5 py-0.2 rounded-full text-[10px] ${
-                      active ? "bg-black/40 text-white" : "bg-white/10 text-[#868892]"
-                    }`}
-                  >
-                    {cat.id === "all" ? KNOWLEDGE_ARTICLES.length : cat.count}
-                  </span>
-                </button>
-              );
-            })}
+          {/* Quick Navigation Jump Bar */}
+          <div className="mt-10 pt-6 border-t border-white/[0.08] flex items-center gap-2.5 overflow-x-auto pb-2 scrollbar-none">
+            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#7E8088] shrink-0 mr-1 hidden sm:inline">
+              {isEn ? "QUICK JUMP:" : "LALUAN PANTAS:"}
+            </span>
 
             <a
-              href="#master-framework"
-              className="px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all flex items-center gap-1.5 border border-[#FF3845]/40 bg-[#FF3845]/15 text-[#FF555C] hover:bg-[#FF3845]/25 backdrop-blur-sm"
+              href="#tunjang-sains-sukan"
+              className="quick-nav-pill px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-2 border border-white/10 bg-white/[0.03] hover:bg-white/[0.08] hover:border-red-500/40 text-[#C7C8CE] hover:text-white backdrop-blur-sm"
             >
-              <CalendarDays size={13} />
-              <span>{isEn ? "2027 Framework" : "Kerangka 2027"}</span>
+              <Dumbbell size={13} className="text-[#FF3845]" />
+              <span>{isEn ? "1. 4 Core Pillars" : "1. 4 Tunjang Sains"}</span>
             </a>
 
             <a
-              href="#silibus-latihan-rumah"
-              className="px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all flex items-center gap-1.5 border border-amber-500/40 bg-amber-500/15 text-amber-400 hover:bg-amber-500/25 backdrop-blur-sm shadow-sm"
+              href="#pelan-periodisasi-2027"
+              className="quick-nav-pill px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-2 border border-white/10 bg-white/[0.03] hover:bg-white/[0.08] hover:border-red-500/40 text-[#C7C8CE] hover:text-white backdrop-blur-sm"
             >
-              <Sparkles size={13} />
-              <span>{isEn ? "5 Core Modules (Home Training)" : "5 Modul Teras Latihan Rumah"}</span>
+              <CalendarDays size={13} className="text-[#FF3845]" />
+              <span>{isEn ? "2. Periodisation 2027" : "2. Roadmap 2027"}</span>
+            </a>
+
+            <a
+              href="#alat-praktikal-sains"
+              className="quick-nav-pill px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-2 border border-white/10 bg-white/[0.03] hover:bg-white/[0.08] hover:border-red-500/40 text-[#C7C8CE] hover:text-white backdrop-blur-sm"
+            >
+              <Scale size={13} className="text-[#FF3845]" />
+              <span>{isEn ? "3. Safe Weight Cut & Sweat" : "3. Alat Praktikal"}</span>
+            </a>
+
+            <a
+              href="#pustaka-panduan"
+              className="quick-nav-pill px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-2 border border-white/10 bg-white/[0.03] hover:bg-white/[0.08] hover:border-red-500/40 text-[#C7C8CE] hover:text-white backdrop-blur-sm"
+            >
+              <Users size={13} className="text-[#FF3845]" />
+              <span>{isEn ? "4. Role-Based Guides" : "4. Panduan Peranan"}</span>
+            </a>
+
+            <a
+              href="#jadual-kelas-berat"
+              className="quick-nav-pill px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-2 border border-white/10 bg-white/[0.03] hover:bg-white/[0.08] hover:border-red-500/40 text-[#C7C8CE] hover:text-white backdrop-blur-sm"
+            >
+              <ShieldCheck size={13} className="text-[#FF3845]" />
+              <span>{isEn ? "5. PERSILAT Classes" : "5. Kelas Berat PERSILAT"}</span>
             </a>
           </div>
         </div>
       </section>
 
-      {/* Master Annual Training Framework 2027 Section */}
-      <section id="master-framework" className="py-14 md:py-20 border-b border-white/[0.08] relative">
+      {/* 2. SECTION 2: 4 CORE PILLARS GRID */}
+      <KnowledgePillarsGrid />
+
+      {/* 3. SECTION 3: UNIFIED 52-WEEK PERIODIZATION ROADMAP */}
+      <UnifiedPeriodizationRoadmap />
+
+      {/* 4. SECTION 4: PRACTICAL PERFORMANCE TOOLS */}
+      <PracticalToolsPanel />
+
+      {/* 5. SECTION 5: ROLE-BASED KNOWLEDGE VAULT */}
+      <RoleKnowledgeVault onOpenArticle={handleOpenArticle} />
+
+      {/* 6. SECTION 6: COLLAPSIBLE ANNEX - PERSILAT WEIGHT STANDARDS & SOURCE BANNER */}
+      <section id="jadual-kelas-berat" className="py-14 border-b border-white/[0.08] scroll-mt-24">
         <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="framework-header-content flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
-            <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#FF3845]/40 bg-[#FF3845]/10 text-[#FF3845] text-xs font-bold tracking-wider uppercase mb-2">
-                <Target size={13} />
-                <span>{isEn ? "ANNUAL TRAINING PROGRAM FRAMEWORK 2027" : "KERANGKA PROGRAM LATIHAN TAHUNAN 2027"}</span>
-              </div>
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
-                {isEn ? "MASTER ANNUAL TRAINING FRAMEWORK 2027" : "KERANGKA INDUK LATIHAN TAHUNAN 2027"}
-              </h2>
-              <p className="text-xs sm:text-sm text-[#A2A3AA] mt-1">
-                {isEn
-                  ? "52-Week Cycle (6 + 6 Months) aligned with ISN Standards, PERSILAT 2026 Medical Code, and National Sports Council (MSN)."
-                  : "Kitaran 52 Minggu (6 + 6 Bulan) diselaraskan bersama Piawaian ISN, Kod Perubatan PERSILAT 2026, dan Majlis Sukan Negara (MSN)."}
-              </p>
-            </div>
-
-            {/* Framework Sub-View Switcher */}
-            <div className="knowledge-pill-switcher flex flex-wrap items-center gap-1.5 p-1.5 rounded-xl">
-              <button
-                type="button"
-                onClick={() => setFrameworkViewTab("calendar")}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                  frameworkViewTab === "calendar"
-                    ? "bg-[#E10600] text-white shadow-sm"
-                    : "text-[#8E9099] hover:text-white"
-                }`}
-              >
-                1. {kd.framework.subtabCalendar}
-              </button>
-              <button
-                type="button"
-                onClick={() => setFrameworkViewTab("competition")}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                  frameworkViewTab === "competition"
-                    ? "bg-[#E10600] text-white shadow-sm"
-                    : "text-[#8E9099] hover:text-white"
-                }`}
-              >
-                2. {kd.framework.subtabPolicy}
-              </button>
-              <button
-                type="button"
-                onClick={() => setFrameworkViewTab("baseline")}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                  frameworkViewTab === "baseline"
-                    ? "bg-[#E10600] text-white shadow-sm"
-                    : "text-[#8E9099] hover:text-white"
-                }`}
-              >
-                3. {kd.framework.subtabTests}
-              </button>
-              <button
-                type="button"
-                onClick={() => setFrameworkViewTab("priorities")}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                  frameworkViewTab === "priorities"
-                    ? "bg-[#E10600] text-white shadow-sm"
-                    : "text-[#8E9099] hover:text-white"
-                }`}
-              >
-                4. {kd.framework.subtabPriorities}
-              </button>
-            </div>
-          </div>
-
-          {/* VIEW 1: 12-Month Periodization Roadmap */}
-          {frameworkViewTab === "calendar" && (
-            <div className="space-y-6">
-              {/* Block Switcher (Blok 1 vs Blok 2) */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSelectedBlock(1);
-                    if (selectedMonthIndex > 6) setSelectedMonthIndex(1);
-                  }}
-                  className={`framework-block-card p-4 rounded-xl border text-left transition-all ${
-                    selectedBlock === 1
-                      ? "active"
-                      : "text-[#8E9099]"
-                  }`}
-                >
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="text-xs font-bold uppercase tracking-wider text-[#FF555C]">
-                      {isEn ? "Phase 1 (January – June 2027)" : "Fasa 1 (Januari – Jun 2027)"}
-                    </span>
-                    <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-[#FF3845]/15 text-[#FF555C] font-bold">
-                      {isEn ? "Block 1" : "Blok 1"}
-                    </span>
-                  </div>
-                  <div className="text-lg font-bold font-athletic text-white uppercase tracking-wide">
-                    {isEn ? "FOUNDATION & PHYSICAL DEVELOPMENT" : "ASAS & PEMBANGUNAN FIZIKAL"}
-                  </div>
-                  <p className="text-xs text-[#9698A0] mt-1">
-                    {isEn
-                      ? "Aerobic base building, core strength, ankle mobility, and June reassessment."
-                      : "Pembinaan asas aerobik, kekuatan teras, mobiliti buku lali, dan penilaian semula Jun."}
-                  </p>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSelectedBlock(2);
-                    if (selectedMonthIndex <= 6) setSelectedMonthIndex(7);
-                  }}
-                  className={`framework-block-card p-4 rounded-xl border text-left transition-all ${
-                    selectedBlock === 2
-                      ? "active"
-                      : "text-[#8E9099]"
-                  }`}
-                >
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="text-xs font-bold uppercase tracking-wider text-[#FF555C]">
-                      {isEn ? "Phase 2 (July – December 2027)" : "Fasa 2 (Julai – Disember 2027)"}
-                    </span>
-                    <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-[#FF3845]/15 text-[#FF555C] font-bold">
-                      {isEn ? "Block 2" : "Blok 2"}
-                    </span>
-                  </div>
-                  <div className="text-lg font-bold font-athletic text-white uppercase tracking-wide">
-                    {isEn ? "SPECIFIC PERFORMANCE & TECHNICAL PEAK" : "PRESTASI KHUSUS & KEMUNCAK TEKNIKAL"}
-                  </div>
-                  <p className="text-xs text-[#9698A0] mt-1">
-                    {isEn
-                      ? "Discipline-specific conditioning, tournament simulation, peak taper phase, and annual report."
-                      : "Kondisi khusus disiplin, simulasi kejohanan, fasa taper kemuncak, dan laporan tahunan."}
-                  </p>
-                </button>
-              </div>
-
-              {/* Monthly Selector Strip */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
-                {blockMonths.map((month) => {
-                  const isActive = selectedMonthIndex === month.monthIndex;
-                  return (
-                    <button
-                      key={month.monthCode}
-                      type="button"
-                      onClick={() => setSelectedMonthIndex(month.monthIndex)}
-                      className={`timeline-month-btn p-3 rounded-xl border text-left flex flex-col justify-between ${
-                        isActive
-                          ? "active"
-                          : "text-[#8E9099]"
-                      }`}
-                    >
-                      <div>
-                        <div className="flex items-center justify-between gap-1 mb-1">
-                          <span className={`text-xs font-bold font-mono ${isActive ? "text-white" : "text-[#FF555C]"}`}>
-                            {month.monthCode}
-                          </span>
-                          {month.highlightTag && (
-                            <span className={`text-[9px] font-bold px-1.5 py-0.2 rounded uppercase ${
-                              isActive ? "bg-black/30 text-white" : "bg-[#FF3845]/20 text-[#FF858B]"
-                            }`}>
-                              {month.highlightTag}
-                            </span>
-                          )}
-                        </div>
-                        <div className={`text-sm font-bold font-athletic uppercase tracking-wide ${isActive ? "text-white" : "text-[#E1E2E6]"}`}>
-                          {getMonthName(month.monthIndex, month.monthName)}
-                        </div>
-                        <div className={`text-[11px] font-medium truncate mt-0.5 ${isActive ? "text-white/90" : "text-[#9E9FA7]"}`}>
-                          {month.theme}
-                        </div>
-                      </div>
-
-                      <div className="mt-3 pt-2 border-t border-white/10 flex items-center justify-between text-[10px]">
-                        <span>V: {month.volumePercentage}%</span>
-                        <span>I: {month.intensityPercentage}%</span>
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-
-              {/* Active Month Detail Card */}
-              <div className="framework-detail-card p-6 sm:p-8 rounded-2xl shadow-xl">
-                <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-6 border-b border-white/[0.08]">
-                  <div>
-                    <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-                      <span className="px-2.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-[#E10600]/20 text-[#FF555C] border border-[#FF3845]/40">
-                        {isEn
-                          ? activeMonthData.block === 1
-                            ? "Block 1: Foundation & Physical Development"
-                            : "Block 2: Specific Performance & Technical Peak"
-                          : activeMonthData.blockTitle}
-                      </span>
-                      <span className="text-xs text-[#8E9099] font-mono">
-                        {isEn ? `Month #${activeMonthData.monthIndex} · 2027` : `Bulan #${activeMonthData.monthIndex} · 2027`}
-                      </span>
-                      {activeMonthData.reviewGate && (
-                        <span className="px-2.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-amber-500/20 text-amber-300 border border-amber-500/40 flex items-center gap-1">
-                          <AlertTriangle size={11} /> {activeMonthData.reviewGate}
-                        </span>
-                      )}
-                    </div>
-
-                    <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
-                      {getMonthName(activeMonthData.monthIndex, activeMonthData.monthName)}: {activeMonthData.theme}
-                    </h3>
-                    <p className="text-xs sm:text-sm text-[#A2A3AA] mt-0.5">
-                      {activeMonthData.subtitle}
-                    </p>
-                  </div>
-
-                  {/* Volume vs Intensity Dual Progress Bars */}
-                  <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 bg-white/[0.03] p-3.5 rounded-xl border border-white/[0.07] backdrop-blur-sm min-w-[280px]">
-                    <div className="flex-1">
-                      <div className="flex items-center justify-between text-[11px] mb-1 font-bold">
-                        <span className="text-[#3B82F6]">{isEn ? "Training Volume" : "Volum Latihan"}</span>
-                        <span className="text-white font-mono">{activeMonthData.volumePercentage}%</span>
-                      </div>
-                      <div className="w-full bg-white/[0.08] h-2 rounded-full overflow-hidden">
-                        <div
-                          className="bg-[#3B82F6] h-full rounded-full transition-all duration-500"
-                          style={{ width: `${activeMonthData.volumePercentage}%` }}
-                        />
-                      </div>
-                    </div>
-
-                    <div className="flex-1">
-                      <div className="flex items-center justify-between text-[11px] mb-1 font-bold">
-                        <span className="text-[#FF3845]">{isEn ? "Session Intensity" : "Intensiti Sesi"}</span>
-                        <span className="text-white font-mono">{activeMonthData.intensityPercentage}%</span>
-                      </div>
-                      <div className="w-full bg-white/[0.08] h-2 rounded-full overflow-hidden">
-                        <div
-                          className="bg-[#FF3845] h-full rounded-full transition-all duration-500"
-                          style={{ width: `${activeMonthData.intensityPercentage}%` }}
-                        />
-                      </div>
-                    </div>
-                  </div>
+          {/* Collapsible Accordion Header */}
+          <div className="p-6 rounded-2xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-[16px]">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#FF555C] mb-1">
+                  <ShieldCheck size={14} className="text-[#FF3845]" />
+                  <span>{isEn ? "OFFICIAL TOURNAMENT STANDARD" : "STANDARD KELAS BERAT TANDING RASMI"}</span>
                 </div>
-
-                {/* Focus Areas & Milestone Badge */}
-                <div className="py-6 border-b border-white/[0.08]">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
-                    <span className="text-xs font-bold text-[#E5E6EB] uppercase tracking-wider block">
-                      {isEn
-                        ? `Primary Training Focus (${getMonthName(activeMonthData.monthIndex, activeMonthData.monthName)}):`
-                        : `Fokus Latihan Utama (${activeMonthData.monthName}):`}
-                    </span>
-                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#FF3845]/15 border border-[#FF3845]/30 text-xs font-bold text-[#FF858B]">
-                      <Award size={13} />
-                      <span>Milestone: {activeMonthData.milestone}</span>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                    {activeMonthData.focusAreas.map((focus, idx) => (
-                      <div key={idx} className="p-3 rounded-lg border border-white/[0.06] bg-white/[0.02] flex items-start gap-2">
-                        <CheckCircle2 size={14} className="text-[#FF3845] shrink-0 mt-0.5" />
-                        <span className="text-xs text-[#D1D2D7] leading-relaxed">{focus}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* 2-Column Task Grid: Athlete Tasks vs Coach Tasks */}
-                <div className="pt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Athlete Tasks */}
-                  <div className="knowledge-frosted-subcard p-4 sm:p-5 rounded-xl">
-                    <div className="flex items-center gap-2 mb-3 text-white">
-                      <Users size={16} className="text-[#3B82F6]" />
-                      <h4 className="text-sm font-bold uppercase tracking-wider">
-                        {isEn ? "Athlete Tasks (Self & App)" : "Tugasan Atlet (Kendiri & Aplikasi)"}
-                      </h4>
-                    </div>
-                    <ul className="space-y-2">
-                      {activeMonthData.fighterxTasks.athlete.map((task, idx) => (
-                        <li key={idx} className="text-xs text-[#C5C6CA] flex items-start gap-2 leading-relaxed">
-                          <span className="w-4 h-4 rounded-full bg-blue-500/20 text-blue-400 font-mono text-[10px] flex items-center justify-center shrink-0 mt-0.5 font-bold">
-                            {idx + 1}
-                          </span>
-                          <span>{task}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Coach Responsibilities */}
-                  <div className="knowledge-frosted-subcard p-4 sm:p-5 rounded-xl">
-                    <div className="flex items-center gap-2 mb-3 text-white">
-                      <ShieldCheck size={16} className="text-[#FF3845]" />
-                      <h4 className="text-sm font-bold uppercase tracking-wider">
-                        {isEn ? "Coach Responsibilities (Review & Verification)" : "Tanggungjawab Coach (Semakan & Pengesahan)"}
-                      </h4>
-                    </div>
-                    <ul className="space-y-2">
-                      {activeMonthData.fighterxTasks.coach.map((task, idx) => (
-                        <li key={idx} className="text-xs text-[#C5C6CA] flex items-start gap-2 leading-relaxed">
-                          <span className="w-4 h-4 rounded-full bg-[#E10600]/20 text-[#FF555C] font-mono text-[10px] flex items-center justify-center shrink-0 mt-0.5 font-bold">
-                            {idx + 1}
-                          </span>
-                          <span>{task}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* VIEW 2: Dasar Pertandingan Sepanjang Tahun (Priority A, B, C) */}
-          {frameworkViewTab === "competition" && (
-            <div className="space-y-6">
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                {COMPETITION_POLICIES.map((policy) => {
-                  const badgeClass =
-                    policy.priority === "A"
-                      ? "badge-crimson"
-                      : policy.priority === "B"
-                      ? "badge-blue"
-                      : "badge-gold";
-
-                  return (
-                    <div
-                      key={policy.priority}
-                      className="framework-policy-card p-6 rounded-2xl flex flex-col justify-between"
-                    >
-                      <div>
-                        <div className="flex items-center justify-between gap-2 mb-3">
-                          <span className={`category-tag ${badgeClass} font-mono font-bold text-xs`}>
-                            {isEn ? `PRIORITY ${policy.priority}` : `KEUTAMAAN ${policy.priority}`}
-                          </span>
-                          <span className="text-[11px] text-[#8E9099] font-medium">
-                            {isEn
-                              ? policy.priority === "A"
-                                ? "Primary Target Tournament"
-                                : policy.priority === "B"
-                                ? "Development & Assessment Tournament"
-                                : "Club Level Match Simulation"
-                              : policy.type}
-                          </span>
-                        </div>
-
-                        <h3 className="text-xl font-bold tracking-tight text-white mb-2">
-                          {isEn
-                            ? policy.priority === "A"
-                              ? "Priority A (Major / Key Competition)"
-                              : policy.priority === "B"
-                              ? "Priority B (Secondary / Development)"
-                              : "Priority C (Internal / Sparring)"
-                            : policy.label}
-                        </h3>
-
-                        {/* Target Events */}
-                        <div className="mb-4">
-                          <span className="text-[10px] font-bold text-[#8A8C95] uppercase tracking-wider block mb-1">
-                            {isEn ? "Target Tournaments:" : "Sasaran Kejohanan:"}
-                          </span>
-                          <div className="flex flex-wrap gap-1.5">
-                            {policy.targetEvents.map((evt, idx) => (
-                              <span key={idx} className="px-2 py-0.5 rounded text-[10px] bg-white/[0.04] text-[#C5C6CA] border border-white/[0.08]">
-                                {evt}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-
-                        {/* Taper Protocol */}
-                        <div className="p-3.5 rounded-xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm mb-3">
-                          <span className="text-[10px] font-bold text-[#ff4d5a] uppercase tracking-wider block mb-1">
-                            {isEn ? "Tapering Protocol:" : "Protokol Tapering:"}
-                          </span>
-                          <p className="text-xs text-[#D1D2D7] leading-relaxed">
-                            {policy.taperProtocol}
-                          </p>
-                        </div>
-
-                        {/* Load Adjustment */}
-                        <div className="p-3.5 rounded-xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm mb-4">
-                          <span className="text-[10px] font-bold text-[#64b7ff] uppercase tracking-wider block mb-1">
-                            {isEn ? "Training Load Adjustment:" : "Pelarasan Beban Latihan:"}
-                          </span>
-                          <p className="text-xs text-[#D1D2D7] leading-relaxed">
-                            {policy.loadAdjustment}
-                          </p>
-                        </div>
-                      </div>
-
-                      {/* Fight Week Rules */}
-                      <div className="pt-4 border-t border-white/[0.08]">
-                        <span className="text-[10px] font-bold text-[#E5E6EB] uppercase tracking-wider block mb-2">
-                          {isEn ? "Fight Week Rules:" : "Peraturan Minggu Pertandingan:"}
-                        </span>
-                        <ul className="space-y-1.5">
-                          {policy.fightWeekRules.map((rule, idx) => (
-                            <li key={idx} className="text-[11px] text-[#A2A3AA] flex items-start gap-1.5 leading-tight">
-                              <Check size={12} className="text-[#ff4d5a] shrink-0 mt-0.5" />
-                              <span>{rule}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-
-              {/* Fight Week Compliance Immunity Banner */}
-              <div className="fight-week-banner p-5 rounded-2xl border border-white/[0.08] bg-white/[0.025] backdrop-blur-[16px] shadow-[0_8px_32px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.06)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                <div className="flex items-start gap-3">
-                  <ShieldCheck size={24} className="text-[#ffd24c] shrink-0 mt-0.5" />
-                  <div>
-                    <h4 className="text-sm font-bold text-white uppercase tracking-wide">
-                      {isEn
-                        ? "Fight Week Compliance Immunity Policy (Fight Week Immunity)"
-                        : "Dasar Imuniti Pematuhan Minggu Pertandingan (Fight Week Immunity)"}
-                    </h4>
-                    <p className="text-xs text-[#C5C6CA] mt-0.5 leading-relaxed">
-                      {isEn
-                        ? "The FighterX system automatically exempts competing athletes from heavy self-directed physical tasks during fight week. Athletes receive zero compliance penalties for scheduled rest to maximize safety and recovery."
-                        : "Sistem FighterX secara automatik mengecualikan atlet bertanding daripada tugasan fizikal kendiri berat sepanjang minggu pertandingan. Atlet tidak akan dikenakan sebarang penalti pematuhan untuk rehat terancang demi keselamatan dan pemulihan maksimum."}
-                    </p>
-                  </div>
-                </div>
-
-                <a
-                  href="#interactive-tools"
-                  onClick={() => setActiveToolTab("weight")}
-                  className="px-4 py-2 rounded-xl text-xs font-bold bg-[#10B981] text-black hover:bg-[#34D399] transition-colors shrink-0"
-                >
-                  {isEn ? "Calculate Safe Weight" : "Kira Berat Selamat"}
-                </a>
-              </div>
-            </div>
-          )}
-
-          {/* VIEW 3: 6 Baseline Assessments Explorer */}
-          {frameworkViewTab === "baseline" && (
-            <div className="space-y-6">
-              {/* Session Filter */}
-              <div className="flex items-center gap-2 overflow-x-auto pb-2">
-                <button
-                  type="button"
-                  onClick={() => setBaselineSessionFilter("all")}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                    baselineSessionFilter === "all"
-                      ? "bg-[#E10600] text-white shadow-sm"
-                      : "bg-white/[0.04] text-[#8E9099] border border-white/[0.08] hover:text-white hover:bg-white/[0.08] backdrop-blur-sm"
-                  }`}
-                >
-                  {isEn ? `All Sessions (${BASELINE_ASSESSMENTS.length})` : `Semua Sesi (${BASELINE_ASSESSMENTS.length})`}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setBaselineSessionFilter("Sesi A (Fizikal & Mobiliti)")}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                    baselineSessionFilter === "Sesi A (Fizikal & Mobiliti)"
-                      ? "bg-[#E10600] text-white shadow-sm"
-                      : "bg-white/[0.04] text-[#8E9099] border border-white/[0.08] hover:text-white hover:bg-white/[0.08] backdrop-blur-sm"
-                  }`}
-                >
-                  {isEn ? "Session A: Physical & Mobility" : "Sesi A: Fizikal & Mobiliti"}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setBaselineSessionFilter("Sesi B (Teknik & Stamina)")}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                    baselineSessionFilter === "Sesi B (Teknik & Stamina)"
-                      ? "bg-[#E10600] text-white shadow-sm"
-                      : "bg-white/[0.04] text-[#8E9099] border border-white/[0.08] hover:text-white hover:bg-white/[0.08] backdrop-blur-sm"
-                  }`}
-                >
-                  {isEn ? "Session B: Technique & Stamina" : "Sesi B: Teknik & Stamina"}
-                </button>
-              </div>
-
-              {/* Grid of Baseline Assessments */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {filteredBaselineTests.map((test) => (
-                  <div
-                    key={test.id}
-                    className="framework-baseline-card p-6 rounded-2xl flex flex-col justify-between"
-                  >
-                    <div>
-                      <div className="flex items-center justify-between gap-2 mb-3">
-                        <span className="px-2.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-[#FF3845]/15 text-[#FF555C] border border-[#FF3845]/30">
-                          {isEn
-                            ? test.session.replace("Sesi A (Fizikal & Mobiliti)", "Session A (Physical & Mobility)").replace("Sesi B (Teknik & Stamina)", "Session B (Technique & Stamina)")
-                            : test.session}
-                        </span>
-                        <span className="text-[11px] text-[#8E9099] font-mono">
-                          {isEn
-                            ? `Discipline: ${test.discipline === "Semua" ? "All Disciplines" : test.discipline === "Silat Seni" ? "Silat Seni" : "Silat Olahraga"}`
-                            : `Disiplin: ${test.discipline}`}
-                        </span>
-                      </div>
-
-                      <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-white mb-1">
-                        {test.title}
-                      </h3>
-
-                      <div className="text-xs font-bold text-[#FF555C] font-mono mb-3">
-                        {isEn ? `Primary Metric: ${test.primaryMetric}` : `Metrik Utama: ${test.primaryMetric}`}
-                      </div>
-
-                      <p className="text-xs text-[#C5C6CA] leading-relaxed mb-4">
-                        {test.protocolSummary}
-                      </p>
-
-                      {/* Detailed Steps */}
-                      <div className="p-3.5 rounded-xl border border-white/[0.06] bg-white/[0.02] mb-4">
-                        <span className="text-[10px] font-bold text-[#E5E6EB] uppercase tracking-wider block mb-2">
-                          {isEn ? "Protocol Implementation Steps:" : "Langkah Pelaksanaan Protokol:"}
-                        </span>
-                        <ol className="space-y-1.5 list-decimal pl-4 text-[11px] text-[#A2A3AA]">
-                          {test.detailedSteps.map((step, idx) => (
-                            <li key={idx} className="leading-snug">{step}</li>
-                          ))}
-                        </ol>
-                      </div>
-
-                      {/* Scoring Rubric Table */}
-                      <div className="rounded-xl border border-white/[0.08] overflow-hidden mb-4 bg-white/[0.02]">
-                        <div className="bg-white/[0.05] px-3 py-2 text-[11px] font-bold text-white uppercase tracking-wider">
-                          {isEn ? "Performance Scoring Rubric" : "Rubrik Skor Prestasi"}
-                        </div>
-                        <div className="divide-y divide-white/[0.05] text-[11px]">
-                          {test.scoringRubric.map((r, rIdx) => (
-                            <div key={rIdx} className="p-2.5 flex items-start justify-between gap-2">
-                              <span className="font-bold text-[#FF555C] shrink-0 min-w-[90px]">{r.tier}</span>
-                              <span className="text-white font-mono shrink-0">{r.standard}</span>
-                              <span className="text-[#8E9099] text-[10px] text-right">{r.description}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Safety Clearance Note if any */}
-                      {test.safetyClearance && (
-                        <div className="p-2.5 rounded-lg border border-amber-500/30 bg-amber-500/10 text-[11px] text-amber-200 flex items-start gap-2 mb-3">
-                          <AlertTriangle size={13} className="shrink-0 text-amber-400 mt-0.5" />
-                          <span><strong>{isEn ? "Safety Clearance:" : "Saringan Keselamatan:"}</strong> {test.safetyClearance}</span>
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="pt-3 border-t border-white/[0.08] text-[10px] text-[#7A7C85] font-mono flex items-center justify-between">
-                      <span>{isEn ? `Reference: ${test.officialReference}` : `Rujukan: ${test.officialReference}`}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* VIEW 4: 5 Training Priorities Matrix */}
-          {frameworkViewTab === "priorities" && (
-            <div className="space-y-6">
-              <div className="text-center max-w-2xl mx-auto mb-4">
-                <span className="text-xs font-bold text-[#FF555C] uppercase tracking-wider block mb-1">
-                  {isEn ? "Scientific Athlete Stratification System" : "Sistem Pengelompokan Saintifik Atlet"}
-                </span>
-                <p className="text-xs sm:text-sm text-[#A2A3AA]">
+                <h3 className="text-xl sm:text-2xl font-bold font-athletic uppercase tracking-wide text-white">
+                  {isEn ? "PERSILAT 2026 TANDING WEIGHT CLASS STANDARDS" : "STANDARD KELAS BERAT TANDING PERSILAT 2026"}
+                </h3>
+                <p className="text-xs text-[#A2A3AA] mt-1">
                   {isEn
-                    ? "FighterX rejects random aggregate marks. Each athlete is grouped into a development track based on verified deficit gaps detected via the 6 Baseline Tests."
-                    : "FighterX menolak agregat markah rawak. Setiap atlet dikelompokkan ke dalam trek pembangunan mengikut jurang kelemahan sebenar yang dikesan melalui 6 Ujian Baseline."}
+                    ? "Official weight brackets for Senior Category (Men & Women) with 0.00 kg tolerance."
+                    : "Piawaian rasmi kategori Dewasa (Putera & Puteri). Timbang rasmi 1 hari sebelum kejohanan dengan toleransi 0.00 kg."}
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {TRAINING_PRIORITIES.map((priority) => {
-                  const badgeClass =
-                    priority.code === "ENDURANCE"
-                      ? "badge-crimson"
-                      : priority.code === "STRENGTH"
-                      ? "badge-silver"
-                      : priority.code === "MOVEMENT"
-                      ? "badge-blue"
-                      : priority.code === "TECHNICAL"
-                      ? "badge-silver"
-                      : "badge-gold";
-
-                  return (
-                    <div
-                      key={priority.id}
-                      className="framework-priority-card p-6 rounded-2xl flex flex-col justify-between"
-                    >
-                      <div>
-                        <div className="flex items-center justify-between gap-2 mb-2">
-                          <span className={`category-tag ${badgeClass} font-mono font-bold text-[10px]`}>
-                            {priority.code}
-                          </span>
-                          <span className="text-[10px] text-[#8E9099] font-mono">{isEn ? "Track #2027" : "Trek #2027"}</span>
-                        </div>
-
-                        <h3 className="text-xl font-bold tracking-tight text-white mb-1">
-                          {priority.title}
-                        </h3>
-
-                        <div className="text-xs font-medium text-[#FF858B] mb-3">
-                          {priority.tagline}
-                        </div>
-
-                        {/* Target Criteria */}
-                        <div className="p-3 rounded-xl border border-white/[0.06] bg-white/[0.02] mb-3">
-                          <span className="text-[10px] font-bold text-[#E5E6EB] uppercase tracking-wider block mb-1">
-                            {isEn ? "Eligibility Criteria:" : "Kriteria Kelayakan:"}
-                          </span>
-                          <p className="text-xs text-[#C5C6CA] leading-snug">
-                            {priority.targetCriteria}
-                          </p>
-                        </div>
-
-                        {/* Primary Focus */}
-                        <div className="mb-3">
-                          <span className="text-[10px] font-bold text-[#8A8C95] uppercase tracking-wider block mb-1.5">
-                            {isEn ? "Primary Focus:" : "Tumpuan Utama:"}
-                          </span>
-                          <ul className="space-y-1">
-                            {priority.primaryFocus.map((foc, idx) => (
-                              <li key={idx} className="text-[11px] text-[#B5B6BD] flex items-start gap-1.5 leading-snug">
-                                <CheckCircle2 size={12} className="text-[#ff4d5a] shrink-0 mt-0.5" />
-                                <span>{foc}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-
-                        {/* Sample Prescription */}
-                        <div className="p-3 rounded-xl border border-white/[0.06] bg-white/[0.02] mb-4">
-                          <span className="text-[10px] font-bold text-[#64b7ff] uppercase tracking-wider block mb-1.5">
-                            {isEn ? "Sample Weekly Prescription:" : "Contoh Preskripsi Latihan Mingguan:"}
-                          </span>
-                          <ul className="space-y-1">
-                            {priority.samplePrescription.map((rx, idx) => (
-                              <li key={idx} className="text-[11px] text-[#C5C6CA] leading-snug">
-                                • {rx}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
-
-                      {/* Graduation Indicator */}
-                      <div className="pt-3 border-t border-white/[0.08]">
-                        <span className="text-[10px] font-bold text-[#ffd24c] uppercase tracking-wider block mb-1">
-                          {isEn ? "Graduation / Promotion Criteria:" : "Syarat Tamat / Naik Taraf:"}
-                        </span>
-                        <p className="text-xs text-[#A2A3AA] leading-snug">
-                          {priority.graduationIndicator}
-                        </p>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* Silibus Sains Sukan 5 Modul Teras Latihan di Rumah */}
-      <HomeTrainingCurriculum />
-
-      {/* Main Articles Grid Section (Practical 3-Tier Structure & Official Links) */}
-      <section id="articles-section" className="py-12 md:py-16">
-        <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
-            <div>
-              <span className="text-xs font-bold text-[#FF555C] uppercase tracking-wider block mb-1">
-                {isEn ? "Sports Science Practical Reference Collection" : "Koleksi Rujukan Praktikal Sains Sukan"}
-              </span>
-              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
-                {isEn ? "SPORTS SCIENCE ARTICLES & PRACTICAL GUIDES" : "ARTIKEL & PANDUAN PRAKTIKAL SAINS SUKAN"}
-              </h2>
-              <p className="text-xs text-[#8E9099] mt-0.5">
-                {isEn
-                  ? "Concise 3-tier structure: Field Problem, Scientific Solution, and Immediate Action Step."
-                  : "Struktur 3-tahap ringkas: Masalah Lapangan, Solusi Saintifik, dan Tindakan Praktikal Hari Ini."}
-              </p>
-            </div>
-            <span className="text-xs text-[#7A7C85] hidden sm:block">
-              {isEn
-                ? "All articles verified by certified sports science panels"
-                : "Semua artikel disahkan oleh panel pakar sukan bertauliah"}
-            </span>
-          </div>
-
-          {filteredArticles.length === 0 ? (
-            <div className="text-center py-20 border border-dashed border-white/[0.12] rounded-2xl bg-white/[0.025] backdrop-blur-[16px] shadow-[0_8px_32px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.06)]">
-              <Search size={36} className="mx-auto text-[#686A72] mb-3" />
-              <h3 className="text-lg font-bold text-white">
-                {isEn ? "No matching articles" : "Tiada artikel sepadan"}
-              </h3>
-              <p className="text-xs text-[#8E9099] mt-1 max-w-sm mx-auto">
-                {isEn
-                  ? "Try another search keyword or select \"All Topics\"."
-                  : "Cuba kata kunci carian lain atau pilih kategori \"Semua Topik\"."}
-              </p>
               <button
                 type="button"
-                onClick={() => {
-                  setSearchQuery("");
-                  setSelectedCategory("all");
-                }}
-                className="mt-4 px-4 py-2 rounded-lg text-xs font-bold text-[#FF555C] border border-[#FF3845]/40 bg-[#FF3845]/10 hover:bg-[#FF3845]/20 backdrop-blur-sm transition-all"
+                onClick={() => setWeightTableExpanded((prev) => !prev)}
+                className="px-4 py-2.5 rounded-xl border border-white/10 bg-white/[0.04] hover:bg-white/[0.08] text-xs font-bold text-white flex items-center justify-center gap-2 transition-all cursor-pointer shrink-0"
               >
-                {isEn ? "Reset Filter" : "Reset Penapis"}
+                <span>{weightTableExpanded ? (isEn ? "Hide Table" : "Tutup Jadual") : (isEn ? "View 11 Classes" : "Lihat 11 Kelas")}</span>
+                {weightTableExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
               </button>
             </div>
-          ) : (
-            <div ref={articlesMotionRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-              {filteredArticles.map((article) => (
-                <article
-                  key={article.id}
-                  className="knowledge-article-card rounded-2xl p-6 transition-all duration-300 flex flex-col justify-between group"
-                >
-                  <div>
-                    {/* Top Meta Bar */}
-                    <div className="flex items-center justify-between gap-2 mb-3">
-                      <span className="category-tag badge-crimson">
-                        {isEn ? article.categoryLabelEn || article.categoryLabel : article.categoryLabel}
+
+            {/* Expandable Content */}
+            {weightTableExpanded && (
+              <div className="mt-6 pt-6 border-t border-white/[0.08] animate-in fade-in duration-300">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+                  {WEIGHT_CATEGORIES_PERSILAT.map((wc) => (
+                    <div
+                      key={wc.code}
+                      className="p-3.5 rounded-xl border border-white/[0.08] bg-black/40 text-center hover:border-red-500/40 transition-colors"
+                    >
+                      <span className="text-xs font-bold font-athletic text-[#FF3845] block">
+                        {isEn ? `CLASS ${wc.code}` : `KELAS ${wc.code}`}
                       </span>
-                      <span className="flex items-center gap-1 text-[11px] text-[#8C8E98]">
-                        <Clock size={12} /> {isEn ? article.readTimeEn || article.readTime : article.readTime}
+                      <span className="text-xs text-white font-mono block mt-1 font-bold">
+                        {wc.minKg} - {wc.maxKg} kg
+                      </span>
+                      <span className="text-[10px] text-[#7A7C85] block mt-0.5">
+                        {isEn ? (wc.gender === "Putera" ? "Male" : wc.gender === "Puteri" ? "Female" : "Open") : wc.gender}
                       </span>
                     </div>
+                  ))}
+                </div>
 
-                    <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-white group-hover:text-[#FF555C] transition-colors leading-snug">
-                      {isEn ? article.titleEn || article.title : article.title}
-                    </h3>
-                    <p className="text-xs font-semibold text-[#B0B1B8] mt-1 mb-3 line-clamp-1">
-                      {isEn ? article.subtitleEn || article.subtitle : article.subtitle}
-                    </p>
-
-                    {/* 3-Tier Practical Content Boxes */}
-                    <div className="space-y-2.5 mb-5">
-                      {/* Tier 1: Real Field Problem */}
-                      <div className="p-3 rounded-xl tier-problem-box">
-                        <div className="flex items-center gap-1.5 text-xs font-bold text-[#ff4d5a] mb-1">
-                          <AlertTriangle size={13} className="shrink-0" />
-                          <span>{isEn ? "Field Problem:" : "Masalah Lapangan:"}</span>
-                        </div>
-                        <p className="text-xs text-[#E5E6EB] leading-relaxed line-clamp-2">
-                          {isEn ? article.fieldProblemEn || article.fieldProblem : article.fieldProblem}
-                        </p>
-                      </div>
-
-                      {/* Tier 2: Scientific Solution */}
-                      <div className="p-3 rounded-xl tier-solution-box">
-                        <div className="flex items-center gap-1.5 text-xs font-bold text-[#64b7ff] mb-1">
-                          <Zap size={13} className="shrink-0" />
-                          <span>{isEn ? "Scientific Solution:" : "Solusi Saintifik:"}</span>
-                        </div>
-                        <p className="text-xs text-[#E5E6EB] leading-relaxed line-clamp-2">
-                          {isEn ? article.scientificSolutionEn || article.scientificSolution : article.scientificSolution}
-                        </p>
-                      </div>
-
-                      {/* Tier 3: Action Step Today */}
-                      <div className="p-3 rounded-xl tier-action-box">
-                        <div className="flex items-center gap-1.5 text-xs font-bold text-[#ffd24c] mb-1">
-                          <CheckCircle2 size={13} className="shrink-0" />
-                          <span>{isEn ? "Action Step Today:" : "Tindakan Hari Ini:"}</span>
-                        </div>
-                        <p className="text-xs text-[#E5E6EB] leading-relaxed line-clamp-2">
-                          {isEn ? article.actionStepTodayEn || article.actionStepToday : article.actionStepToday}
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Official Citation Links Buttons */}
-                    {article.officialLinks && article.officialLinks.length > 0 && (
-                      <div className="mb-4 pt-3 border-t border-white/[0.08]">
-                        <span className="text-[10px] font-bold text-[#8A8C95] uppercase tracking-wider block mb-1.5">
-                          {isEn ? "Official Citations:" : "Rujukan Rasmi:"}
-                        </span>
-                        <div className="flex flex-wrap gap-1.5">
-                          {article.officialLinks.map((link, idx) => (
-                            <a
-                              key={idx}
-                              href={link.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="px-2 py-1 rounded text-[10px] font-bold bg-white/[0.04] border border-white/[0.08] hover:border-[#FF3845] text-[#C5C6CA] hover:text-white inline-flex items-center gap-1 transition-colors"
-                            >
-                              <span>{link.label}</span>
-                              <ExternalLink size={9} className="text-[#8E9099]" />
-                            </a>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Card Actions Footer */}
-                  <div className="pt-4 border-t border-white/[0.08] flex items-center justify-between">
-                    <Link
-                      href={`/knowledge/${article.slug}`}
-                      className="text-[11px] text-[#A2A3AA] hover:text-white transition-colors"
-                    >
-                      {isEn ? "Full Page" : "Laman Penuh"}
-                    </Link>
-
-                    <button
-                      type="button"
-                      onClick={() => handleOpenArticle(article)}
-                      className="inline-flex items-center gap-1.5 text-xs font-bold text-[#FF555C] group-hover:translate-x-1 transition-all"
-                    >
-                      {isEn ? "Read Full" : "Baca Penuh"} <ArrowRight size={14} />
-                    </button>
-                  </div>
-                </article>
-              ))}
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* Interactive Sports-Science Tools Suite */}
-      <section id="interactive-tools" className="py-14 border-t border-white/[0.08] relative">
-        <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="tools-header-anim text-center max-w-2xl mx-auto mb-8">
-            <span className="text-xs font-bold text-[#FF3845] uppercase tracking-wider block mb-1">
-              {kd.tools.title}
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
-              {kd.tools.title}
-            </h2>
-            <p className="text-xs sm:text-sm text-[#A2A3AA] mt-1">
-              {kd.tools.subtitle}
-            </p>
-          </div>
-
-          {/* Tool Switcher Tabs */}
-          <div className="flex items-center justify-start sm:justify-center gap-2 overflow-x-auto pb-4 mb-8">
-            <button
-              type="button"
-              onClick={() => setActiveToolTab("periodization")}
-              className={`tool-tab-btn px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all ${
-                activeToolTab === "periodization"
-                  ? "bg-[#E10600] text-white shadow-[0_4px_16px_rgba(225,6,0,0.35)] border border-[#FF3845]"
-                  : "bg-white/[0.04] text-[#A2A3AA] border border-white/[0.08] hover:text-white hover:bg-white/[0.08] backdrop-blur-sm"
-              }`}
-            >
-              <CalendarDays size={14} />
-              <span>1. {kd.tools.tabPeriodization}</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setActiveToolTab("weight")}
-              className={`tool-tab-btn px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all ${
-                activeToolTab === "weight"
-                  ? "bg-[#E10600] text-white shadow-[0_4px_16px_rgba(225,6,0,0.35)] border border-[#FF3845]"
-                  : "bg-white/[0.04] text-[#A2A3AA] border border-white/[0.08] hover:text-white hover:bg-white/[0.08] backdrop-blur-sm"
-              }`}
-            >
-              <Scale size={14} />
-              <span>2. {kd.tools.tabWeightCut}</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setActiveToolTab("sweat")}
-              className={`tool-tab-btn px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all ${
-                activeToolTab === "sweat"
-                  ? "bg-[#E10600] text-white shadow-[0_4px_16px_rgba(225,6,0,0.35)] border border-[#FF3845]"
-                  : "bg-white/[0.04] text-[#A2A3AA] border border-white/[0.08] hover:text-white hover:bg-white/[0.08] backdrop-blur-sm"
-              }`}
-            >
-              <Droplets size={14} />
-              <span>3. {kd.tools.tabSweatRate}</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setActiveToolTab("stakeholder")}
-              className={`tool-tab-btn px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all ${
-                activeToolTab === "stakeholder"
-                  ? "bg-[#E10600] text-white shadow-[0_4px_16px_rgba(225,6,0,0.35)] border border-[#FF3845]"
-                  : "bg-white/[0.04] text-[#A2A3AA] border border-white/[0.08] hover:text-white hover:bg-white/[0.08] backdrop-blur-sm"
-              }`}
-            >
-              <Users size={14} />
-              <span>4. {kd.tools.tabStakeholders}</span>
-            </button>
-          </div>
-
-          {/* Active Tool View */}
-          {activeToolTab === "periodization" && <PeriodizationMatrix />}
-          {activeToolTab === "weight" && <WeightCutPlanner />}
-          {activeToolTab === "sweat" && <SweatRateCalculator />}
-          {activeToolTab === "stakeholder" && <StakeholderGuideSwitcher />}
-        </div>
-      </section>
-
-      {/* PERSILAT 2026 Weight Categories Reference Strip */}
-      <section id="weight-categories" className="py-12 border-t border-white/[0.08] bg-transparent">
-        <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="weight-header-anim flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-            <div>
-              <span className="text-xs font-bold text-[#FF555C] uppercase tracking-wider block mb-0.5">
-                {isEn ? "Official Tournament Standards" : "Piawaian Rasmi Pertandingan"}
-              </span>
-              <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-white">
-                {isEn ? "PERSILAT 2026 TANDING WEIGHT CLASS STANDARDS" : "STANDARD KELAS BERAT TANDING PERSILAT 2026"}
-              </h3>
-            </div>
-            <span className="text-xs text-[#8E9099]">
-              {isEn ? "Senior Category (Men & Women)" : "Kategori Dewasa (Putera & Puteri)"}
-            </span>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
-            {WEIGHT_CATEGORIES_PERSILAT.map((wc) => (
-              <div
-                key={wc.code}
-                className="weight-category-card p-3.5 rounded-xl text-center"
-              >
-                <span className="text-xs font-bold font-athletic text-[#FF3845] block">
-                  {isEn ? `CLASS ${wc.code}` : `KELAS ${wc.code}`}
-                </span>
-                <span className="text-xs text-white font-mono block mt-1 font-bold">
-                  {wc.minKg} - {wc.maxKg} kg
-                </span>
-                <span className="text-[10px] text-[#7A7C85] block mt-0.5">
-                  {isEn ? (wc.gender === "Putera" ? "Male" : wc.gender === "Puteri" ? "Female" : "Open") : wc.gender}
-                </span>
+                <div className="mt-4 p-3.5 rounded-xl border border-[rgba(255,56,69,0.3)] bg-[rgba(255,56,69,0.05)] backdrop-blur-md flex items-center gap-2.5 text-xs text-[#FF858B]">
+                  <ShieldCheck size={16} className="shrink-0 text-[#FF3845]" />
+                  <span>
+                    {isEn
+                      ? "PERSILAT 2026: Official weigh-in is conducted 1 day before tournament begins with 0.00 kg tolerance. Safe weight category compliance is mandatory."
+                      : "PERSILAT 2026: Timbang berat rasmi dilakukan 1 hari sebelum kejohanan bermula dengan toleransi 0.00 kg. Pematuhan had berat badan selamat adalah mandatori mengikut Kod Perubatan."}
+                  </span>
+                </div>
               </div>
-            ))}
+            )}
           </div>
 
-          <div className="weight-notice-anim mt-4 p-3.5 rounded-xl border border-[rgba(255,56,69,0.3)] bg-[rgba(255,56,69,0.05)] backdrop-blur-md flex items-center gap-2.5 text-xs text-[#FF858B]">
-            <ShieldCheck size={16} className="shrink-0 text-[#FF3845]" />
-            <span>
-              {isEn
-                ? "PERSILAT 2026: Official weigh-in is conducted 1 day before tournament begins with 0.00 kg tolerance. Safe weight category compliance is mandatory."
-                : "PERSILAT 2026: Timbang berat rasmi dilakukan 1 hari sebelum kejohanan bermula dengan toleransi 0.00 kg. Pematuhan had berat badan selamat adalah mandatori."}
-            </span>
+          {/* Official Source & Scope Banner */}
+          <div className="mt-6 rounded-2xl border border-white/[0.08] bg-gradient-to-r from-black/80 via-[#12141a]/90 to-black/80 p-5 sm:p-6 backdrop-blur-[16px] flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="flex items-center gap-3.5">
+              <div className="w-10 h-10 rounded-xl bg-red-500/10 border border-red-500/30 flex items-center justify-center text-[#FF4D5A] shrink-0">
+                <BookMarked size={20} />
+              </div>
+              <div>
+                <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#FF555C] block">
+                  OFFICIAL SOURCE &amp; SCOPE
+                </span>
+                <strong className="text-xs sm:text-sm font-bold text-white block uppercase tracking-wide font-athletic">
+                  INTERNATIONAL PENCAK SILAT COMPETITION REGULATIONS YEAR 2026
+                </strong>
+                <p className="text-[11px] text-[#8E9099] mt-0.5">
+                  worldpencaksilat.org · International Pencak Silat Federation (PERSILAT) &amp; PESAKA Malaysia.
+                </p>
+              </div>
+            </div>
+
+            <a
+              href="https://worldpencaksilat.org"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-2 rounded-xl border border-white/10 bg-white/[0.04] hover:bg-white/[0.08] hover:border-red-500/40 text-xs font-bold text-white inline-flex items-center justify-center gap-1.5 transition-all shrink-0"
+            >
+              <span>Visit World Pencak Silat (PERSILAT)</span>
+              <ExternalLink size={12} className="text-[#8E9099]" />
+            </a>
           </div>
         </div>
       </section>
 
-      {/* Full Article Reader Modal / Drawer */}
+      {/* 7. FULL ARTICLE READER MODAL */}
       {activeArticle && (
         <div
           className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-5 overflow-y-auto"
@@ -2044,109 +593,130 @@ export function KnowledgeHubClient() {
         >
           <div
             ref={articleModalRef}
-            className="knowledge-modal-shell relative w-full max-w-4xl max-h-[92vh] rounded-2xl overflow-hidden flex flex-col"
+            className="knowledge-modal-shell relative w-full max-w-4xl max-h-[92vh] rounded-2xl overflow-hidden flex flex-col bg-[#0e1015] border border-white/[0.12] shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header */}
-            <div className="p-6 border-b border-white/[0.08] bg-white/[0.02] flex items-start justify-between gap-4 sticky top-0 z-10 backdrop-blur-md">
-              <div className="min-w-0">
-                <div className="flex items-center gap-2 mb-2 flex-wrap">
-                  <span className="category-tag badge-crimson">
+            <div className="p-6 border-b border-white/[0.08] bg-white/[0.02] flex items-start justify-between gap-4">
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase border border-red-500/40 bg-red-500/10 text-[#FF4D5A]">
                     {isEn ? activeArticle.categoryLabelEn || activeArticle.categoryLabel : activeArticle.categoryLabel}
                   </span>
-                  <span className="text-[11px] text-[#8E9099] flex items-center gap-1">
-                    <Clock size={12} /> {isEn ? activeArticle.readTimeEn || activeArticle.readTime : activeArticle.readTime}
-                  </span>
-                  <span className="text-[11px] text-[#8E9099]">
-                    {isEn ? `· Reviewed by: ${activeArticle.reviewedByEn || activeArticle.reviewedBy}` : `· Semakan: ${activeArticle.reviewedBy}`}
+                  <span className="text-xs text-[#8E9099] flex items-center gap-1">
+                    <Clock size={12} />
+                    {isEn ? activeArticle.readTimeEn || activeArticle.readTime : activeArticle.readTime}
                   </span>
                 </div>
-                <h2 id="article-reader-title" className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+                <h3
+                  id="article-reader-title"
+                  className="text-xl sm:text-2xl font-bold font-athletic uppercase text-white tracking-wide"
+                >
                   {isEn ? activeArticle.titleEn || activeArticle.title : activeArticle.title}
-                </h2>
-                <p className="text-xs text-[#A8A9B2] mt-1">{isEn ? activeArticle.subtitleEn || activeArticle.subtitle : activeArticle.subtitle}</p>
+                </h3>
+                <p className="text-xs sm:text-sm text-[#A2A3AA] mt-1">
+                  {isEn ? activeArticle.subtitleEn || activeArticle.subtitle : activeArticle.subtitle}
+                </p>
+                <div className="mt-2 text-[11px] text-[#7A7C85]">
+                  <span>Semakan Saintifik: </span>
+                  <strong className="text-[#C7C8CE]">
+                    {isEn ? activeArticle.reviewedByEn || activeArticle.reviewedBy : activeArticle.reviewedBy}
+                  </strong>
+                </div>
               </div>
+
               <button
                 ref={articleCloseBtnRef}
                 type="button"
                 onClick={() => setActiveArticle(null)}
-                className="p-2 rounded-lg bg-white/10 text-[#A2A3AA] hover:text-white hover:bg-white/15 transition-colors shrink-0 cursor-pointer"
-                aria-label={isEn ? "Close article" : "Tutup artikel"}
+                aria-label="Tutup artikel"
+                className="w-9 h-9 rounded-xl border border-white/10 bg-white/[0.04] hover:bg-white/[0.08] flex items-center justify-center text-[#A2A3AA] hover:text-white transition-colors cursor-pointer shrink-0"
               >
-                ✕
+                <X size={18} />
               </button>
             </div>
 
             {/* Modal Body */}
-            <div className="p-6 sm:p-8 overflow-y-auto space-y-8 text-xs sm:text-sm text-[#D1D2D7] leading-relaxed knowledge-drawer-scroll">
+            <div className="p-6 sm:p-8 overflow-y-auto space-y-6 text-sm text-[#D4D5D9] leading-relaxed">
               {/* Summary Callout */}
-              <div className="p-4 rounded-xl border border-white/10 bg-white/[0.03] text-[#E0E0E4]">
-                <strong className="block text-xs font-bold text-[#FF555C] uppercase tracking-wider mb-1">
-                  {isEn ? "Executive Summary" : "Ringkasan Eksekutif"}
+              <div className="p-4 rounded-xl border border-red-500/30 bg-red-500/10 text-xs text-[#FFD5D7]">
+                <strong className="text-white block font-bold mb-1 uppercase tracking-wider">
+                  {isEn ? "EXECUTIVE SUMMARY" : "RINGKASAN EKSEKUTIF SAINS SUKAN"}
                 </strong>
                 <p>{isEn ? activeArticle.summaryEn || activeArticle.summary : activeArticle.summary}</p>
               </div>
 
-              {/* 3-Tier Practical Content Highlights */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                <div className="p-3.5 rounded-xl tier-problem-box">
-                  <strong className="text-xs font-bold text-[#ff4d5a] block mb-1">
-                    {isEn ? "⚠️ Field Problem" : "⚠️ Masalah Lapangan"}
-                  </strong>
-                  <p className="text-xs text-[#D1D2D7]">
-                    {isEn ? activeArticle.fieldProblemEn || activeArticle.fieldProblem : activeArticle.fieldProblem}
-                  </p>
-                </div>
+              {/* Problem / Solution / Action Cards */}
+              {(activeArticle.fieldProblem || activeArticle.scientificSolution || activeArticle.actionStepToday) && (
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 pt-2">
+                  {activeArticle.fieldProblem && (
+                    <div className="p-4 rounded-xl border border-amber-500/30 bg-amber-500/5">
+                      <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-amber-400 block mb-1">
+                        1. REALITI GELANGGANG
+                      </span>
+                      <p className="text-xs text-[#D4D5D9]">
+                        {isEn ? activeArticle.fieldProblemEn || activeArticle.fieldProblem : activeArticle.fieldProblem}
+                      </p>
+                    </div>
+                  )}
 
-                <div className="p-3.5 rounded-xl tier-solution-box">
-                  <strong className="text-xs font-bold text-[#64b7ff] block mb-1">
-                    {isEn ? "🔬 Scientific Solution" : "🔬 Solusi Saintifik"}
-                  </strong>
-                  <p className="text-xs text-[#D1D2D7]">
-                    {isEn ? activeArticle.scientificSolutionEn || activeArticle.scientificSolution : activeArticle.scientificSolution}
-                  </p>
-                </div>
+                  {activeArticle.scientificSolution && (
+                    <div className="p-4 rounded-xl border border-blue-500/30 bg-blue-500/5">
+                      <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-blue-400 block mb-1">
+                        2. PENYELESAIAN SAINS
+                      </span>
+                      <p className="text-xs text-[#D4D5D9]">
+                        {isEn ? activeArticle.scientificSolutionEn || activeArticle.scientificSolution : activeArticle.scientificSolution}
+                      </p>
+                    </div>
+                  )}
 
-                <div className="p-3.5 rounded-xl tier-action-box">
-                  <strong className="text-xs font-bold text-[#ffd24c] block mb-1">
-                    {isEn ? "⚡ Action Step Today" : "⚡ Tindakan Hari Ini"}
-                  </strong>
-                  <p className="text-xs text-[#D1D2D7]">
-                    {isEn ? activeArticle.actionStepTodayEn || activeArticle.actionStepToday : activeArticle.actionStepToday}
-                  </p>
+                  {activeArticle.actionStepToday && (
+                    <div className="p-4 rounded-xl border border-emerald-500/30 bg-emerald-500/5">
+                      <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-400 block mb-1">
+                        3. TINDAKAN HARI INI
+                      </span>
+                      <p className="text-xs text-[#D4D5D9]">
+                        {isEn ? activeArticle.actionStepTodayEn || activeArticle.actionStepToday : activeArticle.actionStepToday}
+                      </p>
+                    </div>
+                  )}
                 </div>
-              </div>
+              )}
 
               {/* Key Takeaways */}
-              <div>
-                <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-3">
-                  {isEn ? "Key Takeaways & Core Principles" : "Poin Kunci & Prinsip Utama"}
-                </h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                  {(isEn && activeArticle.keyTakeawaysEn ? activeArticle.keyTakeawaysEn : activeArticle.keyTakeaways).map((point, idx) => (
-                    <div key={idx} className="p-3 rounded-lg border border-white/[0.06] bg-white/[0.02] flex items-start gap-2">
-                      <CheckCircle2 size={14} className="text-[#FF3845] shrink-0 mt-0.5" />
-                      <span className="text-xs text-[#C5C6CA]">{point}</span>
-                    </div>
-                  ))}
+              {activeArticle.keyTakeaways && activeArticle.keyTakeaways.length > 0 && (
+                <div className="p-4 rounded-xl border border-white/[0.08] bg-white/[0.02]">
+                  <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-2.5 flex items-center gap-2">
+                    <Sparkles size={14} className="text-[#FF3845]" />
+                    <span>{isEn ? "Key Practical Takeaways" : "Prinsip Utama Yang Wajib Diingat"}</span>
+                  </h4>
+                  <ul className="space-y-2 text-xs">
+                    {(isEn ? activeArticle.keyTakeawaysEn || activeArticle.keyTakeaways : activeArticle.keyTakeaways).map((item, idx) => (
+                      <li key={idx} className="flex items-start gap-2.5">
+                        <CheckCircle2 size={14} className="text-emerald-400 shrink-0 mt-0.5" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              </div>
+              )}
 
-              {/* Sections */}
-              {(isEn && activeArticle.sectionsEn ? activeArticle.sectionsEn : activeArticle.sections).map((section, sIdx) => (
-                <div key={sIdx} className="space-y-3 pt-4 border-t border-white/[0.08]">
-                  <h4 className="text-lg font-bold tracking-tight text-white">
+              {/* Full Article Sections */}
+              {(isEn ? activeArticle.sectionsEn || activeArticle.sections : activeArticle.sections).map((section, sIdx) => (
+                <div key={sIdx} className="space-y-3 pt-3 border-t border-white/[0.06]">
+                  <h4 className="text-base font-bold font-athletic uppercase text-white tracking-wide">
                     {section.heading}
                   </h4>
-                  {section.content.map((p, pIdx) => (
-                    <p key={pIdx} className="text-xs sm:text-sm text-[#C5C6CA] leading-relaxed">
+
+                  {section.content && section.content.map((p, pIdx) => (
+                    <p key={pIdx} className="text-xs sm:text-sm text-[#C5C6CA]">
                       {p}
                     </p>
                   ))}
 
-                  {/* Bullet points if any */}
                   {section.bulletPoints && section.bulletPoints.length > 0 && (
-                    <ul className="list-disc pl-5 space-y-1 text-xs text-[#B5B6BD]">
+                    <ul className="list-disc list-inside space-y-1.5 pl-2 text-xs text-[#A2A3AA]">
                       {section.bulletPoints.map((bp, bpIdx) => (
                         <li key={bpIdx}>{bp}</li>
                       ))}
@@ -2209,7 +779,7 @@ export function KnowledgeHubClient() {
               ))}
 
               {/* Citations List */}
-              {activeArticle.citations.length > 0 && (
+              {activeArticle.citations && activeArticle.citations.length > 0 && (
                 <div className="pt-6 border-t border-white/[0.08]">
                   <h4 className="text-xs font-bold text-[#8E9099] uppercase tracking-wider mb-3">
                     {isEn ? "Scientific & Technical References" : "Sumber Rujukan Saintifik & Teknikal"}
@@ -2241,7 +811,7 @@ export function KnowledgeHubClient() {
               <button
                 type="button"
                 onClick={() => setActiveArticle(null)}
-                className="px-5 py-2 rounded-lg text-xs font-bold bg-[#E10600] text-white hover:bg-[#FF3845] transition-colors"
+                className="px-5 py-2 rounded-lg text-xs font-bold bg-[#E10600] text-white hover:bg-[#FF3845] transition-colors cursor-pointer"
               >
                 {isEn ? "Finish Reading" : "Selesai Membaca"}
               </button>
@@ -2250,7 +820,7 @@ export function KnowledgeHubClient() {
         </div>
       )}
 
-      {/* Citations Drawer */}
+      {/* 8. CITATIONS DRAWER */}
       <CitationsDrawer
         isOpen={citationsDrawerOpen}
         onClose={() => setCitationsDrawerOpen(false)}
