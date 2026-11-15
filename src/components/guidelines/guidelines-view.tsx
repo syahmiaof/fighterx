@@ -3,9 +3,7 @@
 import Image from "next/image";
 import {
   ArrowRight,
-  ArrowUpRight,
   BadgeAlert,
-  BookOpenCheck,
   Check,
   CheckCircle2,
   Flag,
@@ -680,41 +678,9 @@ export function GuidelinesView() {
           </section>
 
           {/* SECTION 8: OFFICIAL DISCLAIMER */}
-          <div className="guidelines-motion-item mb-12">
+          <div className="guidelines-motion-item">
             <OfficialDisclaimer />
           </div>
-
-          {/* Footer Citation */}
-          <footer className="guidelines-motion-item guidelines-card rounded-[14px] sm:rounded-2xl border border-white/[0.08] bg-white/[0.025] p-5 sm:p-6 backdrop-blur-[16px] shadow-[0_8px_32px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.06)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div className="flex items-center gap-3.5">
-              <div className="w-10 h-10 rounded-xl bg-[rgba(255,56,69,0.12)] border border-[rgba(255,56,69,0.35)] flex items-center justify-center text-[#ff4d5a] shrink-0">
-                <BookOpenCheck size={20} />
-              </div>
-              <div>
-                <span className="text-[10px] font-mono text-[#ff4d5a] font-bold tracking-wider uppercase block">
-                  {isEn ? "OFFICIAL SOURCE & SCOPE" : "SUMBER & SKOP RASMI"}
-                </span>
-                <h4 className="text-sm font-bold text-white font-athletic uppercase">
-                  International Pencak Silat Competition Regulations Year 2026
-                </h4>
-                <p className="text-[11px] text-[#A6A7AD]">
-                  {isEn
-                    ? "worldpencaksilat.org · International Pencak Silat Federation (PERSILAT) & PESAKA Malaysia."
-                    : "worldpencaksilat.org · Persekutuan Pencak Silat Antarabangsa (PERSILAT) & PESAKA Malaysia."}
-                </p>
-              </div>
-            </div>
-
-            <a
-              href="https://www.worldpencaksilat.org"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl border border-white/[0.12] bg-white/[0.04] text-xs font-semibold text-white hover:border-[rgba(255,56,69,0.45)] hover:bg-[rgba(255,56,69,0.15)] backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition-all shrink-0"
-            >
-              <span>{d.guidelines.disclaimer.linkText}</span>
-              <ArrowUpRight size={14} className="text-[#ff4d5a]" />
-            </a>
-          </footer>
         </div>
       </GuidelinesMotion>
     </main>
