@@ -9,7 +9,6 @@ import {
   Search,
   Shield,
   ShieldAlert,
-  Swords,
   Timer,
   Zap,
 } from "lucide-react";
@@ -138,12 +137,9 @@ export function SilatOlahragaSection() {
       <div className="max-w-6xl mx-auto px-4">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[rgba(255,56,69,0.35)] bg-[rgba(255,56,69,0.12)] text-[#ff4d5a] text-xs font-bold uppercase tracking-wider mb-2">
-            <Swords size={13} /> {locale === "bm" ? "Disiplin Silat Olahraga (Tanding)" : "Silat Olahraga (Combat Sparring) Discipline"}
-          </div>
           <h2
-            className="text-3xl sm:text-4xl md:text-5xl font-display font-bold uppercase text-white tracking-tight"
-            style={{ fontFamily: "var(--font-athletic)" }}
+            className="text-3xl sm:text-4xl md:text-5xl font-bold uppercase text-white tracking-tight"
+            style={{ fontFamily: "var(--font-athletic)", fontStyle: "italic" }}
           >
             {locale === "bm" ? (
               <>TAKTIKAL PERTARUNGAN &amp; <span className="text-red-600">SISTEM SKOR DIGITAL</span></>
@@ -151,11 +147,6 @@ export function SilatOlahragaSection() {
               <>COMBAT TACTICS &amp; <span className="text-red-600">DIGITAL SCORING SYSTEM</span></>
             )}
           </h2>
-          <p className="mt-2 text-xs sm:text-sm text-neutral-400 leading-relaxed">
-            {locale === "bm"
-              ? "Peraturan pertandingan tanding moden PERSILAT 2026 menuntut kepantasan langkah silat, kawalan jarak taktikal, kuasa bantingan sah, dan ketepatan serangan ke atas zon sasaran vest berlapik."
-              : "Modern PERSILAT 2026 competition rules demand agile footwork, tactical distance control, legal takedown power, and accurate strikes on padded vest target zones."}
-          </p>
         </div>
 
         {/* 3 Tactical Pillar Cards */}
@@ -221,20 +212,12 @@ export function SilatOlahragaSection() {
         {/* Interactive Target Scoring Zones Explorer */}
         <div className="rounded-2xl border border-white/[0.08] bg-white/[0.025] backdrop-blur-[16px] p-6 sm:p-8 mb-10 shadow-[0_8px_32px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.06)]">
           <div className="border-b border-white/[0.08] pb-4 mb-6">
-            <span className="text-xs font-bold uppercase tracking-widest text-[#ff4d5a]">
-              {locale === "bm" ? "Peta Anatomi Sasaran Tanding" : "Combat Target Anatomy Map"}
-            </span>
             <h3
-              className="text-2xl sm:text-3xl font-display font-bold uppercase text-white mt-0.5"
-              style={{ fontFamily: "var(--font-athletic)" }}
+              className="text-2xl sm:text-3xl font-bold uppercase text-white"
+              style={{ fontFamily: "var(--font-athletic)", fontStyle: "italic" }}
             >
               {locale === "bm" ? "Zon Mata Sah vs. Zon Larangan (Foul)" : "Legal Scoring Zones vs. Prohibited Zones"}
             </h3>
-            <p className="text-xs text-neutral-400 mt-1">
-              {locale === "bm"
-                ? "Pilih kawasan anatomi di bawah untuk melihat nilai mata pukulan/tendangan dan status undang-undang pertandingan."
-                : "Select an anatomical zone below to view punch/kick point values and regulatory status."}
-            </p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
